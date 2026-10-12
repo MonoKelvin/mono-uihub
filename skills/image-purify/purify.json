@@ -1,0 +1,421 @@
+{
+  "version": 1,
+  "note": "Canonical clean-image prompt packs. Human docs: skills/image-purify/SKILL.md. Consumed automatically by tools/image-forge/generate.py — edit here and the tool picks it up on the next run.",
+  "base": {
+    "label": "通用底座（任何图都叠）",
+    "positive": [
+      "clean professional image",
+      "one clear subject, uncluttered composition",
+      "smooth even surfaces with continuous gradients",
+      "crisp clean edges",
+      "restrained controlled detail",
+      "consistent physical materials",
+      "soft even lighting",
+      "calm balanced colors",
+      "noise-free clean rendering",
+      "high clarity without over-sharpening",
+      "generous empty space around the subject"
+    ],
+    "negative": [
+      "noise",
+      "grain",
+      "color noise",
+      "speckles",
+      "scale-like texture",
+      "fish-scale pattern",
+      "snakeskin pattern",
+      "repetitive micro-pattern",
+      "crunchy high-frequency detail",
+      "over-sharpening",
+      "ringing halos",
+      "dirty smudges",
+      "dirty patches",
+      "dust and scratches",
+      "blotchy shadows",
+      "muddy colors",
+      "fragmented debris",
+      "floating particles",
+      "cluttered background",
+      "random clutter",
+      "garbled text",
+      "watermark",
+      "signature",
+      "jpeg artifacts",
+      "upscaling artifacts",
+      "plastic waxy surface",
+      "smeared texture",
+      "oversaturated glow",
+      "blurry low-resolution details"
+    ]
+  },
+  "styles": {
+    "general": {
+      "label": "通用 / 风格未定",
+      "aliases": ["none", "default"],
+      "positive": [],
+      "negative": []
+    },
+    "photoreal": {
+      "label": "写实摄影（人像 / 实景 / 真实材质）",
+      "aliases": ["realistic", "photo", "photography"],
+      "positive": [
+        "natural photographic realism",
+        "true-to-life material response",
+        "believable skin and fabric micro-structure",
+        "single soft key light from a large softbox",
+        "accurate white balance",
+        "medium-format clarity",
+        "shallow depth of field used sparingly"
+      ],
+      "negative": [
+        "cgi look",
+        "plastic skin",
+        "wax figure sheen",
+        "airbrushed featureless face",
+        "heavy HDR tonemapping",
+        "illustration or cartoon look",
+        "hazy veiling glare"
+      ]
+    },
+    "anime": {
+      "label": "二次元（日式动画 / 赛璐璐）",
+      "aliases": ["acg", "cel", "manga"],
+      "positive": [
+        "clean anime illustration",
+        "flat cel shading in two or three steps",
+        "confident line art with even line weight",
+        "large clean color areas",
+        "simple clear highlight shapes",
+        "harmonious bright palette",
+        "clean uncluttered background"
+      ],
+      "negative": [
+        "sketchy doubled outlines",
+        "broken jittery lines",
+        "muddy airbrushed shading",
+        "scattered random highlights",
+        "paper grain texture",
+        "photoreal face",
+        "3d render look",
+        "over-rendered skin texture"
+      ]
+    },
+    "chibi": {
+      "label": "Q 版 / 萌系",
+      "aliases": ["q", "cute", "mascot"],
+      "positive": [
+        "cute chibi proportions",
+        "oversized head and simple rounded body",
+        "clean closed silhouette",
+        "flat soft shading with one shadow tone",
+        "few simple shapes",
+        "even thick outline",
+        "clean pastel palette"
+      ],
+      "negative": [
+        "realistic proportions",
+        "tiny cluttered accessories",
+        "busy pattern detail",
+        "harsh dark shadows",
+        "noisy texture",
+        "dramatic photographic lighting"
+      ]
+    },
+    "illustration": {
+      "label": "插画（编辑 / 扁平手绘）",
+      "aliases": ["editorial", "flat", "vector"],
+      "positive": [
+        "editorial illustration",
+        "clean flat vector-like shapes",
+        "limited palette of three to four colors",
+        "deliberate negative space",
+        "one consistent texture treatment",
+        "hand-drawn but controlled strokes"
+      ],
+      "negative": [
+        "grunge overlay",
+        "paper fiber texture",
+        "scattered specks",
+        "noisy gradient mesh",
+        "photographic texture",
+        "3d shading",
+        "mixed incompatible styles"
+      ]
+    },
+    "skeuomorphic": {
+      "label": "拟物（图标 / 单体物件）",
+      "aliases": ["skeuo", "nimo", "object-icon"],
+      "positive": [
+        "skeuomorphic object",
+        "one clearly named material",
+        "smooth molded form with clean bevels",
+        "soft studio reflection",
+        "one consistent highlight",
+        "gentle contact shadow",
+        "simple neutral backdrop"
+      ],
+      "negative": [
+        "heavy inner glow",
+        "double conflicting shadows",
+        "grunge scratched metal",
+        "noisy gradients",
+        "dust on the surface",
+        "rainbow specular fringing"
+      ]
+    },
+    "iso25d": {
+      "label": "2.5D / 等距场景",
+      "aliases": ["2.5d", "isometric", "iso"],
+      "positive": [
+        "clean isometric 2.5D scene",
+        "true isometric angle",
+        "simple geometric blocks",
+        "flat surfaces with soft ambient occlusion",
+        "limited palette",
+        "tidy spacing between objects",
+        "plain flat ground"
+      ],
+      "negative": [
+        "broken perspective",
+        "stray floating objects",
+        "tiny scattered props",
+        "noisy surface texture",
+        "heavy black outlines",
+        "overlapping clutter"
+      ]
+    },
+    "render3d": {
+      "label": "3D 渲染（C4D / Blender 风）",
+      "aliases": ["3d", "cgi", "c4d", "blender"],
+      "positive": [
+        "clean 3D render",
+        "matte or satin physically based materials",
+        "soft area-light studio setup",
+        "smooth subdivided geometry",
+        "clean ambient occlusion",
+        "low-contrast gradient backdrop",
+        "fully converged noise-free render"
+      ],
+      "negative": [
+        "render noise",
+        "path-tracing fireflies",
+        "grainy global illumination",
+        "caustic speckles",
+        "bump and displacement artifacts",
+        "oily specular highlights",
+        "blotchy subsurface scattering",
+        "faceted low-poly shading"
+      ]
+    },
+    "cinematic": {
+      "label": "电影感",
+      "aliases": ["film", "movie"],
+      "positive": [
+        "cinematic single-frame composition",
+        "one dominant light direction",
+        "clean filmic contrast with readable shadows",
+        "clean optics",
+        "muted graded palette",
+        "calm staging with real depth"
+      ],
+      "negative": [
+        "heavy film grain",
+        "dust and scratch overlay",
+        "lens dirt and smudges",
+        "excessive bloom",
+        "crushed teal-orange grade",
+        "smoke haze clutter",
+        "light leaks",
+        "chromatic aberration"
+      ]
+    },
+    "stylized": {
+      "label": "风格化（海报 / 几何 / 潮流）",
+      "aliases": ["poster", "graphic", "trendy"],
+      "positive": [
+        "bold stylized shapes",
+        "poster-like simplification",
+        "one consistent stroke system",
+        "flat planes with a single accent color",
+        "clean solid background",
+        "strong readable silhouette"
+      ],
+      "negative": [
+        "texture overlays",
+        "halftone noise",
+        "distressed grunge",
+        "glitch artifacts",
+        "chromatic aberration",
+        "busy competing motifs"
+      ]
+    },
+    "guofeng": {
+      "label": "古风 / 国风",
+      "aliases": ["chinese", "ink", "guo"],
+      "positive": [
+        "Chinese classical aesthetic",
+        "clean ink wash and mineral pigment feel",
+        "generous empty space",
+        "restrained silk jade and wood sheen",
+        "soft even daylight",
+        "limited traditional palette",
+        "elegant sparse ornament"
+      ],
+      "negative": [
+        "splattered ink specks",
+        "paper fiber noise",
+        "muddy washes",
+        "cluttered ornament",
+        "gold glitter particles",
+        "anachronistic modern props",
+        "oversaturated red and gold"
+      ]
+    },
+    "lineicon": {
+      "label": "线性图标 / UI 素材",
+      "aliases": ["icon", "line", "ui"],
+      "positive": [
+        "clean line icon",
+        "uniform stroke weight",
+        "geometric construction on a square grid",
+        "closed even shapes",
+        "generous padding inside the frame",
+        "single flat color",
+        "centered balanced silhouette"
+      ],
+      "negative": [
+        "varying stroke weight",
+        "broken open paths",
+        "stray dots",
+        "gradients and inner shadows",
+        "text labels",
+        "perspective or 3d depth",
+        "extra decorative flourishes"
+      ]
+    },
+    "product": {
+      "label": "产品精修（电商 / 实物展示）",
+      "aliases": ["ecommerce", "packshot"],
+      "positive": [
+        "commercial product shot",
+        "true product color",
+        "immaculate flawless surface",
+        "even soft lighting with clean specular highlights",
+        "seamless clean backdrop",
+        "accurate proportions with a crisp clean branding area"
+      ],
+      "negative": [
+        "fingerprints",
+        "dust and lint",
+        "scratches",
+        "hazy film on the surface",
+        "cluttered reflections",
+        "duplicate or garbled logos",
+        "uneven messy shadows"
+      ]
+    }
+  },
+  "extras": {
+    "transparent": {
+      "label": "透明通道 / 抠图（--transparent 时自动叠加）",
+      "positive": [
+        "subject fully isolated on a transparent background",
+        "completely empty alpha around the subject",
+        "clean continuous cutout edge",
+        "crisp anti-aliased silhouette",
+        "whole subject inside the frame with even margin"
+      ],
+      "negative": [
+        "checkerboard pattern",
+        "white or grey backdrop",
+        "background scenery",
+        "ground shadow or drop shadow",
+        "matte fringe",
+        "color halo around edges",
+        "semi-transparent dirt",
+        "subject cropped at the frame edge"
+      ]
+    }
+  },
+  "repair": {
+    "strong": {
+      "label": "修复-强：画面已明显发脏 / 鳞片 / 噪点密集",
+      "positive": [
+        "aggressive cleanup repaint",
+        "remove all noise, speckles and dirty patches",
+        "rebuild smooth continuous surfaces",
+        "dissolve scale-like and snakeskin micro-pattern",
+        "stabilize unstable high-frequency texture",
+        "clean color transitions and smooth gradients",
+        "crisp refined edges",
+        "preserve the original composition, lighting and shadow structure"
+      ],
+      "negative": [
+        "changed lighting",
+        "relighting",
+        "changed composition",
+        "changed subject identity",
+        "over-smoothed plastic surface",
+        "washed-out flattened details"
+      ]
+    },
+    "medium": {
+      "label": "修复-中：局部脏、阴影发花、材质略涂抹",
+      "positive": [
+        "moderate cleanup repaint",
+        "reduce visible noise, speckles and color noise",
+        "even out blotchy shading",
+        "keep the original material texture recognizable",
+        "clean color transitions",
+        "stable refined surface detail",
+        "preserve the original composition, lighting and shadow structure"
+      ],
+      "negative": [
+        "over-smoothed plastic surface",
+        "lost material texture",
+        "changed lighting",
+        "changed composition"
+      ]
+    },
+    "light": {
+      "label": "修复-弱：整体可用，只想去掉细碎噪点",
+      "positive": [
+        "very light cleanup pass",
+        "remove only noise and dirty speckles",
+        "preserve all fine micro details",
+        "preserve original contrast and color relationships",
+        "preserve the original composition, lighting and shadow structure"
+      ],
+      "negative": [
+        "over-smoothing",
+        "lost micro detail",
+        "flattened texture",
+        "changed lighting",
+        "changed composition",
+        "restyled look"
+      ]
+    }
+  },
+  "avoid_in_user_prompt": [
+    "ultra detailed",
+    "hyper detailed",
+    "intricate details",
+    "insanely detailed",
+    "extremely detailed",
+    "8k",
+    "16k",
+    "masterpiece",
+    "best quality",
+    "trending on artstation",
+    "film grain",
+    "dust particles",
+    "floating bokeh particles",
+    "grunge texture",
+    "texture overlay",
+    "HDR",
+    "bloom",
+    "lens flare",
+    "sharpen",
+    "extreme contrast"
+  ]
+}

@@ -38,7 +38,7 @@ UI 的一切——方向、配色、字体、布局、装饰、动效——全�
 
 ### 类型 B · 网页（常规网站）
 - 常规文档流，**允许垂直滚动**。落地页、品牌页、内容站、作品集属于此类。
-- 可用 **GSAP + ScrollTrigger** 等做滚动驱动的叙事：区块随进入视口出场、视差、首屏景深、一镜到底等，至少设计一段滑动驱动的内容。
+- **至少设计一段滚动驱动的内容**：区块随滚动出场、分层视差、首屏景深、钉住一屏的一镜到底等。用纯 CSS + IntersectionObserver，还是上 GSAP / 平滑滚动，按第 7 步的判断线决定。
 - 讲究整页滚动节奏：首屏抓人，之后一段段有呼吸、有高潮，长页不塌。
 
 ### 类型 C · App（手机应用）
@@ -131,11 +131,145 @@ h1 { font-family: var(--font-display); font-weight: normal; }
 
 ### 第 7 步 · 动画与过渡
 
+#### 7.1 基线（任何页面、任何技术选择都必须有）
+
 - **至少三处基本动效**：①进场——内容淡入 + 轻微上移，多个元素错落 60~80ms 入场；②悬停反馈——可交互元素有即时、克制的状态变化；③状态/视图切换——切换时有平滑过渡而非硬跳。
 - **手感**：时长 150~400ms，缓动用 ease-out 类曲线（如 `cubic-bezier(.22,.61,.36,1)`）。快进慢出，收尾干净。
 - **数据可视化**可做一次性的 draw-in（线条描边、数字滚动、柱子生长）。
 - **克制**：不无限循环晃动，不是每个元素都要动，动效要服务理解与反馈而非炫技。
 - **无障碍**：始终为 `prefers-reduced-motion: reduce` 提供关闭动效的兜底。
+
+#### 7.2 先判断：纯 CSS 还是上 GSAP
+
+这个判断**由你做**，结论写进方向卡的"动效基调"那一行。
+
+**默认纯 CSS（+ 少量 IntersectionObserver）就够**，命中任一即不要引库：
+
+- 容器是**软件 / App / 组件**三类——它们本来就没有页面级滚动，滚动驱动无从谈起；
+- 页面短、叙事线性，只需要出场 + 悬停 + 切换；
+- 动效只是**反馈**，不是内容本身。
+
+**该上 GSAP**（容器是「网页」类型，且命中任一）：
+
+- **滚动驱动的叙事**：区块随滚动进度连续变化（scrub）、钉住一屏做一镜到底（pin）、横向滚动段、分层视差；
+- **阻尼 / 平滑滚动**的高级手感（见 7.4）；
+- **复杂编排**：一条时间线上多个元素按节拍错落，可倒放、可中断、可与滚动双向绑定；
+- **SVG 路径描边 / 形变 / 沿路径运动**；
+- **大标题逐词逐行入场**（SplitText）这类一次性的开场仪式。
+
+> 网页类型要求"至少一段滚动驱动的内容"，但那一段用 IntersectionObserver + CSS 过渡实现也完全合格。
+> 只有当"**连续跟随**滚动进度"确实比"进入视口触发一次"更能表达内容时，才值得上 GSAP——否则就是多一个请求换零视觉增益。
+
+#### 7.3 GSAP：引入与四个标准做法
+
+GSAP 自 **3.13 起全部插件免费**（含过去 Club 专属的 ScrollSmoother / SplitText / DrawSVG），公共 CDN 直取。**只引用到的那几个**：
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script>gsap.registerPlugin(ScrollTrigger);</script>
+```
+
+同路径下按需可取：`ScrollSmoother`（阻尼滚动，依赖 ScrollTrigger）、`SplitText`（拆字 / 词 / 行）、`DrawSVGPlugin`（描边）、`MotionPathPlugin`、`Flip`、`ScrollToPlugin`、`Observer`、`CustomEase`。版本号可按需升到当前最新。
+
+```js
+// ① 出场：进视口一次，不反复播
+gsap.utils.toArray(".reveal").forEach((el, i) => {
+  gsap.from(el, {
+    y: 24, autoAlpha: 0, duration: .6, ease: "power2.out", delay: (i % 3) * .07,
+    scrollTrigger: { trigger: el, start: "top 85%", once: true },
+  });
+});
+
+// ② scrub：跟随滚动进度连续变化，阻尼感来自 scrub 的秒数
+gsap.to(".hero-visual", {
+  scale: 1.12, ease: "none",
+  scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: .8 },
+});
+
+// ③ pin：钉住一屏，内部分段推进（一镜到底）
+const tl = gsap.timeline({
+  scrollTrigger: { trigger: ".chapter", start: "top top", end: "+=180%", pin: true, scrub: 1 },
+});
+tl.to(".step-1", { autoAlpha: 0 }).from(".step-2", { autoAlpha: 0 }, "<");
+
+// ④ 分层视差：同一段里给不同层不同位移量
+gsap.to(".layer-back", {
+  yPercent: -12, ease: "none",
+  scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 1 },
+});
+```
+
+分寸与坑：
+
+- `scrub: .6~1.2` 就是**阻尼**的来源（数值 = 追上滚动位置所用的秒数）；`scrub: true` 是硬跟随，显得生硬。
+- 出场一律 `once: true`；来回播放很廉价。
+- 只动 `transform` / `opacity`（`autoAlpha` 顺带管 `visibility`），别动 `width` / `height` / `box-shadow`。
+- pin 的段落必须自己占够滚动距离（`end: "+=N%"`），否则会吞掉后面的内容。
+- 字体 / 图片晚加载会让触发点漂移：加载完或布局变化后调 `ScrollTrigger.refresh()`。
+- 列表每项都挂一个触发器时改用 `ScrollTrigger.batch()`；几十个触发器正常，上百个该重新设计。
+
+#### 7.4 阻尼 / 平滑滚动（可选，谨慎）
+
+两种选择，**都只适用于「网页」类型**：
+
+- **ScrollSmoother**（GSAP 自带，与 ScrollTrigger 天然同步，还能用 `data-speed` / `data-lag` 直接做视差）。需要两层包裹：
+
+```html
+<div id="smooth-wrapper"><div id="smooth-content"> …整页内容… </div></div>
+```
+
+```js
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+ScrollSmoother.create({ smooth: 1, effects: true, normalizeScroll: true });
+```
+
+- **Lenis**（不打算引 GSAP 时的轻量选择，约 5KB，不需要包裹层）：
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+  const lenis = new Lenis({ duration: 1.1 });
+  (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })();
+</script>
+```
+
+> 已经用了 GSAP 就用 ScrollSmoother，**不要叠两套滚动劫持**。若确实要 Lenis + ScrollTrigger，必须把二者接起来（`lenis.on("scroll", ScrollTrigger.update)`，并由 `gsap.ticker` 驱动 `lenis.raf`），否则触发点全错。
+
+分寸与坑：
+
+- `smooth` / `duration` 控制在 **1 秒上下**。超过 1.5 秒就从"高级"变成"迟钝"，用户会以为页面坏了。
+- **触控端默认不要平滑**（ScrollSmoother 的 `smoothTouch` 默认关闭，保持它）。移动端系统滚动本身就是对的。
+- 平滑滚动会接管 `position: fixed` 的参照系与原生锚点跳转：固定元素放包裹层**外面**，锚点改用 `smoother.scrollTo(target, true)` / `lenis.scrollTo(target)`。
+- 祖先上的 `overflow: hidden` / `height: 100%` 会和包裹层打架。软件 / App / 组件三类页面本身就是 `overflow: hidden`，**一律不要用平滑滚动**。
+- 不做滚动劫持式的整屏翻页（fullpage 那种），除非 brief 明确要求——它剥夺了用户对滚动的控制。
+
+#### 7.5 上了 GSAP 就必须做的两件事
+
+**① reduced-motion 用 `gsap.matchMedia()` 写两套**：
+
+```js
+const mm = gsap.matchMedia();
+mm.add("(prefers-reduced-motion: no-preference)", () => {
+  // 所有滚动动效只写在这里；函数返回时 GSAP 自动清理
+});
+// reduce 分支什么都不做：内容保持可见、可读、不位移
+```
+
+关键：元素**初始态必须本来就可见**（用 `gsap.from` 制造位移入场），绝不能靠 JS 去"显示"它——否则关掉动效就只剩一片空白。平滑滚动同理，reduce 下不要 create。
+
+**② 首屏不等 JS**：首屏主角用 CSS 直接呈现到位，滚动动效只管首屏之下的内容。
+
+#### 7.6 硬禁（动效部分）
+
+- 入场慢于 600ms，或要等 1 秒才看得到文字。
+- 每个元素都飞入；同一屏超过两种位移方向。
+- 无限循环的漂浮 / 呼吸 / 晃动（极小的状态指示除外）。
+- 视差位移超过容器高度约 15%，或层间速度差大到一眼假。
+- 逐字母飞入用在正文，或同一页用超过一次。
+- 滚动劫持到看不出进度；"Scroll ↓" 之类滚动提示（已在硬禁清单）。
+- 动效盖过内容：用户在读的时候元素还在动。
 
 ## 去 AI 味（重点章节：怎样做出高级感、去掉廉价感）
 
@@ -235,13 +369,21 @@ h1 { font-family: var(--font-display); font-weight: normal; }
 - 全站只用这一套图标，统一字号 / 线宽 / 颜色；**绝不用 emoji 当功能图标**（见「去 AI 味」章）。
 - 需要内联 SVG（便于单独做描边动画）时，也可从同一 CDN 取单个 svg，保持同源同风格。
 
-### 生成资产（Image Forge — 按需生成透明图片）
+### 生成资产（Image Forge — 最次选项，按需生成透明图片）
 
-当页面需要的图片素材 **无法从已有素库获得**（例如页面独有的科幻 HUD 线条图标、风格化物件、需要透明背景的图形），使用项目自带的生图工具 `tools/image-forge/`，在线生成 PNG 并保存到对应页面的 `assets/` 目录。
+> **AI 生图是素材的最后手段，不是默认选项。** 取材优先级从高到低：
+>
+> 1. **在线热链图片**（Picsum / Unsplash / Pexels / placehold.co / pravatar / DiceBear，见上文章节）—— 能用素库解决的，绝不用 AI 生成。
+> 2. **手绘 SVG / Canvas**—— 简单的扁平化插画、几何图形、装饰线条、背景纹理、示意图、Logo 草稿等，**直接用内联 SVG 或 `<canvas>` 绘制**，零成本、零额度、可无损缩放、可程序化改色改形。任何「几个形状就能拼出来」的图都应走这条路。
+> 3. **AI 生图（Image Forge）**—— 仅当素材**既无在线替代、又超出手绘 SVG 能力范围**（例如复杂拟物图标、风格化立绘、写实渲染物件、需要透明背景的精细抠图）时使用。
+>
+> **额度红线**：单个页面用 AI 生图**不建议超过 5 张**。如果确实需要超过 5 张，**必须先向用户说明清单和理由，由用户决定是否继续生成**，不得自行批量生成。
 
-如果需要带有透明通道的、抠图后的图片，建议优先考虑该工具。比如抠图后的产品展示、立绘、彩色图标、拟物图标、插画等等。
+当页面需要的图片素材 **无法从已有素库获得、也无法用简单 SVG 绘制**（例如页面独有的科幻 HUD 线条图标、风格化物件、需要透明背景的复杂图形），使用项目自带的生图工具 `tools/image-forge/`，在线生成 PNG 并保存到对应页面的 `assets/` 目录。
 
-> ⚠️ 这是「在线引用优先、不下载」原则的一个**例外**：前提是图片素材**不存在可用的在线替代**（搜索/图标库均不符），且**生成产物会被当前页面复用**，而非一次性使用的风景照。
+判断「该不该用 AI 生图」的快速自检：这张图能不能用 10 个以内的 SVG 基本形状（圆 / 矩形 / 路径 / 渐变）拼出个七八成像？能 —— 就手绘 SVG。
+
+> ⚠️ 这是「在线引用优先、不下载」原则的一个**例外**：前提是图片素材**不存在可用的在线替代、也超出手绘 SVG 的能力范围**，且**生成产物会被当前页面复用**，而非一次性使用的风景照。
 
 #### 前提
 
@@ -255,16 +397,21 @@ h1 { font-family: var(--font-display); font-weight: normal; }
 在生成网页时，如需透明素材图标/装饰图，调用 Python 脚本（无需安装第三方依赖）：
 
 ```bash
-! python tools/image-forge/generate.py \
-  "a sci-fi HUD line icon, monochrome cyan glow, transparent background" \
+! python tools/image-forge/generate.py --style lineicon \
+  "a sci-fi HUD line icon, single cyan stroke, hexagonal frame" \
   ui/<page-name>/assets/icon-hud.png
 ```
 
-- **提示词**：要写出清晰、可复现的关键词（参考上一条「图片 / 占位图」候选的风格与参数控制原则）。
+- **提示词只写主体**：画什么、什么材质、什么光。**绝不要写** `ultra detailed` / `8k` / `masterpiece` / `highly detailed` 这类"细节许愿词"——它们正是噪点、碎片和鳞片感的来源。
+- **必须带 `--style`**：按素材品类选一个风格包（`lineicon` / `skeuomorphic` / `illustration` / `render3d` / `iso25d` / `anime` / `chibi` / `photoreal` / `product` / `cinematic` / `stylized` / `guofeng`）。`--list-styles` 可查全表。
+- **"干净"提示词是自动叠加的**：脚本每次生图都会从 `skills/image-purify/purify.json` 叠上通用底座词、所选风格包、以及透明抠图词（透明模式下），无需你手写任何去噪词。细节与词表见 `skills/image-purify/SKILL.md`。
 - **路径**：输出到页面目录下的 `assets/` 子目录，文件名用英文 `-` 分隔。
-- **--no-transparent**：仅当目标模型不支持透明生成时使用；大多数场景不用加。
+- **`--dry-run`**：先打印拼装好的完整提示词、不消耗额度，拿不准时先看一眼。
+- **`--no-transparent`**：仅当目标模型不支持透明生成、或确实要整幅不透明图时使用。
 
 生成后在页面里按普通图片引用即可（`<img src="assets/icon-hud.png" alt="…">`），享受确实匹配页面方向、透明可贴合的素材。
+
+**生成一次就用**：不要回读生成的图片去分析画质，也不要因为画质不满意反复重生成（读图耗 token、重生成耗额度）。保证质量靠的是**生成前**自动叠加的干净词，而不是事后挑错。`skills/image-purify/SKILL.md` 里的验收清单只在用户明确要求检查时才用。
 
 ## 原型交互：默认都接上，用最简 JS
 
@@ -283,6 +430,7 @@ h1 { font-family: var(--font-display); font-weight: normal; }
 ## 技术约定
 
 - 用 HTML / CSS / JS 实现；是否拆分文件自行决定（内容多时拆为 `index.html` + `styles.css` + `app.js` 更清晰）。
+- **第三方库只走 CDN、只用零构建的轻量库**：动效按第 7 步的判断可用 GSAP 全家桶（ScrollTrigger / ScrollSmoother / SplitText 等，3.13 起全部免费）或 Lenis，交互可用 Alpine.js。按需引、能不引就不引；**绝不引入 React / Vue / Tailwind / Next 这类需要构建的依赖**，也不下载到本地。
 - **颜色、字号、间距、圆角先定义成一组 CSS 变量，之后一律引用变量**，保证整页是"一套系统"。
 - 语义化标签；可访问性到位：可见的焦点态、必要的 `aria-*`、达标的对比度。
 - 做好响应式：至少桌面与窄屏两档，窄屏下重排而非横向滚动。
@@ -296,11 +444,12 @@ h1 { font-family: var(--font-display); font-weight: normal; }
 - **容器类型核对**：软件 / App / 组件类型确认页面本身没有网页滚动条、UI 收在悬浮窗口或居中控件内；组件还要确认多种状态都做齐；网页类型确认滚动节奏成立。
 - 在 **100% 与 200%** 缩放下看关键区域，文字不重叠、不被裁切。
 - 中文多行标题、窄屏换行逐一检查。
-- 三处基本动效在不在，`prefers-reduced-motion` 兜底在不在。
+- 三处基本动效在不在，`prefers-reduced-motion` 兜底在不在；用了 GSAP 则确认 `gsap.matchMedia()` 的 reduce 分支下内容**依然可见可读**（不是空白）。
+- 用了滚动驱动 / 平滑滚动：pin 的段落没吞掉后面内容、锚点跳转仍可用、触控端没被平滑接管、首屏不等 JS 就能看到主角、窄屏下这些动效仍成立或已降级。
 - **交互核对**：能交互的元素默认都接上了最简逻辑；复杂的要么轻提示"开发中"、要么无反应，没有伪造业务成功；且接交互没有拖累视觉。
 - 配色对比度达标，强调色没有泛滥。
 - 对照「去 AI 味」章的硬禁清单与机械式自检再过一遍。
-- 不建议运行node服务环境运行脚本，生成并检查完成后直接交付即可，让用户自行双击html文件在浏览器中查看，除非用户明确指示了需要运行、截图、测试等内容。
+- **默认不自行测试**：没有用户明确指示时，不启动本地服务、不运行测试框架、不截图验证；生成完成后只做代码层面的自检审核（对照上方清单逐条过），然后直接交付，让用户自行双击 HTML 文件在浏览器中查看。仅当用户明确要求运行、截图或测试时才执行相应操作。
 
 ## 最后，牢记
 

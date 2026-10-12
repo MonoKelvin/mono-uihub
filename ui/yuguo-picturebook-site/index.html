@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>余果 · 绘本插画</title>
+<meta name="description" content="独立绘本插画师余果的个人工作室：作品集、正在连载的《云上渡口》，以及合作邀约。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Schibsted+Grotesk:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<!-- ════════════════════════════════════
+     WINDOW · 软件窗口即画室的工作台
+════════════════════════════════════ -->
+<div class="window">
+<div class="app">
+
+  <!-- SIDEBAR ───────────────────────── -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="seal" aria-hidden="true">余</span>
+      <div class="brand-text">
+        <strong>余果</strong>
+        <span>独立绘本插画师</span>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="主导航">
+      <button type="button" class="nav-item" data-nav="home">
+        <i class="ti ti-home" aria-hidden="true"></i><span>首页</span>
+      </button>
+      <button type="button" class="nav-item" data-nav="works">
+        <i class="ti ti-books" aria-hidden="true"></i><span>作品集</span>
+      </button>
+      <button type="button" class="nav-item" data-nav="serial">
+        <i class="ti ti-trending-up" aria-hidden="true"></i><span>连载</span>
+      </button>
+      <button type="button" class="nav-item" data-nav="invite">
+        <i class="ti ti-mail" aria-hidden="true"></i><span>合作邀约</span>
+      </button>
+    </nav>
+
+    <div class="side-foot">
+      <button type="button" class="prog-card" data-nav="serial" aria-label="查看《云上渡口》连载进度">
+        <span class="prog-card-head">《云上渡口》连载 <span class="mono">7/24</span></span>
+        <span class="prog-cells" id="sideCells" aria-hidden="true"></span>
+        <span class="prog-note">第七章已更新，下一章 10 月 15 日</span>
+      </button>
+      <div class="side-status">
+        <span class="dot" aria-hidden="true"></span>
+        <span>接受新邀约</span>
+        <span class="side-city mono">泉州 · 2026</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN ──────────────────────────── -->
+  <main class="main" id="main">
+
+    <!-- VIEW · 首页 ────────────────── -->
+    <section class="view view-home is-open" id="viewHome" tabindex="-1" aria-label="首页">
+      <header class="view-head">
+        <div>
+          <h1 class="view-title">余果的画室</h1>
+          <p class="view-sub">独立绘本插画师，住在泉州。这间屋子里摊着我的作品、正在画的连载，和一份写清楚的合作说明。</p>
+        </div>
+        <p class="view-aside mono">最近更新 2026.09.15</p>
+      </header>
+
+      <!-- Hero：正在连载的绘本 -->
+      <div class="hero rv">
+        <div class="hero-text">
+          <p class="hero-tag"><span class="badge-dot" aria-hidden="true"></span>连载中 · 自主创作</p>
+          <h2 class="hero-title">云上渡口</h2>
+          <p class="hero-lede">一个女孩提着一盏灯，在云上面的渡口等一只不会迟到的白鹭。她每天都来，鹭每天都到，只是云散得越来越早。</p>
+          <ul class="hero-meta">
+            <li><span class="mono">24</span> 章计划</li>
+            <li><span class="mono">7</span> 章已完成</li>
+            <li>每月 <span class="mono">15</span> 日更新</li>
+          </ul>
+          <div class="hero-cta">
+            <button type="button" class="btn btn-seal" data-nav="serial">读最新章节</button>
+            <button type="button" class="btn btn-ghost" data-nav="works">看作品集</button>
+          </div>
+        </div>
+        <figure class="hero-fig">
+          <img src="assets/kv-ferry.png" alt="《云上渡口》的主人公：提着灯的女孩和一只白鹭" width="1170" height="1344">
+        </figure>
+      </div>
+
+      <!-- 数据条 -->
+      <div class="stats rv">
+        <div class="stat">
+          <span class="stat-num mono">3</span>
+          <span class="stat-lbl">已出版绘本</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num mono">7/24</span>
+          <span class="stat-lbl">连载章节进度</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num mono">2026</span>
+          <span class="stat-lbl">新档期排到</span>
+        </div>
+      </div>
+
+      <!-- 作品精选 -->
+      <div class="sec-head rv">
+        <h2 class="sec-title">作品精选</h2>
+        <button type="button" class="link-btn" data-nav="works">全部 5 件作品</button>
+      </div>
+      <div class="work-grid work-grid-3 rv" id="homeGrid"></div>
+
+      <!-- 邀约条 -->
+      <div class="invite-strip rv">
+        <div class="invite-strip-text">
+          <h2 class="invite-strip-title">2026 年秋的合作档期还剩两个位置</h2>
+          <p>绘本、单幅封面、杂志内页、线下工作坊都接。接什么、不接什么、什么价，邀约页都写清楚了。</p>
+        </div>
+        <button type="button" class="btn btn-seal" data-nav="invite">去看看怎么约</button>
+      </div>
+    </section>
+
+    <!-- VIEW · 作品集 ──────────────── -->
+    <section class="view view-works" id="viewWorks" tabindex="-1" aria-label="作品集">
+      <header class="view-head">
+        <div>
+          <h1 class="view-title">作品集</h1>
+          <p class="view-sub">已出版的绘本、杂志内页，和一本不肯卖的手工书。</p>
+        </div>
+        <p class="view-aside mono">共 4 件已发表</p>
+      </header>
+
+      <!-- 连载中的作品 -->
+      <button type="button" class="serial-card rv" data-nav="serial">
+        <span class="serial-card-fig">
+          <img src="assets/plate-pier.png" alt="《云上渡口》第七章内页：云海上立着一座木头渡口" width="1536" height="1024" loading="lazy">
+        </span>
+        <span class="serial-card-body">
+          <span class="hero-tag"><span class="badge-dot" aria-hidden="true"></span>连载中 · 自主创作</span>
+          <span class="serial-card-title">云上渡口</span>
+          <span class="serial-card-desc">一个女孩提着灯，在云上面的渡口等一只不会迟到的白鹭。计划 24 章，每月 15 日更新。</span>
+          <span class="serial-card-prog">
+            <span class="mono">7/24 章</span>
+            <span class="bar"><i style="width:29.2%"></i></span>
+          </span>
+          <span class="btn btn-ghost btn-sm">前往连载</span>
+        </span>
+      </button>
+
+      <div class="sec-head rv">
+        <h2 class="sec-title">已出版与发表</h2>
+        <div class="chips" id="workFilters" role="group" aria-label="按类型筛选">
+          <button type="button" class="chip is-on" data-filter="all">全部</button>
+          <button type="button" class="chip" data-filter="book">绘本</button>
+          <button type="button" class="chip" data-filter="mag">杂志</button>
+          <button type="button" class="chip" data-filter="zine">手工书</button>
+        </div>
+      </div>
+      <div class="work-grid work-grid-2 rv" id="worksGrid"></div>
+    </section>
+
+    <!-- VIEW · 作品详情 ────────────── -->
+    <section class="view view-detail" id="viewDetail" tabindex="-1" aria-label="作品详情">
+      <div class="detail-top rv">
+        <button type="button" class="btn btn-ghost btn-sm" data-nav="works">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>返回作品集
+        </button>
+      </div>
+
+      <article class="detail-stage rv">
+        <figure class="detail-fig">
+          <img id="dImg" src="" alt="" width="1536" height="1024">
+          <figcaption class="detail-cap mono" id="dCap"></figcaption>
+        </figure>
+        <div class="detail-info">
+          <p class="detail-kicker mono" id="dKicker"></p>
+          <h1 class="detail-title" id="dTitle"></h1>
+          <dl class="detail-meta" id="dMeta"></dl>
+          <p class="detail-desc" id="dDesc"></p>
+          <div class="detail-note" id="dNote"></div>
+          <div class="detail-tags" id="dTags"></div>
+          <button type="button" class="btn btn-ghost btn-sm" data-nav="invite">
+            <i class="ti ti-mail" aria-hidden="true"></i>约一次同类合作
+          </button>
+        </div>
+      </article>
+
+      <div class="rv">
+        <div class="sec-head">
+          <h2 class="sec-title">画面细节</h2>
+          <p class="sec-hint mono">同一幅内页的三个局部</p>
+        </div>
+        <div class="crops" id="dCrops"></div>
+      </div>
+
+      <div class="rv">
+        <div class="sec-head">
+          <h2 class="sec-title">其他作品</h2>
+        </div>
+        <div class="work-grid work-grid-2" id="dOthers"></div>
+      </div>
+    </section>
+
+    <!-- VIEW · 连载 ────────────────── -->
+    <section class="view view-serial" id="viewSerial" tabindex="-1" aria-label="云上渡口连载">
+      <header class="view-head">
+        <div>
+          <h1 class="view-title">云上渡口</h1>
+          <p class="view-sub">自主长篇绘本连载，计划 24 章，每月 15 日更新。</p>
+        </div>
+        <p class="view-aside mono">下一章 2026.10.15</p>
+      </header>
+
+      <!-- 章节进度 -->
+      <div class="panel rv">
+        <div class="chap-head">
+          <h2 class="sec-title">章节进度</h2>
+          <span class="mono accent">7/24 已完成</span>
+        </div>
+        <div class="bar bar-lg"><i style="width:29.2%"></i></div>
+        <div class="chap-grid" id="chapGrid" aria-label="24 章进度"></div>
+        <div class="chap-readout" id="chapReadout">
+          <p class="chap-readout-hint">点一个画完的章节，看它叫什么。</p>
+        </div>
+      </div>
+
+      <!-- 当前章节 -->
+      <div class="curr-chap rv">
+        <figure class="curr-fig">
+          <img src="assets/plate-pier.png" alt="第七章内页：云海上立着一座木头渡口，渡口的灯亮着" width="1536" height="1024" loading="lazy">
+        </figure>
+        <div class="curr-text">
+          <div class="curr-tag">
+            <span class="pill">第七章 · 当前</span>
+            <time class="mono" datetime="2026-09-15">2026.09.15</time>
+          </div>
+          <h2 class="curr-title">提灯的人</h2>
+          <p>云散得早的那个清早，渡口只剩一半。</p>
+          <p>女孩把灯放在木桩上，坐下来等。水面上没有船的影子，只有一层一层往下落的白。</p>
+          <p>白鹭来的时候她差点没认出来。它腿上沾着云，像刚从谁家的屋顶上走下来。</p>
+          <p class="curr-note mono">本章 20 页，这里放了开头三段。</p>
+        </div>
+      </div>
+
+      <!-- 创作者手记 -->
+      <div class="note-block rv">
+        <div class="note-head">
+          <i class="ti ti-pencil" aria-hidden="true"></i>
+          <span>画这一章的时候</span>
+        </div>
+        <p>第七章画了三十一天，比前面几章都久。难的不是渡口，是云。水粉画云最怕反复盖，盖两遍就脏了，所以每一块白都得一次画准。废掉的稿子有十一张，现在钉在墙上。</p>
+        <p>灯的颜色换过三次。一开始是暖黄，太像圣诞；后来调成偏绿的黄，像放旧了的铜；最后往里加了一点朱砂，远看才有温度。</p>
+        <p>下一章的草稿起了一半。白鹭要开口说话，这是整本书里我最怕画的一段。</p>
+      </div>
+    </section>
+
+    <!-- VIEW · 合作邀约 ────────────── -->
+    <section class="view view-invite" id="viewInvite" tabindex="-1" aria-label="合作邀约">
+      <header class="view-head">
+        <div>
+          <h1 class="view-title">合作邀约</h1>
+          <p class="view-sub">绘本、单幅封面、杂志内页、线下工作坊都接。不接的也写在这：模仿别家画风的、要短视频分镜的、两周内要交三十二页的。</p>
+        </div>
+        <p class="view-aside mono">一般三天内回信</p>
+      </header>
+
+      <div class="invite-stage">
+        <!-- 价目 -->
+        <div class="rates rv">
+          <h2 class="sec-title">价目与周期</h2>
+          <div class="rate-row">
+            <span class="rate-name">绘本内页与封面<em>32 页起</em></span>
+            <span class="rate-time mono">8–10 个月</span>
+            <span class="rate-price mono">¥4.8 万</span>
+          </div>
+          <div class="rate-row">
+            <span class="rate-name">单幅封面或海报<em>含两轮修改</em></span>
+            <span class="rate-time mono">3 周</span>
+            <span class="rate-price mono">¥6000</span>
+          </div>
+          <div class="rate-row">
+            <span class="rate-name">杂志与书籍内页<em>按幅计</em></span>
+            <span class="rate-time mono">2 周</span>
+            <span class="rate-price mono">¥1200 每幅</span>
+          </div>
+          <div class="rate-row">
+            <span class="rate-name">线下工作坊<em>6–10 岁，半天</em></span>
+            <span class="rate-time mono">提前 1 个月</span>
+            <span class="rate-price mono">¥3500</span>
+          </div>
+          <p class="rates-note">以上都是起价。页数、修改轮数和授权范围会在这个基础上浮动，写信来说清楚就行。</p>
+        </div>
+
+        <!-- 表单 -->
+        <form class="invite-form rv" id="inviteForm" novalidate>
+          <div class="form-row">
+            <p class="field">
+              <label for="fName">怎么称呼你</label>
+              <input id="fName" name="name" type="text" autocomplete="name" placeholder="陈编辑、王老师都行">
+              <span class="err" data-err="fName"></span>
+            </p>
+            <p class="field">
+              <label for="fMail">回信的邮箱</label>
+              <input id="fMail" name="email" type="email" autocomplete="email" placeholder="name@example.com">
+              <span class="err" data-err="fMail"></span>
+            </p>
+          </div>
+          <div class="form-row">
+            <p class="field">
+              <label for="fType">想做的东西</label>
+              <select id="fType" name="type">
+                <option value="book">绘本内页与封面</option>
+                <option value="cover">单幅封面或海报</option>
+                <option value="mag">杂志与书籍内页</option>
+                <option value="workshop">线下工作坊</option>
+                <option value="unsure">还没想好</option>
+              </select>
+            </p>
+            <p class="field">
+              <label for="fBudget">预算大概</label>
+              <select id="fBudget" name="budget">
+                <option value="a">1 万以内</option>
+                <option value="b">1–5 万</option>
+                <option value="c">5–10 万</option>
+                <option value="d">10 万以上</option>
+                <option value="e">再商量</option>
+              </select>
+            </p>
+          </div>
+          <p class="field">
+            <label for="fStory">想讲的故事</label>
+            <textarea id="fStory" name="story" rows="3" placeholder="讲给几岁的孩子、故事发生在哪里、希望什么时候拿到画稿。"></textarea>
+            <span class="err" data-err="fStory"></span>
+          </p>
+          <div class="form-foot">
+            <button class="btn btn-seal" type="submit">把信寄出</button>
+            <p class="form-note">也可以直接写 <a href="mailto:hi@yuguo.ink">hi@yuguo.ink</a>，一般三天内回。</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+  <!-- /MAIN ────────────────────────── -->
+
+</div>
+</div>
+<!-- /WINDOW ──────────────────────────── -->
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

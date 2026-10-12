@@ -11,7 +11,13 @@ mono-uihub/
 ├── ui/                        # UI 原型，一个页面一个文件夹
 │   └── ...                    # 页面持续增加
 ├── skills/                    # 背后的生成技能
-│   └── SKILL.md
+│   ├── mono-ui-prototype/     # 页面生成技能
+│   │   └── SKILL.md
+│   └── image-purify/          # 干净出图词表（去噪点 / 去鳞片感 / 去 AI 味）
+│       ├── SKILL.md
+│       └── purify.json        # 唯一词源，生图工具直接读取
+├── tools/                     # 给助手用的脚本
+│   └── image-forge/           # 按需生成透明 PNG（提示词自动叠加干净词）
 ├── LICENSE                    # MIT
 └── README.md / README.zh.md
 ```
@@ -24,6 +30,7 @@ mono-uihub/
 - **纯前端，零配置**：每个页面都是独立的 HTML / CSS / 原生 JS，无构建、无框架、无依赖。
 - **可交互，不是死壳**：能点的元素都用最简 JS 接上本地假数据，拿来即可演示。
 - **自带"去 AI 味"检查**：交付前按硬性清单自检，一个强调色、一套圆角、真实文案、刻意的留白。
+- **生成的图也要干净**：页面需要定制素材时，[`skills/image-purify`](skills/image-purify/SKILL.md) 的干净词会在生图前自动叠加，避免噪点、鳞片感、满屏碎片这类一眼 AI 的脏图。
 
 ## 使用方式
 

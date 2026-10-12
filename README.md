@@ -10,11 +10,14 @@ AI-powered UI prototype design hub. Generate design pages in one sentence, provi
 mono-uihub/
 ├── ui/                        # UI prototypes, one folder per page
 │   └── ...                    # pages grow over time
-├── skills/                    # Agent skill behind the generation
-│   └── mono-ui-prototype/
-│       └── SKILL.md
+├── skills/                    # Agent skills behind the generation
+│   ├── mono-ui-prototype/     # the page-generation skill
+│   │   └── SKILL.md
+│   └── image-purify/          # clean-image prompt packs (no noise, no scaly texture)
+│       ├── SKILL.md
+│       └── purify.json        # single source of truth, read by the tool
 ├── tools/                     # helper scripts for the agent
-│   └── image-forge/           # on-demand transparent PNG generation
+│   └── image-forge/           # on-demand transparent PNG generation (auto-purified prompts)
 ├── LICENSE                    # MIT
 └── README.md / README.zh.md
 ```
@@ -27,6 +30,7 @@ Describe a page in one sentence — say, "an online configurator for a mechanica
 - **Pure front-end, zero setup** — every page is self-contained HTML / CSS / vanilla JS. No build step, no framework, no dependencies to install.
 - **Interactive, not a dead mock** — clickable elements are wired with minimal JS and local mock data, so prototypes can be demoed as-is.
 - **Anti-slop by design** — a hard checklist of "AI look" tells is enforced before delivery: one accent color, one radius system, real copy, deliberate whitespace.
+- **Clean generated imagery** — when a page needs a custom asset, [`skills/image-purify`](skills/image-purify/SKILL.md) is layered onto the prompt automatically, so assets come back free of noise, fish-scale micro-texture and floating debris.
 
 ## How to use
 
