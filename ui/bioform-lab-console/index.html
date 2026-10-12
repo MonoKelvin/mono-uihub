@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UBR-07 未确认生物研究部 · 观测总览</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="window">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark mono">07</span>
+      <span class="brand-text">
+        <b class="brand-en">UBR-07</b>
+        <small class="brand-zh">未确认生物研究部</small>
+      </span>
+    </div>
+    <label class="search">
+      <i class="ti ti-search"></i>
+      <input id="searchInput" placeholder="搜索样本编号、个体或日志关键词" autocomplete="off">
+      <kbd class="mono">Enter</kbd>
+    </label>
+    <div class="top-right">
+      <span class="shift-chip mono" title="当前值守班次"><i class="ti ti-clock-hour-8"></i>丙班 22:00-06:00</span>
+      <button class="icon-btn" id="noticeBtn" aria-label="通知，2 条待处理">
+        <i class="ti ti-bell"></i><span class="badge">2</span>
+      </button>
+      <div class="me">
+        <img src="https://i.pravatar.cc/64?u=shenzhiwei" alt="沈知微的头像" width="30" height="30">
+        <span class="me-name">沈知微<small>研究员 · 值守中</small></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <nav class="sidenav" aria-label="功能导航">
+      <p class="nav-group">研究</p>
+      <a class="nav-item on" href="#"><i class="ti ti-eye"></i>观测总览</a>
+      <a class="nav-item" href="#"><i class="ti ti-dna-2"></i>生物档案</a>
+      <a class="nav-item" href="#"><i class="ti ti-flask-2"></i>检测流程</a>
+      <a class="nav-item" href="#"><i class="ti ti-test-pipe"></i>样本库</a>
+      <p class="nav-group">环境</p>
+      <a class="nav-item" href="#"><i class="ti ti-snowflake"></i>冷冻仓储</a>
+      <a class="nav-item" href="#"><i class="ti ti-shield-lock"></i>收容管理</a>
+      <p class="nav-group">记录</p>
+      <a class="nav-item" href="#"><i class="ti ti-list-details"></i>运行日志</a>
+      <a class="nav-item" href="#"><i class="ti ti-history"></i>审计追踪</a>
+      <div class="nav-foot mono">
+        <span class="dot ok"></span>在线设备 12 / 12
+      </div>
+    </nav>
+
+    <main class="center">
+
+      <section class="panel observe" aria-label="未知生物观察窗">
+        <div class="observe-head">
+          <div class="subject">
+            <span class="subject-code mono">UBX-1147</span>
+            <div class="subject-title">
+              <h1 class="subject-name">洄</h1>
+              <span class="binomial">Halcyon limnis <small>sp. nov.</small></span>
+            </div>
+            <span class="chip chip-warn"><span class="dot warn"></span>二级收容 · 观察中</span>
+          </div>
+          <div class="feed-toggle" role="group" aria-label="数据源切换">
+            <button class="ft on" data-feed="live" aria-pressed="true">实时</button>
+            <button class="ft" data-feed="replay" aria-pressed="false">回放</button>
+          </div>
+        </div>
+
+        <div class="stage" id="stage">
+          <div class="replay-tag mono" id="replayTag" hidden><i class="ti ti-player-pause"></i>回放 2026.10.11 23:12</div>
+          <figure class="plate" aria-label="UBX-1147 标本影像图版">
+            <span class="corner c-tl" aria-hidden="true"></span>
+            <span class="corner c-tr" aria-hidden="true"></span>
+            <span class="corner c-bl" aria-hidden="true"></span>
+            <span class="corner c-br" aria-hidden="true"></span>
+            <span class="crosshair ch-a" aria-hidden="true"><i></i><em class="mono">A1</em></span>
+            <span class="crosshair ch-b" aria-hidden="true"><i></i><em class="mono">A2</em></span>
+            <img class="organism-img" src="assets/creature.png"
+                 alt="UBX-1147「洄」影像，半透明的未知生物"
+                 width="480" height="480">
+            <figcaption class="plate-label mono">图版 1 · 活体记录</figcaption>
+            <div class="scale-bar mono" aria-hidden="true"><i></i>10 cm</div>
+            <div class="live-stamp mono" id="liveStamp"><span class="dot ok pulse"></span><span id="liveClock">23:44:12</span></div>
+          </figure>
+        </div>
+
+        <div class="vitals mono" id="vitals">
+          <div class="vital"><small>体长</small><b>41.3 <i>cm</i></b></div>
+          <div class="vital"><small>体重</small><b>2.86 <i>kg</i></b></div>
+          <div class="vital"><small>心率</small><b id="hrVal">37 <i>次/分</i></b><span class="dot warn" title="低于同类基准"></span></div>
+          <div class="vital"><small>体表电位</small><b id="epVal">12.4 <i>mV</i></b></div>
+          <div class="vital"><small>代谢率</small><b>2.3<i>×</i></b></div>
+          <div class="vital"><small>稳定指数</small><b id="siVal">87.2 <i>%</i></b></div>
+        </div>
+      </section>
+
+      <div class="center-bottom">
+
+        <section class="panel flow" aria-label="检测流程">
+          <div class="panel-head">
+            <h2>检测流程</h2>
+            <button class="link-btn" id="flowAllBtn">全部任务</button>
+          </div>
+          <ol class="flow-steps" id="flowSteps"></ol>
+        </section>
+
+        <section class="panel cryo" aria-label="冷冻存放位置">
+          <div class="panel-head">
+            <h2>冷冻存放</h2>
+            <span class="cryo-temp mono"><span class="dot ok"></span>CRYO-B 舱 <b>-80.2°C</b></span>
+          </div>
+          <div class="cryo-grid" id="cryoGrid" aria-label="CRYO-B 舱位示意，5 列 4 行"></div>
+          <p class="cryo-legend"><span><i class="slot used"></i>已存样本</span><span><i class="slot"></i>空闲</span><span class="cryo-note mono">湿度 31% · 液氮余量 64%</span></p>
+        </section>
+
+      </div>
+    </main>
+
+    <aside class="rightbar">
+
+      <section class="panel know" aria-label="特征数据库">
+        <div class="panel-head">
+          <h2>特征数据库</h2>
+          <div class="seg" role="tablist" aria-label="已知与未知切换">
+            <button class="seg-btn on" role="tab" aria-selected="true" data-tab="known">已确认 6</button>
+            <button class="seg-btn" role="tab" aria-selected="false" data-tab="unknown">待验证 4</button>
+          </div>
+        </div>
+        <ul class="know-list" id="knowList"></ul>
+      </section>
+
+      <section class="panel samples" aria-label="样本库">
+        <div class="panel-head">
+          <h2>样本库</h2>
+          <span class="panel-meta mono">本日新增 3</span>
+        </div>
+        <ul class="sample-list" id="sampleList"></ul>
+      </section>
+
+      <section class="panel records" aria-label="日志与审计">
+        <div class="panel-head">
+          <h2>记录</h2>
+          <div class="seg" role="tablist" aria-label="日志与审计切换">
+            <button class="seg-btn on" role="tab" aria-selected="true" data-tab="log">运行日志</button>
+            <button class="seg-btn" role="tab" aria-selected="false" data-tab="audit">审计追踪</button>
+          </div>
+        </div>
+        <ul class="record-list" id="recordList"></ul>
+      </section>
+
+    </aside>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-circle-check"></i><span id="toastMsg"></span></div>
+<script src="app.js"></script>
+</body>
+</html>

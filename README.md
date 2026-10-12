@@ -11,7 +11,10 @@ mono-uihub/
 ├── ui/                        # UI prototypes, one folder per page
 │   └── ...                    # pages grow over time
 ├── skills/                    # Agent skill behind the generation
-│   └── SKILL.md
+│   └── mono-ui-prototype/
+│       └── SKILL.md
+├── tools/                     # helper scripts for the agent
+│   └── image-forge/           # on-demand transparent PNG generation
 ├── LICENSE                    # MIT
 └── README.md / README.zh.md
 ```

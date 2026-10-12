@@ -11,3 +11,8 @@ Desktop.ini
 # OS temp
 *.tmp
 *.log
+
+# Image Forge — never commit real credentials
+.env
+tools/image-forge/.env
+__pycache__/
