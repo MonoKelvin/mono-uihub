@@ -1,0 +1,13 @@
+# Local OS / editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS temp
+*.tmp
+*.log

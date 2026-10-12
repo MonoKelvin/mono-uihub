@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>衡 HENG · 定制工坊</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="desk">
+  <div class="window">
+    <header class="top">
+      <div class="brand">
+        <span class="brand-en">HENG</span>
+        <span class="brand-zh">衡 · 定制工坊</span>
+      </div>
+      <label class="cfg-name">
+        <span class="cfg-label">配置单</span>
+        <input id="cfgName" placeholder="给这台键盘起个名字" maxlength="14" autocomplete="off">
+      </label>
+      <div class="top-actions">
+        <button class="icon-btn" id="resetBtn" title="恢复出厂配置" aria-label="恢复出厂配置"><i class="ti ti-arrow-back-up"></i></button>
+        <button class="icon-btn" id="cartBtn" title="购物车" aria-label="购物车"><i class="ti ti-shopping-bag"></i><span class="cart-n" id="cartN" hidden>0</span></button>
+      </div>
+    </header>
+
+    <div class="main">
+      <section class="stage" id="stage" aria-label="键盘预览">
+        <div class="stage-head">
+          <div class="model">
+            <span class="model-code" id="modelCode">HS-65</span>
+            <span class="model-sub mono" id="modelSub">65% 配列 · 68 键</span>
+          </div>
+          <div class="view-toggle" role="group" aria-label="视图切换">
+            <button class="vt on" data-view="std" aria-pressed="true">正视</button>
+            <button class="vt" data-view="exp" aria-pressed="false">拔键</button>
+          </div>
+        </div>
+        <div class="board-wrap">
+          <div class="dim dim-y" aria-hidden="true"><i class="dl"></i><b class="dv mono" id="dimYv">102</b><i class="dl"></i></div>
+          <div class="board-host" id="boardHost">
+            <div class="board" id="board"></div>
+          </div>
+          <div class="dim dim-x" aria-hidden="true"><i class="dl"></i><b class="dv mono" id="dimXv">315</b><i class="dl"></i></div>
+        </div>
+        <div class="stage-foot">
+          <div class="spec-hint mono">GASKET 结构 / 单键开槽定位板 / 五层吸音</div>
+          <table class="tblock" aria-hidden="true">
+            <tbody>
+              <tr><td><span>图号</span><b class="mono" id="tbNo">HS-65-GN</b></td><td><span>比例</span><b class="mono">1:1</b></td></tr>
+              <tr><td><span>材质</span><b class="mono">6063-T5</b></td><td><span>数量</span><b class="mono">1 件</b></td></tr>
+              <tr><td><span>制图</span><b class="mono">HENG LAB</b></td><td><span>日期</span><b class="mono" id="tbDate"></b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <aside class="panel" id="panel" aria-label="配置选项"></aside>
+    </div>
+
+    <footer class="bottom">
+      <div class="sum">
+        <div class="sum-code mono" id="sumCode">HS-65 / GN / A28 / PW</div>
+        <div class="sum-text" id="sumText">石墨灰外壳，A28 红轴，纸白键帽</div>
+      </div>
+      <div class="checkout">
+        <div class="price">
+          <span class="price-label">预估小计</span>
+          <span class="price-num mono" id="price">¥899</span>
+        </div>
+        <button class="btn ghost" id="saveBtn">保存配置单</button>
+        <button class="btn primary" id="addBtn">加入购物车</button>
+      </div>
+    </footer>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check"></i><span id="toastMsg"></span></div>
+<script src="app.js"></script>
+</body>
+</html>

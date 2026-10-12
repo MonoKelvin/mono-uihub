@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e6eceb">
+  <title>苔径｜团队即时通讯</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="presentation">
+      <div class="presentation-name"><strong>苔径</strong><span>团队的对话，在这里继续。</span></div>
+      <nav class="scenes" aria-label="查看三个设计状态">
+        <button class="scene active" data-scene="daily" aria-pressed="true"><i class="ti ti-messages" aria-hidden="true"></i>日常对话</button>
+        <button class="scene" data-scene="thread" aria-pressed="false"><i class="ti ti-message-circle" aria-hidden="true"></i>话题回复</button>
+        <button class="scene" data-scene="draft" aria-pressed="false"><i class="ti ti-at" aria-hidden="true"></i>提及与附件</button>
+      </nav>
+    </header>
+
+    <div class="window" id="window">
+      <header class="window-bar">
+        <div class="window-title"><span class="brand-symbol" aria-hidden="true"><i class="ti ti-brand-abstract"></i></span><strong>苔径</strong><span class="window-divider"></span><span>苔径工作室</span></div>
+        <button class="global-search" id="searchOpen"><i class="ti ti-search" aria-hidden="true"></i><span>搜索消息、同事和文件</span><kbd>Ctrl K</kbd></button>
+        <div class="window-status"><span class="connection-dot"></span>所有消息已同步<button class="icon-btn" id="helpButton" aria-label="查看原型说明" title="查看原型说明"><i class="ti ti-help-circle" aria-hidden="true"></i></button></div>
+      </header>
+
+      <aside class="app-rail" aria-label="应用导航">
+        <button class="rail-workspace" id="workspaceButton" title="苔径工作室" aria-label="查看工作区"><i class="ti ti-brand-abstract" aria-hidden="true"></i></button>
+        <div class="rail-items">
+          <button class="rail-button active" id="chatHome" title="消息" aria-label="消息"><i class="ti ti-messages" aria-hidden="true"></i><span class="rail-dot"></span><small>消息</small></button>
+          <button class="rail-button" id="activityButton" title="提及我的" aria-label="提及我的"><i class="ti ti-at" aria-hidden="true"></i><small>提及</small></button>
+          <button class="rail-button" id="savedButton" title="收藏消息" aria-label="收藏消息"><i class="ti ti-bookmark" aria-hidden="true"></i><small>收藏</small></button>
+          <button class="rail-button" id="directoryButton" title="通讯录" aria-label="通讯录"><i class="ti ti-address-book" aria-hidden="true"></i><small>同事</small></button>
+        </div>
+        <div class="rail-bottom"><button class="rail-button" id="settingsButton" title="设置" aria-label="设置"><i class="ti ti-settings" aria-hidden="true"></i></button><button class="self-avatar" id="profileButton" aria-label="顾帆，查看在线状态"><img src="https://i.pravatar.cc/80?img=12" alt="顾帆"><span></span></button></div>
+      </aside>
+
+      <aside class="sidebar" id="sidebar">
+        <header class="workspace-heading"><div><h2>苔径工作室</h2><p><span class="online-dot"></span><span>23 人在线</span><span class="member-total">86 位成员</span></p></div><button class="icon-btn" id="newConversation" title="新建对话" aria-label="新建对话"><i class="ti ti-edit" aria-hidden="true"></i></button></header>
+        <button class="catch-up" id="unreadButton"><i class="ti ti-inbox" aria-hidden="true"></i><span>未读消息</span><span class="count">12</span></button>
+        <nav class="side-nav" aria-label="对话列表">
+          <section class="nav-group"><header><button class="group-toggle" aria-expanded="true"><i class="ti ti-chevron-down" aria-hidden="true"></i>频道</button><button class="icon-btn small" data-create="频道" aria-label="新建频道" title="新建频道"><i class="ti ti-plus" aria-hidden="true"></i></button></header><div class="nav-list" id="channels"></div></section>
+          <section class="nav-group"><header><button class="group-toggle" aria-expanded="true"><i class="ti ti-chevron-down" aria-hidden="true"></i>群组</button><button class="icon-btn small" data-create="群组" aria-label="新建群组" title="新建群组"><i class="ti ti-plus" aria-hidden="true"></i></button></header><div class="nav-list" id="groups"></div></section>
+          <section class="nav-group"><header><button class="group-toggle" aria-expanded="true"><i class="ti ti-chevron-down" aria-hidden="true"></i>私聊</button><button class="icon-btn small" id="addDirect" aria-label="发起私聊" title="发起私聊"><i class="ti ti-plus" aria-hidden="true"></i></button></header><div class="nav-list" id="directs"></div></section>
+        </nav>
+        <footer class="sidebar-footer"><span class="quiet-icon"><i class="ti ti-moon" aria-hidden="true"></i></span><div><strong>留一点专注的时间</strong><span id="quietLabel">通知正常接收</span></div><button class="quiet-switch" id="quietSwitch" role="switch" aria-checked="false" aria-label="切换免打扰"></button></footer>
+      </aside>
+
+      <main class="chat">
+        <header class="chat-header"><button class="icon-btn mobile-menu" id="sidebarToggle" aria-label="打开对话列表"><i class="ti ti-menu-2" aria-hidden="true"></i></button><div class="chat-heading"><div><span class="channel-symbol" id="channelSymbol">#</span><h1 id="channelName">产品设计</h1><button class="title-star icon-btn small" id="favoriteChannel" aria-label="收藏频道" title="收藏频道"><i class="ti ti-star" aria-hidden="true"></i></button></div><p id="channelDescription">把想法聊清楚，再一起做好。</p></div><div class="chat-actions"><button class="members-button" id="membersButton" aria-label="查看频道成员"><span class="facepile"><img src="https://i.pravatar.cc/60?img=47" alt=""><img src="https://i.pravatar.cc/60?img=13" alt=""><img src="https://i.pravatar.cc/60?img=44" alt=""></span><span id="channelMemberCount">18</span></button><span class="action-divider"></span><button class="icon-btn" id="channelSearch" title="搜索当前对话" aria-label="搜索当前对话"><i class="ti ti-search" aria-hidden="true"></i></button><button class="icon-btn" id="channelInfo" title="频道信息" aria-label="频道信息"><i class="ti ti-dots" aria-hidden="true"></i></button></div></header>
+        <div class="conversation-scroll" id="messages" aria-label="频道消息"><div class="day-divider"><span>今天，10 月 12 日</span></div><div id="messageList"></div></div>
+        <button class="new-message-pill" id="newMessagePill" hidden><i class="ti ti-arrow-down" aria-hidden="true"></i><span>有新消息</span></button>
+        <div class="composer-region" id="composerRegion">
+          <div class="typing-line" id="typing" role="status"><span class="typing-people"><img src="https://i.pravatar.cc/40?img=47" alt=""><img src="https://i.pravatar.cc/40?img=13" alt=""><img src="https://i.pravatar.cc/40?img=32" alt=""></span><span id="typingText"><strong>林晚乔、陈默</strong> 和 <strong>周砚</strong> 正在输入</span><span class="typing-dots" aria-hidden="true"><b></b><b></b><b></b></span></div>
+          <div class="composer" id="composer">
+            <div class="drop-overlay" id="dropOverlay"><i class="ti ti-files" aria-hidden="true"></i><strong>松开，添加到这条消息</strong><span>文件会先留在草稿中</span></div>
+            <div class="draft-attachments" id="attachments"></div>
+            <div class="mention-pop" id="mentionPop" role="listbox" aria-label="选择要提及的同事" hidden></div>
+            <textarea id="editor" rows="1" aria-label="消息输入框" placeholder="发消息到 #产品设计" maxlength="10000"></textarea>
+            <footer class="composer-toolbar"><div class="format-tools"><button class="icon-btn" id="attachButton" title="添加附件" aria-label="添加附件"><i class="ti ti-plus" aria-hidden="true"></i></button><span class="tool-divider"></span><button class="icon-btn" id="emojiButton" title="添加表情" aria-label="添加表情"><i class="ti ti-mood-smile" aria-hidden="true"></i></button><button class="icon-btn" id="mentionButton" title="提及同事" aria-label="提及同事"><i class="ti ti-at" aria-hidden="true"></i></button><button class="icon-btn" id="codeButton" title="添加代码片段" aria-label="添加代码片段"><i class="ti ti-code" aria-hidden="true"></i></button></div><div class="send-tools"><span>Enter 发送，Shift + Enter 换行</span><button class="send-button" id="sendBtn" aria-label="发送消息" disabled>发送<i class="ti ti-send-2" aria-hidden="true"></i></button></div></footer>
+          </div>
+        </div>
+      </main>
+
+      <aside class="thread" id="thread" aria-label="话题回复" hidden>
+        <header class="thread-header"><h2>话题回复<span id="threadHeaderCount">4</span></h2><button class="icon-btn" id="threadClose" title="关闭话题" aria-label="关闭话题"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+        <div class="thread-scroll" id="threadScroll"><div id="threadOrigin"></div><div class="reply-divider"><span id="threadCount">4 条回复</span></div><div id="threadReplies"></div></div>
+        <footer class="thread-bottom"><div class="thread-typing" id="threadTyping"><span class="typing-dots" aria-hidden="true"><b></b><b></b><b></b></span><span>林晚乔正在输入</span></div><div class="thread-input"><textarea id="threadEditor" rows="2" aria-label="回复话题" placeholder="接着这个话题聊…" maxlength="10000"></textarea><div><span>仅发送到此话题</span><button class="send-button compact" id="threadSend" aria-label="发送话题回复" disabled><i class="ti ti-send-2" aria-hidden="true"></i></button></div></div><label class="also-channel"><input id="alsoChannel" type="checkbox">同时发送到频道</label></footer>
+      </aside>
+    </div>
+    <footer class="presentation-footer"><span>本地交互原型。消息与同事动态均为演示数据。</span><span>拖入文件试试，也可以直接开始聊天。</span></footer>
+  </div>
+
+  <input type="file" id="fileInput" multiple hidden>
+  <div class="popover emoji-pop" id="emojiPop" aria-label="选择表情" hidden></div>
+  <dialog id="dialog"><header class="dialog-header"><h2 id="dialogTitle"></h2><button class="icon-btn" id="dialogClose" aria-label="关闭弹窗"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="dialog-body" id="dialogBody"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
