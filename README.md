@@ -1,6 +1,6 @@
 # mono-uihub
 
-A growing hub of handcrafted, high-fidelity UI prototypes. Each page is a self-contained front-end prototype — pure HTML / CSS / vanilla JS, no build step, no framework — built for exploring visual direction, interaction details, and interface polish.
+AI-powered UI prototype design hub. Generate design pages in one sentence, providing endless inspiration for designers and developers.
 
 [中文说明](README.zh.md)
 
@@ -9,36 +9,32 @@ A growing hub of handcrafted, high-fidelity UI prototypes. Each page is a self-c
 ```
 mono-uihub/
 ├── ui/                        # UI prototypes, one folder per page
-│   ├── keyboard-configurator/ # Mechanical keyboard online customizer (case / switch / keycap)
-│   └── im-desktop-chat/       # Desktop IM chat window
-├── skills/                    # Agent skill used to generate these pages
+│   └── ...                    # pages grow over time
+├── skills/                    # Agent skill behind the generation
 │   └── SKILL.md
-└── LICENSE                    # MIT
+├── LICENSE                    # MIT
+└── README.md / README.zh.md
 ```
 
-## Pages
+## How it works
 
-| Page | Path | Description |
-| --- | --- | --- |
-| Keyboard Configurator | `ui/keyboard-configurator/index.html` | Online configurator for a fictional keyboard brand: pick the case, switch and keycaps, preview the board live, with spec bars and price summary. Presented as a desktop "engineering drawing" window. |
-| IM Desktop Chat | `ui/im-desktop-chat/index.html` | A desktop instant-messaging chat interface prototype. |
+Describe a page in one sentence — say, "an online configurator for a mechanical keyboard" or "a desktop chat window for an IM app". The skill in [`skills/SKILL.md`](skills/SKILL.md) turns that brief into a complete, high-fidelity prototype:
+
+- **Derives a fresh visual direction every time** — color, typography, layout and motion are reasoned from the page's content and audience, never copied from a fixed template or the previous page.
+- **Pure front-end, zero setup** — every page is self-contained HTML / CSS / vanilla JS. No build step, no framework, no dependencies to install.
+- **Interactive, not a dead mock** — clickable elements are wired with minimal JS and local mock data, so prototypes can be demoed as-is.
+- **Anti-slop by design** — a hard checklist of "AI look" tells is enforced before delivery: one accent color, one radius system, real copy, deliberate whitespace.
 
 ## How to use
 
-No installation, no build. Just open any `index.html` in your browser.
+Browse the `ui/` folder and open any `index.html` in your browser. That's it.
 
 ```bash
 # optional: serve locally
 npx serve .
-# or simply double-click
-ui/keyboard-configurator/index.html
 ```
 
-All data is mocked locally. Interactions (selection, cart, toasts, view switching) are wired with minimal vanilla JS for demo purposes — no real backend.
-
-## The skill behind the pages
-
-[`skills/SKILL.md`](skills/SKILL.md) documents the methodology used to generate every page in this hub: deriving a fresh visual direction from the page's content each time (color, type, layout, motion), avoiding templated "AI look", and shipping interactive high-fidelity prototypes.
+To generate a new page, hand the skill to your coding agent with a one-sentence brief.
 
 ## License
 
