@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F7F9FA">
+<title>夜录 · 梦境记录与解析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="stage">
+  <section class="window" id="window" aria-label="夜录梦境工作台">
+    <header class="topbar">
+      <div class="brand">
+        <h1 class="brand-mark">夜录</h1>
+        <span class="brand-sub">把梦留在醒来之后</span>
+      </div>
+      <div class="datenav">
+        <div class="datenav-label">
+          <span class="datenav-day">2026 / 10 / 13</span>
+          <span class="datenav-meta">梦境档案演示</span>
+        </div>
+      </div>
+      <div class="topbar-tools">
+        <button class="ghost-btn" type="button" id="dozeOpen" aria-label="进入半梦半醒模式">
+          <i class="ti ti-moon" aria-hidden="true"></i><span>半梦半醒模式</span>
+        </button>
+        <button class="icon-btn" type="button" id="searchToggle" aria-label="搜索笔记" aria-expanded="false" aria-controls="searchRow">
+          <i class="ti ti-search" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" type="button" id="exportNotes" aria-label="导出文字笔记" title="导出文字笔记">
+          <i class="ti ti-download" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="workspace" id="workspace">
+      <div class="body" id="body">
+        <section class="col col-log" style="--d:0ms">
+          <article class="panel panel-capture">
+            <div class="panel-head">
+              <h2 class="panel-title">还记得什么？</h2>
+              <time class="stamp" id="clock"></time>
+            </div>
+            <p class="capture-intro">一个画面，一句话，都可以。</p>
+            <div class="capture">
+              <button class="rec" type="button" id="recBtn" aria-label="开始录音" aria-pressed="false">
+                <span class="rec-ring" aria-hidden="true"></span>
+                <span class="rec-core">
+                  <i class="ti ti-microphone" aria-hidden="true"></i>
+                  <span class="rec-label">点击录音</span>
+                </span>
+              </button>
+              <div class="rec-state">
+                <div class="wave" id="wave" aria-hidden="true"></div>
+                <p class="rec-hint" id="recHint" role="status">再点一次结束，声音只留在此页</p>
+              </div>
+            </div>
+            <form class="jot" id="jotForm">
+              <input class="jot-input" id="jotInput" type="text" autocomplete="off" maxlength="4000"
+                     placeholder="或写下还没消失的梦…" aria-label="输入梦境碎片">
+              <button class="solid-btn" type="submit">记下</button>
+            </form>
+            <p class="local-note" id="storageNote">文字保存在本机；标签为本地关键词建议。</p>
+            <div class="frag-head">
+              <h3 class="frag-title">片段笔记</h3>
+              <span class="stamp stamp-dim" id="fragCount">5 条</span>
+            </div>
+            <div class="search-row" id="searchRow" hidden>
+              <input class="jot-input" id="searchInput" type="search" placeholder="搜索文字、人物、场景" aria-label="搜索笔记内容">
+            </div>
+            <ul class="frags" id="frags"></ul>
+          </article>
+          <p class="privacy-note"><i class="ti ti-lock" aria-hidden="true"></i>只在这台设备，留住你的梦。</p>
+        </section>
+
+        <section class="col col-map" style="--d:70ms">
+          <article class="panel panel-map">
+            <div class="panel-head">
+              <div class="map-heading">
+                <h2 class="panel-title">梦境地图</h2>
+                <p class="panel-note"><span class="numeric">21</span> 个梦境元素，在过去 <span class="numeric">90</span> 天里相遇。</p>
+              </div>
+              <button class="icon-btn" id="openData" type="button" title="查看图表数据" aria-label="查看图表数据表">
+                <i class="ti ti-table" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="map-toolbar">
+              <div class="chips" role="group" aria-label="筛选地图元素类型">
+                <button class="chip is-on" type="button" data-type="person" aria-pressed="true"><i class="dot dot-person" aria-hidden="true"></i>人物</button>
+                <button class="chip is-on" type="button" data-type="place" aria-pressed="true"><i class="dot dot-place" aria-hidden="true"></i>地点</button>
+                <button class="chip is-on" type="button" data-type="mood" aria-pressed="true"><i class="dot dot-mood" aria-hidden="true"></i>情绪</button>
+              </div>
+              <button class="text-btn" id="resetGraph" type="button">重置视图</button>
+            </div>
+            <div class="canvas-wrap" id="canvasWrap">
+              <canvas id="graph" tabindex="0" role="group" aria-label="梦境元素共现图。方向键选择元素，回车查看详情，Escape 取消。完整数据可通过查看图表数据表按钮获取。"></canvas>
+              <div class="graph-tooltip" id="graphTooltip" hidden></div>
+              <p class="canvas-tip">拖动探索，点击查看关联</p>
+            </div>
+            <footer class="inspector" id="inspector" aria-live="polite">
+              <div class="inspector-empty" id="inspectorEmpty">
+                <p class="map-observation">一些梦散去了，一些仍在彼此靠近。</p>
+                <span class="legend-hint">节点面积表示出现次数，连线粗细表示共现次数。</span>
+              </div>
+              <div class="inspector-card" id="inspectorCard" hidden>
+                <div class="ins-main"><span class="ins-kind" id="insKind"></span><h3 class="ins-name" id="insName"></h3><span class="ins-count" id="insCount"></span></div>
+                <div class="ins-links"><span class="ins-links-label">常一同出现</span><ul id="insLinks"></ul></div>
+                <button class="icon-btn icon-btn-sm" type="button" id="insClose" aria-label="取消选中"><i class="ti ti-x" aria-hidden="true"></i></button>
+              </div>
+            </footer>
+          </article>
+        </section>
+
+        <section class="col col-insight" style="--d:140ms" aria-label="梦境主题分析">
+          <article class="panel panel-frequency">
+            <div class="panel-head"><h2 class="panel-title">常来梦里</h2><span class="stamp stamp-dim">近 90 天</span></div>
+            <ul class="freq" id="freq"></ul>
+          </article>
+          <article class="panel panel-trend">
+            <div class="panel-head"><h2 class="panel-title">情绪起伏</h2><span class="stamp stamp-dim" id="trendRead">近 14 夜</span></div>
+            <div class="trend">
+              <div class="trend-range"><span>轻盈 +1</span><span>沉重 −1</span></div>
+              <svg id="trendSvg" viewBox="0 0 300 108" preserveAspectRatio="none" role="img" aria-label="情绪倾向演示值，从负1（沉重）到正1（轻盈）。10月11日最低，为负0.71。">
+                <line class="trend-zero" x1="0" y1="54" x2="300" y2="54"></line>
+                <path class="trend-area" id="trendArea" d=""></path>
+                <path class="trend-line" id="trendLine" d=""></path>
+                <line id="trendCrosshair" x1="0" x2="0" y1="0" y2="108" visibility="hidden"></line>
+                <circle class="trend-cursor" id="trendCursor" r="4" cx="-9" cy="-9"></circle>
+                <rect id="trendHit" x="0" y="0" width="300" height="108" fill="transparent" tabindex="0" role="slider" aria-label="按左右方向键查看每日情绪" aria-valuemin="1" aria-valuemax="14" aria-valuenow="14"></rect>
+              </svg>
+              <div class="trend-axis"><span>09/30</span><span class="trend-axis-mid">0 为中性</span><span>10/13</span></div>
+            </div>
+          </article>
+          <article class="panel panel-themes">
+            <div class="panel-head"><h2 class="panel-title">似曾梦见</h2><span class="stamp stamp-dim">3 个主题</span></div>
+            <ul class="themes" id="themes"></ul>
+          </article>
+        </section>
+      </div>
+
+      <footer class="timeline" style="--d:210ms">
+        <div class="timeline-head"><div class="timeline-heading"><h2 class="panel-title">沿着夜晚，拾回梦境</h2><span class="stamp stamp-dim">23:48 至 07:02</span></div><div class="legend-moods" id="legendMoods"></div></div>
+        <div class="hypno">
+          <div class="hypno-labels"><span>醒</span><span>REM</span><span>浅睡</span><span>深睡</span></div>
+          <svg id="hypnoSvg" viewBox="0 0 1000 72" preserveAspectRatio="none" role="group" aria-label="10月12日晚至13日的演示睡眠周期，选择节点可查看对应梦境"></svg>
+        </div>
+        <div class="cards" id="cards"></div>
+      </footer>
+    </div>
+
+    <div class="doze" id="doze" hidden role="dialog" aria-modal="true" aria-label="半梦半醒记录模式">
+      <button class="doze-exit" type="button" id="dozeClose"><i class="ti ti-x" aria-hidden="true"></i><span>退出</span></button>
+      <p class="doze-time" id="dozeTime"></p>
+      <button class="doze-rec" type="button" id="dozeRec" aria-label="开始录音" aria-pressed="false"><i class="ti ti-microphone" aria-hidden="true"></i><span id="dozeRecLabel">点击录音</span></button>
+      <p class="doze-hint" id="dozeHint" role="status">轻点开始，再点结束。不必组织语言。</p>
+      <button class="text-btn" id="dozeText" type="button">改用文字记下</button>
+    </div>
+    <dialog class="data-dialog" id="dataDialog" aria-labelledby="dataTitle">
+      <div class="panel-head"><h2 id="dataTitle" class="panel-title">梦境档案数据</h2><button class="icon-btn" id="closeData" type="button" aria-label="关闭数据表"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+      <p class="panel-note">以下均为本地演示数据。新笔记不会改变这份历史档案。</p>
+      <div id="dataTables"></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
