@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "name": "闻层 · 声纹地层档案馆",
+  "slug": "sound-strata-lab",
+  "page_type": "software",
+  "tags": [
+    "声学考古",
+    "地层剖面",
+    "频谱分析",
+    "声音重建"
+  ],
+  "created_at": "2026-10-13T00:00:00+08:00",
+  "updated_at": "2026-10-13T00:00:00+08:00",
+  "generation": {
+    "round_count": 1,
+    "history": [
+      {
+        "round": 1,
+        "kind": "initial",
+        "prompt": "一个挖掘和分析历史声音的界面。包含声波地层图、声音化石卡片、频谱分析仪、声音重建播放器。交互上拖动地层剖面查看不同年代声音，点击化石展开频谱，重建播放器可调节参数。氛围是学术、神秘、有探索感，像在挖掘声音的化石。",
+        "model": "claude-opus-5",
+        "reasoning_effort": null,
+        "skills": [
+          "mono-ui-prototype",
+          "frontend-design",
+          "dataviz",
+          "vibehub",
+          "oil-frontend"
+        ],
+        "started_at": null,
+        "completed_at": null,
+        "token_usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "total_tokens": null,
+          "is_estimate": null
+        },
+        "duration_seconds": null,
+        "image_generation": {
+          "used": false,
+          "count": 0,
+          "models": []
+        }
+      }
+    ]
+  },
+  "notes": [
+    "所有视觉元素由 Canvas 2D 与内联 SVG 手绘，未使用 AI 生图。",
+    "字体全部在线 CDN 引入：Tabler Icons webfont、Google Fonts（Spline Sans Mono）、ZeoSeven Fonts（文渊宋体 VF，Font ID 415）。"
+  ]
+}
