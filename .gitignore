@@ -17,3 +17,5 @@ Desktop.ini
 .env
 tools/image-forge/.env
 __pycache__/
+
+temp/

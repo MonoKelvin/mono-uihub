@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": null,
+  "slug": null,
+  "page_type": null,
+  "tags": [],
+  "created_at": null,
+  "updated_at": null,
+  "generation": {
+    "round_count": 1,
+    "history": [
+      {
+        "round": 1,
+        "kind": "initial",
+        "prompt": null,
+        "model": null,
+        "reasoning_effort": null,
+        "skills": [],
+        "started_at": null,
+        "completed_at": null,
+        "token_usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "total_tokens": null,
+          "is_estimate": null
+        },
+        "duration_seconds": null,
+        "image_generation": {
+          "used": null,
+          "count": null,
+          "models": []
+        }
+      }
+    ]
+  },
+  "notes": []
+}
