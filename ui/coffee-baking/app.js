@@ -255,6 +255,7 @@ function drawCurve(svg, batch, interactive) {
 function refreshStats(batch) {
   const total = batch.timeline[batch.timeline.length - 1][0];
   $("#statTotal").textContent = fmtMin(total);
+  // RoR peak / dev ratio shown as static prototype values (not recomputed after drag)
   $("#statRoR").textContent = batch.rorPeak + " °C/min";
   $("#statCrack").textContent = fmtMin(batch.crack);
   $("#statDrop").textContent = fmtT(batch.drop);
@@ -275,18 +276,28 @@ function renderBatchMeta(batch) {
 
 function renderTimeline(batch) {
   const total = batch.timeline[batch.timeline.length - 1][0];
-  const crackT = batch.crack / total * 100;
+  const turn = batch.marks[0].t;
+  const crack = batch.crack;
+  const drop = batch.marks[batch.marks.length - 1].t;
+  const dry = turn, maillard = crack - turn, dev = total - crack;
+  const pct = d => Math.round(d / total * 100);
   $("#timeline").innerHTML = `
-    <div class="timeline-track">
-      <div class="timeline-seg seg-dry" style="width:${batch.marks[0].t / total * 100}%"></div>
-      <div class="timeline-seg seg-maillard" style="left:${batch.marks[0].t / total * 100}%;width:${crackT - batch.marks[0].t / total * 100}%"></div>
-      <div class="timeline-seg seg-dev" style="left:${crackT}%;width:${100 - crackT}%"></div>
-      ${batch.marks.map(m => `
-        <div class="tl-event ${m.major ? "major" : ""}" style="left:${m.t / total * 100}%">
-          <span class="tl-dot"></span>
-          <span class="tl-name">${m.name}</span>
-          <span class="tl-time mono">${fmtMin(m.t)}</span>
-        </div>`).join("")}
+    <div class="roast-phases">
+      <div class="phase" style="flex-grow:${dry}">
+        <div class="phase-head"><span class="phase-name">脱水</span><span class="phase-pct mono">${pct(dry)}%</span></div>
+        <div class="phase-bar seg-dry"></div>
+        <div class="phase-foot"><span class="phase-event mono">转褐 ${fmtMin(turn)}</span></div>
+      </div>
+      <div class="phase is-crack" style="flex-grow:${maillard}">
+        <div class="phase-head"><span class="phase-name">梅纳反应</span><span class="phase-pct mono">${pct(maillard)}%</span></div>
+        <div class="phase-bar seg-maillard"></div>
+        <div class="phase-foot"><span class="phase-event mono">一爆 ${fmtMin(crack)}</span></div>
+      </div>
+      <div class="phase" style="flex-grow:${dev}">
+        <div class="phase-head"><span class="phase-name">发展</span><span class="phase-pct mono">${pct(dev)}%</span></div>
+        <div class="phase-bar seg-dev"></div>
+        <div class="phase-foot"><span class="phase-event mono">落豆 ${fmtMin(drop)}</span></div>
+      </div>
     </div>`;
 }
 
@@ -297,12 +308,28 @@ function loadBatch(id) {
   refreshStats(curBatch);
   renderBatchMeta(curBatch);
   renderTimeline(curBatch);
+  // 批次条随所选批次更新：机器/投豆量 + 状态
+  $("#batchMachine").textContent = `${curBatch.machine} · ${curBatch.weight}`;
+  const pill = $("#batchStatus");
+  const quality = curBatch.status === "quality";
+  pill.className = "status-pill " + (quality ? "warn" : "ok");
+  pill.innerHTML = `<i class="ti ti-point-filled"></i>${quality ? "待品控" : "已完成"}`;
 }
 
 // 批次下拉
 $("#batchSelect").innerHTML = BATCHES.map(b =>
   `<option value="${b.id}">批次 ${b.id} · ${b.short}</option>`).join("");
 $("#batchSelect").addEventListener("change", e => loadBatch(e.target.value));
+
+// 快照原始曲线，供"复位曲线"还原拖拽
+BATCHES.forEach(b => { b.origTimeline = b.timeline.map(p => p.slice()); });
+$("#resetCurveBtn").addEventListener("click", () => {
+  curBatch.timeline = curBatch.origTimeline.map(p => p.slice());
+  drawCurve($("#curveSvg"), curBatch, true);
+  refreshStats(curBatch);
+  renderTimeline(curBatch);
+  toast("曲线已复位到原始记录");
+});
 
 /* ── 批次记录视图 ─────────────────── */
 
@@ -315,7 +342,7 @@ function renderBatchTable() {
     (!kw || b.name.includes(kw) || b.origin.includes(kw) || b.id.includes(kw))
   );
   $("#batchTable").innerHTML = list.map(b => `
-    <div class="batch-row" data-id="${b.id}" tabindex="0" role="button" aria-expanded="false">
+    <div class="batch-row" data-id="${b.id}" tabindex="0" role="button" aria-expanded="false" aria-label="查看批次 ${b.id} 详情">
       <div class="batch-head">
         <span class="batch-id">${b.id}</span>
         <span class="batch-name">${b.short}<small>${b.name}</small></span>
@@ -331,7 +358,7 @@ function renderBatchTable() {
         <div><div class="detail-k">产地与品种</div><div class="detail-v">${b.origin}<br>${b.variety}</div></div>
         <div><div class="detail-k">生豆数据</div><div class="detail-v mono">密度 ${b.density} g/L<br>含水 ${b.moisture}</div></div>
         <div><div class="detail-k">关键标记</div><div class="detail-v mono">${b.marks.map(m => `${m.name} ${fmtMin(m.t)}`).join(" · ")}</div></div>
-        <div><div class="detail-k">烘焙师备注</div><div class="detail-v">${b.note}</div></div>
+        <div class="detail-wide"><div class="detail-k">烘焙师备注</div><div class="detail-v">${b.note}</div></div>
       </div>
     </div>`).join("") || `<p style="color:var(--ink-3);padding:20px 4px;">没有匹配的批次</p>`;
 

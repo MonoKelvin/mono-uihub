@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>焦度计 RoastLab — 咖啡烘焙与品控</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
+<meta name="description" content="独立咖啡烘焙与品控工具：烘焙曲线、批次记录、杯测评分、库存追踪与客户订单。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -66,8 +70,11 @@
               <select id="batchSelect" class="select"></select>
               <i class="ti ti-chevron-down"></i>
             </div>
-            <span class="status-pill ok"><i class="ti ti-point-filled"></i>已归档</span>
-            <span class="batch-machine mono">PROBAT P12 · 12kg</span>
+            <span class="status-pill ok" id="batchStatus"><i class="ti ti-point-filled"></i>已完成</span>
+            <div class="batch-bar-right">
+              <button class="ghost-btn small" id="resetCurveBtn"><i class="ti ti-arrow-back-up"></i>复位曲线</button>
+              <span class="batch-machine mono" id="batchMachine">PROBAT P12 · 12.0 kg</span>
+            </div>
           </div>
 
           <div class="chart-card">
