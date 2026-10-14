@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>暮屿 MUYU · 香调探索</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+SC:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <!-- left rail: brand + fragrance list + material stories -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <span class="brand-mark">暮屿<i>MUYU</i></span>
+      <p class="brand-note">Eau de Parfum · 2026 秋冬</p>
+    </div>
+
+    <nav class="frag-list" role="tablist" aria-label="选择香水">
+      <button class="frag-item is-active" role="tab" aria-selected="true" data-frag="iris">
+        <span class="frag-item-no">02</span>
+        <span class="frag-item-name">鸢尾与雾<em>Iris &amp; Mists</em></span>
+      </button>
+      <button class="frag-item" role="tab" aria-selected="false" data-frag="fig">
+        <span class="frag-item-no">05</span>
+        <span class="frag-item-name">无花果园之夜<em>Fig Orchard at Night</em></span>
+      </button>
+      <button class="frag-item" role="tab" aria-selected="false" data-frag="brine">
+        <span class="frag-item-no">09</span>
+        <span class="frag-item-name">墨角与海盐<em>Bladderwrack &amp; Brine</em></span>
+      </button>
+    </nav>
+
+    <section class="materials">
+      <p class="rail-label">原料故事</p>
+      <div class="material-list">
+        <article class="material">
+          <button class="material-head" aria-expanded="false">
+            <span class="material-name">佛罗伦萨鸢尾根</span>
+            <i class="ti ti-plus material-plus" aria-hidden="true"></i>
+          </button>
+          <div class="material-body">
+            <div class="material-inner">
+              <p>鸢尾不是以花入香，而是以根茎。挖出的根要在暗房里晾足三年，水分退尽、鸢尾酮慢慢富集，才换来近似紫罗兰与旧纸页的粉感。这批根，晾到了第三年的第十一个月。</p>
+            </div>
+          </div>
+        </article>
+        <article class="material">
+          <button class="material-head" aria-expanded="false">
+            <span class="material-name">雨前无花果叶</span>
+            <i class="ti ti-plus material-plus" aria-hidden="true"></i>
+          </button>
+          <div class="material-body">
+            <div class="material-inner">
+              <p>果实太甜，调香师真正想要的是叶子：掐断叶柄时青绿里带一丝椰乳的奶感。采摘必须在降雨前完成，雨会洗掉叶面的挥发性物质。</p>
+            </div>
+          </div>
+        </article>
+        <article class="material">
+          <button class="material-head" aria-expanded="false">
+            <span class="material-name">海盐与岩苔</span>
+            <i class="ti ti-plus material-plus" aria-hidden="true"></i>
+          </button>
+          <div class="material-body">
+            <div class="material-inner">
+              <p>岩苔长在北面背光的礁石上，采苔人说它闻起来像刚退潮的石头。天然岩苔提取物近年受限，我们改用分子级重组的海盐调，把湿冷的矿物感收进尾调深处。</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </aside>
+
+  <!-- center hero -->
+  <main class="hero">
+    <span class="ghost-no" id="a-ghost" aria-hidden="true">02</span>
+    <div class="hero-body">
+      <p class="accord-no" id="a-no">No.02</p>
+      <h1 class="accord-name" id="a-name">鸢尾与雾</h1>
+      <p class="accord-latin" id="a-latin">Iris &amp; Mists</p>
+      <p class="accord-desc" id="a-desc">鸢尾根在地下沉睡三年才被唤醒。这支香从叶子被雾打湿的青涩开始，落进粉感十足的根茎气息，最后只剩一层薄薄的麝香，像清晨没来得及收的被子。</p>
+      <dl class="accord-spec">
+        <div><dt>浓度</dt><dd id="a-conc">18%</dd></div>
+        <div><dt>留香</dt><dd id="a-last">6–8 小时</dd></div>
+        <div><dt>气质</dt><dd id="a-mood">清冷 · 粉感 · 静</dd></div>
+      </dl>
+    </div>
+    <div class="hero-foot">
+      <div class="accord-price">
+        <span class="price" id="a-price">¥ 1,280</span>
+        <span class="vol" id="a-vol">50 ml</span>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-ghost" id="book-btn">预约闻香</button>
+        <button class="btn-acquire" id="a-buy">加入心愿单</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- right pyramid -->
+  <section class="pyramid">
+    <p class="rail-label">三段展开</p>
+    <div class="stage-tabs" role="tablist" aria-label="香调层次">
+      <button class="stage-tab is-active" data-stage="top" role="tab" aria-selected="true">
+        <span class="stage-step">壹</span>
+        <span class="stage-name">前调<em>Top</em></span>
+        <span class="stage-mini" id="t-top">0 – 15 min</span>
+      </button>
+      <button class="stage-tab" data-stage="heart" role="tab" aria-selected="false">
+        <span class="stage-step">贰</span>
+        <span class="stage-name">中调<em>Heart</em></span>
+        <span class="stage-mini" id="t-heart">15 – 120 min</span>
+      </button>
+      <button class="stage-tab" data-stage="base" role="tab" aria-selected="false">
+        <span class="stage-step">叁</span>
+        <span class="stage-name">尾调<em>Base</em></span>
+        <span class="stage-mini" id="t-base">2 – 8 hrs</span>
+      </button>
+    </div>
+
+    <div class="stage-panel">
+      <p class="stage-tag" id="s-tag">初见</p>
+      <p class="stage-line" id="s-line">叶子与果皮被掐破的一瞬，明亮、水汽、微凉。</p>
+      <ul class="stage-notes" id="s-notes"></ul>
+      <div class="stage-vol">
+        <div class="stage-vol-label">扩散强度</div>
+        <div class="stage-vol-track"><div class="stage-vol-fill" id="s-fill"></div></div>
+        <span class="stage-vol-num" id="s-vol">72</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- bottom moments rail -->
+  <section class="moments">
+    <p class="rail-label">使用场景</p>
+    <div class="moments-rail" tabindex="0" aria-label="场景列表，可左右滑动">
+      <figure class="moment">
+        <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=700&q=70&auto=format&fit=crop" alt="晚宴场景" loading="lazy">
+        <figcaption>
+          <h3>落座之前</h3>
+          <span class="moment-fit">鸢尾与雾</span>
+        </figcaption>
+      </figure>
+      <figure class="moment">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=700&q=70&auto=format&fit=crop" alt="深夜书店场景" loading="lazy">
+        <figcaption>
+          <h3>打烊前的书店</h3>
+          <span class="moment-fit">无花果园之夜</span>
+        </figcaption>
+      </figure>
+      <figure class="moment">
+        <img src="https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=700&q=70&auto=format&fit=crop" alt="雨夜车程场景" loading="lazy">
+        <figcaption>
+          <h3>雨夜车程</h3>
+          <span class="moment-fit">墨角与海盐</span>
+        </figcaption>
+      </figure>
+      <figure class="moment">
+        <img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?w=700&q=70&auto=format&fit=crop" alt="晨间更衣场景" loading="lazy">
+        <figcaption>
+          <h3>晨间更衣</h3>
+          <span class="moment-fit">鸢尾与雾</span>
+        </figcaption>
+      </figure>
+      <figure class="moment">
+        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=70&auto=format&fit=crop" alt="公寓傍晚场景" loading="lazy">
+        <figcaption>
+          <h3>公寓的傍晚</h3>
+          <span class="moment-fit">无花果园之夜</span>
+        </figcaption>
+      </figure>
+    </div>
+    <footer class="foot">
+      <p>徐汇区永嘉路 511 号 · 周三至周日 13:00 – 20:00</p>
+    </footer>
+  </section>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
