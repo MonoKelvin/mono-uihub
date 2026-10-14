@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silverpoint · 选片与调色工作台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="cull">
+
+<main class="window" role="application" aria-label="Silverpoint 选片与调色工作台">
+
+  <!-- ───────── 顶栏 ───────── -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="aperture" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" class="ap-ring"/>
+        <g class="ap-blades">
+          <path d="M16 3 A13 13 0 0 1 27.3 9.5 L16 16 Z"/>
+          <path d="M27.3 9.5 A13 13 0 0 1 27.3 22.5 L16 16 Z"/>
+          <path d="M27.3 22.5 A13 13 0 0 1 16 29 L16 16 Z"/>
+          <path d="M16 29 A13 13 0 0 1 4.7 22.5 L16 16 Z"/>
+          <path d="M4.7 22.5 A13 13 0 0 1 4.7 9.5 L16 16 Z"/>
+          <path d="M4.7 9.5 A13 13 0 0 1 16 3 L16 16 Z"/>
+        </g>
+      </svg>
+      <span class="wordmark">Silverpoint</span>
+      <span class="crumb-sep"><i class="ti ti-chevron-right"></i></span>
+      <span class="crumb">明室家居 · 秋冬产品</span>
+    </div>
+
+    <div class="topstats mono" aria-label="当前批次统计">
+      <span><b id="stat-total">284</b> 张</span>
+      <span class="dot-sep"></span>
+      <span>已选 <b id="stat-picked">213</b></span>
+      <span class="dot-sep"></span>
+      <span class="stat-stars"><i class="ti ti-star-filled"></i> <b id="stat-fivestar">18</b></span>
+    </div>
+
+    <div class="topactions">
+      <button class="btn-ghost" id="btn-import"><i class="ti ti-photo-up"></i>导入</button>
+      <button class="btn-primary" id="btn-topexport"><i class="ti ti-package-export"></i>导出 <span class="mono" id="export-badge">7</span></button>
+      <button class="avatar" id="btn-user" aria-label="陈屿">
+        <img src="https://i.pravatar.cc/80?u=silverpoint-chenyu" alt="陈屿 头像">
+      </button>
+    </div>
+  </header>
+
+  <!-- ───────── 主体 ───────── -->
+  <div class="middle">
+
+    <!-- 模块图标栏 -->
+    <nav class="rail" aria-label="模块切换">
+      <button class="rail-btn is-active" data-go="cull" aria-label="选片"><i class="ti ti-layout-grid"></i><span>选片</span></button>
+      <button class="rail-btn" data-go="compare" aria-label="对比"><i class="ti ti-arrows-diff"></i><span>对比</span></button>
+      <button class="rail-btn" data-go="develop" aria-label="调色"><i class="ti ti-adjustments"></i><span>调色</span></button>
+      <button class="rail-btn" data-go="export" aria-label="导出"><i class="ti ti-stack-2"></i><span>导出</span></button>
+      <button class="rail-btn" data-go="deliver" aria-label="交付"><i class="ti ti-send"></i><span>交付</span></button>
+      <span class="rail-spacer"></span>
+      <button class="rail-btn rail-foot" id="btn-help" aria-label="帮助"><i class="ti ti-help-circle"></i></button>
+    </nav>
+
+    <!-- 左侧导航面板 -->
+    <aside class="leftpanel">
+      <section class="lp-block">
+        <h2 class="lp-title">拍摄批次</h2>
+        <ul class="collections" id="collections"></ul>
+      </section>
+
+      <section class="lp-block">
+        <h2 class="lp-title">筛选</h2>
+        <div class="filter-row">
+          <span class="filter-label">星级</span>
+          <div class="star-filter" id="star-filter" role="group" aria-label="按星级筛选">
+            <button data-min="1" aria-label="一星以上"><i class="ti ti-star"></i></button>
+            <button data-min="2" aria-label="二星以上"><i class="ti ti-star"></i></button>
+            <button data-min="3" aria-label="三星以上"><i class="ti ti-star"></i></button>
+            <button data-min="4" aria-label="四星以上"><i class="ti ti-star"></i></button>
+            <button data-min="5" aria-label="五星"><i class="ti ti-star"></i></button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">旗标</span>
+          <div class="flag-filter" id="flag-filter" role="group" aria-label="按旗标筛选">
+            <button data-flag="all" class="is-active">全部</button>
+            <button data-flag="pick"><i class="ti ti-flag-filled"></i>选用</button>
+            <button data-flag="reject"><i class="ti ti-ban"></i>排除</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-block lp-tags">
+        <h2 class="lp-title">标签 <span class="lp-hint">拖照片到此</span></h2>
+        <ul class="tags" id="tags"></ul>
+      </section>
+    </aside>
+
+    <!-- 中央舞台 -->
+    <section class="stage">
+
+      <!-- 视图：选片 -->
+      <div class="view is-active" data-view="cull">
+        <div class="stage-head">
+          <div class="seg" id="grid-size" role="group" aria-label="缩略图尺寸">
+            <button data-size="s" aria-label="小图"><i class="ti ti-grid-dots"></i></button>
+            <button data-size="m" class="is-active" aria-label="中图"><i class="ti ti-layout-grid"></i></button>
+            <button data-size="l" aria-label="大图"><i class="ti ti-layout-board"></i></button>
+          </div>
+          <div class="stage-head-right">
+            <span class="result-count mono" id="result-count"></span>
+            <div class="seg" id="sort-by" role="group" aria-label="排序">
+              <button data-sort="capture" class="is-active">拍摄序</button>
+              <button data-sort="rating">按星级</button>
+              <button data-sort="flag">按旗标</button>
+            </div>
+          </div>
+        </div>
+        <div class="grid-scroll">
+          <div class="photo-grid size-m" id="photo-grid"></div>
+          <div class="empty-state" id="empty-state" hidden>
+            <i class="ti ti-mood-empty"></i>
+            <p>当前筛选条件下没有照片</p>
+            <button class="btn-ghost" id="clear-filter">清除筛选</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 视图：对比 -->
+      <div class="view" data-view="compare">
+        <div class="stage-head">
+          <div class="seg" id="compare-mode" role="group" aria-label="对比模式">
+            <button data-mode="split" class="is-active"><i class="ti ti-layout-columns"></i>并排</button>
+            <button data-mode="overlay"><i class="ti ti-layers-subtract"></i>叠加</button>
+          </div>
+          <div class="stage-head-right">
+            <span class="hint-text">叠加模式下拖动中线对比前后</span>
+          </div>
+        </div>
+        <div class="compare-stage" id="compare-stage" data-mode="split">
+          <!-- 并排 -->
+          <div class="cmp-split">
+            <figure class="cmp-cell" data-slot="a">
+              <img id="cmp-a-img" alt="对比照片 A">
+              <figcaption>
+                <span class="cmp-name mono" id="cmp-a-name">A</span>
+                <span class="cmp-stars" id="cmp-a-stars"></span>
+              </figcaption>
+            </figure>
+            <figure class="cmp-cell" data-slot="b">
+              <img id="cmp-b-img" alt="对比照片 B">
+              <figcaption>
+                <span class="cmp-name mono" id="cmp-b-name">B</span>
+                <span class="cmp-stars" id="cmp-b-stars"></span>
+              </figcaption>
+            </figure>
+          </div>
+          <!-- 叠加 -->
+          <div class="cmp-overlay" id="cmp-overlay">
+            <img id="cmp-ov-base" alt="对比底图">
+            <div class="cmp-ov-top" id="cmp-ov-top"><img id="cmp-ov-topimg" alt="对比上层图"></div>
+            <div class="cmp-divider" id="cmp-divider" role="slider" aria-label="对比分割线" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+              <span class="cmp-handle"><i class="ti ti-arrows-horizontal"></i></span>
+            </div>
+            <span class="cmp-badge cmp-badge-l mono">A</span>
+            <span class="cmp-badge cmp-badge-r mono">B</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 视图：调色 -->
+      <div class="view" data-view="develop">
+        <div class="develop-stage">
+          <div class="dev-preview-wrap">
+            <img id="dev-preview" alt="调色预览">
+            <button class="dev-ba" id="dev-ba" aria-pressed="false"><i class="ti ti-eye"></i>按住看原图</button>
+            <div class="dev-film mono" id="dev-film"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 视图：导出 -->
+      <div class="view" data-view="export">
+        <div class="stage-head">
+          <h2 class="view-h">导出队列</h2>
+          <div class="stage-head-right">
+            <span class="hint-text">拖动卡片调整处理顺序</span>
+            <button class="btn-primary sm" id="btn-run-queue"><i class="ti ti-player-play"></i>开始导出</button>
+          </div>
+        </div>
+        <div class="queue-scroll">
+          <ul class="queue" id="queue"></ul>
+        </div>
+      </div>
+
+      <!-- 视图：交付 -->
+      <div class="view" data-view="deliver">
+        <div class="stage-head">
+          <h2 class="view-h">客户交付 · 画廊</h2>
+          <div class="stage-head-right">
+            <span class="result-count mono"><b id="deliver-count">0</b> 张已选入画廊</span>
+          </div>
+        </div>
+        <div class="deliver-scroll">
+          <div class="deliver-grid" id="deliver-grid"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 右侧检查器 -->
+    <aside class="rightpanel">
+
+      <!-- 检查器：选片 / 对比（元数据） -->
+      <div class="pane is-active" data-view="cull compare">
+        <div class="insp-photo">
+          <img id="insp-img" alt="选中照片预览">
+          <div class="insp-flagrow">
+            <button class="flagbtn" data-set="pick" id="insp-pick"><i class="ti ti-flag"></i>选用</button>
+            <button class="flagbtn" data-set="reject" id="insp-reject"><i class="ti ti-ban"></i>排除</button>
+          </div>
+        </div>
+        <div class="insp-rate">
+          <span class="insp-label">星级评分</span>
+          <div class="stars stars-lg" id="insp-stars" role="slider" aria-label="星级评分" aria-valuemin="0" aria-valuemax="5" tabindex="0"></div>
+        </div>
+        <div class="insp-tags">
+          <span class="insp-label">标签</span>
+          <div class="insp-tag-list" id="insp-tag-list"></div>
+        </div>
+        <div class="insp-meta">
+          <span class="insp-label">元数据</span>
+          <dl class="meta-dl mono" id="insp-meta"></dl>
+        </div>
+      </div>
+
+      <!-- 检查器：调色面板 + 版本历史 -->
+      <div class="pane" data-view="develop">
+        <div class="dev-head">
+          <span class="insp-label">调色</span>
+          <button class="btn-ghost xs" id="dev-reset"><i class="ti ti-restore"></i>复位</button>
+        </div>
+        <div class="sliders" id="sliders"></div>
+        <div class="dev-save">
+          <button class="btn-primary sm block" id="dev-snapshot"><i class="ti ti-bookmark"></i>存为版本</button>
+        </div>
+        <div class="history">
+          <span class="insp-label">版本历史 <span class="lp-hint">点击回溯</span></span>
+          <ul class="history-list" id="history-list"></ul>
+        </div>
+      </div>
+
+      <!-- 检查器：导出设置 -->
+      <div class="pane" data-view="export">
+        <span class="insp-label">导出预设</span>
+        <div class="preset-list" id="preset-list"></div>
+        <div class="export-fields">
+          <label class="fld"><span>格式</span>
+            <select id="exp-format"><option>JPEG · 高画质</option><option>JPEG · 网络优化</option><option>TIFF · 16bit</option><option>PNG</option></select>
+          </label>
+          <label class="fld"><span>长边像素</span>
+            <select id="exp-size"><option>原始尺寸</option><option>4096 px</option><option>2048 px</option><option>1200 px</option></select>
+          </label>
+          <label class="fld"><span>色彩空间</span>
+            <select id="exp-color"><option>sRGB</option><option>Display P3</option><option>Adobe RGB</option></select>
+          </label>
+          <label class="fld fld-check"><input type="checkbox" id="exp-watermark" checked><span>附加水印「明室 · chenyu」</span></label>
+        </div>
+      </div>
+
+      <!-- 检查器：交付设置 -->
+      <div class="pane" data-view="deliver">
+        <span class="insp-label">交付设置</span>
+        <div class="export-fields">
+          <label class="fld"><span>客户</span>
+            <select id="dlv-client"><option>明室家居 · 市场部</option><option>周屿 & 林夏</option><option>山鬼乐队</option></select>
+          </label>
+          <label class="fld"><span>画廊有效期</span>
+            <select id="dlv-expiry"><option>30 天</option><option>90 天</option><option>永久</option></select>
+          </label>
+          <label class="fld fld-check"><input type="checkbox" id="dlv-download" checked><span>允许客户下载原图</span></label>
+          <label class="fld fld-check"><input type="checkbox" id="dlv-pick"><span>允许客户二次挑选</span></label>
+        </div>
+        <div class="dlv-link">
+          <span class="insp-label">交付链接</span>
+          <div class="link-box">
+            <input type="text" id="dlv-url" readonly value="silverpoint.studio/g/mingshi-aw25">
+            <button class="btn-ghost xs" id="dlv-copy" aria-label="复制链接"><i class="ti ti-copy"></i></button>
+          </div>
+          <button class="btn-primary sm block" id="dlv-generate"><i class="ti ti-link"></i>生成交付链接</button>
+        </div>
+        <div class="dlv-status" id="dlv-status">
+          <span class="insp-label">状态</span>
+          <p class="dlv-status-text mono"><i class="ti ti-circle-dot"></i> 草稿 · 尚未发送</p>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- ───────── 底部胶片条 ───────── -->
+  <footer class="filmstrip">
+    <div class="fs-meta mono">
+      <span id="fs-selname"></span>
+    </div>
+    <div class="fs-scroll" id="filmstrip" role="listbox" aria-label="胶片条"></div>
+    <div class="fs-nav">
+      <button id="fs-prev" aria-label="上一张"><i class="ti ti-chevron-left"></i></button>
+      <button id="fs-next" aria-label="下一张"><i class="ti ti-chevron-right"></i></button>
+    </div>
+  </footer>
+
+</main>
+
+<!-- 轻提示 -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
