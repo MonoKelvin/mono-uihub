@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>焦度计 RoastLab — 咖啡烘焙与品控</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<main class="window" id="appWindow">
+
+  <!-- 左侧导航轨 -->
+  <nav class="rail" aria-label="主导航">
+    <div class="rail-logo" title="焦度计 RoastLab"><i class="ti ti-flame"></i></div>
+    <button class="rail-btn active" data-view="curves" title="烘焙曲线">
+      <i class="ti ti-chart-line"></i><span>曲线</span>
+    </button>
+    <button class="rail-btn" data-view="batch" title="批次记录">
+      <i class="ti ti-list-details"></i><span>批次</span>
+    </button>
+    <button class="rail-btn" data-view="compare" title="对比视图">
+      <i class="ti ti-columns-2"></i><span>对比</span>
+    </button>
+    <button class="rail-btn" data-view="cupping" title="杯测评分">
+      <i class="ti ti-mug"></i><span>杯测</span>
+    </button>
+    <button class="rail-btn has-alert" data-view="inventory" title="库存追踪">
+      <i class="ti ti-package"></i><span>库存</span>
+    </button>
+    <button class="rail-btn" data-view="orders" title="客户订单">
+      <i class="ti ti-receipt"></i><span>订单</span>
+    </button>
+    <button class="rail-btn" data-view="notes" title="笔记">
+      <i class="ti ti-pencil"></i><span>笔记</span>
+    </button>
+  </nav>
+
+  <!-- 右侧主体 -->
+  <div class="main">
+
+    <!-- 顶栏 -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h1 id="viewTitle">烘焙曲线</h1>
+        <span class="topbar-sub" id="viewSub">拖动曲线节点调整烘焙节奏</span>
+      </div>
+      <div class="topbar-tools">
+        <span class="clock mono" id="clock">14:32</span>
+        <span class="divider"></span>
+        <button class="ghost-btn" id="exportBtn"><i class="ti ti-download"></i>导出</button>
+        <button class="accent-btn" id="newRoastBtn"><i class="ti ti-plus"></i>新建烘焙</button>
+      </div>
+    </header>
+
+    <!-- ══ 视图：烘焙曲线 ══ -->
+    <section class="view active" id="view-curves">
+      <div class="curves-layout">
+
+        <div class="curves-main">
+          <div class="batch-bar">
+            <label class="field-label" for="batchSelect">当前批次</label>
+            <div class="select-wrap">
+              <select id="batchSelect" class="select"></select>
+              <i class="ti ti-chevron-down"></i>
+            </div>
+            <span class="status-pill ok"><i class="ti ti-point-filled"></i>已归档</span>
+            <span class="batch-machine mono">PROBAT P12 · 12kg</span>
+          </div>
+
+          <div class="chart-card">
+            <svg id="curveSvg" viewBox="0 0 780 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="烘焙温度曲线"></svg>
+          </div>
+
+          <div class="stats-row" id="statsRow">
+            <div class="stat"><span class="stat-k">总时长</span><span class="stat-v" id="statTotal">—</span></div>
+            <div class="stat"><span class="stat-k">RoR 峰值</span><span class="stat-v" id="statRoR">—</span></div>
+            <div class="stat"><span class="stat-k">一爆</span><span class="stat-v" id="statCrack">—</span></div>
+            <div class="stat"><span class="stat-k">落豆温</span><span class="stat-v" id="statDrop">—</span></div>
+            <div class="stat"><span class="stat-k">发展率</span><span class="stat-v" id="statDev">—</span></div>
+          </div>
+
+          <div class="timeline" id="timeline"></div>
+        </div>
+
+        <aside class="curves-side">
+          <div class="side-block">
+            <h3>批次档案</h3>
+            <dl class="meta-list" id="batchMeta"></dl>
+          </div>
+          <div class="side-block">
+            <h3>关键标记</h3>
+            <ul class="mark-list" id="markList"></ul>
+          </div>
+          <div class="side-block note-peek">
+            <h3>烘焙师备注</h3>
+            <p id="batchNote"></p>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ══ 视图：批次记录 ══ -->
+    <section class="view" id="view-batch">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <i class="ti ti-search"></i>
+          <input type="search" id="batchSearch" placeholder="搜索批次、品种、产地…">
+        </div>
+        <div class="chip-group" id="batchFilters">
+          <button class="chip active" data-f="all">全部</button>
+          <button class="chip" data-f="done">已完成</button>
+          <button class="chip" data-f="quality">待品控</button>
+        </div>
+      </div>
+      <div class="batch-scroll">
+        <div class="batch-table" id="batchTable"></div>
+      </div>
+    </section>
+
+    <!-- ══ 视图：对比 ══ -->
+    <section class="view" id="view-compare">
+      <div class="toolbar">
+        <div class="compare-picker">
+          <div class="select-wrap">
+            <select id="cmpA" class="select"></select><i class="ti ti-chevron-down"></i>
+          </div>
+          <span class="cmp-vs">对比</span>
+          <div class="select-wrap">
+            <select id="cmpB" class="select"></select><i class="ti ti-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-col" id="cmpColA"></div>
+        <div class="compare-col" id="cmpColB"></div>
+      </div>
+    </section>
+
+    <!-- ══ 视图：杯测 ══ -->
+    <section class="view" id="view-cupping">
+      <div class="cupping-layout">
+        <div class="cupping-rows" id="cuppingRows"></div>
+        <aside class="cupping-side">
+          <div class="score-dial">
+            <div class="score-num" id="cupTotal">0.00</div>
+            <div class="score-cap">SCA 综合得分</div>
+          </div>
+          <div class="side-block">
+            <h3>杯测师</h3>
+            <p class="cup-cupper">林晏 · Q-Grader</p>
+            <p class="cup-date mono">2026-10-14 · 样品 5 杯</p>
+          </div>
+          <div class="side-block">
+            <h3>风味描述</h3>
+            <p class="cup-flavor" id="cupFlavor">柑橘、白花、蜂蜜甜，酸质明亮，余韵带红茶感。</p>
+          </div>
+          <button class="accent-btn wide" id="cupSaveBtn"><i class="ti ti-device-floppy"></i>保存本次杯测</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ══ 视图：库存 ══ -->
+    <section class="view" id="view-inventory">
+      <div class="alert-banner" id="stockAlert">
+        <i class="ti ti-alert-triangle"></i>
+        <span>2 项生豆低于安全库存，建议本周内补货</span>
+        <button class="ghost-btn small" id="alertClose">知道了</button>
+      </div>
+      <div class="inv-grid" id="invGrid"></div>
+    </section>
+
+    <!-- ══ 视图：订单 ══ -->
+    <section class="view" id="view-orders">
+      <div class="toolbar">
+        <div class="chip-group" id="orderFilters">
+          <button class="chip active" data-f="all">全部</button>
+          <button class="chip" data-f="pending">待烘焙</button>
+          <button class="chip" data-f="shipped">已发货</button>
+        </div>
+        <button class="accent-btn" id="newOrderBtn"><i class="ti ti-plus"></i>新建订单</button>
+      </div>
+      <div class="orders-scroll">
+        <div class="order-list" id="orderList"></div>
+      </div>
+    </section>
+
+    <!-- ══ 视图：笔记 ══ -->
+    <section class="view" id="view-notes">
+      <div class="notes-layout">
+        <div class="note-editor">
+          <textarea id="noteInput" placeholder="记录这台炉子的脾气：火力调整、天气湿度对脱水的影响、下次想试的方案…"></textarea>
+          <div class="note-editor-foot">
+            <span class="mono" id="noteCount">0 字</span>
+            <button class="accent-btn" id="noteSave"><i class="ti ti-device-floppy"></i>存入笔记</button>
+          </div>
+        </div>
+        <div class="note-scroll">
+          <div class="note-list" id="noteList"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

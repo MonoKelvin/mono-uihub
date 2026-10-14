@@ -9,6 +9,9 @@ Desktop.ini
 *.swp
 .workbuddy/
 
+# finesse 构建历史（本地轮换记忆，随每次构建重写）
+.finesse/
+
 # OS temp
 *.tmp
 *.log

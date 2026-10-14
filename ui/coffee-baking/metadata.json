@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "焦度计 RoastLab — 咖啡烘焙与品控",
+  "slug": "coffee-baking",
+  "page_type": "software",
+  "tags": ["咖啡烘焙", "品控", "杯测", "库存", "软件"],
+  "created_at": "2026-10-14T00:00:00+08:00",
+  "updated_at": "2026-10-14T00:00:00+08:00",
+  "generation": {
+    "round_count": 1,
+    "history": [
+      {
+        "round": 1,
+        "kind": "initial",
+        "prompt": "独立咖啡烘焙与品控\n一款咖啡烘焙师管理烘焙曲线、品控、库存和客户的完整软件。包含烘焙曲线、温度时间轴、批次记录、对比视图、杯测评分、库存追踪、客户订单、笔记。交互上拖拽曲线节点调整烘焙节奏，批次可展开详情，对比视图并排显示两次曲线，杯测评分可拖拽滑块，库存低于阈值提醒。氛围是精密、温暖，有烘焙工坊的专注和品控的严谨。",
+        "model": "glm-5.3-flash",
+        "reasoning_effort": null,
+        "skills": ["mono-ui-prototype", "ui-metadata"],
+        "started_at": "2026-10-14T00:00:00+08:00",
+        "completed_at": "2026-10-14T00:00:00+08:00",
+        "token_usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "total_tokens": 20300,
+          "is_estimate": true
+        },
+        "duration_seconds": null,
+        "image_generation": {
+          "used": false,
+          "count": 0,
+          "models": []
+        }
+      }
+    ]
+  },
+  "notes": ["未调用生图，全部图形为内联 SVG 与 Canvas 手绘。", "token 总量为会话近似值（≥20.3k），输入/输出拆分未知故留空；早期原型草稿未计入轮次。"]
+}
