@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#23252a">
+  <meta name="description" content="罗德岛舰载通讯终端。信号所至，同路前行。">
+  <title>RHODES POST / 罗德岛通讯</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="mail-data.js" defer></script>
+  <script src="specimen.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="post-mark" viewBox="0 0 56 56"><path d="M5 45 28 5l23 40H5Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m18 38 10-18 5 9-5 9H18Zm12 0 6-10 6 10H30Z" fill="currentColor"/><path d="M5 50h46" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="operator-mark" viewBox="0 0 64 64"><path d="m12 52 4-31L32 6l16 15 4 31-14-5H26Z" fill="#7a8186"/><path d="m21 24 11-12 11 12-5 19H26Z" fill="#242930"/><path d="m21 24 11 5 11-5-5 19H26Z" fill="#3e474e"/><path d="m9 57 18-13 5 9 5-9 18 13" fill="#a7aeb1"/></symbol>
+    <symbol id="carrier-plan" viewBox="0 0 320 100"><g fill="none" stroke="currentColor" stroke-width="1"><path d="m18 52 34-25h175l69 25-69 25H52Z"/><path d="M55 34h164l42 18-42 18H55Zm27 0v36m28-36v36m107-36v36M35 52h252M120 38h70v28h-70Z"/><path d="M72 23V9h80v14m-92 57v10h66V80m93 0v10h43V80M13 18h22m-11-11v22m259 53h22m-11-11v22"/><path d="m175 18 12-10h24v15M85 13h54"/></g><path d="M120 45h44v14h-44Z" fill="currentColor" opacity=".24"/><circle cx="227" cy="52" r="4" fill="currentColor"/></symbol>
+    <symbol id="cargo-mark" viewBox="0 0 100 80"><path d="m10 23 41-15 39 16v42L49 79 10 64Z" fill="#434952"/><path d="m10 23 39 16 41-15-39-16Z" fill="#939ba3"/><path d="M49 39v40L10 64V23Z" fill="#69737c"/><path d="m20 33 19 8v12l-19-8Zm42 8 19-7v15l-19 7Z" fill="#252b33"/><path d="m35 13 39 17v9l-9 3v-9L27 16Z" fill="#d2bf70"/><path d="M28 43v15m-7-10 14 5" stroke="#e3e6e4" stroke-width="4"/></symbol>
+    <symbol id="record-mark" viewBox="0 0 100 80"><path d="m15 25 50-15 23 12v38L38 76 15 62Z" fill="#69747e"/><path d="m15 25 23 14 50-17-23-12Z" fill="#afb5b5"/><path d="M38 39v37l50-16V22Z" fill="#343e49"/><path d="m44 44 36-12v19L44 63Z" fill="#89978f"/><path d="m52 46 21-7m-21 13 21-7" stroke="#dce3dc" stroke-width="2"/><path d="m23 34 6 4v23l-6-4Z" fill="#dcc76d"/></symbol>
+  </svg>
+  <section id="boot" class="boot" aria-label="PRTS 启动状态" aria-live="polite">
+    <div class="boot-grid" aria-hidden="true"></div>
+    <div class="boot-scanline" aria-hidden="true"></div>
+    <div class="boot-frame boot-frame-left" aria-hidden="true">RI / 07</div>
+    <div class="boot-frame boot-frame-right" aria-hidden="true">LANDSHIP SYSTEMS</div>
+    <div class="boot-content">
+      <div class="boot-identity">
+        <div class="boot-logo"><svg aria-hidden="true"><use href="#post-mark"/></svg></div>
+        <div class="boot-wordmark"><span>RHODES ISLAND</span><strong>PRTS</strong><small>TACTICAL SUPPORT SYSTEM</small></div>
+      </div>
+      <div class="boot-rule"><span></span><b>SECURE CHANNEL / 04</b><span></span></div>
+      <div class="boot-heading"><p>舰载通讯系统</p><h1>正在建立连接</h1><span class="boot-heading-en">ESTABLISHING SECURE LINK</span></div>
+      <div class="boot-status" role="status">
+        <div class="boot-line" data-boot-line="0"><span class="boot-step">01</span><span>建立舰内链路</span><b>已就绪</b></div>
+        <div class="boot-line" data-boot-line="1"><span class="boot-step">02</span><span>载入通讯档案</span><b>读取中</b></div>
+        <div class="boot-line" data-boot-line="2"><span class="boot-step">03</span><span>校验本地存储</span><b>等待校验</b></div>
+      </div>
+      <div class="boot-progress-heading"><span>系统初始化</span><span class="boot-progress-value">00<span>%</span></span></div>
+      <div class="boot-progress" role="progressbar" aria-label="系统初始化进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="boot-progress-bar"></div></div>
+      <div class="boot-meta"><div><span>终端编号</span><strong>EI-6988</strong></div><div><span>信号等级</span><strong class="boot-signal"><i></i><i></i><i></i><i></i><i class="off"></i><em>稳定</em></strong></div><div><span>连接区域</span><strong>第三甲板 / 舰内网</strong></div></div>
+      <button class="boot-enter" id="boot-enter" type="button"><span>进入通讯终端</span><i aria-hidden="true">↗</i></button>
+      <p class="boot-skip-hint">按任意键或点击屏幕继续</p>
+    </div>
+    <div class="boot-bottom"><span>RHODES ISLAND / FIELD COMMUNICATIONS</span><span>WE KEEP IN TOUCH. WE KEEP MOVING.</span></div>
+  </section>
+  <div class="hud-reticle lt" aria-hidden="true"></div>
+  <div class="hud-reticle rt" aria-hidden="true"></div>
+  <div class="hud-reticle lb" aria-hidden="true"></div>
+  <div class="hud-reticle rb" aria-hidden="true"></div>
+  <div class="hud-watermark" aria-hidden="true">PRTS</div>
+  <main class="terminal" id="terminal" aria-label="罗德岛邮件客户端">
+    <header class="titlebar">
+      <a href="./index.html" class="brand" aria-label="罗德岛通讯首页"><svg><use href="#post-mark"/></svg><span>RHODES<span class="brand-post">POST</span></span></a>
+      <span class="app-caption">舰载通讯</span>
+      <label class="search-box"><i class="ti ti-search" aria-hidden="true"></i><input id="search" type="search" autocomplete="off" placeholder="搜索邮件、人员或标签" aria-label="搜索邮件、人员或标签"><kbd>/</kbd></label>
+      <button class="icon-button on-dark" id="advanced-search" aria-label="高级筛选" title="高级筛选"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+      <div class="titlebar-end"><span class="network-state"><span></span>工作区已就绪</span><button class="icon-button on-dark" id="settings-button" aria-label="终端设置" title="终端设置"><i class="ti ti-settings" aria-hidden="true"></i></button><button class="icon-button on-dark" id="fullscreen-button" aria-label="切换全屏" title="切换全屏"><i class="ti ti-maximize" aria-hidden="true"></i></button></div>
+    </header>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="邮箱导航">
+        <div class="sidebar-insignia"><svg><use href="#post-mark"/></svg><div>罗德岛<small>RHODES ISLAND</small></div><span class="insignia-rule"></span></div>
+        <button class="compose-button" id="compose-button" aria-label="撰写邮件"><i class="ti ti-plus" aria-hidden="true"></i><span>新建通讯</span><kbd>C</kbd></button>
+        <nav class="folder-nav" aria-label="邮件文件夹">
+          <button class="nav-item active" data-folder="inbox" aria-current="page" aria-label="收件箱" title="收件箱"><i class="ti ti-inbox" aria-hidden="true"></i><span>收件箱</span><b data-count="inbox">8</b></button>
+          <button class="nav-item" data-folder="starred" aria-label="星标邮件" title="星标邮件"><i class="ti ti-star" aria-hidden="true"></i><span>星标邮件</span><b data-count="starred">2</b></button>
+          <button class="nav-item" data-folder="snoozed" aria-label="稍后处理" title="稍后处理"><i class="ti ti-clock" aria-hidden="true"></i><span>稍后处理</span><b data-count="snoozed"></b></button>
+          <button class="nav-item" data-folder="sent" aria-label="发件箱" title="发件箱"><i class="ti ti-send" aria-hidden="true"></i><span>发件箱</span><b data-count="sent"></b></button>
+          <button class="nav-item" data-folder="drafts" aria-label="草稿箱" title="草稿箱"><i class="ti ti-file-pencil" aria-hidden="true"></i><span>草稿箱</span><b data-count="drafts">1</b></button>
+          <button class="nav-item" data-folder="archive" aria-label="已归档" title="已归档"><i class="ti ti-archive" aria-hidden="true"></i><span>已归档</span><b data-count="archive"></b></button>
+          <button class="nav-item" data-folder="trash" aria-label="回收站" title="回收站"><i class="ti ti-trash" aria-hidden="true"></i><span>回收站</span><b data-count="trash"></b></button>
+        </nav>
+        <div class="sidebar-section"><div class="sidebar-section-heading"><span>通讯频道</span><span>03</span></div><nav class="channel-nav" aria-label="通讯频道"><button class="nav-item" data-group="行动指挥" aria-label="行动指挥" title="行动指挥"><span class="channel-shape triangle"></span><span>行动指挥</span></button><button class="nav-item" data-group="医疗部门" aria-label="医疗部门" title="医疗部门"><span class="channel-shape cross"></span><span>医疗部门</span></button><button class="nav-item" data-group="后勤保障" aria-label="后勤保障" title="后勤保障"><span class="channel-shape square"></span><span>后勤保障</span></button></nav></div>
+        <div class="sidebar-section labels-section"><div class="sidebar-section-heading"><span>个人标签</span><button id="manage-labels" aria-label="管理标签" title="管理标签"><i class="ti ti-plus" aria-hidden="true"></i></button></div><nav id="label-nav" aria-label="个人标签"></nav></div>
+        <button class="nav-item contacts-nav" id="contacts-button" aria-label="通讯录" title="通讯录"><i class="ti ti-address-book" aria-hidden="true"></i><span>通讯录</span><span class="small-arrow">↗</span></button>
+        <div class="sidebar-bottom"><div class="sidebar-wordmark" aria-hidden="true">R.I.<span>CONNECT.<br>EVER FORWARD.</span></div><button class="profile" id="profile-button" aria-label="查看终端身份"><span class="doctor-avatar"><svg><use href="#operator-mark"/></svg></span><span>博士<small>doctor@rhodes.is</small></span><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
+      </aside>
+      <section class="mailbox" aria-label="邮件列表">
+        <header class="mailbox-heading"><div><p id="folder-code">INBOX</p><h1 id="folder-title">收件箱</h1></div><span class="folder-number" id="folder-total">08</span></header>
+        <div class="mail-filters"><button class="filter active" data-filter="all" aria-pressed="true">全部通讯</button><button class="filter" data-filter="unread" aria-pressed="false">未读 <span id="unread-count">4</span></button><button class="filter attachment-filter" data-filter="attachment" aria-pressed="false" aria-label="只看有附件的邮件" title="有附件"><i class="ti ti-paperclip" aria-hidden="true"></i></button><button class="icon-button on-dark" id="sort-button" aria-label="切换时间排序" title="切换时间排序"><i class="ti ti-sort-descending" aria-hidden="true"></i></button></div>
+        <div class="selection-toolbar"><label class="select-all"><input type="checkbox" id="select-all" aria-label="全选当前列表"><span id="selection-label">选择邮件</span></label><button id="clear-selection" class="text-button" hidden>取消选择</button><button class="icon-button on-dark" id="refresh-button" aria-label="刷新本地列表" title="刷新"><i class="ti ti-refresh" aria-hidden="true"></i></button></div>
+        <div class="batch-toolbar" id="batch-toolbar" hidden><button data-batch="read" title="标为已读" aria-label="批量标为已读"><i class="ti ti-mail-opened" aria-hidden="true"></i></button><button data-batch="unread" title="标为未读" aria-label="批量标为未读"><i class="ti ti-mail" aria-hidden="true"></i></button><button data-batch="label" title="添加标签" aria-label="批量添加标签"><i class="ti ti-tag" aria-hidden="true"></i></button><button data-batch="archive" title="归档" aria-label="批量归档"><i class="ti ti-archive" aria-hidden="true"></i></button><button data-batch="trash" title="删除" aria-label="批量删除"><i class="ti ti-trash" aria-hidden="true"></i></button></div>
+        <div class="active-filters" id="active-filters" hidden></div>
+        <div class="mail-list" id="mail-list"></div>
+        <footer class="mailbox-footer"><span id="list-summary">8 封通讯</span><span>END OF TRANSMISSION</span></footer>
+      </section>
+      <section class="reader" id="reader" aria-label="邮件阅读区">
+        <div class="reader-toolbar"><div class="toolbar-group"><button class="icon-button back-button" id="back-button" aria-label="返回列表"><i class="ti ti-arrow-left" aria-hidden="true"></i></button><span class="reader-breadcrumb">通讯 / <b id="reader-category">行动指挥</b></span></div><div class="toolbar-group reader-tools"><button class="icon-button" data-action="archive" aria-label="归档" title="归档"><i class="ti ti-archive" aria-hidden="true"></i></button><button class="icon-button" data-action="snooze" aria-label="稍后处理" title="稍后处理"><i class="ti ti-clock" aria-hidden="true"></i></button><button class="icon-button" data-action="label" aria-label="设置标签" title="设置标签"><i class="ti ti-tag" aria-hidden="true"></i></button><button class="icon-button" data-action="read" aria-label="切换已读状态" title="切换已读状态"><i class="ti ti-mail" aria-hidden="true"></i></button><button class="icon-button" data-action="trash" aria-label="删除" title="删除"><i class="ti ti-trash" aria-hidden="true"></i></button><button class="icon-button" data-action="export" aria-label="导出整封通讯" title="导出整封通讯"><i class="ti ti-download" aria-hidden="true"></i></button><button class="icon-button" id="focus-button" aria-label="切换专注阅读" aria-pressed="false" title="专注阅读"><i class="ti ti-book" aria-hidden="true"></i></button><button class="icon-button dossier-trigger" id="dossier-button" aria-label="行动档案" title="行动档案"><i class="ti ti-layout-sidebar-right" aria-hidden="true"></i></button></div></div>
+        <div class="reader-scroll" id="reader-scroll"><article id="mail-content"></article></div>
+        <footer class="reader-bottom" id="reader-bottom"><div class="reader-pagination"><button class="icon-button" id="prev-mail" aria-label="上一封"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><span id="mail-position">1 / 8</span><button class="icon-button" id="next-mail" aria-label="下一封"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div><div class="reply-actions"><button class="secondary-button" id="forward-button"><i class="ti ti-arrow-forward-up" aria-hidden="true"></i>转发</button><button class="primary-button" id="reply-button"><i class="ti ti-arrow-back-up" aria-hidden="true"></i>回复通讯</button></div></footer>
+      </section>
+      <aside class="dossier" id="dossier" aria-label="行动档案"></aside>
+    </div>
+    <footer class="statusbar"><span><span class="status-square"></span>PRTS<span class="status-divider">/</span><span class="signal-indicator" aria-label="信号等级"><span class="signal-bar"></span><span class="signal-bar"></span><span class="signal-bar"></span><span class="signal-bar"></span><span class="signal-bar off"></span></span><span class="status-divider"></span><span id="storage-status">本地存储已就绪</span></span><span class="status-motto">WE KEEP IN TOUCH. WE KEEP MOVING.</span><button id="shortcuts-button">快捷键 <i class="ti ti-command" aria-hidden="true"></i></button></footer>
+  </main>
+  <div class="desktop-bottom" aria-hidden="true"><span>PERSONAL CORRESPONDENCE / R.I.</span><span class="registration-mark">╳</span><span>在漫长的旅途中，每一封来信都有意义。</span></div>
+  <dialog id="compose-dialog" class="dialog compose-dialog" aria-labelledby="compose-title">
+    <form id="compose-form">
+      <header class="dialog-header"><div><span class="dialog-code">NEW TRANSMISSION</span><h2 id="compose-title">新建通讯</h2></div><button class="icon-button" type="button" data-close="compose-dialog" aria-label="关闭并保存草稿"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+      <div class="compose-field"><label for="compose-to">收件人</label><input id="compose-to" type="text" list="contact-options" placeholder="邮箱地址，多个地址用逗号分隔" required autocomplete="off"><button type="button" class="text-button" id="toggle-cc">抄送</button></div>
+      <div class="compose-field" id="cc-field" hidden><label for="compose-cc">抄送</label><input id="compose-cc" type="text" placeholder="抄送邮箱"></div>
+      <div class="compose-field"><label for="compose-subject">主题</label><input id="compose-subject" placeholder="这封通讯的主题" required maxlength="180"><label class="priority-toggle"><input id="compose-priority" type="checkbox"><span>优先</span></label></div>
+      <datalist id="contact-options"></datalist>
+      <textarea id="compose-body" aria-label="通讯正文" placeholder="博士，请在这里写下您的讯息。" required></textarea>
+      <div class="compose-attachments" id="compose-attachments"></div>
+      <div class="compose-status"><span id="draft-status" role="status">草稿将自动保存</span><span id="word-count">0 字</span></div>
+      <footer class="compose-footer"><label class="icon-button attachment-label" title="添加附件"><input id="compose-file" type="file" multiple aria-label="添加附件"><i class="ti ti-paperclip" aria-hidden="true"></i></label><button class="text-button" type="button" id="insert-signature">插入签名</button><button class="text-button" type="button" id="save-draft">保存草稿</button><button class="primary-button" type="submit"><i class="ti ti-send" aria-hidden="true"></i>加入发件箱</button></footer>
+    </form>
+  </dialog>
+  <dialog id="info-dialog" class="dialog info-dialog" aria-labelledby="info-title"><header class="dialog-header"><h2 id="info-title">终端</h2><button class="icon-button" data-close="info-dialog" aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></header><div id="info-content"></div></dialog>
+  <dialog id="material-dialog" class="dialog material-dialog" aria-labelledby="material-title"><header class="dialog-header"><div><span class="dialog-code">MATERIAL INSPECTION</span><h2 id="material-title">物资检视</h2></div><button class="icon-button on-dark" data-close="material-dialog" aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></header><div id="material-content"></div></dialog>
+  <div id="toast" class="toast" popover="manual" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span id="toast-text"></span><button id="toast-undo" hidden>撤销</button></div>
+</body>
+</html>

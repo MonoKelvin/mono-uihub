@@ -1,0 +1,50 @@
+{
+  "name": "罗德岛通讯 · Rhodes Mail",
+  "slug": "rhodes-mail",
+  "page_type": "software",
+  "tags": [
+    "邮件客户端",
+    "明日方舟",
+    "罗德岛",
+    "战术终端",
+    "几何",
+    "3D",
+    "交互"
+  ],
+  "created_at": "2026-10-14T11:46:42Z",
+  "updated_at": "2026-10-14T12:32:00Z",
+  "duration_seconds": 1119,
+  "image_generation": {
+    "used": false,
+    "count": 0,
+    "models": []
+  },
+  "history": [
+    {
+      "prompt": "生成一个《明日方舟》风格的UI页面的邮件客户端软件，要求简约高级大气感，明显的明日方舟风格几何、3D、动画、交互等特色",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "mono-ui-prototype",
+        "ui-metadata",
+        "frontend-design",
+        "animate",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 1119,
+      "image_generation": {
+        "used": false,
+        "count": 0,
+        "models": []
+      }
+    }
+  ],
+  "notes": [
+    "独立设计方向：罗德岛舰载通讯终端。深石墨导航、冷白阅读区、战术黄强调，几何切角和 CSS 3D 源石晶体。",
+    "原生 HTML / CSS / JavaScript，无构建依赖；字体与 Tabler Icons 通过 CDN 引用。没有生成图片。",
+    "支持邮件搜索、未读筛选、分组、星标、归档与撤销、删除与恢复、草稿、回复、转发、本地发件箱、文本附件保存、快捷键和 3D 模型拖动。",
+    "邮件及设置保存在当前浏览器；未接入真实邮件服务，发件箱中的邮件保持待发送状态。小型文本附件内容可保存，其他附件只保留文件名。",
+    "窄屏采用列表和阅读区分视图；支持减少动效设置及系统 prefers-reduced-motion。",
+    "PRTS 启动界面已重构为可读的舰载系统面板：放大关键状态、初始化进度、连接区域和进入终端按钮，并使用原创切角、网格、战术黄标记与响应式布局。",
+    "按仓库约定仅做代码层面自检；没有启动服务器、运行测试框架或截图。"
+  ]
+}
