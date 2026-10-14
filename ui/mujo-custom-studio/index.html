@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f4f0">
+  <title>木序 MUJO｜家具定制工作台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;650;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-window">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#orders" aria-label="木序，返回订单看板">
+        <svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true"><path d="M6 29V7h7v15h5V7h7v22h-7v-7h-5v7Z" fill="currentColor"/><path d="M28 7h3v22h-3Z" fill="currentColor"/></svg>
+        <span>木序 <b>mujo</b><small>家具定制工作台</small></span>
+      </a>
+      <button class="workspace-switch" data-action="workspace"><span class="workspace-icon"><i class="ti ti-building-store" aria-hidden="true"></i></span><span>木序设计事务所<small>品牌工作空间</small></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+      <nav aria-label="主导航">
+        <p class="nav-label">工作空间</p>
+        <button class="nav-item active" data-view="orders"><i class="ti ti-layout-kanban" aria-hidden="true"></i><span>订单看板</span><span class="nav-count" id="nav-order-count">12</span></button>
+        <button class="nav-item" data-view="production"><i class="ti ti-calendar-week" aria-hidden="true"></i><span>生产排期</span></button>
+        <button class="nav-item" data-view="delivery"><i class="ti ti-truck-delivery" aria-hidden="true"></i><span>交付追踪</span></button>
+        <p class="nav-label second">设计与协作</p>
+        <button class="nav-item" data-view="materials"><i class="ti ti-stack-2" aria-hidden="true"></i><span>材料库</span></button>
+        <button class="nav-item" data-view="craft"><i class="ti ti-file-pencil" aria-hidden="true"></i><span>工艺卡</span></button>
+        <button class="nav-item" data-view="dimensions"><i class="ti ti-ruler-measure" aria-hidden="true"></i><span>尺寸编辑器</span></button>
+        <button class="nav-item" data-view="preview"><i class="ti ti-cube" aria-hidden="true"></i><span>效果预览</span></button>
+        <button class="nav-item" data-view="messages"><i class="ti ti-messages" aria-hidden="true"></i><span>客户沟通</span><span class="message-count">4</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="studio-note"><i class="ti ti-plant-2" aria-hidden="true"></i><p>好家具，值得慢慢做。<span>让每一份用心，都有条不紊。</span></p></div>
+        <button class="nav-item settings" data-action="settings"><i class="ti ti-settings" aria-hidden="true"></i><span>工作空间设置</span></button>
+        <button class="profile" data-action="profile"><img src="https://i.pravatar.cc/80?img=47" alt="设计师林可"><span>林可<small>设计负责人</small></span><i class="ti ti-chevrons-up" aria-hidden="true"></i></button>
+      </div>
+    </aside>
+    <div class="main-shell">
+      <header class="topbar">
+        <div class="breadcrumb"><button class="icon-button mobile-menu" data-action="menu" aria-label="展开导航"><i class="ti ti-menu-2" aria-hidden="true"></i></button><i class="ti ti-layout-sidebar" aria-hidden="true"></i><span>工作空间</span><span class="slash">/</span><strong id="breadcrumb-current">订单看板</strong></div>
+        <div class="top-actions"><span class="demo-status"><span></span>本地演示空间</span><button class="icon-button" data-action="search" aria-label="搜索订单"><i class="ti ti-search" aria-hidden="true"></i></button><button class="icon-button notification-button" data-action="notifications" aria-label="查看通知"><i class="ti ti-bell" aria-hidden="true"></i><b></b></button><div class="top-divider"></div><img class="avatar" src="https://i.pravatar.cc/80?img=47" alt="林可"></div>
+      </header>
+      <main id="main-content" tabindex="-1"></main>
+      <footer class="statusbar"><span><span class="status-dot"></span><span id="save-state">更改保存在此浏览器</span></span><span>用心造物，从容协作 <i class="ti ti-leaf" aria-hidden="true"></i></span></footer>
+    </div>
+  </div>
+  <div id="overlay-root"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">请启用 JavaScript 以使用订单看板与定制工具。</p></noscript>
+</body>
+</html>
