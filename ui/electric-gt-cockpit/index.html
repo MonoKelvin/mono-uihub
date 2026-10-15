@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e9eceb">
+  <meta name="description" content="极点 GT 纯电超跑中控屏，车辆控制、能量、导航与座舱舒适设置。">
+  <title>极点 GT · 中控屏</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="cockpit" data-view="drive" aria-label="极点 GT 中控屏">
+    <header class="topbar">
+      <a href="./index.html" class="wordmark" aria-label="极点 GT 首页"><span class="brand-symbol" aria-hidden="true"></span><span>极点 <b>GT</b></span></a>
+      <nav class="view-tabs" aria-label="座舱视图"><button class="view-tab is-active" data-view="drive" aria-pressed="true">车辆</button><button class="view-tab" data-view="energy" aria-pressed="false">能量</button><button class="view-tab" data-view="journey" aria-pressed="false">行程</button></nav>
+      <div class="system-status"><span class="weather"><i class="ti ti-sun" aria-hidden="true"></i><span class="number">23°</span></span><i class="ti ti-bluetooth" role="img" aria-label="蓝牙已连接"></i><time id="clock" class="number">10:48</time><button class="icon-button" data-dialog="settings" aria-label="车辆设置"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button></div>
+    </header>
+    <div class="workspace">
+      <section class="vehicle-section" aria-labelledby="view-title">
+        <div class="vehicle-heading"><h1 id="view-title">车辆概览</h1><span class="ready"><span class="status-dot"></span><span id="vehicle-note">已驻车，系统正常</span></span></div>
+        <div class="hero-content" id="drive-content">
+          <div class="hero-heading"><div class="driving-summary"><div class="speed"><span class="number speed-value">0</span><span>km/h</span></div><span class="park-status"><b class="number">P</b>驻车</span></div><button class="tire-button" data-dialog="tires"><i class="ti ti-car-4wd" aria-hidden="true"></i><span>胎压正常</span><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
+          <div class="car-stage"><img id="car-render" class="car-render" src="assets/vehicle.webp" alt="纯电超跑车辆三维透视" width="1440" height="808" fetchpriority="high"><div class="car-pin frunk-pin" id="frunk-pin" hidden><span></span>前备厢已打开</div><div class="car-pin charge-pin" id="charge-pin" hidden><span></span>充电口已打开</div><div class="car-pin mirror-pin" id="mirror-pin" hidden><span></span>后视镜已折叠</div></div>
+          <div class="vehicle-quick-actions" aria-label="车辆快捷控制"><button class="vehicle-action" id="lock-button" aria-pressed="true" aria-label="解锁车门"><i class="ti ti-lock" aria-hidden="true"></i><span id="lock-label">已锁定</span></button><button class="vehicle-action" id="frunk-button" aria-pressed="false"><i class="ti ti-car" aria-hidden="true"></i><span>前备厢</span><small id="frunk-label">开启</small></button><button class="vehicle-action" id="charge-port-button" aria-pressed="false"><i class="ti ti-plug" aria-hidden="true"></i><span>充电口</span><small id="charge-port-label">开启</small></button></div>
+        </div>
+        <div class="energy-content content-view" id="energy-content" hidden>
+          <div class="energy-head"><div><span class="field-label">当前电量</span><div class="large-value number">78<span>%</span></div></div><button class="outlined-button" data-dialog="charge"><i class="ti ti-bolt" aria-hidden="true"></i>充电设置</button></div>
+          <div class="energy-visual"><img id="energy-render" src="assets/powertrain.webp" alt="纯电动力系统与电池结构" width="1440" height="808" loading="lazy"><div class="energy-callout"><span class="number">28°C</span><span>电池温度正常</span></div></div>
+          <div class="energy-stats"><div><span>可用能量</span><strong class="number">72.5 <small>kWh</small></strong></div><div><span>平均能耗</span><strong class="number">17.6 <small>kWh/100 km</small></strong></div><div><span>充电上限</span><strong class="number" id="charge-limit-summary">80<small>%</small></strong></div></div>
+        </div>
+        <div class="journey-content content-view" id="journey-content" hidden>
+          <div class="journey-overview">
+            <div class="journey-distance">
+              <span class="field-label">行驶里程</span>
+              <div class="journey-distance-value"><strong class="number">36.8</strong><span>km</span></div>
+              <p class="trip-start">今日 <span class="number">09:12</span> 出发</p>
+            </div>
+            <dl class="journey-metrics" aria-label="本次行程指标">
+              <div><dt>用时</dt><dd><span class="number">48</span><span class="metric-unit">分钟</span></dd></div>
+              <div><dt>均速</dt><dd><span class="number">46</span><span class="metric-unit">km/h</span></dd></div>
+              <div><dt>耗电</dt><dd><span class="number">6.5</span><span class="metric-unit">kWh</span></dd></div>
+            </dl>
+          </div>
+          <figure class="journey-chart" aria-labelledby="journey-chart-title">
+            <figcaption class="chart-heading"><span id="journey-chart-title">能耗变化</span><span>kWh / 100 km</span></figcaption>
+            <svg viewBox="0 0 650 130" preserveAspectRatio="none" role="img" aria-label="本次行程能耗曲线，平均每百公里17.6千瓦时">
+              <path d="M0 25 H650 M0 65 H650 M0 105 H650" stroke="#d1d7d5" fill="none" stroke-dasharray="3 6"/>
+              <path d="M0 82 L22 75 L46 93 L69 59 L92 66 L115 29 L138 54 L161 48 L184 69 L207 74 L230 59 L253 84 L276 62 L299 52 L322 78 L345 69 L368 89 L391 69 L414 77 L437 63 L460 80 L483 64 L506 76 L529 55 L552 70 L575 65 L598 81 L625 74 L650 82" fill="none" stroke="#505f67" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+            </svg>
+            <div class="chart-labels number"><span>0 km</span><span>36.8 km</span></div>
+          </figure>
+        </div>
+        <div class="vehicle-footer"><div class="range-summary"><span class="number" id="range-value">412</span><span class="range-unit">km<small>预计续航</small></span></div><button class="battery-summary" data-dialog="charge" aria-label="电量78%，打开充电设置"><span class="battery-icon" aria-hidden="true"><span></span></span><b class="number">78%</b><span>电量</span></button></div>
+      </section>
+      <section class="drive-mode-panel" aria-label="驾驶模式"><button class="mode-info" data-dialog="mode"><span>驾驶模式</span><span id="mode-description">平衡动力与舒适</span><i class="ti ti-info-circle" aria-hidden="true"></i></button><div class="mode-selector" role="group" aria-label="选择驾驶模式"><button data-mode="range" aria-pressed="false"><i class="ti ti-leaf" aria-hidden="true"></i><span>续航</span></button><button data-mode="gt" class="is-active" aria-pressed="true"><span class="gt-mark">GT</span><span>巡航</span></button><button data-mode="sport" aria-pressed="false"><i class="ti ti-flag-3" aria-hidden="true"></i><span>运动</span></button></div></section>
+      <aside class="companion-panel" aria-label="导航与媒体">
+        <section class="navigation-panel" aria-label="导航">
+          <button class="destination-search-button" data-dialog="destination"><i class="ti ti-search" aria-hidden="true"></i><span>想去哪里？</span></button>
+          <div class="map" role="group" aria-label="西岸周边道路与所选路线">
+            <svg viewBox="0 0 400 470" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="470" fill="#dde2df"/>
+              <path d="M360 -40 C242 50 255 123 293 189 S370 291 271 511" fill="none" stroke="#c3cecf" stroke-width="87"/>
+              <g fill="#d4dcd5"><path d="M156 186 L225 215 L246 264 L204 298 L164 263Z"/><path d="M16 298 L73 330 L47 380 L4 354Z"/><path d="M186 26 L229 42 L199 109 L156 84Z"/></g>
+              <g fill="none" stroke="#eef1ee" stroke-width="12"><path d="M-50 112 L262 306 L420 373"/><path d="M-20 251 L230 88 L314 -35"/><path d="M34 500 L97 330 L168 217 L215 115 L239 -20"/><path d="M-10 359 L185 434 L305 448"/><path d="M-30 33 L265 218"/><path d="M31 -20 L28 156 L218 283"/><path d="M113 -20 L98 116 L51 210 L12 288"/><path d="M151 147 L251 207 M92 264 L226 343 M72 332 L194 386"/></g>
+              <g fill="none" stroke="#bfc8c4" stroke-width="1"><path d="M-50 112 L262 306 L420 373"/><path d="M34 500 L97 330 L168 217 L215 115 L239 -20"/></g>
+              <g fill="#69766f" font-size="12" font-family="sans-serif"><text x="50" y="142" transform="rotate(31 50 142)">龙华中路</text><text x="93" y="381" transform="rotate(24 93 381)">龙腾大道</text><text x="175" y="167">西岸</text><text x="287" y="121" transform="rotate(62 287 121)" fill="#667b80">黄 浦 江</text><text x="39" y="284">龙华</text></g>
+              <path id="map-route" d="M97 330 L141 260 L177 282 L223 244 L242 255" fill="none" stroke="#f5f6f3" stroke-width="9" stroke-linejoin="round"/><path id="map-route-line" d="M97 330 L141 260 L177 282 L223 244 L242 255" fill="none" stroke="#526c7b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle id="map-destination" cx="242" cy="255" r="8" fill="#526c7b" stroke="#f5f6f3" stroke-width="3"/>
+              <circle cx="97" cy="330" r="21" fill="#6d8794" fill-opacity=".12"/><circle cx="97" cy="330" r="13" fill="#f6f7f4"/><path d="M97 320 L104 338 L97 334 L90 338Z" fill="#394f5b"/>
+            </svg>
+            <span class="map-compass number">N<i class="ti ti-navigation" aria-hidden="true"></i></span><button class="map-center icon-button" id="map-center" aria-label="地图回到当前位置"><i class="ti ti-current-location" aria-hidden="true"></i></button>
+          </div>
+          <div class="navigation-instruction" id="navigation-instruction" hidden><i class="ti ti-arrow-ramp-right" aria-hidden="true"></i><div><b class="number">800 m</b><span>右转进入龙腾大道</span></div></div>
+          <div class="destination-details"><div class="destination-heading"><span class="destination-type" id="destination-type">已选目的地</span><button class="icon-button" data-dialog="route" aria-label="查看路线详情"><i class="ti ti-dots" aria-hidden="true"></i></button></div><h2 id="destination-name">西岸艺术中心</h2><div class="destination-meta"><span><b class="number" id="destination-time">18</b> 分钟</span><span><b class="number" id="destination-distance">8.6</b> km</span><span class="arrival-charge"><i class="ti ti-battery-3" aria-hidden="true"></i><b class="number" id="arrival-charge">76%</b></span></div><button class="primary-button route-button" id="route-button"><i class="ti ti-navigation" aria-hidden="true"></i><span>开始导航</span></button></div>
+        </section>
+        <section class="music-panel" aria-label="音乐播放器"><button class="music-open" data-dialog="media" aria-label="打开音乐播放器"><span class="album-art" aria-hidden="true"><span></span></span><span class="track-details"><strong id="track-title">A Walk</strong><span id="track-artist">Tycho</span></span></button><button class="icon-button play-button" id="play-button" aria-label="播放音乐" aria-pressed="false"><i class="ti ti-player-play" aria-hidden="true"></i></button><button class="icon-button next-button" id="next-button" aria-label="下一首"><i class="ti ti-player-skip-forward" aria-hidden="true"></i></button></section>
+      </aside>
+    </div>
+    <footer class="climate-bar" aria-label="空调与座椅控制">
+      <button class="seat-control" data-seat="driver" aria-label="主驾座椅加热，已关闭"><i class="ti ti-armchair" aria-hidden="true"></i><span class="heat-level" aria-hidden="true"><i></i><i></i><i></i></span></button>
+      <div class="temperature-control"><button class="icon-button" data-temp="driver" data-delta="-0.5" aria-label="降低主驾温度"><i class="ti ti-minus" aria-hidden="true"></i></button><button class="temperature-display" data-dialog="climate" aria-label="打开主驾空调控制"><b id="driver-temp" class="number">21.5°</b><span>主驾</span></button><button class="icon-button" data-temp="driver" data-delta="0.5" aria-label="升高主驾温度"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+      <button class="climate-main" data-dialog="climate"><i class="ti ti-propeller" aria-hidden="true"></i><span><strong id="climate-status">自动空调</strong><small id="climate-detail">A/C 已开启</small></span><i class="ti ti-chevron-up" aria-hidden="true"></i></button>
+      <div class="temperature-control"><button class="icon-button" data-temp="passenger" data-delta="-0.5" aria-label="降低副驾温度"><i class="ti ti-minus" aria-hidden="true"></i></button><button class="temperature-display" data-dialog="climate" aria-label="打开副驾空调控制"><b id="passenger-temp" class="number">21.5°</b><span>副驾</span></button><button class="icon-button" data-temp="passenger" data-delta="0.5" aria-label="升高副驾温度"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+      <button class="seat-control" data-seat="passenger" aria-label="副驾座椅加热，已关闭"><i class="ti ti-armchair" aria-hidden="true"></i><span class="heat-level" aria-hidden="true"><i></i><i></i><i></i></span></button><button class="volume-button icon-button" data-dialog="volume" aria-label="媒体音量"><i class="ti ti-volume" aria-hidden="true"></i></button>
+    </footer>
+    <div class="toast" role="status" id="toast"></div>
+  </main>
+  <dialog id="control-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><button class="icon-button" id="dialog-back" aria-label="&#36820;&#22238;&#19978;&#19968;&#32423;" hidden><i class="ti ti-chevron-left" aria-hidden="true"></i></button><div><p id="dialog-context">极点 GT</p><h2 id="dialog-title">车辆设置</h2></div><button class="icon-button" id="close-dialog" aria-label="关闭面板"><i class="ti ti-x" aria-hidden="true"></i></button></div><div id="dialog-content"></div></dialog>
+</body>
+</html>

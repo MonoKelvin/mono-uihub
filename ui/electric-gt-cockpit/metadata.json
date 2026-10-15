@@ -1,0 +1,97 @@
+{
+  "name": "极点 GT 纯电超跑中控屏",
+  "slug": "electric-gt-cockpit",
+  "page_type": "software",
+  "tags": [
+    "纯电超跑",
+    "车载中控",
+    "瓷白钛银",
+    "大触控区域",
+    "本地图片"
+  ],
+  "created_at": "2026-10-15T10:26:24+08:00",
+  "updated_at": "2026-10-15T11:14:13+08:00",
+  "duration_seconds": 133,
+  "image_generation": {
+    "used": false,
+    "count": 0,
+    "models": []
+  },
+  "history": [
+    {
+      "prompt": "设计一个纯电超跑中央显示屏UI界面，简约高级",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "draw-ui",
+        "mono-ui-prototype",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 540,
+      "image_generation": {
+        "used": false,
+        "count": 0,
+        "models": []
+      }
+    },
+    {
+      "prompt": "请重构：UI设计太普通了，配色太老土太多AI味道了，没有高级感，图标和交互区域也很小不高级，请完善交互和UI设计\n补充：图片加载有点慢，还是拉取到本地吧。\n补充：车辆页面的车辆图片太大导致被下面的空间遮挡了。能量页面的图片又太小了。请统一下大小和布局间距等。",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "mono-ui-prototype",
+        "redesign-existing-projects",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 1159,
+      "image_generation": {
+        "used": false,
+        "count": 0,
+        "models": []
+      }
+    },
+    {
+      "prompt": "删除design.md文件，svg放到assets里面。再继续优化，适当加一点点高斯模糊、交互动画等效果\n补充：中央显示屏改成中控屏",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "mono-ui-prototype",
+        "animate",
+        "animation-performance",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 266,
+      "image_generation": {
+        "used": false,
+        "count": 0,
+        "models": []
+      }
+    },
+    {
+      "prompt": "行程页面的文字内容很多太紧凑了，请调整好排版布局",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "mono-ui-prototype",
+        "redesign-existing-projects",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 133,
+      "image_generation": {
+        "used": false,
+        "count": 0,
+        "models": []
+      }
+    }
+  ],
+  "notes": [
+    "以瓷白 #ecefed、钛银车辆、深灰 #252e30 建立座舱层级；灰蓝 #526c7b 仅用于导航路线。保留极点 GT 标识，删除营销口号、小型三栏仪表盘与苔绿色强调。",
+    "车辆与能量共用 72px 信息行、弹性图片行、64px 操作/数据行与12px间距；图片使用相同尺寸和 object-fit:contain，取消绝对定位位移。底部续航与空调处于独立布局区域。",
+    "主要图标26–32px，按钮56–64px；紧凑断点保留44px及以上操作目标。980–1050px附近重排辅助内容，较低窗口允许工作区局部滚动。",
+    "保留并完善驾驶模式、续航估算、到达电量、车锁、前备厢、充电口、后视镜、胎压、双区温度、温度同步、自动/手动空调、除雾、座椅加热、导航路线、媒体进度、音量、充电上限和面板返回。状态仅存于内存，刷新恢复初始值。",
+    "车辆图片由用户要求本地化。Rimac 官方两张 PNG 经等比缩小和灰度处理为透明 WebP，输出1440×808，大小88104与156942字节，总计245046字节；原始合计3212882字节，减少约92.4%。图片来源为 Rimac 官方 Nevera 页面，原图链接记录在本文件中。",
+    "字体和 Tabler 图标保持 CDN 引用；原有车辆 SVG 用于胎压视图及车图异常时的本地后备。",
+    "代码层面检查包括 JavaScript 语法、HTML 嵌套、DOM引用、本地文件、图标名称、JSON和图片解码。按仓库要求未启动服务、未截图、未运行浏览器测试。媒体仅模拟播放状态和进度，不含音频；地图和车辆控制未接入真实服务。",
+    "页面标题、描述和辅助技术名称统一为中控屏。设计说明文件已按要求删除；favicon.svg 与 vehicle.svg 统一存放于 assets，HTML、胎压面板及图片后备引用均已更新。",
+    "动效用于操作反馈和状态连续性：按钮按压140ms、内容淡入180ms、标签底板滑动200ms、原生面板开合240ms；沿用并更新现有缓动变量。面板遮罩固定4px模糊，地图搜索固定8px，车辆提示固定6px；不动画模糊半径、不移动图片或改变统一图片布局。",
+    "键盘操作和系统减少动态效果设置会停用位移动画；低透明度偏好和不支持backdrop-filter的浏览器使用清晰底色。原生dialog继续承担焦点约束、Esc和关闭语义，退出动画使用渐进增强的离散显示/overlay过渡。",
+    "原始车图：https://cloudfront.rimac-automobili.com/wp-content/uploads/2021/05/30140115/teardown_01_optimised.png；动力结构图：https://cloudfront.rimac-automobili.com/wp-content/uploads/2021/05/30140126/teardown_02_optimised.png。",
+    "行程页改为桌面端左侧里程和出发时间、右侧三项对齐指标、下方独立能耗图的布局。将标签精简为用时/均速/耗电，减少横轴重复标记；使用独立行程样式，数值与单位按基线对齐，图表按剩余高度伸缩。600px以下将摘要和指标分行，适当增加该视图高度，保留可读字号与24px区块间距；低高度桌面使用紧凑间距，不影响车辆和能量页的共享图片布局。"
+  ]
+}
