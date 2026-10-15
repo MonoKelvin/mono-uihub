@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>翠野 · 定制奶茶付款</title>
+<meta name="description" content="翠野 · 桂花乌龙鲜奶茶 定制与付款" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%233C4B32' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%233C4B32'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap&text=翠野桂花乌龙鲜奶茶定制你的一杯现萃" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main class="stage">
+  <section class="checkout" aria-label="定制奶茶付款">
+
+    <!-- 左 · 产品 · 几何茶盘 -->
+    <aside class="product warm">
+      <header class="brand reveal" style="--d:0">
+        <span class="brand-name">翠野</span>
+        <span class="brand-tag">CUIYE&nbsp;TEA</span>
+      </header>
+
+      <div class="hero reveal" style="--d:1">
+        <div class="dial-stage">
+          <svg class="dial" viewBox="0 0 320 320" aria-hidden="true">
+            <circle class="ring-track"  cx="160" cy="160" r="140" />
+            <circle class="dial-fill"   cx="160" cy="160" r="140" transform="rotate(-90 160 160)" />
+            <circle class="ring-outer"  cx="160" cy="160" r="152" />
+            <circle class="ring-ticks"  cx="160" cy="160" r="146" />
+            <circle class="ring-inner"  cx="160" cy="160" r="110" />
+            <g class="ticks-cardinal">
+              <line x1="160" y1="2"   x2="160" y2="14"  /><line x1="160" y1="306" x2="160" y2="318" />
+              <line x1="2"   y1="160" x2="14"  y2="160" /><line x1="306" y1="160" x2="318" y2="160" />
+            </g>
+          </svg>
+
+          <figure class="cup-wrap">
+            <img class="cup" src="assets/milk-tea.png" alt="桂花乌龙鲜奶茶 实物图"
+                 onerror="this.closest('.cup-wrap').classList.add('no-img');this.onerror=null" />
+            <span class="cup-fallback" aria-hidden="true"><i class="ti ti-cup"></i></span>
+          </figure>
+
+          <div class="steam" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <div class="product-id reveal" style="--d:2">
+        <h1 class="product-name">桂花乌龙鲜奶茶</h1>
+        <p class="product-tag"><i class="ti ti-leaf"></i>高山乌龙<span class="dot-sep"></span>鲜乳现萃</p>
+      </div>
+
+      <p class="pickup reveal" style="--d:3">
+        <i class="ti ti-map-pin"></i>翠野湖滨道店<span class="dot-sep"></span>自取约 <span class="num">12</span> 分钟
+      </p>
+    </aside>
+
+    <!-- 右 · 定制 · 付款 -->
+    <section class="panel">
+      <header class="panel-head reveal" style="--d:1">
+        <h2 class="panel-title">定制你的一杯</h2>
+      </header>
+
+      <div class="panel-scroll">
+        <div class="field reveal" style="--d:2" role="radiogroup" aria-label="杯型">
+          <span class="field-label"><i class="ti ti-cup"></i>杯型</span>
+          <div class="chip-row">
+            <button class="chip" role="radio" aria-checked="false" data-size="M" data-price="22">中杯<em>¥22</em></button>
+            <button class="chip is-sel" role="radio" aria-checked="true" data-size="L" data-price="26">大杯<em>¥26</em></button>
+          </div>
+        </div>
+
+        <div class="field reveal" style="--d:3" role="radiogroup" aria-label="甜度">
+          <span class="field-label"><i class="ti ti-droplet"></i>甜度</span>
+          <div class="chip-row wrap">
+            <button class="chip" role="radio" aria-checked="false" data-level="0">无糖</button>
+            <button class="chip is-sel" role="radio" aria-checked="true" data-level="0.3">三分</button>
+            <button class="chip" role="radio" aria-checked="false" data-level="0.5">五分</button>
+            <button class="chip" role="radio" aria-checked="false" data-level="0.7">七分</button>
+            <button class="chip" role="radio" aria-checked="false" data-level="1">全糖</button>
+          </div>
+        </div>
+
+        <div class="field reveal" style="--d:4" role="radiogroup" aria-label="温度与冰量">
+          <span class="field-label"><i class="ti ti-temperature"></i>温度</span>
+          <div class="chip-row wrap">
+            <button class="chip" role="radio" aria-checked="false">热饮</button>
+            <button class="chip is-sel" role="radio" aria-checked="true">温热</button>
+            <button class="chip" role="radio" aria-checked="false">去冰</button>
+            <button class="chip" role="radio" aria-checked="false">少冰</button>
+            <button class="chip" role="radio" aria-checked="false">正常冰</button>
+          </div>
+        </div>
+
+        <div class="field reveal" style="--d:5">
+          <span class="field-label"><i class="ti ti-circle-dot"></i>小料</span>
+          <div class="chip-row wrap">
+            <button class="chip tog is-sel" data-topping="pearl" data-add="4" aria-pressed="true">黑糖珍珠<em>+¥4</em></button>
+            <button class="chip tog" data-topping="jelly" data-add="3" aria-pressed="false">桂花冻<em>+¥3</em></button>
+            <button class="chip tog" data-topping="coconut" data-add="3" aria-pressed="false">鲜椰果<em>+¥3</em></button>
+            <button class="chip tog" data-topping="oat" data-add="2" aria-pressed="false">黄金燕麦<em>+¥2</em></button>
+          </div>
+        </div>
+
+        <div class="field field-inline reveal" style="--d:6">
+          <span class="field-label"><i class="ti ti-stack-2"></i>数量</span>
+          <div class="stepper">
+            <button class="step" data-step="-1" aria-label="减少数量"><i class="ti ti-minus"></i></button>
+            <span class="step-n num" id="qty" aria-live="polite">1</span>
+            <button class="step" data-step="1" aria-label="增加数量"><i class="ti ti-plus"></i></button>
+          </div>
+        </div>
+
+        <div class="bill reveal" style="--d:7">
+          <div class="bill-row"><span>桂花乌龙鲜奶茶<span class="bill-size" id="billSize">· 大杯</span></span><span id="billBase" class="num">¥26</span></div>
+          <div class="bill-add" id="billAdd"></div>
+          <div class="bill-row sub"><span>小计 · <span id="billQty">1</span> 杯</span><span id="billSub" class="num">¥30</span></div>
+          <div class="bill-row minus"><span>新客首杯立减</span><span class="num">−¥3</span></div>
+        </div>
+      </div>
+
+      <footer class="pay reveal" style="--d:8">
+        <div class="methods" role="radiogroup" aria-label="支付方式">
+          <button class="method is-sel" role="radio" aria-checked="true" aria-label="微信支付"><i class="ti ti-brand-wechat"></i></button>
+          <button class="method" role="radio" aria-checked="false" aria-label="支付宝"><i class="ti ti-brand-alipay"></i></button>
+          <button class="method" role="radio" aria-checked="false" aria-label="Apple Pay"><i class="ti ti-brand-apple"></i></button>
+          <button class="method" role="radio" aria-checked="false" aria-label="余额支付"><i class="ti ti-wallet"></i></button>
+        </div>
+        <button class="pay-btn" id="payBtn">
+          <span class="pay-total num" id="payTotal">¥27</span>
+          <span class="pay-label">确认付款</span>
+          <span class="pay-spin"><i class="ti ti-loader-2"></i></span>
+        </button>
+      </footer>
+    </section>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
