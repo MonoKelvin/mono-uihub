@@ -5,6 +5,16 @@
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const icon = (name) => '<i class="ti ti-' + esc(name) + '" aria-hidden="true"></i>';
   const { initialMessages, contacts, materials } = window.RhodesData;
+  const assetRoot = 'assets/';
+  const portraitByEmail = {
+    'amiya@rhodes.is': assetRoot + 'rhodes-amiya.png',
+    'kaltsit@rhodes.is': assetRoot + 'rhodes-kaltsit.png',
+    'closure@rhodes.is': assetRoot + 'rhodes-closure.png',
+    'exusiai@penguin.logistics': assetRoot + 'rhodes-exusiai.png',
+    'dobermann@rhodes.is': assetRoot + 'rhodes-dobermann.png',
+    'perfumer@rhodes.is': assetRoot + 'rhodes-perfumer.png',
+    'prts@rhodes.is': assetRoot + 'rhodes-prts.png'
+  };
   const storeKey = 'rhodes-mail-v2';
   const folderNames = {inbox:['收件箱','INBOX'],starred:['星标邮件','STARRED'],snoozed:['稍后处理','SNOOZED'],sent:['发件箱','OUTBOX'],drafts:['草稿箱','DRAFTS'],archive:['已归档','ARCHIVE'],trash:['回收站','RECYCLE']};
   const defaultLabels = [{id:'action',name:'行动待办'},{id:'reference',name:'资料归档'},{id:'personal',name:'私人通讯'}];
@@ -58,6 +68,7 @@
   }
   function applySettings() {
     document.body.classList.toggle('no-motion', !settings.motion);
+    canvasViews.forEach((view) => view.setMotion(settings.motion));
     document.body.classList.toggle('compact', settings.compact);
     document.body.classList.toggle('large-reading', settings.largeReading);
     if (!settings.motion) readerAnimation?.cancel();
@@ -93,6 +104,10 @@
     const gap = 'M23 6L21.3 7.7L21 8l-1.3-1.3 1.3-1.3z';
     return '<svg viewBox="0 0 28 28" aria-hidden="true" class="emblem"><polygon points="15 2 23 6 23 16 15 22 7 16 7 6" fill="none" stroke="currentColor" stroke-width="1.3" class="emblem-frame"/><path d="'+glyph+'" fill="currentColor" class="emblem-glyph"/><path d="'+gap+'" fill="none" stroke="var(--accent)" stroke-width="1.1" class="emblem-gap"/></svg>';
   }
+  function portrait(source) {
+    const src = portraitByEmail[source?.email] || source?.avatar;
+    return '<span class="operator-portrait">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy" decoding="async">':'')+emblem(source)+'</span>';
+  }
   function visibleMessages(ignoreFilter = false) {
     const a = state.advanced;
     return messages.filter((m) => {
@@ -111,7 +126,7 @@
   function mountArt() {
     canvasViews.forEach((view,canvas) => { if (!canvas.isConnected) { view.destroy(); canvasViews.delete(canvas); } });
     $$('canvas[data-specimen]').forEach((canvas) => {
-      if (!canvasViews.has(canvas)) canvasViews.set(canvas,new window.SpecimenView(canvas,{interactive:canvas.dataset.specimen === 'interactive'}));
+      if (!canvasViews.has(canvas)) canvasViews.set(canvas,new window.SpecimenView(canvas,{interactive:canvas.dataset.specimen === 'interactive',motion:settings.motion}));
     });
   }
   function renderNav() {
@@ -148,7 +163,7 @@
     $('#mail-list').innerHTML = list.length ? list.map((m) => {
       const group = date !== m.date.slice(0,10) ? '<div class="date-group">'+esc(m.date.slice(0,10).replace(/-/g,'.'))+'</div>' : '';
       date = m.date.slice(0,10);
-      return group+'<article class="mail-row'+(m.id === state.selected ? ' selected' : '')+(m.unread ? ' unread' : '')+(settings.motion && !reduce.matches ? ' stagger' : '')+'"><button class="mail-open" data-open="'+esc(m.id)+'" aria-label="'+esc((m.unread?'未读，':'')+m.sender+'：'+m.subject)+'" aria-current="'+(m.id === state.selected)+'"></button><label class="row-check"><input type="checkbox" data-select="'+esc(m.id)+'" aria-label="选择 '+esc(m.subject)+'" '+(state.checked.has(m.id)?'checked':'')+'></label><div class="mail-row-top">'+(m.unread?'<span class="unread-dot"></span>':'')+'<span class="mail-sender">'+esc(m.sender)+'</span><time class="mail-time" datetime="'+esc(m.date)+'">'+esc(m.date.slice(11,16))+'</time><button class="row-star'+(m.starred?' starred':'')+'" data-star="'+esc(m.id)+'" aria-label="'+(m.starred?'取消星标':'添加星标')+'" aria-pressed="'+m.starred+'">'+icon(m.starred?'star-filled':'star')+'</button></div><h3>'+esc(m.subject || '无主题')+'</h3><p>'+esc(m.preview || m.paragraphs.join(' '))+'</p><div class="mail-row-tags"><span class="mail-tag">'+esc(m.folder === 'drafts'?'草稿':m.folder === 'sent'?'待发送':m.folder === 'snoozed'?'稍后提醒':m.role || '个人通讯')+'</span>'+m.labels.slice(0,1).map((id) => '<span class="mail-tag">'+esc(labels.find((l) => l.id === id)?.name || '')+'</span>').join('')+(m.priority?'<span class="mail-tag">优先</span>':'')+(m.attachments.length?icon('paperclip'):'')+'</div></article>';
+      return group+'<article class="mail-row'+(m.id === state.selected ? ' selected' : '')+(m.unread ? ' unread' : '')+(settings.motion && !reduce.matches ? ' stagger' : '')+'"><button class="mail-open" data-open="'+esc(m.id)+'" aria-label="'+esc((m.unread?'未读，':'')+m.sender+'：'+m.subject)+'" aria-current="'+(m.id === state.selected ? 'page' : 'false')+'"></button><label class="row-check"><input type="checkbox" data-select="'+esc(m.id)+'" aria-label="选择 '+esc(m.subject)+'" '+(state.checked.has(m.id)?'checked':'')+'></label><div class="mail-row-top"><span class="row-portrait" aria-hidden="true">'+portrait(m)+'</span>'+(m.unread?'<span class="unread-dot"></span>':'')+'<span class="mail-sender">'+esc(m.sender)+'</span><time class="mail-time" datetime="'+esc(m.date)+'">'+esc(m.date.slice(11,16))+'</time><button class="row-star'+(m.starred?' starred':'')+'" data-star="'+esc(m.id)+'" aria-label="'+(m.starred?'取消星标':'添加星标')+'" aria-pressed="'+m.starred+'">'+icon(m.starred?'star-filled':'star')+'</button></div><h3>'+esc(m.subject || '无主题')+'</h3><p>'+esc(m.preview || m.paragraphs.join(' '))+'</p><div class="mail-row-tags"><span class="mail-tag">'+esc(m.folder === 'drafts'?'草稿':m.folder === 'sent'?'待发送':m.folder === 'snoozed'?'稍后提醒':m.role || '个人通讯')+'</span>'+m.labels.slice(0,1).map((id) => '<span class="mail-tag">'+esc(labels.find((l) => l.id === id)?.name || '')+'</span>').join('')+(m.priority?'<span class="mail-tag">优先</span>':'')+(m.attachments.length?icon('paperclip'):'')+'</div></article>';
     }).join('') : '<div class="empty-state">'+icon('inbox')+'<h2>'+(state.query?'没有匹配的通讯':'这里暂时没有通讯')+'</h2><p>'+(state.filter === 'unread'?'全部读完了，休息一下吧。':'新的讯息，会在这里与你相遇。')+'</p>'+((state.query || hasAdvanced() || state.filter !== 'all')?'<button class="secondary-button" data-clear-filters>清除筛选</button>':'')+'</div>';
     renderNav(); updatePosition();
     if (restore) $$('[data-'+restore[0]+']',$('#mail-list')).find((el) => el.dataset[restore[0]] === restore[1])?.focus({preventScroll:true});
@@ -178,7 +193,7 @@
     if (m.folder === 'snoozed') notice = '<div class="mail-notice"><span>提醒时间：'+esc(new Date(m.snoozeUntil).toLocaleString('zh-CN',{hour12:false}))+'</span><button data-restore-current>立即恢复</button></div>';
     if (m.folder === 'trash') notice = '<div class="mail-notice"><span>这封通讯位于回收站</span><button data-restore-current>恢复通讯</button><button data-delete-current>永久删除</button></div>';
     const replies = messages.filter((reply) => reply.parentId === m.id && reply.folder !== 'trash').sort((a,b) => a.date.localeCompare(b.date));
-    $('#mail-content').innerHTML = '<div class="subject-topline">'+(m.priority?'<span class="priority-flag">'+icon('flag')+'优先通讯</span>':'<span>内部通讯</span>')+'<span class="message-code">'+esc(m.id.startsWith('ri-')?m.id.toUpperCase():'R.I. / PERSONAL')+'</span></div><div class="subject-row"><h2>'+esc(m.subject || '无主题')+'</h2><button class="icon-button reader-star'+(m.starred?' starred':'')+'" data-star="'+esc(m.id)+'" aria-label="'+(m.starred?'取消星标':'添加星标')+'" aria-pressed="'+m.starred+'">'+icon(m.starred?'star-filled':'star')+'</button></div>'+(m.labels.length?'<div class="message-labels">'+m.labels.map((id) => '<button class="message-label" data-label-filter="'+esc(id)+'">'+icon('tag')+esc(labels.find((l) => l.id === id)?.name || '')+'</button>').join('')+'</div>':'')+'<div class="sender-detail"><span class="sender-emblem">'+emblem(m)+'</span><div class="sender-info"><div class="sender-name">'+esc(m.sender)+'<span>&lt;'+esc(m.email)+'&gt;</span></div><div class="sender-recipient">发送至 '+esc(m.to || '博士 <doctor@rhodes.is>')+(m.cc?'<br>抄送 '+esc(m.cc):'')+'</div></div><time class="sender-date" datetime="'+esc(m.date)+'">'+esc(m.date.slice(0,10).replace(/-/g,'.'))+'<br>'+esc(m.date.slice(11,16))+'</time></div>'+notice+featured+'<div class="mail-body">'+m.paragraphs.map((paragraph,index) => '<p>'+esc(paragraph).replace(/\n/g,'<br>')+'</p>'+(index === 1?details:'')).join('')+'</div>'+(m.signature?'<div class="mail-signature">'+esc(m.signature)+'</div>':'')+(m.attachments.length?'<div class="attachment-heading">'+icon('paperclip')+m.attachments.length+' 个附件</div><div class="attachments">'+m.attachments.map((file,index) => '<button class="attachment" data-attachment="'+index+'">'+icon(file.type?.startsWith('image/')?'photo':'file-text')+'<span><b>'+esc(file.name)+'</b><small>'+esc(file.name.split('.').pop().toUpperCase())+' / '+sizeString(fileSize(file))+'</small></span>'+icon('arrow-up-right')+'</button>').join('')+'</div>':'')+(replies.length?'<section class="thread-section"><h3>相关通讯 / '+replies.length+'</h3>'+replies.map((r) => '<div class="thread-entry"><div><strong>博士 · '+(r.folder === 'drafts'?'草稿':'待发送')+'</strong><time>'+esc(r.date.slice(5,16).replace('T',' '))+'</time></div><p>'+esc(r.paragraphs.join('\n\n'))+'</p><button class="text-button" data-open-related="'+esc(r.id)+'">查看通讯</button></div>').join('')+'</section>':'');
+    $('#mail-content').innerHTML = '<div class="subject-topline">'+(m.priority?'<span class="priority-flag">'+icon('flag')+'优先通讯</span>':'<span>内部通讯</span>')+'<span class="message-code">'+esc(m.id.startsWith('ri-')?m.id.toUpperCase():'R.I. / PERSONAL')+'</span></div><div class="subject-row"><h2>'+esc(m.subject || '无主题')+'</h2><button class="icon-button reader-star'+(m.starred?' starred':'')+'" data-star="'+esc(m.id)+'" aria-label="'+(m.starred?'取消星标':'添加星标')+'" aria-pressed="'+m.starred+'">'+icon(m.starred?'star-filled':'star')+'</button></div>'+(m.labels.length?'<div class="message-labels">'+m.labels.map((id) => '<button class="message-label" data-label-filter="'+esc(id)+'">'+icon('tag')+esc(labels.find((l) => l.id === id)?.name || '')+'</button>').join('')+'</div>':'')+'<div class="sender-detail"><span class="sender-emblem">'+portrait(m)+'</span><div class="sender-info"><div class="sender-name">'+esc(m.sender)+'<span>&lt;'+esc(m.email)+'&gt;</span></div><div class="sender-recipient">发送至 '+esc(m.to || '博士 <doctor@rhodes.is>')+(m.cc?'<br>抄送 '+esc(m.cc):'')+'</div></div><time class="sender-date" datetime="'+esc(m.date)+'">'+esc(m.date.slice(0,10).replace(/-/g,'.'))+'<br>'+esc(m.date.slice(11,16))+'</time></div>'+notice+featured+'<div class="mail-body">'+m.paragraphs.map((paragraph,index) => '<p>'+esc(paragraph).replace(/\n/g,'<br>')+'</p>'+(index === 1?details:'')).join('')+'</div>'+(m.signature?'<div class="mail-signature">'+esc(m.signature)+'</div>':'')+(m.attachments.length?'<div class="attachment-heading">'+icon('paperclip')+m.attachments.length+' 个附件</div><div class="attachments">'+m.attachments.map((file,index) => '<button class="attachment" data-attachment="'+index+'">'+icon(file.type?.startsWith('image/')?'photo':'file-text')+'<span><b>'+esc(file.name)+'</b><small>'+esc(file.name.split('.').pop().toUpperCase())+' / '+sizeString(fileSize(file))+'</small></span>'+icon('arrow-up-right')+'</button>').join('')+'</div>':'')+(replies.length?'<section class="thread-section"><h3>相关通讯 / '+replies.length+'</h3>'+replies.map((r) => '<div class="thread-entry"><div><strong>博士 · '+(r.folder === 'drafts'?'草稿':'待发送')+'</strong><time>'+esc(r.date.slice(5,16).replace('T',' '))+'</time></div><p>'+esc(r.paragraphs.join('\n\n'))+'</p><button class="text-button" data-open-related="'+esc(r.id)+'">查看通讯</button></div>').join('')+'</section>':'');
     const editable = ['drafts','sent'].includes(m.folder);
     $('#reply-button').innerHTML = icon(editable?'pencil':'arrow-back-up')+(editable?'继续编辑':'回复通讯');
     $('#forward-button').hidden = editable;
@@ -500,7 +515,7 @@
       const list=contacts.filter((c)=>[c.name,c.group,c.email,c.title].join(' ').toLowerCase().includes(query));
       const groups={};
       list.forEach((c)=>{const g=c.group||'其他';if(!groups[g])groups[g]=[];groups[g].push(c);});
-      const fragments=Object.keys(groups).sort().map((g)=>'<div class="contact-group"><div class="contact-group-heading">'+esc(g)+'</div><div class="contact-rows">'+groups[g].map((c)=>'<button class="contact-entry" data-contact="'+esc(c.email)+'"><span class="sender-emblem">'+emblem(c)+'</span><span class="contact-info"><strong>'+esc(c.name)+'</strong><small class="contact-title">'+esc(c.title||g)+'</small><small class="contact-email">'+esc(c.email)+'</small></span><span class="contact-status'+(c.status==='offline'?' offline':'')+'" title="'+esc(c.status==='offline'?'离舰':'在舰')+'"></span>'+icon('send')+'</button>').join('')+'</div></div>').join('');
+      const fragments=Object.keys(groups).sort().map((g)=>'<div class="contact-group"><div class="contact-group-heading">'+esc(g)+'</div><div class="contact-rows">'+groups[g].map((c)=>'<button class="contact-entry" data-contact="'+esc(c.email)+'"><span class="sender-emblem">'+portrait(c)+'</span><span class="contact-info"><strong>'+esc(c.name)+'</strong><small class="contact-title">'+esc(c.title||g)+'</small><small class="contact-email">'+esc(c.email)+'</small></span><span class="contact-status'+(c.status==='offline'?' offline':'')+'" title="'+esc(c.status==='offline'?'离舰':'在舰')+'"></span>'+icon('send')+'</button>').join('')+'</div></div>').join('');
       $('#contact-list').innerHTML=fragments||'<p>没有匹配的联系人。</p>';
     };draw();$('#contact-search').oninput=draw;
     $('#contact-list').onclick=(event)=>{const b=event.target.closest('[data-contact]');if(b){closeDialog($('#info-dialog'));openCompose('new',b.dataset.contact);}};
@@ -512,7 +527,7 @@
   function openMaterial(id) {
     const material=materials.find((m)=>m.id===id);if(!material)return;
     $('#material-title').textContent=material.name+' / '+material.reference;
-    $('#material-content').innerHTML='<div class="material-stage"><span class="hud-bracket"></span>'+(id==='originium'?'<canvas id="interactive-specimen" data-specimen="interactive" tabindex="0" role="img" aria-label="原创源石晶簇三维结构，拖动或使用方向键旋转"></canvas>':'<svg aria-label="'+esc(material.name)+'"><use href="#'+(id==='case'?'cargo-mark':'record-mark')+'"/></svg>')+'<span class="model-overlay-label">'+esc(material.reference.toUpperCase())+'</span><span class="model-overlay-label bottom">'+(id==='originium'?'DRAG TO ROTATE':'CARGO INSPECTION')+'</span></div>'+(id==='originium'?'<div class="material-controls"><button class="secondary-button" id="turn-model">'+icon('rotate')+'旋转视角</button><button class="secondary-button" id="reset-model">重置</button><label class="wireframe-toggle"><input type="checkbox" id="wireframe-model">结构线框</label><label>缩放<input id="zoom-model" type="range" min="60" max="165" value="100" aria-label="模型缩放"></label></div>':'')+'<div class="material-description"><div><h3>'+esc(material.english)+'</h3><p>'+esc(material.description)+'</p><small>'+esc(material.handling)+' / '+material.quantity+' '+material.unit+'</small></div>'+(id==='originium'?'<div><img class="reference-image" id="game-reference" src="https://raw.githubusercontent.com/yuanyan3060/ArknightsGameResource/main/item/DIAMOND.png" alt="明日方舟至纯源石物品图" width="86" height="86"><div class="reference-caption">游戏物品图对照</div></div>':'')+'</div>';
+    $('#material-content').innerHTML='<div class="material-stage"><span class="hud-bracket"></span>'+(id==='originium'?'<canvas id="interactive-specimen" data-specimen="interactive" tabindex="0" role="img" aria-label="原创源石晶簇三维结构，拖动或使用方向键旋转"></canvas>':'<svg aria-label="'+esc(material.name)+'"><use href="#'+(id==='case'?'cargo-mark':'record-mark')+'"/></svg>')+'<span class="model-overlay-label">'+esc(material.reference.toUpperCase())+'</span><span class="model-overlay-label bottom">'+(id==='originium'?'DRAG TO ROTATE':'CARGO INSPECTION')+'</span></div>'+(id==='originium'?'<div class="material-controls"><button class="secondary-button" id="turn-model">'+icon('rotate')+'旋转视角</button><button class="secondary-button" id="reset-model">重置</button><label class="wireframe-toggle"><input type="checkbox" id="wireframe-model">结构线框</label><label>缩放<input id="zoom-model" type="range" min="60" max="165" value="100" aria-label="模型缩放"></label></div>':'')+'<div class="material-description"><div><h3>'+esc(material.english)+'</h3><p>'+esc(material.description)+'</p><small>'+esc(material.handling)+' / '+material.quantity+' '+material.unit+'</small></div>'+(id==='originium'?'<div><img class="reference-image" id="game-reference" src="assets/originium-shard.png" alt="明日方舟至纯源石物品图" width="86" height="86"><div class="reference-caption">本地资源对照</div></div>':'')+'</div>';
     openDialog($('#material-dialog'));mountArt();
     if(id==='originium'){
       const view=canvasViews.get($('#interactive-specimen'));
@@ -523,6 +538,13 @@
 
   document.addEventListener('pointerdown',()=>{inputMethod='pointer';document.body.dataset.inputMethod='pointer';},true);
   document.addEventListener('keydown',()=>{inputMethod='keyboard';document.body.dataset.inputMethod='keyboard';},true);
+  document.addEventListener('error',(event)=>{
+    const image=event.target;
+    if(!(image instanceof HTMLImageElement))return;
+    if(image.id==='game-reference'){image.hidden=true;image.nextElementSibling.textContent='物品图暂不可用';return;}
+    const portrait=image.closest('.operator-portrait');
+    if(portrait){portrait.classList.add('is-fallback');image.remove();}
+  },true);
   document.addEventListener('click',(event)=>{
     const target=event.target;
     const close=target.closest('[data-close]');if(close){closeDialog(document.getElementById(close.dataset.close));return;}
@@ -577,7 +599,7 @@
   $('#sort-button').onclick=()=>{state.ascending=!state.ascending;$('#sort-button').innerHTML=icon(state.ascending?'sort-ascending':'sort-descending');$('#sort-button').title=state.ascending?'最早优先':'最新优先';renderList();};
   $('#refresh-button').onclick=()=>{wakeDueMessages();refresh(true);toast('本地通讯列表已更新');};
   $('#prev-mail').onclick=()=>navigate(-1);$('#next-mail').onclick=()=>navigate(1);
-  $('#back-button').onclick=()=>{$('#terminal').classList.remove('reading','focus-mode');$('#focus-button').setAttribute('aria-pressed','false');$('[data-open]').find((el)=>el.dataset.open===state.selected)?.focus();};
+  $('#back-button').onclick=()=>{$('#terminal').classList.remove('reading','focus-mode');$('#focus-button').setAttribute('aria-pressed','false');$$('[data-open]').find((el)=>el.dataset.open===state.selected)?.focus();};
   $('#compose-button').onclick=()=>openCompose();
   $('#reply-button').onclick=()=>openCompose(['drafts','sent'].includes(current()?.folder)?'edit':'reply');
   $('#forward-button').onclick=()=>openCompose('forward');

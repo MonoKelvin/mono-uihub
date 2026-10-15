@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">RHODES POST</title>
+  <desc id="desc">罗德岛舰载通讯终端</desc>
+  <rect width="1200" height="630" fill="#20262c"/>
+  <path d="M0 0h1200v630H0z" fill="url(#grid)" opacity=".28"/>
+  <path d="M0 470 350 120h850v510H0Z" fill="#2e3941"/>
+  <path d="m72 492 172-300 172 300H72Z" fill="none" stroke="#dcc36a" stroke-width="9"/>
+  <path d="m170 445 74-136 36 67-36 69h-74Zm89 0 44-71 44 71h-88Z" fill="#dcc36a"/>
+  <path d="M72 522h344" stroke="#dcc36a" stroke-width="9"/>
+  <text x="492" y="284" fill="#f0f2ed" font-family="Arial Narrow,Arial,sans-serif" font-size="92" font-weight="700" letter-spacing="8">RHODES</text>
+  <text x="498" y="365" fill="#aebbc0" font-family="monospace" font-size="30" letter-spacing="8">POST / FIELD COMMUNICATIONS</text>
+  <path d="M498 413h546" stroke="#718087"/>
+  <text x="498" y="462" fill="#d1ba66" font-family="monospace" font-size="20" letter-spacing="4">SIGNAL RECEIVED · ROUTE OPEN</text>
+  <defs>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#aebbc0" stroke-width="1"/></pattern>
+  </defs>
+</svg>
