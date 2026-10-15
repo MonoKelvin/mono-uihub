@@ -21,4 +21,7 @@ Desktop.ini
 tools/image-forge/.env
 __pycache__/
 
+# Image Forge — large matting models fetched on demand (keep vendored u2netp.onnx)
+tools/image-forge/models/cache/
+
 temp/

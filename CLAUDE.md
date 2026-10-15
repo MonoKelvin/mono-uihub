@@ -21,6 +21,10 @@ npx serve .
 python tools/image-forge/generate.py --style <风格包> "<主体描述>" ui/<page>/assets/<name>.png
 python tools/image-forge/generate.py --list-styles      # 查可用风格包
 python tools/image-forge/generate.py --style <风格包> --dry-run "<主体描述>" out.png   # 只打印最终提示词，不消耗额度
+
+# 备选：AI 生图不可用时，用在线图片 + 离线 ONNX 模型抠成透明 PNG（需 onnxruntime / Pillow / numpy）
+python tools/image-forge/matte.py "<图片URL或本地路径>" ui/<page>/assets/<name>.png                 # 默认 u2netp（随仓库，约 4.4MB）
+python tools/image-forge/matte.py "<图片URL>" ui/<page>/assets/<name>.png --model isnet-general-use  # 高精度（首次自动下载到 models/cache/）
 ```
 
 没有测试、lint 或构建流程。交付前只做代码层面自检（对照 SKILL.md 的清单），默认不启动服务、不截图 —— 除非用户明确要求。
@@ -32,13 +36,13 @@ python tools/image-forge/generate.py --style <风格包> --dry-run "<主体描�
 - `ui/<page-name>/` — 产出物。一个页面一个文件夹（英文 kebab-case，不超过 4 个单词），内含 `index.html`、`styles.css`、`app.js`，可选 `assets/` 存放生成的图片。页面之间完全独立，不共享任何代码或样式。
 - `skills/mono-ui-prototype/SKILL.md` — 生成技能的完整规范，是本仓库的核心资产。它定义了流程（方向卡推导）、四类页面容器（软件 / 网页 / App / 组件）、配色 / 字体 / 布局 / 动效规则、"去 AI 味"硬禁清单和交付自检项。
 - `skills/image-purify/` — 干净出图词表。`SKILL.md` 讲清脏图成因（鳞片感 / 噪点 / 碎片 / 涂抹）、五条出图准则、12 个风格大类的叠加词、以及对已有脏图做 img2img 修复的三档强度词；`purify.json` 是唯一词源，被生图工具直接读取。
-- `tools/image-forge/` — 透明 PNG 生成工具，供技能在素库无法满足时调用。从仓库根目录的 `.env` 读 `IMAGE_API_BASE_URL` / `IMAGE_API_KEY` / `IMAGE_MODEL`（`.env` 已 gitignore，绝不提交）。**每次生图自动叠加 `skills/image-purify/purify.json` 的干净词**，调用方只写主体描述。
+- `tools/image-forge/` — 透明 PNG 工具。`generate.py` 走 AI 生图：从 `.env`（**仓库根目录或 `tools/image-forge/` 皆可**，已 gitignore，绝不提交）读 `IMAGE_API_BASE_URL` / `IMAGE_API_KEY` / `IMAGE_MODEL`，**每次生图自动叠加 `skills/image-purify/purify.json` 的干净词**，调用方只写主体描述。`matte.py` 是生图不可用时的备选：用在线图片 + 离线 ONNX 显著性模型（U²-Net 系）本地抠图成透明 PNG，默认模型 `u2netp.onnx` 随仓库放在 `models/`（Apache-2.0，见 `models/LICENSE` 与 `models/NOTICE`），`isnet-general-use` 等大模型按需下载到 `models/cache/`（已 gitignore）；需 `onnxruntime` / `Pillow` / `numpy`，用法见该目录 `README.md`。
 
 ### 生成新页面时的关键约定
 
 - 每个页面必须现场推导全新的视觉方向（方向卡），严禁复用上一个页面的配色 / 字体 / 布局，也不套用固定模板。
 - 字体一律在线 CDN 引入（拉丁用 Google Fonts，中文特色字体用 ZeoSeven Fonts `@import`），配好系统兜底栈，绝不下载托管。
-- 图片优先热链（Picsum / Unsplash / Pexels / placehold.co / pravatar）；简单的扁平化插画、几何图形、装饰纹理优先用内联 SVG 或 Canvas 手绘。AI 生图（image-forge）是**最次选项**，仅当素材无在线替代、又超出手绘 SVG 能力范围时才用；单页生图**不建议超过 5 张**，确需超过必须先列出清单询问用户，由用户决定是否继续。
+- 图片优先热链（Picsum / Unsplash / Pexels / placehold.co / pravatar）；简单的扁平化插画、几何图形、装饰纹理优先用内联 SVG 或 Canvas 手绘。AI 生图（image-forge）是**最次选项**，仅当素材无在线替代、又超出手绘 SVG 能力范围时才用；单页生图**不建议超过 5 张**，确需超过必须先列出清单询问用户，由用户决定是否继续。需要真实照片的透明抠图而 AI 生图不可用（额度 / 网络）时，可用 `tools/image-forge/matte.py` 把在线照片离线抠成透明 PNG（见该目录 `README.md`）。
 - 生图时提示词**只写主体**（画什么、什么材质、什么光），且**必须传 `--style`**；`ultra detailed` / `8k` / `masterpiece` 这类细节许愿词一律不写 —— 它们正是噪点与鳞片感的来源。干净词由脚本自动叠加，详见 `skills/image-purify/SKILL.md`。**生成一次就用**：不回读图片分析画质、不因画质重生成（省额度省 token）。
 - 图标统一用 Tabler Icons webfont CDN（`<i class="ti ti-...">`），全站一套，不用 emoji 当功能图标。
 - 交互用最简原生 JS + 本地假数据，能点能演示即可；不接后端、不伪造业务成功（如假的"支付成功"）。

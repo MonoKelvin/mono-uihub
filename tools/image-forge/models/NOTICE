@@ -1,0 +1,19 @@
+Image Forge — bundled model attribution
+=======================================
+
+models/u2netp.onnx
+  Model : U^2-Net (U2-Netp, the small variant), salient-object detection.
+  Paper : Qin et al., "U^2-Net: Going Deeper with Nested U-Structure for
+          Salient Object Detection", Pattern Recognition, 2020.
+  Source: https://github.com/xuebinqin/U-2-Net   (Apache License 2.0)
+  Weights redistributed via the rembg project releases
+          (https://github.com/danielgatis/rembg, MIT).
+  License: Apache License 2.0 — full text in models/LICENSE.
+
+Optional models (NOT vendored; fetched on demand into models/cache/ by matte.py):
+  u2net.onnx             — U^2-Net full.      Apache-2.0 (same source as above).
+  isnet-general-use.onnx — IS-Net / DIS.      Apache-2.0
+                           (https://github.com/xuebinqin/DIS).
+
+Only Apache-2.0 / MIT-licensed weights are used here. Do NOT vendor models whose
+license forbids redistribution (e.g. BRIA RMBG-1.4 is non-commercial).
