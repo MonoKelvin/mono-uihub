@@ -1,0 +1,190 @@
+:root {
+  color-scheme: light;
+  --canvas: #e9eae7;
+  --card-front: #242b29;
+  --card-back: #29312d;
+  --silver: #dfe5df;
+  --silver-soft: #c1cbc3;
+  --silver-muted: #b8c4bb;
+  --edge-light: rgba(226, 237, 227, .34);
+  --edge-dark: rgba(15, 25, 20, .70);
+  --separator: rgba(193, 208, 197, .15);
+  --font-brand: "Instrument Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-ui: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --font-data: "DM Mono", "SFMono-Regular", Consolas, monospace;
+  --card-width: clamp(360px, calc((100svh - 108px) * .792885), 536px);
+  --pair-gap: 28px;
+  --page-inset: 16px;
+  --frame-inset: 24px;
+  --card-inset: 6.8cqw;
+  --radius: 3.3cqw;
+  --brand-size: clamp(24px, 5.5cqw, 30px);
+  --back-brand-size: clamp(20px, 4.25cqw, 24px);
+  --type-size: clamp(13px, 2.8cqw, 15px);
+  --label-size: clamp(12px, 2.7cqw, 14.5px);
+  --note-size: clamp(12px, 2.65cqw, 14.2px);
+  --payment-size: clamp(13px, 2.65cqw, 14.2px);
+  --number-size: clamp(18px, 4.65cqw, 25px);
+  --value-size: clamp(13px, 3.15cqw, 17px);
+  --ending-size: clamp(13px, 2.85cqw, 15.5px);
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: var(--canvas);
+  font-family: var(--font-ui);
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+p, dl, dd { margin: 0; }
+svg { display: block; }
+
+.showcase {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--page-inset);
+}
+
+.card-pair {
+  display: grid;
+  grid-auto-rows: max-content;
+  gap: var(--pair-gap);
+  width: min(100%, calc(var(--card-width) + var(--frame-inset) * 2));
+  max-height: 100%;
+  padding: var(--frame-inset);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b7c0b9 transparent;
+}
+
+.bank-card {
+  container-type: inline-size;
+  aspect-ratio: 85.6 / 53.98;
+  min-width: 0;
+  position: relative;
+  animation: settle 400ms var(--ease) backwards;
+}
+
+.card-back { animation-delay: 70ms; }
+
+.card-surface {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--card-inset);
+  border-radius: var(--radius);
+  color: var(--silver);
+  background-color: var(--card-front);
+  /* Satin titanium: a low-contrast reflection leaves the engraved lines in focus. */
+  background-image: linear-gradient(118deg, rgba(182, 201, 188, .075), transparent 44%, rgba(11, 23, 16, .16));
+  box-shadow:
+    inset 0 1px 0 var(--edge-light),
+    inset 0 -1px 0 var(--edge-dark),
+    inset 1px 0 0 rgba(219, 232, 221, .12),
+    inset -1px 0 0 rgba(219, 232, 221, .07),
+    0 2px 3px rgba(40, 54, 45, .12),
+    0 12px 22px -10px rgba(49, 64, 53, .28);
+}
+
+.card-surface::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 2;
+  border: 1px solid rgba(216, 231, 220, .035);
+  border-radius: calc(var(--radius) - 1px);
+  pointer-events: none;
+}
+
+.card-header, .front-footer, .account-details, .back-footer { position: relative; z-index: 1; }
+.back-geometry {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  top: 10%;
+  left: 0;
+  pointer-events: none;
+}
+.card-header { display: flex; align-items: center; justify-content: space-between; gap: 3cqw; }
+.brand { display: inline-flex; align-items: center; gap: 1.6cqw; }
+.brand-symbol { width: clamp(28px, 6.4cqw, 35px); height: auto; fill: currentColor; flex-shrink: 0; }
+.wordmark { font-family: var(--font-brand); font-size: var(--brand-size); font-weight: 500; line-height: 1; letter-spacing: -.035em; padding-bottom: .3cqw; }
+.card-type, .back-category { color: var(--silver-soft); font-size: var(--type-size); font-weight: 500; line-height: 1.4; letter-spacing: .035em; white-space: nowrap; }
+
+.guilloche {
+  position: absolute;
+  z-index: 0;
+  width: 68%;
+  height: auto;
+  top: 2%;
+  right: -8%;
+  pointer-events: none;
+  /* Kept as a faint watermark: the whole medallion is dialed back so it stays
+     a texture rather than a competing focal point. Tune with this one value. */
+  opacity: .5;
+  /* Keep the medallion legible while its lower edge recedes beneath the footer. */
+  mask-image: linear-gradient(to bottom, transparent 1%, #18221b 10%, #18221b 60%, transparent 98%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 1%, #18221b 10%, #18221b 60%, transparent 98%);
+}
+
+.front-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 4cqw; margin-top: auto; }
+.owner { display: flex; flex-direction: column; gap: clamp(6px, 1.5cqw, 8px); }
+.owner-name { font: 400 var(--value-size) / 1.3 var(--font-data); letter-spacing: .075em; }
+.card-ending { color: var(--silver-soft); font: 400 var(--ending-size) / 1.3 var(--font-data); letter-spacing: .055em; font-variant-numeric: tabular-nums; }
+.card-ending > span { display: inline-block; margin-right: 1.4cqw; font-size: .9em; vertical-align: .08em; letter-spacing: .16em; }
+.payment-brand { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.payment-mark { width: clamp(54px, 11.7cqw, 64px); height: auto; fill: var(--silver); }
+.payment-overlap { fill: #9faa9f; }
+.payment-wordmark { font: 600 var(--payment-size) / 1.1 var(--font-brand); letter-spacing: -.025em; }
+
+.card-back .card-surface { background-color: var(--card-back); }
+.back-header .brand { gap: 1.45cqw; color: var(--silver-soft); }
+.back-header .brand-symbol { width: clamp(23px, 4.9cqw, 27px); height: auto; }
+.back-header .wordmark { font-size: var(--back-brand-size); }
+.account-details { margin-top: auto; margin-bottom: auto; padding-top: 1.4cqw; }
+.number-field { display: flex; flex-direction: column; gap: 1.6cqw; }
+.field-label { color: var(--silver-muted); font-size: var(--label-size); font-weight: 500; line-height: 1.4; letter-spacing: .025em; }
+.full-number { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3cqw; font: 400 var(--number-size) / 1.25 var(--font-data); letter-spacing: .015em; font-variant-numeric: tabular-nums; }
+.details-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3cqw; margin-top: 4cqw; }
+.details-grid > div:first-child { grid-column: span 2; }
+.details-grid > div { min-width: 0; }
+.field-value { margin-top: 1.2cqw; font: 400 var(--value-size) / 1.3 var(--font-data); font-variant-numeric: tabular-nums; letter-spacing: .025em; white-space: nowrap; }
+.holder-value { letter-spacing: .07em; }
+.back-footer { display: flex; align-items: center; justify-content: space-between; gap: 3cqw; border-top: 1px solid var(--separator); padding-top: 2cqw; }
+.back-footer p { color: var(--silver-muted); font-size: var(--note-size); font-weight: 500; line-height: 1.4; letter-spacing: .025em; }
+.security-seal { width: 5.8cqw; height: 5.8cqw; stroke: var(--silver-soft); stroke-width: .65; }
+.security-seal circle + circle { opacity: .4; }
+.security-seal path { fill: var(--silver-soft); stroke: none; }
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  :root { --page-inset: 8px; --frame-inset: 16px; --pair-gap: 20px; }
+}
+
+@container (max-width: 300px) {
+  .card-back .card-surface { padding: 6cqw; }
+  .account-details { padding-top: 0; }
+  .number-field { gap: 1cqw; }
+  .details-grid { margin-top: 3cqw; }
+  .back-footer { padding-top: 1.5cqw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bank-card { animation: none; }
+}
