@@ -22,6 +22,8 @@ description: 为 UI 原型创建、整理和更新 metadata.json，记录页面�
 
 `generation.history` 数组按顺序排列，第一条为初始生成，其后每条为一次 revision，轮次顺序即索引 + 1。
 
+**技能列表记录约定**：`metadata.json` 中的所有 `skills` 数组（如 `history[].skills`）均不记录 `ui-metadata`。该技能仍用于元数据归档，但即使本轮实际使用，也不要将其加入技能列表；生成或更新元数据时，过滤已有列表中的 `ui-metadata`，保留其他技能。
+
 ## 工作流程
 
 1. **生成前后**：创建或更新 `ui/<page>/metadata.json`，仅记录当前这轮。
