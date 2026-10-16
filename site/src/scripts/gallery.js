@@ -220,20 +220,37 @@ export function initGallery() {
     if (aura) gsap.to(aura, { yPercent: 45, xPercent: -14, ease: 'none',
       scrollTrigger: { trigger: document.body, start: 'top top', end: 'max', scrub: 1.2 } });
 
-    /* ---------- wheel: damped continuous handoff into the tools area ---------- */
+    /* ---------- wheel: interruptible two-way snap (hero <-> list) ----------
+       Down inside hero -> glide to list top (tools pinned). Up near list top ->
+       glide back to page top. A reverse wheel mid-animation starts a NEW tween
+       from the CURRENT scroll position, so direction changes stay fluid. */
     if (!embedded && matchMedia('(pointer: fine)').matches) {
       const tools = $('[data-tools]');
       if (tools) {
         let anim = null;
+        let dir = 0; // +1 gliding down, -1 gliding up, 0 idle
+        const listY = () => Math.max(0, tools.getBoundingClientRect().top + scrollY - 14);
+        const glide = (to, d) => {
+          if (anim) anim.kill(); // hand off from current position
+          dir = d;
+          anim = gsap.to(window, { duration: 1.05, ease: 'power2.out',
+            scrollTo: { y: to, autoKill: false },
+            onComplete: () => { anim = null; dir = 0; } });
+        };
         addEventListener('wheel', (e) => {
-          if (e.deltaY <= 0 || anim) return;
-          const r = tools.getBoundingClientRect();
-          if (r.top <= 14) return; // tools already reached
-          const target = r.top + scrollY - 14;
-          e.preventDefault();
-          anim = gsap.to(window, { duration: 1.1, ease: 'power2.inOut',
-            scrollTo: { y: target, autoKill: false },
-            onComplete: () => { anim = null; } });
+          const down = e.deltaY > 0;
+          if (e.deltaY === 0) return;
+          const y = scrollY, ly = listY();
+          if (anim) {
+            // mid-flight: only a reverse wheel redirects, from where we are now
+            if ((dir > 0 && !down) || (dir < 0 && down)) {
+              e.preventDefault();
+              glide(down ? ly : 0, down ? 1 : -1);
+            } else e.preventDefault(); // same direction: keep gliding, swallow input
+            return;
+          }
+          if (down && y < ly - 2) { e.preventDefault(); glide(ly, 1); return; }
+          if (!down && y <= ly + 2 && y > 0) { e.preventDefault(); glide(0, -1); }
         }, { passive: false });
       }
     }
