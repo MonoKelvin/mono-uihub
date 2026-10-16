@@ -229,10 +229,26 @@ export function initGallery() {
       if (tools) {
         let anim = null;
         let dir = 0; // +1 gliding down, -1 gliding up, 0 idle
-        const listY = () => Math.max(0, tools.getBoundingClientRect().top + scrollY - 14);
+        let atSnap = false; // user is RESTING at the list-top snap point
+        let idleT = 0;
+        // Snap point in DOCUMENT coordinates, measured with tools unpinned.
+        // Once tools is sticky, rect.top is constant, so we must measure it
+        // while at scrollY=0 (or derive it from the first pre-sticky layout).
+        let ly = -1;
+        const measure = () => {
+          if (scrollY <= 0) ly = Math.max(0, tools.getBoundingClientRect().top - 14);
+        };
+        measure();
+        addEventListener('resize', () => { const y0 = scrollY; if (y0 <= 0) measure(); }, { passive: true });
+        const listY = () => ly >= 0 ? ly : Math.max(0, tools.getBoundingClientRect().top + scrollY - 14);
+        addEventListener('scroll', () => {
+          clearTimeout(idleT);
+          idleT = setTimeout(() => { atSnap = !anim && Math.abs(scrollY - listY()) <= 2; }, 120);
+        }, { passive: true });
         const glide = (to, d) => {
           if (anim) anim.kill(); // hand off from current position
           dir = d;
+          atSnap = false;
           anim = gsap.to(window, { duration: 1.05, ease: 'power2.out',
             scrollTo: { y: to, autoKill: false },
             onComplete: () => { anim = null; dir = 0; } });
@@ -240,6 +256,7 @@ export function initGallery() {
         addEventListener('wheel', (e) => {
           const down = e.deltaY > 0;
           if (e.deltaY === 0) return;
+          if (scrollY <= 0) measure(); // refresh layout-derived snap point when at top
           const y = scrollY, ly = listY();
           if (anim) {
             // mid-flight: only a reverse wheel redirects, from where we are now
@@ -250,7 +267,9 @@ export function initGallery() {
             return;
           }
           if (down && y < ly - 2) { e.preventDefault(); glide(ly, 1); return; }
-          if (!down && y <= ly + 2 && y > 0) { e.preventDefault(); glide(0, -1); }
+          // snap home only when resting at the list top — never hijack a
+          // pass-by from deep below
+          if (!down && atSnap && y > 0) { e.preventDefault(); glide(0, -1); }
         }, { passive: false });
       }
     }
