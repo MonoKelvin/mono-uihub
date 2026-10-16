@@ -1,0 +1,138 @@
+---
+import '../styles/theme.css';
+import path from 'node:path';
+import { loadCatalog } from '../../lib/catalog.mjs';
+interface Props { embedded?: boolean }
+const { embedded = false } = Astro.props;
+// Bundled output moves import.meta.url, so resolve ui/ from the site package root (build cwd).
+const catalog = loadCatalog({ uiRoot: path.resolve(process.cwd(), '..', 'ui') });
+const REPO = 'https://github.com/MonoKelvin/mono-uihub';
+const SWATCH = { red:'#c8473d', blue:'#3d63b8', green:'#4f8a5b', pink:'#e3a7b4', purple:'#7b5ea7', orange:'#e08a3c', yellow:'#e2c046', black:'#1d1d1b', white:'#ffffff', gray:'#9a9890', beige:'#e6dcc8', brown:'#8a5a3b' };
+const facet = (key) => { const m = new Map(); for (const it of catalog) for (const v of [].concat(it[key])) if (v && v !== 'unknown') m.set(v, (m.get(v) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0]))).map(([v]) => v); };
+const models = facet('model'), types = facet('type'), tags = facet('tags'), colors = facet('colors');
+---
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mono-uihub · UI 原型画廊</title>
+<meta name="description" content="AI 生成的高保真 UI 原型合集" />
+<link rel="icon" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+</head>
+<body class={embedded ? 'embedded' : ''} data-embedded={embedded ? '1' : '0'}>
+{!embedded && (
+<header class="bar" data-bar>
+  <div class="wrap bar-in">
+    <a class="brand" href="/" aria-label="mono-uihub">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--ink)"/><path d="M9 28V12h5l6 9 6-9h5v16h-5V20l-6 8-6-8v8Z" fill="var(--bg)"/></svg>
+      mono-uihub
+    </a>
+    <div class="bar-actions">
+      <a class="ghost" href={REPO} target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        GitHub
+      </a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="zh" aria-pressed="true">中</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+)}
+<main>
+{!embedded && (
+  <section class="wrap hero">
+    <div>
+      <h1 data-i18n="heroTitle">UI 原型画廊</h1>
+      <p data-i18n="heroText">一句话生成的高保真原型合集。筛选只依据每个原型的首次生成记录。</p>
+    </div>
+    <span class="hero-n" data-hero-n></span>
+  </section>
+)}
+  <div class="tools" data-tools>
+    <div class="wrap">
+      <div class="row">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" data-search-input data-i18n-placeholder="search" placeholder="搜索首次提示词、模型…" />
+        </label>
+        <div class="seg" role="group" data-type-group>
+          <button type="button" data-type="all" aria-pressed="true" data-i18n="all">全部</button>
+          {types.map((t) => <button type="button" data-type={t} aria-pressed="false" data-i18n={'type_' + t}>{t}</button>)}
+        </div>
+        <select class="sel" data-sort aria-label="Sort">
+          <option value="updated" data-i18n="sortUpdated">最近更新</option>
+          <option value="created" data-i18n="sortCreated">最近创建</option>
+          <option value="name" data-i18n="sortName">名称</option>
+        </select>
+        <button type="button" class="ghost more" data-more aria-expanded="false" aria-controls="adv">
+          <span data-i18n="more">高级</span>
+          <b data-more-count hidden>0</b>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="adv" id="adv" data-adv hidden>
+        <div class="adv-in">
+          <div class="facet">
+            <span class="facet-k" data-i18n="modelK">模型</span>
+            {models.map((m) => <button type="button" class="chip" data-model={m} aria-pressed="false">{m}</button>)}
+          </div>
+          {colors.length > 0 && (
+          <div class="facet">
+            <span class="facet-k" data-i18n="colorK">配色</span>
+            {colors.map((c) => <button type="button" class="chip" data-color={c} aria-pressed="false"><i style={'background:' + (SWATCH[c] ?? '#ccc')}></i><span data-i18n={'color_' + c}>{c}</span></button>)}
+          </div>
+          )}
+          {tags.length > 0 && (
+          <div class="facet">
+            <span class="facet-k" data-i18n="tagK">标签</span>
+            {tags.map((t) => <button type="button" class="chip" data-tag={t} aria-pressed="false">{t}</button>)}
+          </div>
+          )}
+          <div class="adv-foot">
+            <button type="button" class="reset" data-reset data-i18n="reset">清除筛选</button>
+            <span data-count></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="wrap">
+    <div class="grid" data-grid>
+      {catalog.map((it) => (
+        <article class="card" data-card data-slug={it.slug} data-model={it.model} data-type={it.type}
+          data-tags={JSON.stringify(it.tags)} data-colors={JSON.stringify(it.colors)}
+          data-search={[it.prompt, it.model, it.type, ...it.tags, ...it.colors].join(' ').toLowerCase()}
+          data-updated={it.updatedAt ? Date.parse(it.updatedAt) || 0 : 0}
+          data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
+          <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>
+            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading="lazy" decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
+              : <span class="none" data-i18n="noShot">暂无截图</span>}
+            {it.screenshots.length > 1 && <span class="dots">{it.screenshots.map((_, i) => <span class={i === 0 ? 'is-on' : ''}></span>)}</span>}
+          </a>
+          <div class="body">
+            <h3 title={it.name}>{it.name}</h3>
+            <span class="kind" data-i18n={'type_' + it.type}>{it.type}</span>
+          </div>
+          <div class="foot-meta">
+            <span class="model" title={it.model}>{it.model === 'unknown' ? <span data-i18n="unknownModel">未记录</span> : it.model}</span>
+            <span class="date">{it.updatedAt ? it.updatedAt.slice(0, 10) : '—'}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="empty" data-empty><b data-i18n="emptyTitle">没有匹配的原型</b><span data-i18n="emptyText">换个关键词，或清除筛选条件。</span></div>
+  </section>
+</main>
+{!embedded && <footer class="wrap foot"><span>© mono-uihub · MIT</span><a href={REPO} target="_blank" rel="noopener noreferrer">github.com/MonoKelvin/mono-uihub</a></footer>}
+<script>
+  import { initGallery } from '../scripts/gallery.js';
+  initGallery();
+</script>
+</body>
+</html>

@@ -25,3 +25,11 @@ __pycache__/
 tools/image-forge/models/cache/
 
 temp/
+
+# Gallery build artifacts
+site/node_modules/
+site/dist/
+site/.astro/
+site/public/prototypes/
+site/.vercel/
+
