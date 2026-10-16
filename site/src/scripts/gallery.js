@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const I18N = {
   zh: {
-    heroTitle:'一句话，即一个界面', heroText:'每个原型都从一句需求现场推导视觉方向。筛选与搜索只依据首次生成记录。', heroUnit:'个原型',
+    heroL1:'AI 一句话', heroL2:'生成一个界面',
     search:'搜索首次提示词、模型…', all:'全部', more:'高级',
     sortUpdated:'最近更新', sortCreated:'最近创建', sortName:'名称',
     modelK:'模型', colorK:'配色', tagK:'标签', reset:'清除筛选',
@@ -15,7 +15,7 @@ const I18N = {
     color_yellow:'黄', color_black:'黑', color_white:'白', color_gray:'灰', color_beige:'米', color_brown:'棕',
   },
   en: {
-    heroTitle:'One sentence, one interface.', heroText:'Each prototype derives its own visual direction from a single brief. Filters and search use only the first generation record.', heroUnit:'prototypes',
+    heroL1:'One AI prompt,', heroL2:'one interface',
     search:'Search initial prompts, models…', all:'All', more:'Advanced',
     sortUpdated:'Recently updated', sortCreated:'Recently created', sortName:'Name',
     modelK:'Model', colorK:'Color', tagK:'Tags', reset:'Clear filters',
@@ -37,6 +37,22 @@ export function initGallery() {
   const embedded = document.body.dataset.embedded === '1';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Split hero title lines into per-word spans so they can stagger in.
+     Chinese lines split per character, latin per word. */
+  function splitWords(el) {
+    const text = el.textContent;
+    const isCJK = /[一-鿿]/.test(text);
+    const parts = isCJK ? [...text] : text.split(/(\s+)/);
+    el.textContent = '';
+    for (const part of parts) {
+      if (!part.trim()) { el.append(document.createTextNode(part)); continue; }
+      const w = document.createElement('span');
+      w.className = 'word';
+      w.textContent = part;
+      el.append(w);
+    }
+  }
+
   const grid = $('[data-grid]');
   const cards = $$('[data-card]', grid);
   const total = cards.length;
@@ -49,7 +65,11 @@ export function initGallery() {
     lang = next;
     const d = I18N[lang];
     document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
-    $$('[data-i18n]').forEach((el) => { const v = d[el.dataset.i18n]; if (typeof v === 'string') el.textContent = v; });
+    $$('[data-i18n]').forEach((el) => {
+      const v = d[el.dataset.i18n]; if (typeof v !== 'string') return;
+      el.textContent = v;
+      if (el.closest('.hero-title')) splitWords(el);
+    });
     $$('[data-i18n-placeholder]').forEach((el) => { el.placeholder = d[el.dataset.i18nPlaceholder] ?? el.placeholder; });
     $$('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
     if (!embedded) { try { localStorage.setItem('uihub-lang', lang); } catch {} }
@@ -79,8 +99,7 @@ export function initGallery() {
     const n = cards.filter(isVisible).length;
     const label = I18N[lang].count(n, total);
     const count = $('[data-count]'); if (count) count.textContent = label;
-    const heroN = $('[data-hero-count]'); if (heroN) heroN.textContent = String(n);
-    const _tc = $('[data-tcount]'); if (_tc) _tc.textContent = label;
+    const ac = $('[data-count-all]'); if (ac) ac.textContent = String(n);
     $('[data-empty]').classList.toggle('is-on', n === 0);
     const badge = $('[data-more-count]');
     if (badge) { const a = activeCount(); badge.hidden = a === 0; badge.textContent = String(a); }
@@ -171,20 +190,6 @@ export function initGallery() {
     });
   });
 
-  /* ---------- hero eyebrow reveal on scroll ---------- */
-  const eyebrow = $('[data-hero-eyebrow]');
-  if (eyebrow && !reduce) {
-    ScrollTrigger.create({
-      trigger: '.hero', start: 'top 40%', end: 'bottom 60%',
-      onEnter: () => eyebrow.classList.add('in-view'),
-      onEnterBack: () => eyebrow.classList.add('in-view'),
-      onLeave: () => eyebrow.classList.remove('in-view'),
-      onLeaveBack: () => eyebrow.classList.remove('in-view'),
-    });
-  }
-  const bar = $('[data-bar]');
-  if (bar) ScrollTrigger.create({ start: 8, end: 'max', onToggle: (s) => bar.classList.toggle('is-scrolled', s.isActive) });
-
   /* ---------- embed height reporting ---------- */
   const parent = params.get('parent');
   const target = embedded && window.parent !== window && parent && PARENTS.has(parent) ? parent : null;
@@ -201,17 +206,37 @@ export function initGallery() {
   applyLang(lang);
   render({ animate: false });
 
-  /* First-visit reveal only; the header and hero are never animated away on
-     scroll, so nothing can disappear while reading. */
+  /* First-visit reveal only; hero content never animates away on scroll. */
   if (!reduce) {
-    const h1 = $('.hero h1');
-    if (h1) {
-      gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .from(h1, { autoAlpha: 0, y: 24, duration: 0.85, clearProps: 'all' })
-        .from('.hero-stat > *', { autoAlpha: 0, y: 12, duration: 0.5, stagger: 0.1, clearProps: 'all' }, '-=0.55');
+    const words = $$('.hero-title .word');
+    if (words.length) {
+      gsap.from(words, { autoAlpha: 0, y: 34, rotate: 2, duration: 0.9, ease: 'power3.out', stagger: 0.07, clearProps: 'all' });
     }
     const first = cards.filter(isVisible);
     gsap.from(first.slice(0, 16), { autoAlpha: 0, y: 18, duration: 0.55, ease: 'power2.out', stagger: { each: 0.04 }, clearProps: 'all' });
+
+    /* ---------- scroll: aura drift ---------- */
+    const aura = $('.aura');
+    if (aura) gsap.to(aura, { yPercent: 45, xPercent: -14, ease: 'none',
+      scrollTrigger: { trigger: document.body, start: 'top top', end: 'max', scrub: 1.2 } });
+
+    /* ---------- wheel: damped continuous handoff into the tools area ---------- */
+    if (!embedded && matchMedia('(pointer: fine)').matches) {
+      const tools = $('[data-tools]');
+      if (tools) {
+        let anim = null;
+        addEventListener('wheel', (e) => {
+          if (e.deltaY <= 0 || anim) return;
+          const r = tools.getBoundingClientRect();
+          if (r.top <= 14) return; // tools already reached
+          const target = r.top + scrollY - 14;
+          e.preventDefault();
+          anim = gsap.to(window, { duration: 1.1, ease: 'power2.inOut',
+            scrollTo: { y: target, autoKill: false },
+            onComplete: () => { anim = null; } });
+        }, { passive: false });
+      }
+    }
   }
 }
 

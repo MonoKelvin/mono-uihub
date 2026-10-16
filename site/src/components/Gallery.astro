@@ -22,15 +22,19 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <link rel="icon" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;550;600&family=Geist+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;600&family=Geist+Mono:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" />
 </head>
 <body class={embedded ? 'embedded' : ''} data-embedded={embedded ? '1' : '0'}>
+{!embedded && <div class="vlines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>}
+{!embedded && <div class="aura" aria-hidden="true"></div>}
+<svg class="defs" aria-hidden="true" focusable="false"><defs><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.76" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs></svg>
 {!embedded && (
-<header class="bar" data-bar>
+<header class="bar">
   <div class="wrap bar-in">
     <a class="brand" href="/" aria-label="mono-uihub">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--ink)"/><path d="M9 28V12h5l6 9 6-9h5v16h-5V20l-6 8-6-8v8Z" fill="var(--bg)"/></svg>
-      mono-uihub
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--ink)"/><path d="M9 28V12h5l6 9 6-9h5v16h-5V20l-6 8-6-8v8Z" fill="var(--paper)"/></svg>
+      <span class="brand-mark">mono-uihub</span>
+      <span class="brand-sub">UI 原型画廊</span>
     </a>
     <div class="bar-actions">
       <a class="ghost" href={REPO} target="_blank" rel="noopener noreferrer">
@@ -47,38 +51,40 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 )}
 <main>
 {!embedded && (
-  <section class="wrap hero">
-    <div class="hero-text">
-      <h1 data-i18n="heroTitle">One sentence, one interface.</h1>
-      <p data-i18n="heroText">Each prototype derives its own visual direction from a single brief. Filters and search use only the first generation record.</p>
-      <div class="hero-stat"><b data-hero-count>{catalog.length}</b><span data-i18n="heroUnit">prototypes</span></div>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-title">
+        <h1><span class="l1" data-i18n="heroL1">AI 一句话</span><span class="l2" data-i18n="heroL2">生成一个界面</span></h1>
+      </div>
     </div>
-    <div class="hero-eyebrow" data-hero-eyebrow aria-hidden="true"><span data-i18n="all">All</span> <span>·</span> <span data-hero-count>{catalog.length}</span></div>
   </section>
 )}
   <div class="tools" data-tools>
     <div class="wrap">
-      <div class="row">
-        <label class="search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input type="search" data-search-input data-i18n-placeholder="search" placeholder="搜索首次提示词、模型…" />
-          <button type="button" class="clear" data-clear hidden aria-label="清空搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-        </label>
-        <div class="seg" role="group" data-type-group>
-          <button type="button" data-type="all" aria-pressed="true" data-i18n="all">全部</button>
-          {types.map((t) => <button type="button" data-type={t} aria-pressed="false" data-i18n={'type_' + t}>{t}</button>)}
+      <div class="deck">
+        <div class="row">
+          <label class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" data-search-input data-i18n-placeholder="search" placeholder="搜索首次提示词、模型…" />
+            <button type="button" class="clear" data-clear hidden aria-label="清空搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </label>
+          <span class="div" aria-hidden="true"></span>
+          <div class="seg" role="group" data-type-group>
+            <button type="button" data-type="all" aria-pressed="true"><span data-i18n="all">全部</span><i data-count-all>{catalog.length}</i></button>
+            {types.map((t) => <button type="button" data-type={t} aria-pressed="false"><span data-i18n={'type_' + t}>{t}</span><i>{catalog.filter((it) => it.type === t).length}</i></button>)}
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <select class="sel" data-sort aria-label="Sort">
+            <option value="updated" data-i18n="sortUpdated">最近更新</option>
+            <option value="created" data-i18n="sortCreated">最近创建</option>
+            <option value="name" data-i18n="sortName">名称</option>
+          </select>
+          <button type="button" class="ghost more" data-more aria-expanded="false" aria-controls="adv">
+            <span data-i18n="more">Advanced</span>
+            <b data-more-count hidden>0</b>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
         </div>
-        <select class="sel" data-sort aria-label="Sort">
-          <option value="updated" data-i18n="sortUpdated">最近更新</option>
-          <option value="created" data-i18n="sortCreated">最近创建</option>
-          <option value="name" data-i18n="sortName">名称</option>
-        </select>
-        <button type="button" class="ghost more" data-more aria-expanded="false" aria-controls="adv">
-          <span data-i18n="more">Advanced</span>
-          <b data-more-count hidden>0</b>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <span class="tcount" data-tcount></span>
       </div>
       <div class="adv" id="adv" data-adv hidden>
         <div class="adv-in">
@@ -115,9 +121,11 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           data-updated={it.updatedAt ? Date.parse(it.updatedAt) || 0 : 0}
           data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
           <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>
+            <span class="frame">
             {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
               : <span class="none" data-i18n="noShot">暂无截图</span>}
             {it.screenshots.length > 1 && <span class="dots">{it.screenshots.map((_, i) => <span class={i === 0 ? 'is-on' : ''}></span>)}</span>}
+            </span>
           </a>
           <div class="body">
             <h3 title={it.name}>{it.name}</h3>
@@ -136,6 +144,9 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 {!embedded && <footer class="wrap foot"><span>© mono-uihub · MIT</span><span class="snap">{buildDate} · {catalog.length}</span><a href={REPO} target="_blank" rel="noopener noreferrer">github.com/MonoKelvin/mono-uihub</a></footer>}
 <script>
   import { initGallery } from '../scripts/gallery.js';
+  import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+  import { gsap } from 'gsap';
+  gsap.registerPlugin(ScrollToPlugin);
   initGallery();
 </script>
 </body>

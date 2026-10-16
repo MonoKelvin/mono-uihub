@@ -52,7 +52,7 @@ node tools/screenshots/capture.mjs --all --width 1600 --height 1200 --count 3
 所有颜色、阴影、圆角、字体都是 `src/styles/theme.css` 中 `:root` 的 CSS 变量。新增主题只需写一个覆盖块，并改 `<html data-theme>`：
 
 ```css
-[data-theme="dark"] { --bg:#141413; --surface:#1c1c1a; --ink:#f2f0ea; /* … */ color-scheme: dark; }
+[data-theme="light"] { --paper:#faf7f4; --ink:#1a1816; --ink-2:#6b665f; --gold:#5a8c6e; /* … */ color-scheme: light; }
 ```
 
 ## 部署到 Vercel
