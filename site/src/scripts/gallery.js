@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const I18N = {
   zh: {
-    heroTitle:'UI 原型画廊', heroText:'一句话生成的高保真原型合集。筛选只依据每个原型的首次生成记录。',
+    heroTitle:'一句话，即一个界面', heroText:'每个原型都从一句需求现场推导视觉方向。筛选与搜索只依据首次生成记录。', heroUnit:'个原型',
     search:'搜索首次提示词、模型…', all:'全部', more:'高级',
     sortUpdated:'最近更新', sortCreated:'最近创建', sortName:'名称',
     modelK:'模型', colorK:'配色', tagK:'标签', reset:'清除筛选',
@@ -15,7 +15,7 @@ const I18N = {
     color_yellow:'黄', color_black:'黑', color_white:'白', color_gray:'灰', color_beige:'米', color_brown:'棕',
   },
   en: {
-    heroTitle:'UI Prototype Gallery', heroText:'High-fidelity prototypes generated from a single sentence. Filters use only each prototype’s first generation record.',
+    heroTitle:'One sentence, one interface.', heroText:'Each prototype derives its own visual direction from a single brief. Filters and search use only the first generation record.', heroUnit:'prototypes',
     search:'Search initial prompts, models…', all:'All', more:'Advanced',
     sortUpdated:'Recently updated', sortCreated:'Recently created', sortName:'Name',
     modelK:'Model', colorK:'Color', tagK:'Tags', reset:'Clear filters',
@@ -79,7 +79,8 @@ export function initGallery() {
     const n = cards.filter(isVisible).length;
     const label = I18N[lang].count(n, total);
     const count = $('[data-count]'); if (count) count.textContent = label;
-    const heroN = $('[data-hero-n]'); if (heroN) heroN.textContent = label;
+    const heroN = $('[data-hero-count]'); if (heroN) heroN.textContent = String(n);
+    const _tc = $('[data-tcount]'); if (_tc) _tc.textContent = label;
     $('[data-empty]').classList.toggle('is-on', n === 0);
     const badge = $('[data-more-count]');
     if (badge) { const a = activeCount(); badge.hidden = a === 0; badge.textContent = String(a); }
@@ -161,18 +162,26 @@ export function initGallery() {
     let index = 0, timer;
     const show = (i) => { index = i; imgs.forEach((im, j) => im.classList.toggle('is-on', j === i)); dots.forEach((d, j) => d.classList.toggle('is-on', j === i)); };
     card.addEventListener('pointerenter', () => {
-      gsap.to(card, { y: -4, boxShadow: 'var(--shadow-up)', duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
       if (imgs.length) gsap.to(imgs, { scale: 1.03, duration: 0.6, ease: 'power3.out' });
       if (imgs.length > 1) timer = setInterval(() => show((index + 1) % imgs.length), 1500);
     });
     card.addEventListener('pointerleave', () => {
       clearInterval(timer); show(0);
-      gsap.to(card, { y: 0, boxShadow: 'var(--shadow)', duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
       if (imgs.length) gsap.to(imgs, { scale: 1, duration: 0.45, ease: 'power3.out' });
     });
   });
 
-  /* ---------- scroll ---------- */
+  /* ---------- hero eyebrow reveal on scroll ---------- */
+  const eyebrow = $('[data-hero-eyebrow]');
+  if (eyebrow && !reduce) {
+    ScrollTrigger.create({
+      trigger: '.hero', start: 'top 40%', end: 'bottom 60%',
+      onEnter: () => eyebrow.classList.add('in-view'),
+      onEnterBack: () => eyebrow.classList.add('in-view'),
+      onLeave: () => eyebrow.classList.remove('in-view'),
+      onLeaveBack: () => eyebrow.classList.remove('in-view'),
+    });
+  }
   const bar = $('[data-bar]');
   if (bar) ScrollTrigger.create({ start: 8, end: 'max', onToggle: (s) => bar.classList.toggle('is-scrolled', s.isActive) });
 
@@ -195,7 +204,23 @@ export function initGallery() {
   /* First-visit reveal only; the header and hero are never animated away on
      scroll, so nothing can disappear while reading. */
   if (!reduce) {
+    const h1 = $('.hero h1');
+    if (h1) {
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .from(h1, { autoAlpha: 0, y: 24, duration: 0.85, clearProps: 'all' })
+        .from('.hero-stat > *', { autoAlpha: 0, y: 12, duration: 0.5, stagger: 0.1, clearProps: 'all' }, '-=0.55');
+    }
     const first = cards.filter(isVisible);
-    gsap.from(first.slice(0, 12), { autoAlpha: 0, y: 16, duration: 0.5, ease: 'power2.out', stagger: 0.05, clearProps: 'all' });
+    gsap.from(first.slice(0, 16), { autoAlpha: 0, y: 18, duration: 0.55, ease: 'power2.out', stagger: { each: 0.04 }, clearProps: 'all' });
   }
 }
+
+/* v5: search clear button */
+(() => {
+  const inp = document.querySelector('[data-search-input]');
+  const btn = document.querySelector('[data-clear]');
+  if (!inp || !btn) return;
+  const sync = () => { btn.hidden = !inp.value; };
+  inp.addEventListener('input', sync); sync();
+  btn.addEventListener('click', () => { inp.value = ''; sync(); inp.dispatchEvent(new Event('input')); inp.focus(); });
+})();

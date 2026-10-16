@@ -6,6 +6,7 @@ interface Props { embedded?: boolean }
 const { embedded = false } = Astro.props;
 // Bundled output moves import.meta.url, so resolve ui/ from the site package root (build cwd).
 const catalog = loadCatalog({ uiRoot: path.resolve(process.cwd(), '..', 'ui') });
+const buildDate = new Date().toISOString().slice(0, 10);
 const REPO = 'https://github.com/MonoKelvin/mono-uihub';
 const SWATCH = { red:'#c8473d', blue:'#3d63b8', green:'#4f8a5b', pink:'#e3a7b4', purple:'#7b5ea7', orange:'#e08a3c', yellow:'#e2c046', black:'#1d1d1b', white:'#ffffff', gray:'#9a9890', beige:'#e6dcc8', brown:'#8a5a3b' };
 const facet = (key) => { const m = new Map(); for (const it of catalog) for (const v of [].concat(it[key])) if (v && v !== 'unknown') m.set(v, (m.get(v) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0]))).map(([v]) => v); };
@@ -21,7 +22,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <link rel="icon" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;550;600&family=Geist+Mono:wght@400;500&display=swap" />
 </head>
 <body class={embedded ? 'embedded' : ''} data-embedded={embedded ? '1' : '0'}>
 {!embedded && (
@@ -47,12 +48,12 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <main>
 {!embedded && (
   <section class="wrap hero">
-    <div class="hero-mark" data-hero-mark aria-hidden="true"></div>
-    <h1 data-i18n="heroTitle">一句话，即一个界面</h1>
-    <div class="hero-foot">
-      <p data-i18n="heroText">每个原型都从一句需求现场推导视觉方向。筛选与搜索只依据首次生成记录。</p>
-      <div class="hero-stat"><b data-hero-count>{catalog.length}</b><span data-i18n="heroUnit">个原型</span></div>
+    <div class="hero-text">
+      <h1 data-i18n="heroTitle">One sentence, one interface.</h1>
+      <p data-i18n="heroText">Each prototype derives its own visual direction from a single brief. Filters and search use only the first generation record.</p>
+      <div class="hero-stat"><b data-hero-count>{catalog.length}</b><span data-i18n="heroUnit">prototypes</span></div>
     </div>
+    <div class="hero-eyebrow" data-hero-eyebrow aria-hidden="true"><span data-i18n="all">All</span> <span>·</span> <span data-hero-count>{catalog.length}</span></div>
   </section>
 )}
   <div class="tools" data-tools>
@@ -61,6 +62,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
         <label class="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input type="search" data-search-input data-i18n-placeholder="search" placeholder="搜索首次提示词、模型…" />
+          <button type="button" class="clear" data-clear hidden aria-label="清空搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </label>
         <div class="seg" role="group" data-type-group>
           <button type="button" data-type="all" aria-pressed="true" data-i18n="all">全部</button>
@@ -72,10 +74,11 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           <option value="name" data-i18n="sortName">名称</option>
         </select>
         <button type="button" class="ghost more" data-more aria-expanded="false" aria-controls="adv">
-          <span data-i18n="more">高级</span>
+          <span data-i18n="more">Advanced</span>
           <b data-more-count hidden>0</b>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
+        <span class="tcount" data-tcount></span>
       </div>
       <div class="adv" id="adv" data-adv hidden>
         <div class="adv-in">
@@ -112,7 +115,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           data-updated={it.updatedAt ? Date.parse(it.updatedAt) || 0 : 0}
           data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
           <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>
-            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading="lazy" decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
+            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
               : <span class="none" data-i18n="noShot">暂无截图</span>}
             {it.screenshots.length > 1 && <span class="dots">{it.screenshots.map((_, i) => <span class={i === 0 ? 'is-on' : ''}></span>)}</span>}
           </a>
@@ -122,15 +125,15 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           </div>
           <div class="foot-meta">
             <span class={'model' + (it.model === 'unknown' ? ' unknown' : '')} title={it.model}><span data-i18n={it.model === 'unknown' ? 'unknownModel' : undefined}>{it.model === 'unknown' ? '未记录' : it.model}</span></span>
-            <span class="date">{it.updatedAt ? it.updatedAt.slice(0, 10) : '—'}</span>
+            <span class="date">{it.updatedAt ? it.updatedAt.slice(0, 10) : '-'}</span>
           </div>
         </article>
       ))}
     </div>
-    <div class="empty" data-empty><b data-i18n="emptyTitle">没有匹配的原型</b><span data-i18n="emptyText">换个关键词，或清除筛选条件。</span></div>
+    <div class="empty" data-empty><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="7" y="9" width="34" height="30" rx="4"/><path d="M7 17h34" opacity=".45"/><circle cx="14" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="18.5" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg><b data-i18n="emptyTitle">没有匹配的原型</b><span data-i18n="emptyText">换个关键词，或清除筛选条件。</span></div>
   </section>
 </main>
-{!embedded && <footer class="wrap foot"><span>© mono-uihub · MIT</span><a href={REPO} target="_blank" rel="noopener noreferrer">github.com/MonoKelvin/mono-uihub</a></footer>}
+{!embedded && <footer class="wrap foot"><span>© mono-uihub · MIT</span><span class="snap">{buildDate} · {catalog.length}</span><a href={REPO} target="_blank" rel="noopener noreferrer">github.com/MonoKelvin/mono-uihub</a></footer>}
 <script>
   import { initGallery } from '../scripts/gallery.js';
   initGallery();
