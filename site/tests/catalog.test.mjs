@@ -51,7 +51,7 @@ test('screenshots are discovered and sorted numerically', () => {
     writeFileSync(path.join(root, 'p', 'index.html'), '<!doctype html>');
     for (const f of ['10.jpg', '2.jpg', '1.jpg', 'cover.png']) writeFileSync(path.join(dir, f), '');
     const [item] = loadCatalog({ uiRoot: root });
-    assert.deepEqual(item.screenshots.map((s) => s.split('/').pop()), ['1.jpg', '2.jpg', '10.jpg']);
+    assert.deepEqual(item.screenshots.map((s) => s.src.split('/').pop()), ['1.jpg', '2.jpg', '10.jpg']);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 

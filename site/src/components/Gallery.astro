@@ -21,7 +21,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <link rel="icon" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 </head>
 <body class={embedded ? 'embedded' : ''} data-embedded={embedded ? '1' : '0'}>
 {!embedded && (
@@ -47,11 +47,12 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <main>
 {!embedded && (
   <section class="wrap hero">
-    <div>
-      <h1 data-i18n="heroTitle">UI 原型画廊</h1>
-      <p data-i18n="heroText">一句话生成的高保真原型合集。筛选只依据每个原型的首次生成记录。</p>
+    <div class="hero-mark" data-hero-mark aria-hidden="true"></div>
+    <h1 data-i18n="heroTitle">一句话，即一个界面</h1>
+    <div class="hero-foot">
+      <p data-i18n="heroText">每个原型都从一句需求现场推导视觉方向。筛选与搜索只依据首次生成记录。</p>
+      <div class="hero-stat"><b data-hero-count>{catalog.length}</b><span data-i18n="heroUnit">个原型</span></div>
     </div>
-    <span class="hero-n" data-hero-n></span>
   </section>
 )}
   <div class="tools" data-tools>
@@ -111,7 +112,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           data-updated={it.updatedAt ? Date.parse(it.updatedAt) || 0 : 0}
           data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
           <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>
-            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading="lazy" decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
+            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s.src} alt={s.alt || ''} loading="lazy" decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
               : <span class="none" data-i18n="noShot">暂无截图</span>}
             {it.screenshots.length > 1 && <span class="dots">{it.screenshots.map((_, i) => <span class={i === 0 ? 'is-on' : ''}></span>)}</span>}
           </a>
@@ -120,7 +121,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
             <span class="kind" data-i18n={'type_' + it.type}>{it.type}</span>
           </div>
           <div class="foot-meta">
-            <span class="model" title={it.model}>{it.model === 'unknown' ? <span data-i18n="unknownModel">未记录</span> : it.model}</span>
+            <span class={'model' + (it.model === 'unknown' ? ' unknown' : '')} title={it.model}><span data-i18n={it.model === 'unknown' ? 'unknownModel' : undefined}>{it.model === 'unknown' ? '未记录' : it.model}</span></span>
             <span class="date">{it.updatedAt ? it.updatedAt.slice(0, 10) : '—'}</span>
           </div>
         </article>
