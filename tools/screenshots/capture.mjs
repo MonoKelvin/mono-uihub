@@ -1,40 +1,9 @@
-import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, lstatSync, mkdirSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadCatalog, UI_ROOT } from '../../site/lib/catalog.mjs';
 import { startPrototypeServer } from './server.mjs';
-
-/**
- * After capturing (or preserving) screenshots, scan the page's screenshots
- * directory and update metadata.json so the gallery has alt-text descriptions.
- * Reads all *.jpg files sorted numerically, replaces the existing screenshots
- * entries, and updates `updated_at` — keeping metadata in sync with what's on
- * disk regardless of whether --overwrite was used.
- */
-export function updateMetadataScreenshots(slug, { uiRoot = UI_ROOT } = {}) {
-  const metadataPath = path.join(uiRoot, slug, 'metadata.json');
-  if (!existsSync(metadataPath)) return;
-  const screenshotsDir = path.join(uiRoot, slug, 'screenshots');
-  if (!existsSync(screenshotsDir) || !lstatSync(screenshotsDir).isDirectory()) return;
-  const files = readdirSync(screenshotsDir)
-    .filter((name) => /^\d+\.jpe?g$/i.test(name) && lstatSync(path.join(screenshotsDir, name)).isFile())
-    .sort((a, b) => Number.parseInt(a, 10) - Number.parseInt(b, 10) || a.localeCompare(b));
-  if (!files.length) return;
-  const now = new Date().toISOString();
-  const metadata = JSON.parse(readFileSync(metadataPath, 'utf8'));
-  // Only keep existing descriptions for files that still exist; generate
-  // placeholder descriptions for new files.
-  const existing = new Map((metadata.screenshots || []).map((s) => [s.file, s.description]));
-  metadata.screenshots = files.map((name) => {
-    const file = 'screenshots/' + name;
-    const desc = existing.get(file) || (name === '1.jpg' ? '页面主要界面截图' : '页面界面截图');
-    return { file, description: desc, captured_at: now };
-  });
-  metadata.updated_at = now;
-  writeFileSync(metadataPath, JSON.stringify(metadata, null, 2) + '\n');
-  console.log('Updated metadata.json screenshots for ' + slug + ' (' + files.length + ' files)');
-}
 
 export function parseArgs(args) {
   const options = { all: false, overwrite: false, slug: null, width: 1600, height: 1200, count: 1 };
@@ -99,8 +68,6 @@ export async function capture(options, { uiRoot = UI_ROOT } = {}) {
           console.log('Captured ' + item.slug + '/screenshots/' + path.basename(filename));
           if (files.length > 1) await page.waitForTimeout(500);
         }
-        // Update metadata.json screenshots list to match captured files.
-        updateMetadataScreenshots(item.slug, { uiRoot });
       } catch (error) { console.error('Failed ' + item.slug + ': ' + error.message); results.push({ slug: item.slug, error: error.message }); }
       finally { await page.close(); }
     }

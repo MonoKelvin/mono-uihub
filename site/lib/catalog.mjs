@@ -66,21 +66,9 @@ export function loadCatalog({ uiRoot = UI_ROOT } = {}) {
     const item = normalizeMetadata(metadata, slug);
     const screenshotsDir = path.join(uiRoot, slug, 'screenshots');
     if (existsSync(screenshotsDir) && lstatSync(screenshotsDir).isDirectory() && !lstatSync(screenshotsDir).isSymbolicLink()) {
-      // Build a map of descriptions from metadata.json (if present), then
-      // merge with the actual files on disk.
-      const descMap = new Map();
-      for (const s of (metadata?.screenshots || [])) {
-        if (s?.file && s?.description) descMap.set(s.file, s.description);
-      }
       item.screenshots = readdirSync(screenshotsDir).filter((name) => /^\d+\.jpe?g$/i.test(name) && isRegularFile(path.join(screenshotsDir, name)))
         .sort((a, b) => Number.parseInt(a, 10) - Number.parseInt(b, 10) || a.localeCompare(b))
-        .map((name) => {
-          const rel = 'screenshots/' + name;
-          return {
-            src: '/prototypes/' + encodeURIComponent(slug) + '/screenshots/' + encodeURIComponent(name),
-            alt: descMap.get(rel) || '',
-          };
-        });
+        .map((name) => '/prototypes/' + encodeURIComponent(slug) + '/screenshots/' + encodeURIComponent(name));
     }
     return item;
   }).sort((a, b) => a.slug.localeCompare(b.slug));

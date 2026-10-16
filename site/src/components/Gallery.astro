@@ -112,7 +112,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           data-updated={it.updatedAt ? Date.parse(it.updatedAt) || 0 : 0}
           data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
           <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>
-            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s.src} alt={s.alt || ''} loading="lazy" decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
+            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading="lazy" decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
               : <span class="none" data-i18n="noShot">暂无截图</span>}
             {it.screenshots.length > 1 && <span class="dots">{it.screenshots.map((_, i) => <span class={i === 0 ? 'is-on' : ''}></span>)}</span>}
           </a>
