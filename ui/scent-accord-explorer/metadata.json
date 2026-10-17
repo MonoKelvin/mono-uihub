@@ -15,7 +15,7 @@
     {
       "prompt": "香水品牌的香调探索单页。包含香调、前中后调切换、原料故事、使用场景、购买入口。交互上可点击切换，前中后调随切换变化，原料故事可展开，场景可滑动。氛围是优雅、神秘、有嗅觉氛围。",
       "model": "glm-5.3-flash",
-      "skills": ["mono-ui-prototype", "ui-metadata"],
+      "skills": ["mono-ui-prototype"],
       "duration_seconds": 700,
       "image_generation": {
         "used": false,
@@ -26,7 +26,7 @@
     {
       "prompt": "改成单页面，浅粉+米色+浅蓝色等低饱和的高级感UI设计",
       "model": "deepseek-v4.1-flash",
-      "skills": ["mono-ui-prototype", "ui-metadata"],
+      "skills": ["mono-ui-prototype"],
       "duration_seconds": null,
       "image_generation": {
         "used": false,

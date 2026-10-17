@@ -18,13 +18,12 @@
         "round": 1,
         "kind": "initial",
         "prompt": "家具品牌的定制管理\n设计一款家具品牌管理定制订单、材料、工艺和交付的完整软件。包含订单看板、材料库、工艺卡、尺寸编辑器、效果预览、生产排期、交付追踪、客户沟通。交互上订单可拖拽切换状态，材料可拖拽到家具模型，尺寸编辑器可拖拽调整，效果预览可旋转缩放，生产",
-        "model": "gpt-6-astra",
+        "model": "GPT-6-Astra",
         "reasoning_effort": null,
         "skills": [
           "mono-ui-prototype",
-          "ui-metadata",
           "design-taste-frontend",
-          "andrej-karpathy-skills:karpathy-guidelines"
+          "karpathy-guidelines"
         ],
         "started_at": "2026-10-14T11:07:38.5323035+08:00",
         "completed_at": "2026-10-14T11:44:35.1858300+08:00",
@@ -49,7 +48,7 @@
         "reasoning_effort": null,
         "skills": [
           "mono-ui-prototype",
-          "ui-metadata",
+
           "skill-creator"
         ],
         "started_at": null,

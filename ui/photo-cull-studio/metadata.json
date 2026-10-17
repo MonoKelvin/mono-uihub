@@ -26,8 +26,7 @@
         "model": "claude-sonnet-4.8",
         "reasoning_effort": null,
         "skills": [
-          "mono-ui-prototype",
-          "ui-metadata"
+          "mono-ui-prototype"
         ],
         "started_at": "2026-10-14T11:08:48+08:00",
         "completed_at": "2026-10-14T11:27:45+08:00",

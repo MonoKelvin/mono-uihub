@@ -21,11 +21,11 @@
   "history": [
     {
       "prompt": "skills\\mono-ui-prototype\\SKILL.md 设计一个蜘蛛侠定位的软件，支持当前地址定位、历史出没路径，可能的真实身份者，群众最新的消息留言，犯罪事件等功能模块，不需要切换设计成导航栏切换展示不同页面的样子，尽量将大部分功能模块集中展示到一个软件页面中，最好是设计成局部页面的切换。配色体系采用蜘蛛侠金典红蓝配色，高级且带有科幻幽默感，流畅的交互动画和蜘蛛侠元素，尽量完善有效的功能逻辑",
-      "model": "GPT-6",
+      "model": "GPT-6-Astra",
       "skills": [
         "mono-ui-prototype",
         "animate",
-        "andrej-karpathy-skills:karpathy-guidelines"
+        "karpathy-guidelines"
       ],
       "duration_seconds": 930,
       "image_generation": {
@@ -36,12 +36,12 @@
     },
     {
       "prompt": "继续优化UI设计，目前UI还是太普通了没有高级设计感，请优化 $redesign-existing-projects。继续优化UI设计和交互动画等。此外的问题修复：地图区域拖动不要触发文字选择、要支持鼠标滚动缩放，地图尽可能放大一点（如果有条件可以使用一些API获取真实块状地图或者真实信息API，一样使用cdn或者api等方式，尽量不要下载依赖包，除非有开源的轻量离线包可以用也行）地图尽量优化模型、图标、动效、实时状态、动画、随机消息等。继续打磨优化。补充：建议 Leaflet 配合无需 API Key 的 OSM 瓦片；地图瓦片全部提示 403 access blocked，需要修复。",
-      "model": "GPT-6",
+      "model": "GPT-6-Astra",
       "skills": [
         "mono-ui-prototype",
         "redesign-existing-projects",
         "animate",
-        "andrej-karpathy-skills:karpathy-guidelines"
+        "karpathy-guidelines"
       ],
       "duration_seconds": 2762,
       "image_generation": {
@@ -52,10 +52,10 @@
     },
     {
       "prompt": "还是提示api key required",
-      "model": "GPT-6",
+      "model": "GPT-6-Astra",
       "skills": [
         "redesign-existing-projects",
-        "andrej-karpathy-skills:karpathy-guidelines"
+        "karpathy-guidelines"
       ],
       "duration_seconds": 309,
       "image_generation": {

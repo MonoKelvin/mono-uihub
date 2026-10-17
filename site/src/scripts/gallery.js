@@ -4,8 +4,8 @@ import { EMBED_PARENTS } from '../config.mjs';
 
 const I18N = {
   zh: {
-    heroL1:'AI 一句话', heroL2:'生成一个原型',
-    search:'搜索首次提示词、模型…', all:'全部', more:'高级',
+    heroL1:'一句话让 AI', heroL2:'生成 UI 原型',
+    search:'搜索首次提示词、模型…', all:'全部', more:'筛选',
     sortUpdated:'最近更新', sortCreated:'最近创建', sortName:'名称',
     modelK:'模型', colorK:'配色', tagK:'标签', reset:'清除筛选',
     noShot:'暂无截图', unknownModel:'未记录',
@@ -17,7 +17,7 @@ const I18N = {
   },
   en: {
     heroL1:'One AI prompt,', heroL2:'one UI prototype',
-    search:'Search initial prompts, models…', all:'All', more:'Advanced',
+    search:'Search initial prompts, models…', all:'All', more:'Filters',
     sortUpdated:'Updated', sortCreated:'Created', sortName:'Name',
     modelK:'Model', colorK:'Color', tagK:'Tags', reset:'Clear filters',
     noShot:'No screenshot yet', unknownModel:'Unrecorded',
