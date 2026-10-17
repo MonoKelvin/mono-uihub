@@ -15,6 +15,7 @@
   --font:"Geist","PingFang SC","Microsoft YaHei","Source Han Sans SC",system-ui,sans-serif;
   --font-mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
   --font-display:"KingHwaOldSong","Playfair Display","Songti SC","SimSun",serif;
+  --font-sign:"Mrs Saint Delafield","Brush Script MT",cursive;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -40,7 +41,12 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
 .brand{display:flex;align-items:baseline;gap:10px}
 .brand svg{width:20px;height:20px;flex:none;align-self:center}
 .brand-mark{font-weight:550;font-size:15px;letter-spacing:-.015em}
-.brand-sub{font-family:var(--font-display);font-size:14px;color:var(--ink-3);transform:translateY(-.5px)}
+.brand-wrap{display:flex;align-items:center;gap:12px}
+.brand-sep{color:var(--line-2);font-size:15px;transform:translateY(-1px)}
+.brand-by{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;color:var(--ink-3);transition:color .2s var(--ease)}
+.brand-by .sig{font:400 27px/1 var(--font-sign);color:var(--ink);letter-spacing:0;transform:translateY(3px);transition:transform .3s var(--ease)}
+.brand-by:hover{color:var(--ink-2)}
+.brand-by:hover .sig{transform:translateY(3px) rotate(-3deg)}
 .bar-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
 .ghost{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:transparent;font-size:13.5px;color:var(--ink-2);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
 .ghost:hover{background:var(--fill);color:var(--ink)}
@@ -132,9 +138,11 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
 .empty svg{display:block;margin:0 auto 18px;width:38px;height:38px;color:var(--ink-3)}
 .empty b{display:block;margin-bottom:8px;font:400 34px/1.2 var(--font-display);letter-spacing:.02em;color:var(--ink)}
 .foot{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:30px 0 52px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
-.foot .snap{font-family:var(--font-mono);font-size:12px;font-variant-numeric:tabular-nums}
-.foot a{transition:color .2s var(--ease)}
-.foot a:hover{color:var(--ink)}
+.social{display:flex;align-items:center;gap:6px}
+.social a{display:grid;place-items:center;width:36px;height:36px;border-radius:var(--r-pill);color:color-mix(in oklab,var(--brand) 58%,var(--ink-3));transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
+.social a:hover{color:color-mix(in oklab,var(--brand) 82%,var(--ink-3));background:color-mix(in srgb,var(--brand) 8%,transparent);transform:translateY(-1px)}
+.social a:active{transform:scale(.94)}
+.social svg{width:20px;height:20px}
 .embedded .foot{display:none}
 .embedded .tools{top:0}
 
@@ -151,7 +159,9 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
   .wrap{width:calc(100% - 32px)}
   .vlines{width:calc(100% - 32px)}
   .bar-in{height:58px}
-  .brand-sub{display:none}
+  .brand-wrap{gap:9px}
+  .brand-by{font-size:12px}
+  .brand-by .sig{font-size:23px}
   .hero{padding-top:28px}
   .hero-title h1{font-size:clamp(40px,11.5vw,80px)}
   .tools{top:8px}

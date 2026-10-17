@@ -2,12 +2,12 @@
 import '../styles/theme.css';
 import path from 'node:path';
 import { loadCatalog } from '../../lib/catalog.mjs';
+import { PROJECT, AUTHOR, SOCIAL } from '../config.mjs';
 interface Props { embedded?: boolean }
 const { embedded = false } = Astro.props;
 // Bundled output moves import.meta.url, so resolve ui/ from the site package root (build cwd).
 const catalog = loadCatalog({ uiRoot: path.resolve(process.cwd(), '..', 'ui') });
-const buildDate = new Date().toISOString().slice(0, 10);
-const REPO = 'https://github.com/MonoKelvin/mono-uihub';
+const REPO = PROJECT.repo;
 const SWATCH = { red:'#c8473d', blue:'#3d63b8', green:'#4f8a5b', pink:'#e3a7b4', purple:'#7b5ea7', orange:'#e08a3c', yellow:'#e2c046', black:'#1d1d1b', white:'#ffffff', gray:'#9a9890', beige:'#e6dcc8', brown:'#8a5a3b' };
 const facet = (key) => { const m = new Map(); for (const it of catalog) for (const v of [].concat(it[key])) if (v && v !== 'unknown') m.set(v, (m.get(v) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0]))).map(([v]) => v); };
 const models = facet('model'), types = facet('type'), tags = facet('tags'), colors = facet('colors');
@@ -22,7 +22,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <link rel="icon" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;600&family=Geist+Mono:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;600&family=Geist+Mono:wght@400;500&family=Playfair+Display:wght@400;500&family=Mrs+Saint+Delafield&display=swap" />
 </head>
 <body class={embedded ? 'embedded' : ''} data-embedded={embedded ? '1' : '0'}>
 {!embedded && <div class="vlines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>}
@@ -31,11 +31,14 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 {!embedded && (
 <header class="bar">
   <div class="wrap bar-in">
-    <a class="brand" href="/" aria-label="mono-uihub">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--ink)"/><path d="M9 28V12h5l6 9 6-9h5v16h-5V20l-6 8-6-8v8Z" fill="var(--paper)"/></svg>
-      <span class="brand-mark">mono-uihub</span>
-      <span class="brand-sub">UI 原型画廊</span>
-    </a>
+    <div class="brand-wrap">
+      <a class="brand" href="/" aria-label={PROJECT.name}>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--ink)"/><path d="M9 28V12h5l6 9 6-9h5v16h-5V20l-6 8-6-8v8Z" fill="var(--paper)"/></svg>
+        <span class="brand-mark">{PROJECT.name}</span>
+      </a>
+      <span class="brand-sep" aria-hidden="true">|</span>
+      <a class="brand-by" href={AUTHOR.site} target="_blank" rel="noopener noreferrer">by <span class="sig">{AUTHOR.name}</span></a>
+    </div>
     <div class="bar-actions">
       <a class="ghost" href={REPO} target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
@@ -54,7 +57,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
   <section class="hero">
     <div class="wrap">
       <div class="hero-title">
-        <h1><span class="l1" data-i18n="heroL1">AI 一句话</span><span class="l2" data-i18n="heroL2">生成一个界面</span></h1>
+        <h1><span class="l1" data-i18n="heroL1">AI 一句话</span><span class="l2" data-i18n="heroL2">生成一个原型</span></h1>
       </div>
     </div>
   </section>
@@ -141,7 +144,18 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
     <div class="empty" data-empty><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="7" y="9" width="34" height="30" rx="4"/><path d="M7 17h34" opacity=".45"/><circle cx="14" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="18.5" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg><b data-i18n="emptyTitle">没有匹配的原型</b><span data-i18n="emptyText">换个关键词，或清除筛选条件。</span></div>
   </section>
 </main>
-{!embedded && <footer class="wrap foot"><span>© mono-uihub · MIT</span><span class="snap">{buildDate} · {catalog.length}</span><a href={REPO} target="_blank" rel="noopener noreferrer">github.com/MonoKelvin/mono-uihub</a></footer>}
+{!embedded && (
+<footer class="wrap foot">
+  <span>© {PROJECT.name} · {PROJECT.license}</span>
+  <nav class="social" aria-label="Social links">
+    {SOCIAL.map((s) => (
+      <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label} style={`--brand:${s.color}`}>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={s.icon} /></svg>
+      </a>
+    ))}
+  </nav>
+</footer>
+)}
 <script>
   import { initGallery } from '../scripts/gallery.js';
   import { ScrollToPlugin } from 'gsap/ScrollToPlugin';

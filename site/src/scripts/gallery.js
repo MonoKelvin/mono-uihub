@@ -1,9 +1,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { EMBED_PARENTS } from '../config.mjs';
 
 const I18N = {
   zh: {
-    heroL1:'AI 一句话', heroL2:'生成一个界面',
+    heroL1:'AI 一句话', heroL2:'生成一个原型',
     search:'搜索首次提示词、模型…', all:'全部', more:'高级',
     sortUpdated:'最近更新', sortCreated:'最近创建', sortName:'名称',
     modelK:'模型', colorK:'配色', tagK:'标签', reset:'清除筛选',
@@ -15,9 +16,9 @@ const I18N = {
     color_yellow:'黄', color_black:'黑', color_white:'白', color_gray:'灰', color_beige:'米', color_brown:'棕',
   },
   en: {
-    heroL1:'One AI prompt,', heroL2:'one interface',
+    heroL1:'One AI prompt,', heroL2:'one UI prototype',
     search:'Search initial prompts, models…', all:'All', more:'Advanced',
-    sortUpdated:'Recently updated', sortCreated:'Recently created', sortName:'Name',
+    sortUpdated:'Updated', sortCreated:'Created', sortName:'Name',
     modelK:'Model', colorK:'Color', tagK:'Tags', reset:'Clear filters',
     noShot:'No screenshot yet', unknownModel:'Unrecorded',
     emptyTitle:'No matching prototypes', emptyText:'Try another keyword or clear the filters.',
@@ -27,7 +28,7 @@ const I18N = {
     color_yellow:'Yellow', color_black:'Black', color_white:'White', color_gray:'Gray', color_beige:'Beige', color_brown:'Brown',
   },
 };
-const PARENTS = new Set(['https://monokelvin.cn', 'https://www.monokelvin.cn']);
+const PARENTS = new Set(EMBED_PARENTS);
 
 export function initGallery() {
   gsap.registerPlugin(ScrollTrigger);
