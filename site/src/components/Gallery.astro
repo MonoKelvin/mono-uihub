@@ -76,16 +76,20 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
             {types.map((t) => <button type="button" data-type={t} aria-pressed="false"><span data-i18n={'type_' + t}>{t}</span><i>{catalog.filter((it) => it.type === t).length}</i></button>)}
           </div>
           <span class="div" aria-hidden="true"></span>
-          <select class="sel" data-sort aria-label="Sort">
-            <option value="updated" data-i18n="sortUpdated">最近更新</option>
-            <option value="created" data-i18n="sortCreated">最近创建</option>
-            <option value="name" data-i18n="sortName">名称</option>
-          </select>
+          <button type="button" class="sort-btn" data-sort-btn aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-menu">
+            <span data-sort-label data-i18n="sortUpdated">最近更新</span>
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m3 4.5 3 3 3-3"/></svg>
+          </button>
           <button type="button" class="ghost more" data-more aria-expanded="false" aria-controls="adv">
             <span data-i18n="more">Advanced</span>
             <b data-more-count hidden>0</b>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
+        </div>
+        <div class="sort-menu" id="sort-menu" role="listbox" aria-label="Sort" data-sort-menu hidden>
+          <button type="button" role="option" data-sort-opt="updated" aria-selected="true"><span data-i18n="sortUpdated">最近更新</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>
+          <button type="button" role="option" data-sort-opt="created" aria-selected="false"><span data-i18n="sortCreated">最近创建</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>
+          <button type="button" role="option" data-sort-opt="name" aria-selected="false"><span data-i18n="sortName">名称</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>
         </div>
       </div>
       <div class="adv" id="adv" data-adv hidden>

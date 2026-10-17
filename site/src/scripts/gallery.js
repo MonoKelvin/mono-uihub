@@ -138,7 +138,63 @@ export function initGallery() {
     typeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     render();
   }));
-  $('[data-sort]').addEventListener('change', (e) => { state.sort = e.target.value; render(); });
+  /* ---------- sort dropdown: interruptible glass menu ---------- */
+  const sortBtn = $('[data-sort-btn]');
+  const sortMenu = $('[data-sort-menu]');
+  const sortLabel = $('[data-sort-label]');
+  const sortOpts = $$('[data-sort-opt]', sortMenu);
+  const SORT_KEY = { updated: 'sortUpdated', created: 'sortCreated', name: 'sortName' };
+  let sortOpen = false, sortTween = null;
+  function placeSortMenu() {
+    const deck = sortBtn.closest('.deck').getBoundingClientRect();
+    const b = sortBtn.getBoundingClientRect();
+    const w = sortMenu.offsetWidth;
+    const left = Math.min(Math.max(0, b.left - deck.left + b.width / 2 - w / 2), deck.width - w);
+    sortMenu.style.left = left + 'px';
+    sortMenu.style.top = (b.bottom - deck.top + 8) + 'px';
+  }
+  function setSortOpen(open, { focus = false } = {}) {
+    if (open === sortOpen) return;
+    sortOpen = open;
+    sortBtn.setAttribute('aria-expanded', String(open));
+    if (open) { sortMenu.hidden = false; placeSortMenu(); }
+    if (sortTween) sortTween.kill();
+    if (reduce) {
+      gsap.set(sortMenu, { autoAlpha: open ? 1 : 0, scale: 1, y: 0 });
+      if (!open) sortMenu.hidden = true;
+    } else {
+      // gsap.to starts from the CURRENT values, so a reversed click mid-way continues smoothly.
+      if (open && sortMenu.style.opacity === '') gsap.set(sortMenu, { autoAlpha: 0, scale: 0.94, y: -6 });
+      sortTween = gsap.to(sortMenu, open
+        ? { autoAlpha: 1, scale: 1, y: 0, duration: 0.26, ease: 'power3.out', onComplete: () => { sortTween = null; } }
+        : { autoAlpha: 0, scale: 0.96, y: -4, duration: 0.18, ease: 'power2.in',
+            onComplete: () => { sortTween = null; sortMenu.hidden = true; sortMenu.style.opacity = ''; } });
+    }
+    if (open && focus) (sortOpts.find((o) => o.getAttribute('aria-selected') === 'true') || sortOpts[0]).focus();
+    if (!open && focus) sortBtn.focus();
+  }
+  function chooseSort(v) {
+    state.sort = v;
+    sortOpts.forEach((o) => o.setAttribute('aria-selected', String(o.dataset.sortOpt === v)));
+    sortLabel.dataset.i18n = SORT_KEY[v];
+    sortLabel.textContent = I18N[lang][SORT_KEY[v]];
+    render();
+  }
+  sortBtn.addEventListener('click', () => setSortOpen(!sortOpen));
+  sortBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setSortOpen(true, { focus: true }); }
+  });
+  sortOpts.forEach((o) => o.addEventListener('click', () => { chooseSort(o.dataset.sortOpt); setSortOpen(false, { focus: true }); }));
+  sortMenu.addEventListener('keydown', (e) => {
+    const i = sortOpts.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); sortOpts[(i + 1) % sortOpts.length].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sortOpts[(i - 1 + sortOpts.length) % sortOpts.length].focus(); }
+    else if (e.key === 'Escape' || e.key === 'Tab') { if (e.key === 'Escape') e.preventDefault(); setSortOpen(false, { focus: e.key === 'Escape' }); }
+  });
+  document.addEventListener('pointerdown', (e) => {
+    if (sortOpen && !sortMenu.contains(e.target) && !sortBtn.contains(e.target)) setSortOpen(false);
+  });
+  addEventListener('resize', () => { if (sortOpen) placeSortMenu(); }, { passive: true });
 
   const chipGroup = (attr, set) => $$('.chip[data-' + attr + ']').forEach((b) => b.addEventListener('click', () => {
     const v = b.dataset[attr];
