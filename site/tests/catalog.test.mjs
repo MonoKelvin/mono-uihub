@@ -4,11 +4,12 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { normalizeMetadata, filterCatalog, loadCatalog } from '../lib/catalog.mjs';
+import { COLOR_BINS, classifyColor, classifyPalette } from '../lib/colors.mjs';
 import { isSafePublicPath } from '../scripts/sync-prototypes.mjs';
 import { parseArgs } from '../../tools/screenshots/capture.mjs';
 
 const meta = {
-  name: '示例', page_type: 'software', tags: ['后改标签'],
+  name: '示例', page_type: 'software', tags: ['后改标签'], palette: ['#e4485a', '#1c1e1d', '#zzz'],
   created_at: '2026-01-01T00:00:00+08:00', updated_at: '2026-02-01T00:00:00+08:00',
   history: [
     { prompt: '设计一个咖啡烘焙软件，红色主题', model: 'GPT-X' },
@@ -20,12 +21,12 @@ test('only the initial history record drives filter fields', () => {
   const it = normalizeMetadata(meta, 'demo');
   assert.equal(it.model, 'gpt-x');
   assert.equal(it.type, 'software');
-  assert.deepEqual(it.colors, ['red']);
+  assert.deepEqual(it.colors, ['rose', 'ink']);
   assert.ok(it.tags.includes('咖啡') && !it.tags.includes('蜘蛛侠') && !it.tags.includes('后改标签'));
   assert.equal(filterCatalog([it], { query: '蜘蛛侠' }).length, 0);
   assert.equal(filterCatalog([it], { model: 'other-model' }).length, 0);
-  assert.equal(filterCatalog([it], { colors: ['blue'] }).length, 0);
-  assert.equal(filterCatalog([it], { query: '咖啡', colors: ['red'] }).length, 1);
+  assert.equal(filterCatalog([it], { colors: ['cobalt'] }).length, 0);
+  assert.equal(filterCatalog([it], { query: '咖啡', colors: ['rose'] }).length, 1);
 });
 
 test('legacy generation.history layout is supported', () => {
@@ -69,12 +70,12 @@ test('initial explicit fields win; mutable display names and dates are not searc
     { prompt: 'RevisionOnlySecret', model: 'RevisionModel', tags: ['revision'], colors: ['pink'], page_type: 'website' },
   ] }, 'SlugOnlySecret');
   assert.deepEqual(item.tags, ['initial']);
-  assert.deepEqual(item.colors, ['blue']);
+  assert.deepEqual(item.colors, []);
   assert.equal(item.type, 'component');
   for (const query of ['NameOnlySecret', 'RootOnlySecret', 'RevisionOnlySecret', 'RevisionModel', 'SlugOnlySecret', 'pink']) {
     assert.equal(filterCatalog([item], { query }).length, 0, query);
   }
-  assert.equal(filterCatalog([item], { model: 'GPT-X', tags: ['initial'], colors: ['blue'], type: 'component' }).length, 1);
+  assert.equal(filterCatalog([item], { model: 'GPT-X', tags: ['initial'], type: 'component' }).length, 1);
 });
 
 test('empty history does not fall back to mutable root fields or slug', () => {
@@ -86,18 +87,29 @@ test('empty history does not fall back to mutable root fields or slug', () => {
   assert.deepEqual(item.colors, []);
 });
 
-test('repository includes six no-metadata prototypes without invented fields', () => {
+test('repository prototypes all carry a palette; missing history stays unknown', () => {
   const catalog = loadCatalog();
-  assert.equal(catalog.length, 16);
-  const missing = catalog.filter((item) => !item.hasMetadata);
-  assert.equal(missing.length, 6);
-  for (const item of missing) {
-    assert.equal(item.prompt, '');
-    assert.equal(item.model, 'unknown');
-    assert.equal(item.type, 'unknown');
-    assert.deepEqual(item.tags, []);
-    assert.deepEqual(item.colors, []);
+  assert.ok(catalog.length > 0);
+  for (const item of catalog) {
+    assert.ok(item.colors.length > 0, item.slug);
+    if (item.prompt) continue;
+    assert.equal(item.model, 'unknown', item.slug);
+    assert.equal(item.type, 'unknown', item.slug);
+    assert.deepEqual(item.tags, [], item.slug);
   }
+});
+
+test('palette colors snap to at most 30 named bins', () => {
+  assert.ok(COLOR_BINS.length <= 30);
+  assert.equal(new Set(COLOR_BINS.map((b) => b.key)).size, COLOR_BINS.length);
+  assert.equal(classifyColor('#FAF6EC'), 'ivory');
+  assert.equal(classifyColor('#1b1d1f'), 'ink');
+  assert.equal(classifyColor('#0a72e0'), 'cobalt');
+  assert.equal(classifyColor('#e4485a'), 'rose');
+  assert.equal(classifyColor('#3e6b4f'), 'moss');
+  assert.equal(classifyColor('#c99a4e'), 'amber');
+  assert.equal(classifyColor('red'), null);
+  assert.deepEqual(classifyPalette(['#d4a7b5', '#b59db0', 'bad']), ['lotus']);
 });
 
 test('safe-path rules deny traversal, hidden files, histories, maps and credentials', () => {

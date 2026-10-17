@@ -2,15 +2,17 @@
 import '../styles/theme.css';
 import path from 'node:path';
 import { loadCatalog } from '../../lib/catalog.mjs';
+import { COLOR_BINS } from '../../lib/colors.mjs';
 import { PROJECT, AUTHOR, SOCIAL, FONT_CSS } from '../config.mjs';
 interface Props { embedded?: boolean }
 const { embedded = false } = Astro.props;
 // Bundled output moves import.meta.url, so resolve ui/ from the site package root (build cwd).
 const catalog = loadCatalog({ uiRoot: path.resolve(process.cwd(), '..', 'ui') });
 const REPO = PROJECT.repo;
-const SWATCH = { red:'#c8473d', blue:'#3d63b8', green:'#4f8a5b', pink:'#e3a7b4', purple:'#7b5ea7', orange:'#e08a3c', yellow:'#e2c046', black:'#1d1d1b', white:'#ffffff', gray:'#9a9890', beige:'#e6dcc8', brown:'#8a5a3b' };
 const facet = (key) => { const m = new Map(); for (const it of catalog) for (const v of [].concat(it[key])) if (v && v !== 'unknown') m.set(v, (m.get(v) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0]))).map(([v]) => v); };
-const models = facet('model'), types = facet('type'), tags = facet('tags'), colors = facet('colors');
+const models = facet('model'), types = facet('type'), tags = facet('tags');
+const usedColors = new Set(catalog.flatMap((it) => it.colors));
+const colors = COLOR_BINS.filter((bin) => usedColors.has(bin.key));
 ---
 <!doctype html>
 <html lang="zh-CN" data-theme="light">
@@ -65,17 +67,15 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
     <div class="wrap">
       <div class="deck">
         <div class="row">
+          <button type="button" class="sort-btn type-btn" data-dd="type" aria-haspopup="listbox" aria-expanded="false" aria-controls="type-menu">
+            <span data-dd-label data-i18n="all">全部</span>
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m3 4.5 3 3 3-3"/></svg>
+          </button>
           <label class="search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input type="search" data-search-input data-i18n-placeholder="search" placeholder="搜索首次提示词、模型…" />
             <button type="button" class="clear" data-clear hidden aria-label="清空搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
           </label>
-          <span class="div" aria-hidden="true"></span>
-          <div class="seg" role="group" data-type-group>
-            <button type="button" data-type="all" aria-pressed="true"><span data-i18n="all">全部</span><i data-count-all>{catalog.length}</i></button>
-            {types.map((t) => <button type="button" data-type={t} aria-pressed="false"><span data-i18n={'type_' + t}>{t}</span><i>{catalog.filter((it) => it.type === t).length}</i></button>)}
-          </div>
-          <span class="div" aria-hidden="true"></span>
           <button type="button" class="sort-btn" data-sort-btn aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-menu">
             <span data-sort-label data-i18n="sortUpdated">最近更新</span>
             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m3 4.5 3 3 3-3"/></svg>
@@ -91,6 +91,10 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           <button type="button" role="option" data-sort-opt="created" aria-selected="false"><span data-i18n="sortCreated">最近创建</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>
           <button type="button" role="option" data-sort-opt="name" aria-selected="false"><span data-i18n="sortName">名称</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>
         </div>
+        <div class="sort-menu" id="type-menu" role="listbox" aria-label="Type" data-type-menu hidden>
+          <button type="button" role="option" data-type-opt="all" aria-selected="true"><span data-i18n="all">全部</span><i data-count-all>{catalog.length}</i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>
+          {types.map((t) => <button type="button" role="option" data-type-opt={t} aria-selected="false"><span data-i18n={'type_' + t}>{t}</span><i>{catalog.filter((it) => it.type === t).length}</i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg></button>)}
+        </div>
       </div>
       <div class="adv" id="adv" data-adv hidden>
         <div class="adv-in">
@@ -101,7 +105,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
           {colors.length > 0 && (
           <div class="facet">
             <span class="facet-k" data-i18n="colorK">配色</span>
-            <div class="facet-v">{colors.map((c) => <button type="button" class="chip" data-color={c} aria-pressed="false"><i style={'background:' + (SWATCH[c] ?? '#ccc')}></i><span data-i18n={'color_' + c}>{c}</span></button>)}</div>
+            <div class="facet-v">{colors.map((b) => <button type="button" class="chip" data-color={b.key} aria-pressed="false"><i style={'background:' + b.hex}></i><span data-i18n={'color_' + b.key}>{b.zh}</span></button>)}</div>
           </div>
           )}
           {tags.length > 0 && (
@@ -123,7 +127,7 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
       {catalog.map((it) => (
         <article class="card" data-card data-slug={it.slug} data-model={it.model} data-type={it.type}
           data-tags={JSON.stringify(it.tags)} data-colors={JSON.stringify(it.colors)}
-          data-search={[it.prompt, it.model, it.type, ...it.tags, ...it.colors].join(' ').toLowerCase()}
+          data-search={[it.prompt, it.model, it.type, ...it.tags, ...it.colors.map((k) => COLOR_BINS.find((b) => b.key === k)?.zh ?? k)].join(' ').toLowerCase()}
           data-updated={it.updatedAt ? Date.parse(it.updatedAt) || 0 : 0}
           data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
           <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>

@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { EMBED_PARENTS } from '../config.mjs';
+import { COLOR_BINS } from '../../lib/colors.mjs';
 
 const I18N = {
   zh: {
@@ -12,8 +13,7 @@ const I18N = {
     emptyTitle:'没有匹配的原型', emptyText:'换个关键词，或清除筛选条件。',
     count:(n)=> '共 '+n+' 个结果',
     type_software:'软件', type_website:'网页', type_app:'App', type_component:'组件', type_unknown:'未分类',
-    color_red:'红', color_blue:'蓝', color_green:'绿', color_pink:'粉', color_purple:'紫', color_orange:'橙',
-    color_yellow:'黄', color_black:'黑', color_white:'白', color_gray:'灰', color_beige:'米', color_brown:'棕',
+    ...Object.fromEntries(COLOR_BINS.map((b) => ['color_' + b.key, b.zh])),
   },
   en: {
     heroL1:'One AI prompt,', heroL2:'one UI prototype',
@@ -24,8 +24,7 @@ const I18N = {
     emptyTitle:'No matching prototypes', emptyText:'Try another keyword or clear the filters.',
     count:(n)=> n+(n===1?' result':' results'),
     type_software:'Software', type_website:'Website', type_app:'App', type_component:'Component', type_unknown:'Uncategorized',
-    color_red:'Red', color_blue:'Blue', color_green:'Green', color_pink:'Pink', color_purple:'Purple', color_orange:'Orange',
-    color_yellow:'Yellow', color_black:'Black', color_white:'White', color_gray:'Gray', color_beige:'Beige', color_brown:'Brown',
+    ...Object.fromEntries(COLOR_BINS.map((b) => ['color_' + b.key, b.en])),
   },
 };
 const PARENTS = new Set(EMBED_PARENTS);
@@ -132,69 +131,71 @@ export function initGallery() {
     const value = e.target.value.trim().toLowerCase();
     qTimer = setTimeout(() => { state.q = value; render(); }, 160);
   });
-  const typeButtons = $$('[data-type]', $('[data-type-group]'));
-  typeButtons.forEach((b) => b.addEventListener('click', () => {
-    state.type = b.dataset.type;
-    typeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    render();
-  }));
-  /* ---------- sort dropdown: interruptible glass menu ---------- */
-  const sortBtn = $('[data-sort-btn]');
-  const sortMenu = $('[data-sort-menu]');
-  const sortLabel = $('[data-sort-label]');
-  const sortOpts = $$('[data-sort-opt]', sortMenu);
-  const SORT_KEY = { updated: 'sortUpdated', created: 'sortCreated', name: 'sortName' };
-  let sortOpen = false, sortTween = null;
-  function placeSortMenu() {
-    const deck = sortBtn.closest('.deck').getBoundingClientRect();
-    const b = sortBtn.getBoundingClientRect();
-    const w = sortMenu.offsetWidth;
-    const left = Math.min(Math.max(0, b.left - deck.left + b.width / 2 - w / 2), deck.width - w);
-    sortMenu.style.left = left + 'px';
-    sortMenu.style.top = (b.bottom - deck.top + 8) + 'px';
-  }
-  function setSortOpen(open, { focus = false } = {}) {
-    if (open === sortOpen) return;
-    sortOpen = open;
-    sortBtn.setAttribute('aria-expanded', String(open));
-    if (open) { sortMenu.hidden = false; placeSortMenu(); }
-    if (sortTween) sortTween.kill();
-    if (reduce) {
-      gsap.set(sortMenu, { autoAlpha: open ? 1 : 0, scale: 1, y: 0 });
-      if (!open) sortMenu.hidden = true;
-    } else {
-      // gsap.to starts from the CURRENT values, so a reversed click mid-way continues smoothly.
-      if (open && sortMenu.style.opacity === '') gsap.set(sortMenu, { autoAlpha: 0, scale: 0.94, y: -6 });
-      sortTween = gsap.to(sortMenu, open
-        ? { autoAlpha: 1, scale: 1, y: 0, duration: 0.26, ease: 'power3.out', onComplete: () => { sortTween = null; } }
-        : { autoAlpha: 0, scale: 0.96, y: -4, duration: 0.18, ease: 'power2.in',
-            onComplete: () => { sortTween = null; sortMenu.hidden = true; sortMenu.style.opacity = ''; } });
+  /* ---------- dropdowns (type + sort): interruptible glass menus ---------- */
+  const dropdowns = [];
+  function dropdown(btn, menu, optKey, onChoose) {
+    const label = btn.querySelector('[data-dd-label],[data-sort-label]');
+    const opts = [...menu.querySelectorAll('[role="option"]')];
+    let open = false, tween = null;
+    function place() {
+      const deck = btn.closest('.deck').getBoundingClientRect();
+      const b = btn.getBoundingClientRect();
+      const w = menu.offsetWidth;
+      const left = Math.min(Math.max(0, b.left - deck.left + b.width / 2 - w / 2), deck.width - w);
+      menu.style.left = left + 'px';
+      menu.style.top = (b.bottom - deck.top + 8) + 'px';
     }
-    if (open && focus) (sortOpts.find((o) => o.getAttribute('aria-selected') === 'true') || sortOpts[0]).focus();
-    if (!open && focus) sortBtn.focus();
+    function setOpen(next, { focus = false } = {}) {
+      if (next === open) return;
+      open = next;
+      if (open) dropdowns.forEach((d) => { if (d.setOpen !== setOpen) d.setOpen(false); });
+      btn.setAttribute('aria-expanded', String(open));
+      if (open) { menu.hidden = false; place(); }
+      if (tween) tween.kill();
+      if (reduce) {
+        gsap.set(menu, { autoAlpha: open ? 1 : 0, scale: 1, y: 0 });
+        if (!open) menu.hidden = true;
+      } else {
+        // gsap.to starts from the CURRENT values, so a reversed click mid-way continues smoothly.
+        if (open && menu.style.opacity === '') gsap.set(menu, { autoAlpha: 0, scale: 0.94, y: -6 });
+        tween = gsap.to(menu, open
+          ? { autoAlpha: 1, scale: 1, y: 0, duration: 0.26, ease: 'power3.out', onComplete: () => { tween = null; } }
+          : { autoAlpha: 0, scale: 0.96, y: -4, duration: 0.18, ease: 'power2.in',
+              onComplete: () => { tween = null; menu.hidden = true; menu.style.opacity = ''; } });
+      }
+      if (open && focus) (opts.find((o) => o.getAttribute('aria-selected') === 'true') || opts[0]).focus();
+      if (!open && focus) btn.focus();
+    }
+    function choose(v, { silent = false } = {}) {
+      const opt = opts.find((o) => o.dataset[optKey] === v);
+      if (!opt) return;
+      opts.forEach((o) => o.setAttribute('aria-selected', String(o === opt)));
+      const key = opt.querySelector('[data-i18n]').dataset.i18n;
+      label.dataset.i18n = key;
+      label.textContent = I18N[lang][key] ?? v;
+      if (!silent) onChoose(v);
+    }
+    btn.addEventListener('click', () => setOpen(!open));
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setOpen(true, { focus: true }); }
+    });
+    opts.forEach((o) => o.addEventListener('click', () => { choose(o.dataset[optKey]); setOpen(false, { focus: true }); }));
+    menu.addEventListener('keydown', (e) => {
+      const i = opts.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') { e.preventDefault(); opts[(i + 1) % opts.length].focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); opts[(i - 1 + opts.length) % opts.length].focus(); }
+      else if (e.key === 'Escape' || e.key === 'Tab') { if (e.key === 'Escape') e.preventDefault(); setOpen(false, { focus: e.key === 'Escape' }); }
+    });
+    document.addEventListener('pointerdown', (e) => {
+      if (open && !menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+    });
+    addEventListener('resize', () => { if (open) place(); }, { passive: true });
+    const api = { setOpen, choose };
+    dropdowns.push(api);
+    return api;
   }
-  function chooseSort(v) {
-    state.sort = v;
-    sortOpts.forEach((o) => o.setAttribute('aria-selected', String(o.dataset.sortOpt === v)));
-    sortLabel.dataset.i18n = SORT_KEY[v];
-    sortLabel.textContent = I18N[lang][SORT_KEY[v]];
-    render();
-  }
-  sortBtn.addEventListener('click', () => setSortOpen(!sortOpen));
-  sortBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setSortOpen(true, { focus: true }); }
-  });
-  sortOpts.forEach((o) => o.addEventListener('click', () => { chooseSort(o.dataset.sortOpt); setSortOpen(false, { focus: true }); }));
-  sortMenu.addEventListener('keydown', (e) => {
-    const i = sortOpts.indexOf(document.activeElement);
-    if (e.key === 'ArrowDown') { e.preventDefault(); sortOpts[(i + 1) % sortOpts.length].focus(); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); sortOpts[(i - 1 + sortOpts.length) % sortOpts.length].focus(); }
-    else if (e.key === 'Escape' || e.key === 'Tab') { if (e.key === 'Escape') e.preventDefault(); setSortOpen(false, { focus: e.key === 'Escape' }); }
-  });
-  document.addEventListener('pointerdown', (e) => {
-    if (sortOpen && !sortMenu.contains(e.target) && !sortBtn.contains(e.target)) setSortOpen(false);
-  });
-  addEventListener('resize', () => { if (sortOpen) placeSortMenu(); }, { passive: true });
+  const typeDD = dropdown($('[data-dd="type"]'), $('[data-type-menu]'), 'typeOpt', (v) => { state.type = v; render(); });
+  dropdown($('[data-sort-btn]'), $('[data-sort-menu]'), 'sortOpt', (v) => { state.sort = v; render(); });
 
   const chipGroup = (attr, set) => $$('.chip[data-' + attr + ']').forEach((b) => b.addEventListener('click', () => {
     const v = b.dataset[attr];
@@ -211,7 +212,7 @@ export function initGallery() {
     state.q = ''; state.type = 'all'; state.models.clear(); state.tags.clear(); state.colors.clear();
     $('[data-search-input]').value = '';
     $$('.chip').forEach((b) => b.setAttribute('aria-pressed', 'false'));
-    typeButtons.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.type === 'all')));
+    typeDD.choose('all', { silent: true });
     render();
   });
 
