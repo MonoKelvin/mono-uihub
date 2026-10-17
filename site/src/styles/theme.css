@@ -58,11 +58,11 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
 /* ---- hero: quiet editorial headline ---- */
 .hero{position:relative;z-index:1;padding:clamp(56px,9vh,96px) 0 clamp(24px,3.5vh,40px)}
 .hero-title{display:flex;justify-content:center}
-.hero-title h1{margin:0;padding-left:1em;display:inline-flex;flex-direction:column;font:400 clamp(56px,7.5vw,116px)/1.14 var(--font-display);letter-spacing:.02em}
+.hero-title h1{margin:0;display:inline-flex;flex-direction:column;font:400 clamp(56px,7.5vw,116px)/1.14 var(--font-display);letter-spacing:.02em}
 html[lang="en"] .hero-title h1{font-size:clamp(44px,6vw,96px)}
 .hero-title h1 .l1,.hero-title h1 .l2{display:block;width:fit-content;white-space:nowrap}
-.hero-title h1 .l1{align-self:flex-start;padding-left:1em}
-.hero-title h1 .l2{align-self:flex-end;padding-right:1em}
+.hero-title h1 .l1{align-self:flex-start;margin-right:1em}
+.hero-title h1 .l2{align-self:flex-end;margin-left:1em}
 .hero-title h1 .word{display:inline-block;will-change:transform}
 
 /* ---- toolbar: floating glass capsule ---- */
