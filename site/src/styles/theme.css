@@ -1,5 +1,3 @@
-@import url("https://fontsapi.zeoseven.com/309/main/result.css");
-
 :root{
   /* ---- Theme tokens: add a [data-theme="name"] block to switch themes ---- */
   --paper:#eae8e1; --paper-2:#e2dfd6; --card:#f4f3ee; --mat:#d9d6cb;
@@ -9,13 +7,13 @@
   --gold:#9a7433;
   --shadow-sm:0 1px 2px rgba(38,34,26,.06),0 8px 22px -14px rgba(38,34,26,.28);
   --shadow-up:0 34px 64px -34px rgba(38,34,26,.45),0 10px 24px -14px rgba(38,34,26,.22);
-  /* radius rule: 0 — sharp editorial; pills only for controls */
+  /* radius rule: 0 鈥?sharp editorial; pills only for controls */
   --r-pill:999px;
   --ease:cubic-bezier(.22,.61,.36,1);
-  --font:"Geist","PingFang SC","Microsoft YaHei","Source Han Sans SC",system-ui,sans-serif;
-  --font-mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
-  --font-display:"KingHwaOldSong","Playfair Display","Songti SC","SimSun",serif;
-  --font-sign:"Mrs Saint Delafield","Brush Script MT",cursive;
+  --font:"Geist Variable",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;
+  --font-mono:"Geist Mono Variable",ui-monospace,monospace;
+  --font-display:"KingHwaOldSong","Playfair Display",serif;
+  --font-sign:"Great Vibes",cursive;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -44,9 +42,9 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
 .brand-wrap{display:flex;align-items:center;gap:12px}
 .brand-sep{color:var(--line-2);font-size:15px;transform:translateY(-1px)}
 .brand-by{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;color:var(--ink-3);transition:color .2s var(--ease)}
-.brand-by .sig{font:400 27px/1 var(--font-sign);color:var(--ink);letter-spacing:0;transform:translateY(3px);transition:transform .3s var(--ease)}
+.brand-by .sig{font:400 24px/1 var(--font-sign);color:var(--ink);letter-spacing:0;transform:translateY(2px);transition:transform .3s var(--ease)}
 .brand-by:hover{color:var(--ink-2)}
-.brand-by:hover .sig{transform:translateY(3px) rotate(-3deg)}
+.brand-by:hover .sig{transform:translateY(2px) rotate(-3deg)}
 .bar-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
 .ghost{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:transparent;font-size:13.5px;color:var(--ink-2);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
 .ghost:hover{background:var(--fill);color:var(--ink)}
@@ -59,10 +57,12 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
 
 /* ---- hero: quiet editorial headline ---- */
 .hero{position:relative;z-index:1;padding:clamp(56px,9vh,96px) 0 clamp(24px,3.5vh,40px)}
-.hero-title{max-width:70%;margin-inline:auto;text-align:center}
-.hero-title h1{margin:0;display:flex;flex-direction:column;align-items:center;font:400 clamp(56px,7.5vw,116px)/1.14 var(--font-display);letter-spacing:.02em}
-.hero-title h1 .l1,.hero-title h1 .l2{display:block;width:fit-content}
-.hero-title h1 .l2{align-self:center;transform:translateX(1.3em)}
+.hero-title{display:flex;justify-content:center}
+.hero-title h1{margin:0;padding-left:1em;display:inline-flex;flex-direction:column;font:400 clamp(56px,7.5vw,116px)/1.14 var(--font-display);letter-spacing:.02em}
+html[lang="en"] .hero-title h1{font-size:clamp(44px,6vw,96px)}
+.hero-title h1 .l1,.hero-title h1 .l2{display:block;width:fit-content;white-space:nowrap}
+.hero-title h1 .l1{align-self:flex-start;padding-left:1em}
+.hero-title h1 .l2{align-self:flex-end;padding-right:1em}
 .hero-title h1 .word{display:inline-block;will-change:transform}
 
 /* ---- toolbar: floating glass capsule ---- */
@@ -161,9 +161,10 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;fil
   .bar-in{height:58px}
   .brand-wrap{gap:9px}
   .brand-by{font-size:12px}
-  .brand-by .sig{font-size:23px}
+  .brand-by .sig{font-size:21px}
   .hero{padding-top:28px}
   .hero-title h1{font-size:clamp(40px,11.5vw,80px)}
+  html[lang="en"] .hero-title h1{font-size:clamp(28px,8.4vw,64px)}
   .tools{top:8px}
   .deck{gap:12px}
   .tcount{display:none}

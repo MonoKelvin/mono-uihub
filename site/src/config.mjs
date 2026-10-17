@@ -22,5 +22,15 @@ export const SOCIAL = [
   },
 ];
 
+// Online font stylesheets (CDN only, never self-hosted). Latin via Fontsource on jsDelivr,
+// Chinese display via ZeoSeven. Family names are referenced in styles/theme.css.
+export const FONT_CSS = [
+  'https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5/index.css',
+  'https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5/index.css',
+  'https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5/400.css',
+  'https://cdn.jsdelivr.net/npm/@fontsource/great-vibes@5/index.css',
+  'https://fontsapi.zeoseven.com/309/main/result.css',
+];
+
 // Origins allowed to embed /embed/ and receive height postMessage.
 export const EMBED_PARENTS = ['https://monokelvin.cn', 'https://www.monokelvin.cn'];
