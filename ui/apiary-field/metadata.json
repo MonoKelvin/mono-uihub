@@ -1,52 +1,32 @@
 {
-  "schema_version": 1,
   "name": "蜂野 · 蜂场工作台",
   "slug": "apiary-field",
   "page_type": "software",
-  "tags": [
-    "蜂场管理",
-    "农业科技",
-    "数据可视化",
-    "田园风格"
+  "palette": [
+    "#f2f4ec",
+    "#405b43",
+    "#e6c674"
   ],
-  "created_at": "2026-10-13T11:23:00",
-  "updated_at": "2026-10-13T11:44:18+08:00",
-  "generation": {
-    "round_count": 1,
-    "history": [
-      {
-        "round": 1,
-        "kind": "initial",
-        "prompt": "一个管理多个蜂箱并追踪蜂群健康、蜂蜜产量、花期和天气影响的工具。蜂箱地图用颜色表示健康状态，点击展开详情；蜂箱详情卡显示蜂群数量、蜂王状态和蜂蜜储量；花期日历显示本地植物花期时间线并预测蜂蜜类型；产量曲线显示每箱蜂蜜产量对比；天气关联图显示天气和产量的关系。氛围是田园与科技的结合。",
-        "model": "GPT-6-Astra",
-        "reasoning_effort": "high",
-        "skills": [
-          "mono-ui-prototype",
-          "oil-ui",
-          "frontend-design",
-          "dataviz",
-          "vibehub",
-          "oil-frontend"
-        ],
-        "started_at": null,
-        "completed_at": null,
-        "token_usage": {
-          "input_tokens": null,
-          "output_tokens": null,
-          "total_tokens": 49300,
-          "is_estimate": true
-        },
-        "duration_seconds": 1074,
-        "image_generation": {
-          "used": false,
-          "count": 0,
-          "models": []
-        }
-      }
-    ]
-  },
-  "notes": [
-    "创建时间沿用原记录，原记录未注明时区；生成起止时间未知。",
-    "49300 token 来自原记录 49.3k，为近似值；1074 秒来自原记录 17m 54s，不包含本次元数据整理。"
+  "tags": [
+    "蜂场",
+    "农业",
+    "数据可视化"
+  ],
+  "created_at": "2026-10-13 11:23:00",
+  "updated_at": "2026-10-13 11:44:18",
+  "history": [
+    {
+      "prompt": "一个管理多个蜂箱并追踪蜂群健康、蜂蜜产量、花期和天气影响的工具。蜂箱地图用颜色表示健康状态，点击展开详情；蜂箱详情卡显示蜂群数量、蜂王状态和蜂蜜储量；花期日历显示本地植物花期时间线并预测蜂蜜类型；产量曲线显示每箱蜂蜜产量对比；天气关联图显示天气和产量的关系。氛围是田园与科技的结合。",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "mono-ui-prototype",
+        "oil-ui",
+        "frontend-design",
+        "dataviz",
+        "vibehub",
+        "oil-frontend"
+      ],
+      "duration_seconds": 1074
+    }
   ]
 }

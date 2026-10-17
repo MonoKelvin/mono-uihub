@@ -1,0 +1,18 @@
+{
+  "name": "UBR-07 未确认生物研究部 · 观测总览",
+  "slug": "bioform-lab-console",
+  "page_type": "software",
+  "palette": [
+    "#f5f3ec",
+    "#3e6b4f",
+    "#23281f"
+  ],
+  "tags": [
+    "生物研究",
+    "监测",
+    "数据可视化"
+  ],
+  "created_at": "2026-10-12 17:26:28",
+  "updated_at": "2026-10-16 12:04:20",
+  "history": []
+}

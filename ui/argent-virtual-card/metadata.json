@@ -1,135 +1,116 @@
 {
-    "name": "Argent 黑钛银刻虚拟银行卡",
-    "slug": "argent-virtual-card",
-    "page_type": "component",
-    "tags": [
-        "银行卡",
-        "正反面",
-        "黑钛",
-        "银灰线雕",
-        "玫瑰纹",
-        "简约"
-    ],
-    "created_at": "2026-10-15T11:25:16+08:00",
-    "updated_at": "2026-10-15T15:45:56+08:00",
-    "duration_seconds": 196,
-    "image_generation": {
-        "used": false,
-        "count": 0,
-        "models": []
+  "name": "Argent 黑钛银刻虚拟银行卡",
+  "slug": "argent-virtual-card",
+  "page_type": "component",
+  "palette": [
+    "#e9eae7",
+    "#242b29",
+    "#dfe5df"
+  ],
+  "tags": [
+    "虚拟卡",
+    "定制",
+    "预览"
+  ],
+  "created_at": "2026-10-15 11:25:16",
+  "updated_at": "2026-10-15 15:45:56",
+  "history": [
+    {
+      "prompt": "设计一个虚拟银行卡封面组件，简约高级",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "mono-ui-prototype",
+        "oil-ui",
+        "karpathy-guidelines"
+      ]
     },
-    "history": [
-        {
-            "prompt": "设计一个虚拟银行卡封面组件，简约高级",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "mono-ui-prototype",
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": null
-        },
-        {
-            "prompt": "太丑了，请仅设计银行卡正反面即可（上下布局），其他卡外的内容全部删除。仔细打磨银行卡的内容、图案、logo等设计细节",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "mono-ui-prototype",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 269
-        },
-        {
-            "prompt": "继续美化，包括字体、排版、图案、尺寸和配色",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "mono-ui-prototype",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 243
-        },
-        {
-            "prompt": "还是太普通了，还不如上一版的，基于上一版进行优化设计",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "mono-ui-prototype",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 230
-        },
-        {
-            "prompt": "字体是否太小了，比如“虚拟借记卡”、“请妥善保管卡片信息”、“mastercard”等，尽量整体调整合适一点，包括字体也可以一些好看的清晰的高级的",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "mono-ui-prototype",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 196
-        },
-        {
-            "prompt": "背面是否也可以加一点很浅的简单的几何线条；改用斜线之类的",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 243
-        },
-        {
-            "prompt": "还是太丑了，可以用一些贝塞尔曲线贯穿从左到右，深浅不定，又纵深感效果",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": null
-        },
-        {
-            "prompt": "曲线密集一点，间距小一点，大约用9根，不同意地方间距可以适当调整一点点（即控制点间距适当调整）",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 1045
-        },
-        {
-            "prompt": "还是有问题，请参考 temp/curve.txt 里面的曲线，只不过要设计成静态的，不需要随机，稍微紧凑一点",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 383
-        },
-        {
-            "prompt": "线条之间间距还是太大了，请修改调小紧凑一点",
-            "model": "GPT-5.6-Sol",
-            "skills": [
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": 249
-        },
-        {
-            "prompt": "正面卡片后面的右侧曲线部分请整体调浅色一点，不要这么明显；重构背面卡片后面的曲线样式，目前每个曲线的间距太大请调小，曲折程度（最高点和最低点差距）需要调大一点，纵深感、深浅也要优化",
-            "model": "GLM-5.3",
-            "skills": [
-                "oil-ui",
-                "karpathy-guidelines"
-            ],
-            "duration_seconds": null
-        }
-    ],
-    "notes": [
-        "保留黑钛、银灰玫瑰纹、拱形 A Logo 和上下正反面布局，仅优化可读性与排版。",
-        "字体分工：Instrument Sans 500 为品牌字标、600 为 Mastercard 文字，DM Mono 400 为卡号与数据；中文使用苹方、Microsoft YaHei UI、微软雅黑的 UI 字体栈，辅助文字使用 500 字重。",
-        "以 536px 卡宽计，卡种 15px、字段标签约 14.5px、提示及 Mastercard 约 14.2px、卡号约 25px、数据约 17px。窄屏辅助文字最低 12px，卡种和 Mastercard 最低 13px。",
-        "Mastercard 圆形符号与文字分离：符号保持 SVG，文字使用卡内真实 HTML 文本和独立字号，避免嵌在 SVG 内被再次缩小。",
-        "同步提高辅助文字对比度、减少过宽中文字距，放大正背面品牌字标和持卡人信息，缩减背面纵向间隔；300px 以下卡宽使用更紧凑的内边距和分组间距。",
-        "24 椭圆圆形玫瑰纹、明暗双线压印、中心徽记、卡片比例与配色保持上一轮设计。",
-        "源码检查与 272/342/536px 卡宽的静态字号、布局算式核对通过；按仓库规范未启动服务、运行浏览器或截图，不代表实际浏览器视觉验收。",
-        "仅保留上下两张卡，无外部面板或交互脚本；卡片数据为虚构。",
-        "背面卡片背景曲线—照抄 temp/curve.txt 路径算法 (position=0.5, 静态定格)。曲线组 transform=\"translate(0 -125) scale(1.35 1)\" 横向拉伸并上移，各曲线从左中区域进入、尾部扫向右下角。pathLength=100 + stroke-dasharray 加 52~92 的确定性伪随机抖动，长短不一。组外加 userSpaceOnUse 渐变 mask（左上白→右下黑，40% 起淡出），使右下尾部颜色自然变浅。",
-        "正面右侧玫瑰纹整体 opacity .5，退为底纹；恢复 .back-footer border-top 分隔线—属于原设计的一部分。"
-    ]
+    {
+      "prompt": "太丑了，请仅设计银行卡正反面即可（上下布局），其他卡外的内容全部删除。仔细打磨银行卡的内容、图案、logo等设计细节",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "mono-ui-prototype",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 269
+    },
+    {
+      "prompt": "继续美化，包括字体、排版、图案、尺寸和配色",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "mono-ui-prototype",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 243
+    },
+    {
+      "prompt": "还是太普通了，还不如上一版的，基于上一版进行优化设计",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "mono-ui-prototype",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 230
+    },
+    {
+      "prompt": "字体是否太小了，比如“虚拟借记卡”、“请妥善保管卡片信息”、“mastercard”等，尽量整体调整合适一点，包括字体也可以一些好看的清晰的高级的",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "mono-ui-prototype",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 196
+    },
+    {
+      "prompt": "背面是否也可以加一点很浅的简单的几何线条；改用斜线之类的",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "oil-ui",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 243
+    },
+    {
+      "prompt": "还是太丑了，可以用一些贝塞尔曲线贯穿从左到右，深浅不定，又纵深感效果",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "oil-ui",
+        "karpathy-guidelines"
+      ]
+    },
+    {
+      "prompt": "曲线密集一点，间距小一点，大约用9根，不同意地方间距可以适当调整一点点（即控制点间距适当调整）",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "oil-ui",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 1045
+    },
+    {
+      "prompt": "还是有问题，请参考 temp/curve.txt 里面的曲线，只不过要设计成静态的，不需要随机，稍微紧凑一点",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "oil-ui",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 383
+    },
+    {
+      "prompt": "线条之间间距还是太大了，请修改调小紧凑一点",
+      "model": "GPT-5.6-Sol",
+      "skills": [
+        "oil-ui",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 249
+    },
+    {
+      "prompt": "正面卡片后面的右侧曲线部分请整体调浅色一点，不要这么明显；重构背面卡片后面的曲线样式，目前每个曲线的间距太大请调小，曲折程度（最高点和最低点差距）需要调大一点，纵深感、深浅也要优化",
+      "model": "GLM-5.3",
+      "skills": [
+        "oil-ui",
+        "karpathy-guidelines"
+      ]
+    }
+  ]
 }

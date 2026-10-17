@@ -2,27 +2,22 @@
   "name": null,
   "slug": null,
   "page_type": null,
+  "palette": [],
   "tags": [],
   "created_at": null,
   "updated_at": null,
-  "duration_seconds": null,
-  "image_generation": {
-    "used": false,
-    "count": 0,
-    "models": []
-  },
   "history": [
     {
       "prompt": null,
       "model": null,
       "skills": [],
       "duration_seconds": null,
-      "image_generation": {
-        "used": false,
-        "count": 0,
-        "models": []
-      }
+      "image_generation": [
+        {
+          "prompt": null,
+          "model": null
+        }
+      ]
     }
-  ],
-  "notes": []
+  ]
 }

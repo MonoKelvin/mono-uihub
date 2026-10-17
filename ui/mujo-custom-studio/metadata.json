@@ -1,75 +1,36 @@
 {
-  "schema_version": 1,
   "name": "木序 MUJO｜家具定制工作台",
   "slug": "mujo-custom-studio",
   "page_type": "software",
-  "tags": [
-    "家具品牌",
-    "定制管理",
-    "木作",
-    "设计协作"
+  "palette": [
+    "#f7f8f5",
+    "#365b44",
+    "#956b33"
   ],
-  "created_at": "2026-10-14T11:07:38.5323035+08:00",
-  "updated_at": "2026-10-14T11:44:35.1858300+08:00",
-  "generation": {
-    "round_count": 2,
-    "history": [
-      {
-        "round": 1,
-        "kind": "initial",
-        "prompt": "家具品牌的定制管理\n设计一款家具品牌管理定制订单、材料、工艺和交付的完整软件。包含订单看板、材料库、工艺卡、尺寸编辑器、效果预览、生产排期、交付追踪、客户沟通。交互上订单可拖拽切换状态，材料可拖拽到家具模型，尺寸编辑器可拖拽调整，效果预览可旋转缩放，生产",
-        "model": "GPT-6-Astra",
-        "reasoning_effort": null,
-        "skills": [
-          "mono-ui-prototype",
-          "design-taste-frontend",
-          "karpathy-guidelines"
-        ],
-        "started_at": "2026-10-14T11:07:38.5323035+08:00",
-        "completed_at": "2026-10-14T11:44:35.1858300+08:00",
-        "token_usage": {
-          "input_tokens": null,
-          "output_tokens": null,
-          "total_tokens": null,
-          "is_estimate": null
-        },
-        "duration_seconds": 2217,
-        "image_generation": {
-          "used": false,
-          "count": 0,
-          "models": []
-        }
-      },
-      {
-        "round": 2,
-        "kind": "revision",
-        "prompt": "请不要和现有项目中的UI原型一样，请自行思考并重构UI原型设计，每次生成的都要不一样的（SKILL里面也可以补充这一点，不能照搬和参考已有项目的原型设计）",
-        "model": null,
-        "reasoning_effort": null,
-        "skills": [
-          "mono-ui-prototype",
-
-          "skill-creator"
-        ],
-        "started_at": null,
-        "completed_at": "2026-10-14T11:44:35.1858300+08:00",
-        "token_usage": {
-          "input_tokens": null,
-          "output_tokens": null,
-          "total_tokens": null,
-          "is_estimate": null
-        },
-        "duration_seconds": null,
-        "image_generation": {
-          "used": false,
-          "count": 0,
-          "models": []
-        }
-      }
-    ]
-  },
-  "notes": [
-    "运行环境未提供可核实的具体模型标识、思考等级及 token 统计。",
-    "第二条记录为初次生成期间追加的要求，未单独记录起始时间；整体耗时仅计入第一条记录。"
+  "tags": [
+    "家具",
+    "木作",
+    "定制"
+  ],
+  "created_at": "2026-10-14 11:07:38",
+  "updated_at": "2026-10-14 11:44:35",
+  "history": [
+    {
+      "prompt": "家具品牌的定制管理\n设计一款家具品牌管理定制订单、材料、工艺和交付的完整软件。包含订单看板、材料库、工艺卡、尺寸编辑器、效果预览、生产排期、交付追踪、客户沟通。交互上订单可拖拽切换状态，材料可拖拽到家具模型，尺寸编辑器可拖拽调整，效果预览可旋转缩放，生产",
+      "model": "GPT-6-Astra",
+      "skills": [
+        "mono-ui-prototype",
+        "design-taste-frontend",
+        "karpathy-guidelines"
+      ],
+      "duration_seconds": 2217
+    },
+    {
+      "prompt": "请不要和现有项目中的UI原型一样，请自行思考并重构UI原型设计，每次生成的都要不一样的（SKILL里面也可以补充这一点，不能照搬和参考已有项目的原型设计）",
+      "skills": [
+        "mono-ui-prototype",
+        "skill-creator"
+      ]
+    }
   ]
 }
