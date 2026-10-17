@@ -27,7 +27,6 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
 <body class={embedded ? 'embedded' : ''} data-embedded={embedded ? '1' : '0'}>
 {!embedded && <div class="vlines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>}
 {!embedded && <div class="aura" aria-hidden="true"></div>}
-<svg class="defs" aria-hidden="true" focusable="false"><defs><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.76" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs></svg>
 {!embedded && (
 <header class="bar">
   <div class="wrap bar-in">
@@ -93,23 +92,23 @@ const models = facet('model'), types = facet('type'), tags = facet('tags'), colo
         <div class="adv-in">
           <div class="facet">
             <span class="facet-k" data-i18n="modelK">模型</span>
-            {models.map((m) => <button type="button" class="chip" data-model={m} aria-pressed="false">{m}</button>)}
+            <div class="facet-v">{models.map((m) => <button type="button" class="chip" data-model={m} aria-pressed="false">{m}</button>)}</div>
           </div>
           {colors.length > 0 && (
           <div class="facet">
             <span class="facet-k" data-i18n="colorK">配色</span>
-            {colors.map((c) => <button type="button" class="chip" data-color={c} aria-pressed="false"><i style={'background:' + (SWATCH[c] ?? '#ccc')}></i><span data-i18n={'color_' + c}>{c}</span></button>)}
+            <div class="facet-v">{colors.map((c) => <button type="button" class="chip" data-color={c} aria-pressed="false"><i style={'background:' + (SWATCH[c] ?? '#ccc')}></i><span data-i18n={'color_' + c}>{c}</span></button>)}</div>
           </div>
           )}
           {tags.length > 0 && (
           <div class="facet">
             <span class="facet-k" data-i18n="tagK">标签</span>
-            {tags.map((t) => <button type="button" class="chip" data-tag={t} aria-pressed="false">{t}</button>)}
+            <div class="facet-v">{tags.map((t) => <button type="button" class="chip" data-tag={t} aria-pressed="false">{t}</button>)}</div>
           </div>
           )}
           <div class="adv-foot">
-            <button type="button" class="reset" data-reset data-i18n="reset">清除筛选</button>
             <span data-count></span>
+            <button type="button" class="reset" data-reset data-i18n="reset">清除筛选</button>
           </div>
         </div>
       </div>

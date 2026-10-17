@@ -10,7 +10,7 @@ const I18N = {
     modelK:'模型', colorK:'配色', tagK:'标签', reset:'清除筛选',
     noShot:'暂无截图', unknownModel:'未记录',
     emptyTitle:'没有匹配的原型', emptyText:'换个关键词，或清除筛选条件。',
-    count:(n,t)=> n===t ? t+' 个原型' : n+' / '+t+' 个原型',
+    count:(n)=> '共 '+n+' 个结果',
     type_software:'软件', type_website:'网页', type_app:'App', type_component:'组件', type_unknown:'未分类',
     color_red:'红', color_blue:'蓝', color_green:'绿', color_pink:'粉', color_purple:'紫', color_orange:'橙',
     color_yellow:'黄', color_black:'黑', color_white:'白', color_gray:'灰', color_beige:'米', color_brown:'棕',
@@ -22,7 +22,7 @@ const I18N = {
     modelK:'Model', colorK:'Color', tagK:'Tags', reset:'Clear filters',
     noShot:'No screenshot yet', unknownModel:'Unrecorded',
     emptyTitle:'No matching prototypes', emptyText:'Try another keyword or clear the filters.',
-    count:(n,t)=> n===t ? t+' prototypes' : n+' / '+t+' prototypes',
+    count:(n)=> n+(n===1?' result':' results'),
     type_software:'Software', type_website:'Website', type_app:'App', type_component:'Component', type_unknown:'Uncategorized',
     color_red:'Red', color_blue:'Blue', color_green:'Green', color_pink:'Pink', color_purple:'Purple', color_orange:'Orange',
     color_yellow:'Yellow', color_black:'Black', color_white:'White', color_gray:'Gray', color_beige:'Beige', color_brown:'Brown',
@@ -162,17 +162,57 @@ export function initGallery() {
   /* ---------- advanced panel ---------- */
   const more = $('[data-more]');
   const adv = $('[data-adv]');
+  let advOpen = false;
+  /* Large soft shadow only while the open panel actually overlaps visible cards. */
+  function syncAdvShadow() {
+    if (!adv) return;
+    let over = false;
+    if (advOpen || !adv.hidden) {
+      const a = adv.getBoundingClientRect();
+      over = a.height > 1 && cards.some((c) => {
+        if (c.hidden) return false;
+        const r = c.getBoundingClientRect();
+        return r.top < a.bottom && r.bottom > a.top;
+      });
+    }
+    adv.classList.toggle('is-over', over);
+  }
   if (more && adv) {
-    let open = false;
+    const inner = adv.firstElementChild;
+    let tween = null;
     more.addEventListener('click', () => {
-      open = !open;
+      advOpen = !advOpen;
+      const open = advOpen;
       more.setAttribute('aria-expanded', String(open));
-      if (open) adv.hidden = false;
-      const target = open ? adv.firstElementChild.offsetHeight : 0;
-      if (reduce) { adv.style.height = open ? 'auto' : '0px'; if (!open) adv.hidden = true; postHeight(); return; }
-      gsap.to(adv, { height: target, duration: 0.35, ease: 'power2.inOut',
-        onComplete: () => { if (open) adv.style.height = 'auto'; else adv.hidden = true; postHeight(); } });
+      if (reduce) {
+        adv.hidden = !open;
+        gsap.set(adv, { height: open ? 'auto' : 0, marginTop: open ? 12 : 0 });
+        syncAdvShadow(); postHeight(); return;
+      }
+      // Interruptible: start from the CURRENT height, never from an end state.
+      if (tween) tween.kill();
+      adv.hidden = false;
+      const from = adv.offsetHeight;
+      const full = inner.offsetHeight;
+      const to = open ? full : 0;
+      const dur = Math.min(0.42, Math.max(0.16, 0.42 * Math.abs(to - from) / Math.max(full, 1)));
+      if (open && from < 1) gsap.set(inner, { autoAlpha: 0, y: -8 });
+      tween = gsap.timeline({
+        onUpdate: syncAdvShadow,
+        onComplete: () => {
+          tween = null;
+          if (open) adv.style.height = 'auto'; else adv.hidden = true;
+          syncAdvShadow(); postHeight();
+        },
+      })
+        .fromTo(adv, { height: from }, { height: to, marginTop: open ? 12 : 0, duration: dur, ease: open ? 'power3.out' : 'power2.inOut' }, 0)
+        .to(inner, { autoAlpha: open ? 1 : 0, y: open ? 0 : -8, duration: open ? dur : dur * 0.7, ease: 'power2.out' }, open ? dur * 0.15 : 0);
     });
+    let advRaf = 0;
+    addEventListener('scroll', () => {
+      if (advRaf || adv.hidden) return;
+      advRaf = requestAnimationFrame(() => { advRaf = 0; syncAdvShadow(); });
+    }, { passive: true });
   }
 
   /* ---------- card feedback ---------- */
@@ -182,13 +222,9 @@ export function initGallery() {
     let index = 0, timer;
     const show = (i) => { index = i; imgs.forEach((im, j) => im.classList.toggle('is-on', j === i)); dots.forEach((d, j) => d.classList.toggle('is-on', j === i)); };
     card.addEventListener('pointerenter', () => {
-      if (imgs.length) gsap.to(imgs, { scale: 1.03, duration: 0.6, ease: 'power3.out' });
       if (imgs.length > 1) timer = setInterval(() => show((index + 1) % imgs.length), 1500);
     });
-    card.addEventListener('pointerleave', () => {
-      clearInterval(timer); show(0);
-      if (imgs.length) gsap.to(imgs, { scale: 1, duration: 0.45, ease: 'power3.out' });
-    });
+    card.addEventListener('pointerleave', () => { clearInterval(timer); show(0); });
   });
 
   /* ---------- embed height reporting ---------- */
@@ -250,7 +286,9 @@ export function initGallery() {
           if (anim) anim.kill(); // hand off from current position
           dir = d;
           atSnap = false;
-          anim = gsap.to(window, { duration: 1.05, ease: 'power2.out',
+          const span = Math.max(listY(), 1);
+          const dur = Math.min(0.95, Math.max(0.42, 0.95 * Math.abs(to - scrollY) / span));
+          anim = gsap.to(window, { duration: dur, ease: 'power2.out',
             scrollTo: { y: to, autoKill: false },
             onComplete: () => { anim = null; dir = 0; } });
         };
