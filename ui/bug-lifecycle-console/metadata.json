@@ -1,0 +1,43 @@
+{
+  "name": "虫况 · 缺陷生命周期控制台",
+  "slug": "bug-lifecycle-console",
+  "page_type": "software",
+  "palette": [
+    "#d7e9f9",
+    "#0a72e0",
+    "#10233d"
+  ],
+  "tags": [
+    "缺陷管理",
+    "工作流",
+    "筛选"
+  ],
+  "created_at": "2026-10-17 13:58:00",
+  "updated_at": "2026-10-17 20:05:00",
+  "history": [
+    {
+      "prompt": "请重构 bug-lifecycle-console UI，改成高饱和天空蓝主题配色，整体简约清新高级",
+      "model": "claude-opus-5.5",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1500
+    },
+    {
+      "prompt": "继续重构UI设计，请调整更简约、清新、高级的UI设计和交互",
+      "model": "deepseek-v4-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1100
+    },
+    {
+      "prompt": "继续优化，简化设计（可以适当减少内容看上去精简一点、增大间距、尺寸、小部分留白、图形等），继续美化控件设计，优化交互的连续动画等",
+      "model": "Sonnet 4.6",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1300
+    }
+  ]
+}

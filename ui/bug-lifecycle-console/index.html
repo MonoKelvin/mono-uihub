@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>虫况 · 缺陷生命周期控制台</title>
+  <meta name="theme-color" content="#0A72E0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="window" id="window">
+    <aside class="rail">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><i class="ti ti-bug"></i></span>
+        <div class="brand-text"><strong>虫况</strong><span>缺陷生命周期</span></div>
+      </div>
+
+      <nav class="views" id="views" aria-label="缺陷视图"></nav>
+
+      <section class="pulse" aria-label="近 7 日新增与关闭">
+        <div class="pulse-head">
+          <span class="pulse-title">近 7 日</span>
+          <span class="pulse-mttr">平均修复 <b class="mono">2.6</b> 天</span>
+        </div>
+        <svg class="pulse-chart" id="pulseChart" viewBox="0 0 196 56" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="pulse-foot">
+          <span><i class="lg lg-in"></i>新增 <b class="mono" id="pulseIn">0</b></span>
+          <span><i class="lg lg-out"></i>关闭 <b class="mono" id="pulseOut">0</b></span>
+        </div>
+      </section>
+
+      <div class="rail-foot">
+        <img src="https://i.pravatar.cc/64?u=hanshuang" alt="韩霜的头像" class="avatar">
+        <div class="foot-meta"><strong>韩霜</strong><span>质量工程 / 分诊</span></div>
+        <button class="icon-btn icon-btn-dark" id="prefBtn" aria-label="偏好设置"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+      </div>
+    </aside>
+
+    <section class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1 id="viewTitle">全部缺陷</h1>
+          <span class="topbar-sub" id="viewSub"></span>
+        </div>
+        <div class="topbar-tools">
+          <div class="seg" id="sevSeg" role="radiogroup" aria-label="按级别筛选"></div>
+          <label class="search">
+            <i class="ti ti-search" aria-hidden="true"></i>
+            <input id="searchInput" type="search" placeholder="搜索编号、标题或模块" aria-label="搜索缺陷">
+            <kbd class="mono">/</kbd>
+          </label>
+          <button class="btn btn-primary" id="newBugBtn" aria-label="登记缺陷"><i class="ti ti-plus" aria-hidden="true"></i><span class="btn-label">登记缺陷</span></button>
+        </div>
+      </header>
+
+      <div class="flowstrip" id="flowstrip" aria-label="生命周期阶段"></div>
+
+      <div class="workspace">
+        <div class="listpane">
+          <div class="list-head" aria-hidden="true">
+            <span>状态</span><span>标题</span><span>级别</span><span class="col-owner">负责人</span><span class="col-time">更新</span>
+          </div>
+          <div class="list-body" id="listBody" role="list" aria-label="缺陷列表" tabindex="0"></div>
+        </div>
+        <aside class="detail" id="detail" aria-label="缺陷详情"></aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-head">
+        <div>
+          <h2 id="modalTitle">登记缺陷</h2>
+          <p class="mono modal-id" id="modalId">BUG-1048</p>
+        </div>
+        <button type="button" class="icon-btn" id="modalClose" aria-label="关闭登记窗"><i class="ti ti-x" aria-hidden="true"></i></button>
+      </header>
+      <form class="modal-body" id="bugForm" novalidate autocomplete="off">
+        <div class="field">
+          <label for="fTitle">标题</label>
+          <input id="fTitle" type="text" maxlength="60" placeholder="一句话说清现象，例如：退款回调偶发丢失">
+          <p class="field-err" id="fTitleErr" hidden>请填写缺陷标题</p>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="fModule">所属模块</label>
+            <select id="fModule">
+              <option>支付网关</option><option>结算中心</option><option>消息推送</option>
+              <option>权限中心</option><option>报表导出</option><option>移动端</option><option>开放平台</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fVer">影响版本</label>
+            <input id="fVer" type="text" value="v3.2.1" class="mono">
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label" id="sevLabel">严重级别</span>
+          <div class="sev-picker" id="sevPicker" role="radiogroup" aria-labelledby="sevLabel"></div>
+        </div>
+        <div class="field">
+          <label for="fDesc">补充说明</label>
+          <textarea id="fDesc" rows="3" placeholder="复现步骤、影响范围、相关日志链接（可留空）"></textarea>
+        </div>
+        <footer class="modal-foot">
+          <button type="button" class="btn btn-ghost" id="modalCancel">取消</button>
+          <button type="submit" class="btn btn-primary"><i class="ti ti-check" aria-hidden="true"></i>登记</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
