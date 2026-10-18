@@ -1,0 +1,71 @@
+{
+  "name": "糖罐账本 · 记账 App",
+  "slug": "candy-ledger-app",
+  "page_type": "app",
+  "palette": [
+    "#eeeef0",
+    "#d91e4e",
+    "#302d36"
+  ],
+  "tags": [
+    "记账",
+    "个人财务",
+    "可爱"
+  ],
+  "created_at": "2026-10-17 20:57:51",
+  "updated_at": "2026-10-18 10:56:47",
+  "history": [
+    {
+      "prompt": "生成一个记账类手机App，画风清新，高饱和的活力可爱多色彩风格，界面简约",
+      "model": "Claude Opus 4.8",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1414
+    },
+    {
+      "prompt": "重构：尽量设计简约一点，尺寸大一点；加一些彩色图标或者拟物图标，整体圆滑一点",
+      "model": "Claude Opus 4.8",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 2585
+    },
+    {
+      "prompt": "继续优化、美化和设计美观的UI界面",
+      "model": "Claude Opus 4.8",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 2397
+    },
+    {
+      "prompt": "调整下软件尺寸，让App居中，目前稍微偏下导致被遮挡了",
+      "model": "kimi-k3",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 210
+    },
+    {
+      "prompt": "放宽内部排版与软件尺寸，精简阴影，加入背景高斯模糊、活力可爱的交互反馈和彩色图标，并完善现有模块功能",
+      "model": "openai/gpt-6.1-sol-pro",
+      "skills": ["mono-ui-prototype", "animate"]
+    },
+    {
+      "prompt": "改为 iPhone 常用尺寸 390×844，调整内部间距与字号防止遮挡和不必要换行，继续优化 UI。",
+      "model": "xinjianya/z-ai/glm-5.3-flash",
+      "skills": ["mono-ui-prototype", "mobile-native"]
+    },
+    {
+      "prompt": "太宽了，请改成iPhone手机常用尺寸，内部大小请调整好不要出现遮挡、不必要的换行的情况，请继续优化UI",
+      "model": "Fable 5",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "整体检查：弹窗限定在 App 内、替换原生下拉框等默认控件、重构预算按钮、导航栏改为圆角悬浮高斯模糊、删除灵动岛，使用粗线条单色图标无文字，继续优化 UI",
+      "model": "Fable 5",
+      "skills": ["mono-ui-prototype", "mobile-native"]
+    }
+  ]
+}

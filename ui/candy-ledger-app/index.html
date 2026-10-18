@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#eeeef0">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2a282f">
+<meta name="color-scheme" content="light dark">
+<title>糖罐账本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css?v=20261018-4">
+</head>
+<body>
+
+<!-- 拟物彩色分类图标 -->
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-food" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffa45e"/><stop offset="1" stop-color="#ef5b22"/>
+    </linearGradient>
+    <linearGradient id="g-transit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7db5ff"/><stop offset="1" stop-color="#3a71e8"/>
+    </linearGradient>
+    <linearGradient id="g-shop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd968"/><stop offset="1" stop-color="#f2ab0c"/>
+    </linearGradient>
+    <linearGradient id="g-fun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bda6ff"/><stop offset="1" stop-color="#8156e8"/>
+    </linearGradient>
+    <linearGradient id="g-daily" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#79e6c9"/><stop offset="1" stop-color="#1fb995"/>
+    </linearGradient>
+    <linearGradient id="g-other" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfd7e6"/><stop offset="1" stop-color="#94a0b7"/>
+    </linearGradient>
+    <linearGradient id="g-income" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#86e6ab"/><stop offset="1" stop-color="#22a35b"/>
+    </linearGradient>
+  </defs>
+
+  <symbol id="ico-food" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="41.4" rx="12" ry="2.3" fill="#e8590c" opacity=".15"/>
+    <path d="M9.5 23.5h29c0 9.8-6.5 15.7-14.5 15.7S9.5 33.3 9.5 23.5z" fill="url(#g-food)"/>
+    <ellipse cx="24" cy="23.5" rx="14.5" ry="4.5" fill="#ffc28f"/>
+    <ellipse cx="24" cy="23" rx="12.3" ry="3.3" fill="#fff7e8"/>
+    <path d="M15 22.6c1.1-4 4.8-6.3 9-6.3s7.9 2.3 9 6.3" fill="#fffdf7"/>
+    <circle cx="19.4" cy="18.6" r="3.9" fill="#ffbf1f"/>
+    <circle cx="18.2" cy="17.5" r="1" fill="#fff" opacity=".85"/>
+    <path d="M27.4 18.6c2.3-1.5 4.8-1.2 6.2.5" stroke="#a0673a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M15.2 9.6q1.8-2 0-4M21 8.2q1.6-1.8 0-3.6" stroke="#d9c6b2" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  </symbol>
+
+  <symbol id="ico-transit" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="41" rx="12" ry="2.3" fill="#1d4ed8" opacity=".14"/>
+    <rect x="8.5" y="9.5" width="31" height="27" rx="8.5" fill="url(#g-transit)"/>
+    <rect x="12.6" y="14" width="9.6" height="8.6" rx="2.9" fill="#eaf4ff"/>
+    <rect x="25.8" y="14" width="9.6" height="8.6" rx="2.9" fill="#eaf4ff"/>
+    <rect x="20.4" y="26.4" width="7.2" height="4.4" rx="1.6" fill="#dbeafe" opacity=".92"/>
+    <rect x="8.5" y="31.4" width="31" height="3" fill="#1e40af" opacity=".22"/>
+    <circle cx="15.6" cy="37" r="3.5" fill="#1d3a8a"/>
+    <circle cx="32.4" cy="37" r="3.5" fill="#1d3a8a"/>
+    <circle cx="15.6" cy="37" r="1.3" fill="#c7d7ff"/>
+    <circle cx="32.4" cy="37" r="1.3" fill="#c7d7ff"/>
+  </symbol>
+
+  <symbol id="ico-shop" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="42" rx="11" ry="2.2" fill="#b45309" opacity=".13"/>
+    <path d="M18 16v-2.6a6 6 0 0 1 12 0V16" stroke="#a16207" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M10.6 16h26.8l-2.2 19.8a5 5 0 0 1-5 4.5H17.8a5 5 0 0 1-5-4.5z" fill="url(#g-shop)"/>
+    <path d="M10.6 16h26.8l-.5 4.6H11.1z" fill="#fff" opacity=".3"/>
+    <circle cx="30.6" cy="26" r="4.7" fill="#fff8e1"/>
+    <path d="M30.6 23.2l.9 2 2.1.25-1.6 1.4.45 2.1-1.85-1.15-1.85 1.15.45-2.1-1.6-1.4 2.1-.25z" fill="#f59e0b"/>
+  </symbol>
+
+  <symbol id="ico-fun" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="38.6" rx="14" ry="2.4" fill="#6d28d9" opacity=".14"/>
+    <path d="M15 14.5h18c5.2 0 8.6 4.1 9.5 9.4.9 5-1 9.2-4.4 9.2-2.7 0-4.5-2.3-6.9-2.3H16.8c-2.4 0-4.2 2.3-6.9 2.3-3.4 0-5.3-4.2-4.4-9.2.9-5.3 4.3-9.4 9.5-9.4z" fill="url(#g-fun)"/>
+    <rect x="13.2" y="20.6" width="3.1" height="9.4" rx="1.55" fill="#f8f3ff"/>
+    <rect x="10" y="23.6" width="9.4" height="3.1" rx="1.55" fill="#f8f3ff"/>
+    <circle cx="32.4" cy="22.8" r="2.5" fill="#ffd166"/>
+    <circle cx="37" cy="26.8" r="2.5" fill="#ff7fa8"/>
+    <circle cx="27.8" cy="26.8" r="2.5" fill="#7ce0c3"/>
+  </symbol>
+
+  <symbol id="ico-daily" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="41.5" rx="12" ry="2.2" fill="#0f766e" opacity=".14"/>
+    <path d="M19.6 11.5c0-3 1.8-5 4.4-5s4.4 2 4.4 5" stroke="#0f766e" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".5"/>
+    <circle cx="18.6" cy="14.2" r="4.1" fill="#ffb703"/>
+    <circle cx="17.5" cy="13.1" r="1" fill="#fff" opacity=".8"/>
+    <path d="M27.8 9.4c3 0 5 1.8 5 4.8v1" fill="#7ad3b6"/>
+    <rect x="26.2" y="7.6" width="6.6" height="8.4" rx="2.6" fill="#eef6f3"/>
+    <path d="M9 18.4h30l-3.4 17.2a5.2 5.2 0 0 1-5.1 4.2H17.5a5.2 5.2 0 0 1-5.1-4.2z" fill="url(#g-daily)"/>
+    <path d="M14.4 25.4h19.2M15.8 31.2h16.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" opacity=".5"/>
+  </symbol>
+
+  <symbol id="ico-other" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="41.5" rx="11" ry="2.2" fill="#334155" opacity=".13"/>
+    <rect x="9.6" y="20.4" width="28.8" height="17.6" rx="4.4" fill="url(#g-other)"/>
+    <rect x="7.4" y="15.2" width="33.2" height="7.6" rx="3.4" fill="#c2cbdc"/>
+    <rect x="21" y="20.4" width="6" height="17.6" fill="#ffd166"/>
+    <rect x="21" y="15.2" width="6" height="7.6" fill="#ffd166"/>
+    <path d="M24 14.6c-4-2.6-6.6-3.4-8.2-2.2-2 1.5-1.3 4.4 1.2 4.6 2.4.2 4.8-1 7-2.4z" fill="#ffd166"/>
+    <path d="M24 14.6c4-2.6 6.6-3.4 8.2-2.2 2 1.5 1.3 4.4-1.2 4.6-2.4.2-4.8-1-7-2.4z" fill="#ffd166"/>
+    <circle cx="24" cy="14.6" r="2.1" fill="#f59e0b"/>
+  </symbol>
+
+  <symbol id="ico-income" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="42" rx="11" ry="2.2" fill="#166534" opacity=".14"/>
+    <path d="M18.4 12.4h11.2l-2.4 4.8c6.6 3.3 10.8 8.6 10.8 14.7 0 6.9-5.8 10.7-14 10.7S10 38.8 10 31.9c0-6.1 4.2-11.4 10.8-14.7z" fill="url(#g-income)"/>
+    <path d="M19 11.4h10" stroke="#166534" stroke-width="3" stroke-linecap="round"/>
+    <path d="M24 24.5v15M20.4 28.3h6a2.6 2.6 0 0 1 0 5.2h-4.8a2.6 2.6 0 0 0 0 5.2h6" stroke="#fff" stroke-width="2.1" stroke-linecap="round" fill="none" opacity=".95"/>
+  </symbol>
+
+  <symbol id="avatar" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="32" fill="#ffe0b8"/>
+    <path d="M11 36c0-15 9-24 21-24s21 9 21 24v9c0 8-4 15-7 15H18c-3 0-7-7-7-15z" fill="#3b2a34"/>
+    <circle cx="32" cy="36" r="16.5" fill="#ffe6c9"/>
+    <path d="M15 31c2.5-10.5 8.5-16 17-16s14.5 5.5 17 16c-5-5.5-10-8-17-8s-12 2.5-17 8z" fill="#3b2a34"/>
+    <path d="M25.5 35.5q2-2.4 4 0M34.5 35.5q2-2.4 4 0M29.5 42.5q2.5 2.6 5 0" stroke="#3b2a34" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="23.5" cy="41" r="2.6" fill="#ff9db0" opacity=".65"/>
+    <circle cx="40.5" cy="41" r="2.6" fill="#ff9db0" opacity=".65"/>
+  </symbol>
+
+  <!-- 底部导航的简化单色图标 -->
+  <symbol id="tab-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 10.4 12 3.8l8 6.6V19a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19z"/>
+    <path d="M9.6 20.6v-6.2a1.6 1.6 0 0 1 1.6-1.6h1.6a1.6 1.6 0 0 1 1.6 1.6v6.2"/>
+  </symbol>
+
+  <symbol id="tab-bills" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.2 3.4h11.6a1 1 0 0 1 1 1v16.2l-3.4-1.9-3.4 1.9-3.4-1.9-3.4 1.9V4.4a1 1 0 0 1 1-1z"/>
+    <path d="M8.8 8.4h6.4M8.8 12.4h4.2"/>
+  </symbol>
+
+  <symbol id="tab-stats" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <path d="M5.2 20.2v-7.4M12 20.2V5.4M18.8 20.2v-4.6"/>
+  </symbol>
+
+  <symbol id="tab-me" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8.2" r="3.9"/>
+    <path d="M4.6 20.4c1.4-3.2 4.2-4.9 7.4-4.9s6 1.7 7.4 4.9"/>
+  </symbol>
+</svg>
+
+<div class="phone" id="phone">
+  <div class="statusbar">
+    <span class="status-time">21:06</span>
+    <span class="status-icons" aria-hidden="true"><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span>
+  </div>
+
+  <main class="screen" id="screen">
+
+    <!-- 首页 -->
+    <section class="view active" id="view-home" aria-label="首页">
+      <header class="topbar hello">
+        <svg class="hello-avatar" aria-hidden="true"><use href="#avatar"></use></svg>
+        <div class="hello-text">
+          <h1 class="hello-title">晚上好，小满</h1>
+          <p class="page-sub" id="home-sub">十月已经记了 9 天</p>
+        </div>
+        <button class="icon-btn" type="button" id="bell-btn" aria-label="记账提醒">
+          <i class="ti ti-bell"></i><span class="badge-dot"></span>
+        </button>
+      </header>
+
+      <section class="hero" aria-label="十月支出概览">
+        <div class="hero-top">
+          <span>十月支出</span>
+          <button class="budget-chip" id="hero-budget" type="button" aria-label="设置本月预算">
+            <i class="ti ti-pig-money" aria-hidden="true"></i>
+            <span id="hero-budget-label">预算 ¥2,000</span>
+          </button>
+        </div>
+        <p class="hero-amount"><span class="cny">¥</span><span id="month-total">1,542.60</span></p>
+        <div class="hero-body">
+          <div class="hero-stats">
+            <p class="hero-note" id="hero-note">糖罐里还剩 <b>¥457.40</b></p>
+            <div class="hero-foot">
+              <div><span>收入</span><b id="month-income">¥8,600.00</b></div>
+              <div><span>今天</span><b id="today-total">¥214.90</b></div>
+            </div>
+          </div>
+          <svg class="jar pop" id="jar" viewBox="0 0 100 120" role="img" aria-label="预算糖罐">
+            <defs>
+              <clipPath id="jar-clip"><rect x="17" y="33" width="66" height="77" rx="16"/></clipPath>
+            </defs>
+            <ellipse cx="50" cy="116" rx="33" ry="3.4" fill="#7a0b2a" opacity=".28"/>
+            <rect x="14" y="30" width="72" height="83" rx="19" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".75" stroke-width="2.5"/>
+            <g id="jar-candies" clip-path="url(#jar-clip)"></g>
+            <path d="M24 45v30" stroke="#fff" stroke-width="3.6" stroke-linecap="round" opacity=".5"/>
+            <path d="M24 82v5" stroke="#fff" stroke-width="3.6" stroke-linecap="round" opacity=".5"/>
+            <rect x="24" y="22" width="52" height="11" rx="4" fill="#f4b52c"/>
+            <rect x="19" y="10" width="62" height="15" rx="7.5" fill="#ffd66b"/>
+            <rect x="26" y="14" width="20" height="3.6" rx="1.8" fill="#fff" opacity=".65"/>
+          </svg>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <h2>花在哪儿</h2>
+        <span class="section-meta" id="cat-total">本月 ¥1,542.60</span>
+      </div>
+      <div class="cat-grid" id="cat-grid"></div>
+
+      <div class="section-head">
+        <h2>最近记账</h2>
+        <button class="text-btn" type="button" id="see-all">全部账单</button>
+      </div>
+      <div class="list-card">
+        <ul class="tx-list" id="recent-list"></ul>
+      </div>
+    </section>
+
+    <!-- 账单 -->
+    <section class="view" id="view-bills" aria-label="账单">
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">账单</h1>
+          <p class="page-sub" id="bills-sub">2026 年十月，共 33 笔</p>
+        </div>
+      </header>
+
+      <div class="bill-stats">
+        <div class="bill-stat out"><span>支出</span><b id="bill-out">¥1,542.60</b></div>
+        <div class="bill-stat in"><span>收入</span><b id="bill-in">¥8,600.00</b></div>
+      </div>
+
+      <label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="bill-search" type="search" placeholder="搜索事项、备注或分类" aria-label="搜索账单" maxlength="80"></label>
+      <div class="filter-row" role="group" aria-label="筛选账单">
+        <button class="filter-chip active" type="button" data-filter="all" aria-pressed="true">全部</button>
+        <button class="filter-chip" type="button" data-filter="expense" aria-pressed="false">支出</button>
+        <button class="filter-chip" type="button" data-filter="income" aria-pressed="false">收入</button>
+      </div>
+      <button class="cat-filter" type="button" id="cat-filter" hidden>
+        <span id="cat-filter-label">餐饮</span><i class="ti ti-x"></i>
+      </button>
+
+      <div id="bill-groups"></div>
+    </section>
+
+    <!-- 统计 -->
+    <section class="view" id="view-stats" aria-label="统计">
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">统计</h1>
+          <p class="page-sub">2026 年十月</p>
+        </div>
+      </header>
+
+      <section class="card donut-card" aria-label="支出分类占比">
+        <div class="card-head">
+          <span class="card-title">支出都去了哪</span>
+          <span class="card-note" id="donut-note">共 6 类</span>
+        </div>
+        <div class="donut-wrap">
+          <svg id="donut" viewBox="0 0 200 200" role="img" aria-label="各类支出占比环形图"></svg>
+          <div class="donut-center">
+            <span>本月支出</span>
+            <b id="donut-total">¥1,542.60</b>
+            <em id="donut-sub">预算用掉 77%</em>
+          </div>
+        </div>
+        <ul class="legend" id="donut-legend"></ul>
+      </section>
+
+      <section class="card week-card" aria-label="本周每日支出">
+        <div class="card-head">
+          <span class="card-title">这周每天花了多少</span>
+          <span class="card-note" id="week-total">合计 ¥1,237.60</span>
+        </div>
+        <div class="week-bars" id="week-bars"></div>
+      </section>
+
+      <div class="stat-pair">
+        <div class="mini-card">
+          <span>最高单笔</span>
+          <b id="max-amount">¥289.00</b>
+          <em id="max-desc">护肤精华</em>
+        </div>
+        <div class="mini-card">
+          <span>本月日均</span>
+          <b id="avg-amount">¥90.74</b>
+          <em id="avg-note">按 17 天算</em>
+        </div>
+      </div>
+    </section>
+
+    <!-- 我的 -->
+    <section class="view" id="view-profile" aria-label="我的">
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">我的</h1>
+          <p class="page-sub">小满的糖罐</p>
+        </div>
+      </header>
+
+      <section class="profile-card">
+        <svg class="avatar" aria-hidden="true"><use href="#avatar"></use></svg>
+        <div class="profile-main">
+          <p class="profile-name">小满</p>
+          <p class="profile-sub" id="profile-sub">已经记账 8 天</p>
+        </div>
+        <span class="streak" id="streak-pill">连续 8 天</span>
+      </section>
+
+      <section class="budget-card" id="budget-card" role="button" tabindex="0" aria-label="设置本月预算">
+        <div class="ring" id="budget-ring" style="--p:77">
+          <span id="ring-label">77%</span>
+        </div>
+        <div class="budget-main">
+          <p class="budget-label">本月预算</p>
+          <p class="budget-value"><b id="profile-spent">¥1,542.60</b><span id="profile-budget"> / ¥2,000</span></p>
+          <p class="budget-left" id="profile-left">还剩 ¥457.40</p>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <h2>小工具</h2>
+      </div>
+      <div class="setting-card">
+        <button class="setting-row" type="button" id="row-cats">
+          <span class="setting-icon" style="--cs:#ffe9dd;--cd:#c2410c"><i class="ti ti-category"></i></span>
+          <span class="setting-label">分类管理</span>
+          <i class="ti ti-chevron-right chev"></i>
+        </button>
+        <button class="setting-row" type="button" id="row-report">
+          <span class="setting-icon" style="--cs:#e7eeff;--cd:#2457b8"><i class="ti ti-chart-bar"></i></span>
+          <span class="setting-label">月度报表</span>
+          <i class="ti ti-chevron-right chev"></i>
+        </button>
+        <button class="setting-row" type="button" id="row-export">
+          <span class="setting-icon" style="--cs:#e0f7f0;--cd:#0b8a6e"><i class="ti ti-download"></i></span>
+          <span class="setting-label">导出账单</span>
+          <i class="ti ti-chevron-right chev"></i>
+        </button>
+        <div class="setting-row">
+          <span class="setting-icon" style="--cs:#fff3d2;--cd:#a26e00"><i class="ti ti-bell"></i></span>
+          <span class="setting-label">记账提醒</span>
+          <button class="switch" type="button" role="switch" aria-checked="true" aria-pressed="true" aria-label="记账提醒"></button>
+        </div>
+      </div>
+      <p class="profile-foot">每一笔小账，都是认真生活的痕迹。</p>
+    </section>
+
+  </main>
+
+  <nav class="tabbar" aria-label="主导航">
+    <button class="tab active" type="button" data-tab="home" aria-label="首页" aria-current="page">
+      <span class="tab-ico"><svg aria-hidden="true"><use href="#tab-home"></use></svg></span>
+    </button>
+    <button class="tab" type="button" data-tab="bills" aria-label="账单" aria-current="false">
+      <span class="tab-ico"><svg aria-hidden="true"><use href="#tab-bills"></use></svg></span>
+    </button>
+    <button class="fab" type="button" id="fab" aria-label="记一笔">
+      <i class="ti ti-plus"></i>
+    </button>
+    <button class="tab" type="button" data-tab="stats" aria-label="统计" aria-current="false">
+      <span class="tab-ico"><svg aria-hidden="true"><use href="#tab-stats"></use></svg></span>
+    </button>
+    <button class="tab" type="button" data-tab="profile" aria-label="我的" aria-current="false">
+      <span class="tab-ico"><svg aria-hidden="true"><use href="#tab-me"></use></svg></span>
+    </button>
+  </nav>
+
+  <div class="scrim" id="scrim"></div>
+
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+    <div class="sheet-grip" aria-hidden="true"></div>
+    <header class="sheet-head">
+      <h2 id="sheet-title">记一笔</h2>
+      <button class="icon-btn sheet-close" type="button" id="sheet-close" aria-label="关闭">
+        <i class="ti ti-x"></i>
+      </button>
+    </header>
+
+    <div class="seg" role="group" aria-label="收支类型">
+      <button class="seg-btn active" type="button" data-type="expense" aria-pressed="true">支出</button>
+      <button class="seg-btn" type="button" data-type="income" aria-pressed="false">收入</button>
+    </div>
+
+    <button class="amount-field" type="button" id="amount-field" aria-label="金额">
+      <span class="cny" aria-hidden="true">¥</span>
+      <span class="amount-display zero" id="amount-display">0.00</span>
+      <span class="amount-cat" id="amount-cat" aria-hidden="true"></span>
+    </button>
+
+    <div class="cat-picker" id="cat-picker" role="group" aria-label="选择分类"></div>
+
+    <div class="keypad" id="keypad" aria-label="数字键盘"></div>
+
+    <label class="note-field">
+      <i class="ti ti-notes" aria-hidden="true"></i>
+      <input id="note-input" type="text" placeholder="写点什么，比如「楼下早餐摊」" autocomplete="off" aria-label="备注">
+    </label>
+
+    <div class="day-row" role="group" aria-label="日期">
+      <button class="day-chip active" type="button" data-day="0" aria-pressed="true">今天</button>
+      <button class="day-chip" type="button" data-day="1" aria-pressed="false">昨天</button>
+    </div>
+
+    <button class="save-btn" type="button" id="save-btn">存入糖罐</button>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-scrim" id="modal-scrim"></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="utility-title">
+      <header class="dialog-head"><h2 id="utility-title"></h2><button type="button" class="icon-btn" id="utility-close" aria-label="关闭弹窗"><i class="ti ti-x"></i></button></header>
+      <div id="utility-content" class="dialog-body"></div>
+    </section>
+  </div>
+</div>
+
+<script src="app.js?v=20261018-2"></script>
+</body>
+</html>
