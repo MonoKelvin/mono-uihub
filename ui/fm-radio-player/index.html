@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>夜航电台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1815'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23da5230' stroke-width='1.6'/%3E%3Cpath d='M16 8.5v7.5l5 3' fill='none' stroke='%23ede6d8' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;600&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<main class="rx">
+
+  <!-- 机壳螺丝 -->
+  <i class="screw screw--tl" aria-hidden="true"></i>
+  <i class="screw screw--tr" aria-hidden="true"></i>
+  <i class="screw screw--bl" aria-hidden="true"></i>
+  <i class="screw screw--br" aria-hidden="true"></i>
+
+  <header class="head">
+    <p class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="12" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M12 4.6v2M19.4 12h-2M12 19.4v-2M4.6 12h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text">Night Voyage</span>
+    </p>
+    <p class="tally" id="tally">
+      <i class="lamp" aria-hidden="true"></i>
+      <span class="tally-text">待播</span>
+    </p>
+  </header>
+
+<!-- 读数窗：内凹槽。玻璃盖只在每个数字格与小数点自身上 -->
+  <section class="window">
+    <span class="recess-shadow" aria-hidden="true"></span>
+
+    <div class="readout">
+      <!-- 左侧：电台身份（内凹小槽，无玻璃盖） -->
+      <div class="readout-l recess-pill">
+        <span class="win-name" id="station">夜航电台</span>
+        <span class="win-mode" id="winMode">立体声</span>
+      </div>
+
+      <!-- 中央：滚轮数字。每格自带独立玻璃盖 -->
+      <p class="win-freq">
+        <span class="odo" id="odo" aria-hidden="true">
+          <span class="odo-cell"><span class="odo-strip"></span></span>
+          <span class="odo-cell"><span class="odo-strip"></span></span>
+          <span class="odo-cell"><span class="odo-strip"></span></span>
+          <span class="odo-dot"></span>
+          <span class="odo-cell"><span class="odo-strip"></span></span>
+          <em class="win-unit">MHz</em>
+        </span>
+      </p>
+
+      <!-- 右侧：信号状态（横向内凹槽，无玻璃盖） -->
+      <div class="readout-r recess-pill recess-pill--wide">
+        <span class="win-signal" id="winSignal">信号清晰</span>
+        <span class="win-bars" id="winBars" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <p class="sr-only" id="freqText" aria-live="polite">88.6 兆赫，夜航电台，信号清晰</p>
+  </section>
+
+  <!-- 刻度盘：纯刻度无文字 -->
+  <div class="dial" id="dial"
+       role="slider" tabindex="0"
+       aria-label="调谐频率"
+       aria-valuemin="88" aria-valuemax="108" aria-valuenow="88.6">
+    <div class="dial-well">
+      <div class="dial-inner" id="dialInner">
+        <span class="dial-rail" aria-hidden="true"></span>
+        <div class="dial-ticks" id="ticks" aria-hidden="true"></div>
+        <div class="dial-slots" id="slots" aria-hidden="true"></div>
+        <span class="needle" id="needle" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scope recess-glass" aria-hidden="true">
+    <canvas id="scope"></canvas>
+    <span class="scope-line"></span>
+    <span class="glass-lid" aria-hidden="true"></span>
+  </div>
+
+  <section class="meta">
+    <p class="program" id="program">夜航信箱</p>
+    <p class="byline" id="byline">沈砚秋 · 22:00</p>
+  </section>
+
+  <footer class="deck">
+    <div class="transport">
+      <button class="key" id="prev" type="button" aria-label="上一台" title="上一台">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+          <rect x="4.5" y="5" width="2.4" height="14" rx=".5"/>
+          <path d="M20 5.4v13.2L9.6 12z"/>
+        </svg>
+      </button>
+
+      <button class="key key--main" id="play" type="button" aria-label="播放">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+          <path d="M8 4.4v15.2L20.6 12z"/>
+        </svg>
+      </button>
+
+      <button class="key" id="next" type="button" aria-label="下一台" title="下一台">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+          <rect x="17.1" y="5" width="2.4" height="14" rx=".5"/>
+          <path d="M4 5.4v13.2L14.4 12z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="vol">
+      <!-- 旋钮：刻度环与指针用同一套 SVG 坐标系，保证指针精确落在刻度上。
+           外圈是刻度（固定），中间是旋钮盘（随音量旋转），指针从盘心伸出到刻度半径 -->
+      <div class="knob" id="knob"
+           role="slider" tabindex="0"
+           aria-label="音量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72">
+        <svg class="knob-svg" viewBox="0 0 100 100" aria-hidden="true">
+          <g class="knob-ticks" id="kticks"></g>
+          <!-- 指针从盘缘（r≈24）向外延伸到刻度内侧（r≈34），
+               不穿过金属盘面，这样层级上永远清晰 -->
+          <g class="knob-needle" id="kneedle">
+            <line x1="50" y1="26" x2="50" y2="16"/>
+            <circle cx="50" cy="15" r="2.8"/>
+          </g>
+        </svg>
+        <span class="knob-dial"></span>
+      </div>
+      <!-- 音量读数：内凹小窗（按钮区不做玻璃盖，保持纯拟物） -->
+      <span class="vol-num recess-pill" id="volNum">72</span>
+    </div>
+  </footer>
+
+  <!-- 扬声器网孔 -->
+  <div class="grille" aria-hidden="true"></div>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

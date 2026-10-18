@@ -1,0 +1,808 @@
+/* ============================================================
+   夜航电台 · 复古接收机
+   ------------------------------------------------------------
+   方向卡（本轮独立推导）
+   定位：一台有年份的塑料壳收音机。拟物只做到「材质暗示」这一层——
+        塑料机身、金属旋钮、玻璃读数窗、内凹刻度槽、外壳螺丝、
+        扬声器网孔。做过头就成了贴图，不是设计。
+   刻度盘：纯刻度无文字。真机就是这样，读数交给玻璃窗。
+   读数窗：滚轮数字。**位数固定**是这一版的关键约束——
+        真实机械滚轮的每一位宽度恒定，所以 MHz 的锚点永远不会
+        被数字宽度变化带着跑。若靠内容自适应宽度，MHz 必然抖动。
+   配色：机身近纯色（避免大面积渐变底），渐变只用于材质部件。
+   强调色：信号红，仅用于 ON AIR 灯、指针、刻度高亮与主键激活态。
+   ============================================================ */
+
+:root {
+  /* 机身：哑光塑料，近纯色，质感靠高光与阴影 */
+  --case:      #26231e;
+  --case-hi:   #302c25;
+  --case-lo:   #1b1815;
+
+  --well:      #100e0c;
+  --well-lo:   #0a0908;
+
+  --metal-hi:  #726c63;
+  --metal:     #4d4941;
+  --metal-lo:  #272420;
+
+  --bone:      #ede6d8;
+  --dim:       #8f8578;
+  --dimmer:    #5f584e;
+
+  --signal:    #da5230;
+  --signal-lo: #a83a1b;
+
+  --hair:      rgba(237, 230, 216, .16);
+  --hair-lo:   rgba(237, 230, 216, .08);
+
+  --serif: "Instrument Serif", "Noto Serif SC", "Songti SC", serif;
+  --sans:  "Archivo", "Noto Serif SC", system-ui, sans-serif;
+  --mono:  "Spline Sans Mono", ui-monospace, Menlo, monospace;
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+
+  /* 凸起 / 凹陷两套阴影 token */
+  --lift: 0 1px 0 rgba(237, 230, 216, .08) inset,
+          0 -1px 0 rgba(0, 0, 0, .5) inset,
+          0 2px 5px rgba(20, 14, 8, .5);
+  --sink: 0 1px 3px rgba(0, 0, 0, .6) inset,
+          0 -1px 0 rgba(237, 230, 216, .05) inset;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2.6vh, 22px);
+  background: #0a0908;
+  background-image:
+    radial-gradient(ellipse 62% 46% at 50% 20%, rgba(218, 82, 48, .06), transparent 68%),
+    linear-gradient(180deg, #110f0d 0%, #070606 100%);
+  color: var(--bone);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 机身 ---------- */
+
+.rx {
+  position: relative;
+  width: min(496px, 100%);
+  max-height: calc(100dvh - 2 * clamp(10px, 2.6vh, 22px));
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 3vh, 23px) clamp(20px, 5vw, 30px) clamp(14px, 2.6vh, 20px);
+  background: var(--case);
+  border-radius: 9px;
+  box-shadow:
+    0 1px 0 rgba(237, 230, 216, .1) inset,
+    0 0 0 1px rgba(0, 0, 0, .6),
+    0 0 0 2px rgba(237, 230, 216, .045),
+    0 24px 48px -20px rgba(0, 0, 0, .9),
+    0 4px 14px rgba(0, 0, 0, .5);
+  overflow: hidden;
+  animation: press-in .5s var(--ease) both;
+}
+
+/* 塑料磨砂颗粒：两层网点叠加，近看有质地，远看只是哑光 */
+.rx::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(237, 230, 216, .028) .5px, transparent .6px),
+    radial-gradient(rgba(0, 0, 0, .05) .5px, transparent .6px);
+  background-size: 3px 3px, 4px 4px;
+  background-position: 0 0, 1px 2px;
+  border-radius: inherit;
+}
+
+@keyframes press-in {
+  from { opacity: 0; transform: translateY(10px) scale(.99); }
+  to   { opacity: 1; transform: none; }
+}
+
+.rx > *:not(.screw) { position: relative; z-index: 1; }
+
+/* ---------- 外壳螺丝 ---------- */
+
+.screw {
+  position: absolute;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #4a453d, #211e1a 70%);
+  box-shadow:
+    0 1px 0 rgba(237, 230, 216, .12) inset,
+    0 -1px 1px rgba(0, 0, 0, .5) inset,
+    0 1px 2px rgba(0, 0, 0, .6);
+  z-index: 2;
+}
+/* 螺丝刀槽 */
+.screw::after {
+  content: "";
+  position: absolute;
+  left: 12%; right: 12%; top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, .55);
+  box-shadow: 0 1px 0 rgba(237, 230, 216, .07);
+}
+.screw--tl { left: 9px;  top: 9px; }
+.screw--tr { right: 9px; top: 9px; }
+.screw--bl { left: 9px;  bottom: 9px; }
+.screw--br { right: 9px; bottom: 9px; }
+
+/* ---------- 顶栏 ---------- */
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: clamp(10px, 2vh, 14px);
+}
+
+.brand { display: flex; align-items: center; gap: 8px; color: var(--dim); }
+.brand-mark { width: 15px; height: 15px; flex: none; opacity: .7; }
+.brand-text {
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.tally {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--dimmer);
+  transition: color .3s var(--ease);
+}
+.lamp {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #241f1a;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .85), 0 0 0 1px rgba(0, 0, 0, .45);
+  transition: background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.tally[data-on="true"] { color: var(--signal); }
+.tally[data-on="true"] .lamp {
+  background: var(--signal);
+  box-shadow: inset 0 0 2px rgba(255, 212, 192, .55), 0 0 8px rgba(218, 82, 48, .5);
+}
+
+/* ============================================================
+   玻璃系统
+   ------------------------------------------------------------
+   拟物的关键不是贴图，而是**层次**：内容先陷进内凹的槽里，
+   槽上再盖一片玻璃。玻璃由三层叠成：
+     1) 半透渐变底  微弱的方向性色偏
+     2) 斜向高光带  一道被环境光扫过的反光
+     3) 左上镜面点  球面反射
+   玻璃盖只用在：每个数字格、小数点、示波器窗口。
+   底部按钮区与读数窗本身不做玻璃盖，保持纯拟物。
+   ============================================================ */
+
+/* ---- 通用玻璃盖层 ---- */
+.glass-lid,
+.odo-cell::after,
+.odo-dot::after {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(158deg,
+    rgba(237, 230, 216, .05) 0%,
+    rgba(237, 230, 216, .015) 42%,
+    rgba(0, 0, 0, .03) 100%);
+}
+
+/* ---- 读数窗：内凹槽 ---- */
+.window {
+  position: relative;
+  padding: clamp(16px, 3vh, 22px) 16px clamp(16px, 3vh, 22px);
+  border-radius: 5px;
+  background: linear-gradient(178deg, var(--well) 0%, #15120f 100%);
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, .9),
+    inset 0 -1px 0 rgba(237, 230, 216, .07),
+    0 1px 0 rgba(237, 230, 216, .08);
+}
+/* 槽壁：内凹四周的暗角，强化"陷进去" */
+.recess-shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, .6),
+    inset 1px 0 2px rgba(0, 0, 0, .4),
+    inset -1px 0 2px rgba(0, 0, 0, .4);
+}
+
+/* ---- 内凹小槽（台名 / 信号 / 音量读数共用）----
+   只做凹陷，不加玻璃盖。上缘暗、下缘亮 = 光从上方来。 */
+.recess-pill {
+  position: relative;
+  padding: 5px 9px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #0a0908 0%, #13110e 60%, #0e0c0a 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, .85),
+    inset 0 -1px 0 rgba(237, 230, 216, .06),
+    0 0 0 1px rgba(0, 0, 0, .5);
+}
+
+/* ---------- 读数窗：三栏布局 ----------
+   左：电台身份　中：滚轮数字　右：信号状态
+   数字独占中间栏并绝对居中，两侧信息各贴一边，
+   因此永远不会被数字遮挡，也不会互相挤压。 */
+
+.readout {
+  display: grid;
+  /* 两侧等宽（1fr）保证中栏真正居中；数字栏宽度收窄给台名留出空间 */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(8px, 2.4%, 18px);
+}
+
+/* 中栏：数字区。
+   .odo 是 position:absolute，**不占流内高度**，所以容器高度不会
+   被数字撑开。若只写 padding，容器会塌成纯 padding 高（实测 11.8px
+   而数字需 74px，溢出 62px）。
+
+   正确做法：height = font-size（数字格 1em）+ 上下 padding。
+   用 em 表达，两者永远同步，不会再脱节。 */
+.win-freq {
+  position: relative;
+  width: 2.9em;
+  height: calc(1em + .2em);
+  padding: .1em 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(40px, min(18vw, 11.8vh), 74px);
+  line-height: 1;
+  transition: color .35s var(--ease);
+}
+/* 数字块贴在 padding 盒内（top 用 em，跟随字号） */
+.odo {
+  position: absolute;
+  left: 50%;
+  top: .1em;
+  height: 1em;
+  display: flex;
+  align-items: stretch;
+  /* 格与格之间留出沟槽，每格的小窗轮廓才独立可辨 */
+  gap: .07em;
+  transform: translateX(-50%);
+  font-variant-numeric: lining-nums tabular-nums;
+  /* 不用纯白：暖米白 + 一点内发光，像灯管背光的显示管 */
+  color: #e0d3ba;
+  text-shadow: 0 0 14px rgba(224, 211, 186, .16);
+  transition: color .35s var(--ease), text-shadow .35s var(--ease);
+}
+
+/* 数字格：内凹的槽 + 覆盖其上的独立玻璃盖 */
+.odo-cell {
+  position: relative;
+  width: .46em;
+  height: 1em;
+  overflow: hidden;
+  border-radius: .045em;
+  background: linear-gradient(180deg, #080706 0%, #16130f 55%, #0d0b09 100%);
+  box-shadow:
+    inset 0 .07em .14em rgba(0, 0, 0, .95),
+    inset 0 -.04em 0 rgba(237, 230, 216, .07),
+    0 0 0 1px rgba(0, 0, 0, .6);
+}
+/* 玻璃盖：叠在数字之上，pointer-events:none 不影响交互。
+   透明度必须克制 —— 盖太厚会把底下的数字吃掉，玻璃是"薄薄一层"。 */
+.odo-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(158deg,
+    rgba(237, 230, 216, .022) 0%,
+    rgba(237, 230, 216, .008) 40%,
+    rgba(0, 0, 0, .02) 100%);
+}
+/* 斜向高光带：只压在格子上三分之一处，像玻璃接住的一道环境反光 */
+.odo-cell::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 42%;
+  z-index: 4;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(180deg,
+    rgba(237, 230, 216, .1) 0%,
+    rgba(237, 230, 216, .035) 46%,
+    transparent 100%);
+}
+.odo-strip {
+  position: absolute;
+  left: 0; top: 0;
+  display: block;
+  /* 机械翻片的落定感：稍带回弹，但不过冲 */
+  transition: transform .62s cubic-bezier(.32, 1.42, .5, 1);
+}
+/* 每个数字占满一格，滚动时才不会跳 */
+.odo-strip > b {
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* 小数点：同样是一个凹陷的窗格，内容由 JS 写入。
+   比数字格窄，占位在数字窗之间 */
+.odo-dot {
+  position: relative;
+  width: .18em;
+  height: 1em;
+  overflow: hidden;
+  border-radius: .045em;
+  background: linear-gradient(180deg, #080706 0%, #16130f 55%, #0d0b09 100%);
+  box-shadow:
+    inset 0 .07em .14em rgba(0, 0, 0, .95),
+    inset 0 -.04em 0 rgba(237, 230, 216, .07),
+    0 0 0 1px rgba(0, 0, 0, .6);
+  color: #e0d3ba;
+  line-height: 1;
+  text-align: center;
+}
+
+/* MHz：odo 的最后一个 flex 子项，天然排在数字右侧。
+   换成等宽字体（Spline Sans Mono），与衬线数字形成技术感对比。
+   align-self: flex-end 只贴底部，用 margin 把它抬到数字基线附近，
+   避免因 odo 1em 行高而掉到小窗下方。 */
+.win-unit {
+  align-self: flex-end;
+  margin: 0 0 .17em .14em;
+  flex: none;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: .17em;
+  font-weight: 400;
+  letter-spacing: .1em;
+  line-height: 1;
+  color: var(--dim);
+  transition: color .35s var(--ease);
+}
+
+/* 左栏：电台身份。两栏都套 recess-pill（内凹槽），纵向排列 */
+.readout-l,
+.readout-r {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  max-width: 100%;
+  align-self: center;
+}
+/* 侧栏给一个保底宽度，台名不会被数字挤掉 */
+.readout-l { align-items: flex-start; justify-self: start; min-width: 88px; }
+.readout-r { align-items: flex-end; text-align: right; justify-self: end; min-width: 76px; }
+.recess-pill--wide { padding-left: 11px; padding-right: 11px; }
+
+.win-name {
+  font-family: var(--serif);
+  font-size: clamp(13px, 2.2vh, 16px);
+  letter-spacing: .1em;
+  white-space: nowrap;
+  color: #cfc3aa;
+  transition: color .35s var(--ease);
+}
+.win-mode,
+.win-signal {
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  color: var(--dim);
+  white-space: nowrap;
+  transition: color .35s var(--ease);
+}
+
+/* 右栏：信号强度条。四格，用数量表示强弱 */
+.win-bars {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 7px;
+}
+.win-bars i {
+  width: 3px;
+  background: rgba(237, 230, 216, .16);
+  border-radius: .5px;
+  transition: background .3s var(--ease);
+}
+.win-bars i:nth-child(1) { height: 3px; }
+.win-bars i:nth-child(2) { height: 5px; }
+.win-bars i:nth-child(3) { height: 7px; }
+.win-bars i[data-on="true"] { background: var(--signal); }
+
+.rx[data-signal="off"] .odo {
+  color: #6b6357;
+  text-shadow: none;
+}
+.rx[data-signal="off"] .win-name,
+.rx[data-signal="off"] .win-mode,
+.rx[data-signal="off"] .win-signal { color: var(--dimmer); }
+
+/* ---------- 刻度盘：纯刻度，无文字 ---------- */
+
+.dial { margin-top: clamp(12px, 2.2vh, 17px); outline: none; }
+
+.dial-well {
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--well-lo) 0%, var(--well) 100%);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, .85),
+    inset 0 -1px 0 rgba(237, 230, 216, .05),
+    0 1px 0 rgba(237, 230, 216, .06);
+}
+.dial:focus-visible .dial-well { box-shadow: inset 0 2px 5px rgba(0,0,0,.85), 0 0 0 1px var(--signal); }
+
+.dial-inner {
+  position: relative;
+  height: clamp(38px, 5.8vh, 48px);
+  margin: 0 15px;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.dial-rail {
+  position: absolute;
+  left: 0; right: 0; top: 13px;
+  height: 1px;
+  background: var(--hair-lo);
+}
+.dial-ticks, .dial-slots { position: absolute; inset: 0; }
+
+.dtick {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: 12px;
+  width: 1px;
+  height: 3px;
+  margin-left: -.5px;
+  background: rgba(237, 230, 216, .18);
+}
+.dtick--major { top: 9px; height: 6px; background: rgba(237, 230, 216, .32); }
+
+.dslot {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: 18px;
+  width: 1px;
+  height: 3px;
+  margin-left: -.5px;
+  background: rgba(237, 230, 216, .14);
+  transition: background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.dslot[data-on="true"] {
+  background: var(--signal);
+  box-shadow: 0 0 5px rgba(218, 82, 48, .7);
+}
+
+.needle {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: 5px;
+  bottom: 5px;
+  width: 1px;
+  margin-left: -.5px;
+  background: var(--signal);
+  box-shadow: 0 0 5px rgba(218, 82, 48, .45);
+  transition: left .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.needle::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: -3px;
+  width: 5px; height: 5px;
+  transform: translateX(-50%) rotate(45deg);
+  background: inherit;
+}
+.rx[data-signal="off"] .needle { background: var(--dimmer); box-shadow: none; }
+.rx[data-dragging="true"] .needle { transition: none; }
+
+/* ---------- 示波器：内凹槽 + 玻璃盖 ---------- */
+
+.scope {
+  position: relative;
+  height: clamp(28px, 4.4vh, 40px);
+  margin-top: clamp(10px, 2vh, 15px);
+  border-radius: 3px;
+  background: linear-gradient(180deg, #080706 0%, #100e0c 100%);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, .9),
+    inset 0 -1px 0 rgba(237, 230, 216, .05),
+    0 1px 0 rgba(237, 230, 216, .06);
+  overflow: hidden;
+}
+.scope canvas {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.scope-line {
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 1px;
+  z-index: 3;
+  background: rgba(237, 230, 216, .07);
+}
+/* 示波器玻璃盖：斜向高光带 + 左上镜面点 */
+.glass-lid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg,
+    transparent 14%,
+    rgba(237, 230, 216, .05) 30%,
+    rgba(237, 230, 216, .1) 46%,
+    rgba(237, 230, 216, .045) 62%,
+    transparent 80%);
+  filter: blur(2px);
+}
+.glass-lid::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 46%; height: 160%;
+  background: radial-gradient(circle at 0% 0%,
+    rgba(237, 230, 216, .09) 0%,
+    rgba(237, 230, 216, .025) 40%,
+    transparent 70%);
+}
+
+/* ---------- 节目信息 ---------- */
+
+.meta {
+  padding: clamp(10px, 2vh, 15px) 0;
+  border-top: 1px solid var(--hair-lo);
+  border-bottom: 1px solid var(--hair-lo);
+  box-shadow: 0 1px 0 rgba(237, 230, 216, .03);
+}
+.program {
+  font-family: var(--serif);
+  font-size: clamp(15px, 2.5vh, 18px);
+  letter-spacing: .05em;
+}
+.byline {
+  margin-top: 4px;
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  color: var(--dim);
+  transition: color .35s var(--ease);
+}
+.rx[data-signal="off"] .program,
+.rx[data-signal="off"] .byline { color: var(--dimmer); }
+
+/* ---------- 底部：拟物按键 + 金属旋钮 ---------- */
+
+.deck {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: clamp(13px, 2.4vh, 18px);
+}
+
+.transport { display: flex; align-items: center; gap: 10px; }
+
+.key {
+  width: 48px; height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #bcb3a4;
+  background: linear-gradient(180deg, var(--case-hi) 0%, var(--case-lo) 100%);
+  border: none;
+  border-radius: 6px;
+  box-shadow: var(--lift), 0 0 0 1px rgba(0, 0, 0, .55);
+  cursor: pointer;
+  transition: transform .1s var(--ease), box-shadow .1s var(--ease), color .2s var(--ease);
+}
+.key svg { width: 18px; height: 18px; }
+.key:hover { color: var(--bone); }
+.key:active { transform: translateY(1.5px); box-shadow: var(--sink), 0 0 0 1px rgba(0, 0, 0, .6); }
+.key:focus-visible { outline: 1px solid var(--signal); outline-offset: 2px; }
+
+.key--main {
+  width: 60px; height: 42px;
+  color: var(--case);
+  background: linear-gradient(180deg, #e2dacb 0%, #b6ad9c 100%);
+}
+.key--main svg { width: 21px; height: 21px; }
+.key--main:hover { color: #241f1a; }
+.key--main[data-on="true"] {
+  color: #fff3ed;
+  background: linear-gradient(180deg, var(--signal) 0%, var(--signal-lo) 100%);
+}
+
+.vol { display: flex; align-items: center; gap: 10px; }
+
+/* 旋钮容器要比旋钮盘大一圈，用来容纳刻度环。
+   实测比例：盘半径 = 容器 47%，刻度半径需 ≈ 容器 50%（略小于半宽才不会溢出） */
+/* 旋钮容器：外圈留给刻度环。
+   实测比例：容器 78px、盘半径 30px（占 38%）。刻度半径取容器 38% = 30px 会压盘，
+   因此把盘再收小到 44%（半径约 17px），刻度落在 34% 处 = 26px，
+   两者之间留出 9px 的可读环带。 */
+/* 旋钮：刻度环与指针共用一套 SVG 坐标系（viewBox 0 0 100 100）
+   —— 中心 (50,50)，刻度半径 38，指针从中心伸到半径 38。
+   **同源同半径，指针必然精确落在刻度上**。这解决了此前的错位：
+   刀口若只在盘面的小半径上旋转，同样的角度对应的视觉弧长远小于
+   刻度弧长，表现为「指针扫 178° 而刻度扫 270°」。
+   —— 两者必须用同一坐标系，不能各算各的。 */
+.knob {
+  position: relative;
+  width: clamp(62px, 10vh, 76px);
+  height: clamp(62px, 10vh, 76px);
+  display: grid;
+  place-items: center;
+  cursor: ew-resize;
+  touch-action: none;
+  outline: none;
+  border-radius: 50%;
+  flex: none;
+}
+
+.knob-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* 不要 overflow:visible —— SVG 坐标会按 viewBox 原尺寸绘制，
+     指针会冲出刻度环（实测末端 66px vs 刻度半径 29px）。
+     所有元素都在 viewBox 0 0 100 100 内，裁剪不会丢内容。 */
+  overflow: hidden;
+  pointer-events: none;
+  /* 指针必须压在金属盘之上：刻度在下、盘在中、指针在最上。
+     三层用同一坐标系，视觉上就是"盘心伸出的一根针"。 */
+  z-index: 3;
+}
+
+.ktick {
+  stroke: rgba(237, 230, 216, .32);
+  stroke-width: 1;
+  stroke-linecap: round;
+  transition: stroke .18s var(--ease), stroke-width .18s var(--ease);
+}
+.ktick--major { stroke: rgba(237, 230, 216, .5); stroke-width: 1.5; }
+.ktick[data-on=true] { stroke: rgba(218, 82, 48, .55); }
+.ktick[data-cur=true] { stroke: var(--signal); stroke-width: 2.8; }
+
+.knob-needle {
+  transform-origin: 50px 50px;
+  transform-box: view-box;
+  transition: transform .18s var(--ease);
+}
+.knob-needle line {
+  stroke: #f4eee2;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.knob-needle circle { fill: #f4eee2; }
+
+.knob-dial {
+  position: relative;
+  z-index: 2;                    /* 压在指针之下 */
+  width: 44%;
+  height: 44%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(237, 230, 216, .15), transparent 58%),
+    linear-gradient(158deg, var(--metal-hi) 0%, var(--metal) 46%, var(--metal-lo) 100%);
+  box-shadow:
+    0 1px 0 rgba(237, 230, 216, .16) inset,
+    0 -1px 2px rgba(0, 0, 0, .6) inset,
+    0 3px 7px rgba(0, 0, 0, .6),
+    0 0 0 1px rgba(0, 0, 0, .5);
+}
+/* 侧面滚花 */
+.knob-dial::after {
+  content: ;
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(0, 0, 0, .22) 0deg 1.6deg,
+    rgba(237, 230, 216, .07) 1.6deg 3.2deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%, #000 90%, transparent 92%);
+  mask: radial-gradient(circle, transparent 62%, #000 64%, #000 90%, transparent 92%);
+  opacity: .5;
+  pointer-events: none;
+}
+
+.knob:hover .knob-dial { box-shadow: 0 1px 0 rgba(237,230,216,.24) inset, 0 -1px 2px rgba(0,0,0,.6) inset, 0 4px 11px rgba(0,0,0,.7); }
+.knob:focus-visible .knob-dial { box-shadow: 0 0 0 1px var(--signal), 0 3px 7px rgba(0,0,0,.6); }
+
+/* 音量读数：内凹小窗（不做玻璃盖）。
+   **必须固定宽度**：内容会在「静音」(2 字) 与「100」(3 位数) 之间切换，
+   宽度若随内容变，旋钮与读数之间的间距会跟着抖动。 */
+.vol-num {
+  width: 42px;                    /* 容纳 3 位数字 + 内边距，恒定 */
+  flex: none;
+  padding: 5px 0;
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+
+/* ---------- 扬声器网孔 ---------- */
+
+.grille {
+  margin-top: clamp(12px, 2.4vh, 18px);
+  height: 16px;
+  border-radius: 3px;
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, .62) 1.1px, transparent 1.4px),
+    radial-gradient(circle, rgba(237, 230, 216, .05) 1.1px, transparent 1.4px);
+  background-size: 7px 7px, 7px 7px;
+  background-position: 0 0, 3.5px 3.5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .5), 0 1px 0 rgba(237, 230, 216, .04);
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 430px) {
+  .key { width: 44px; height: 33px; }
+  .key--main { width: 54px; height: 39px; }
+  .win-name { font-size: 12px; letter-spacing: .1em; }
+  .win-mode, .win-signal { font-size: 9px; }
+}
+
+/* 窄屏：隐去左侧次要身份行，让数字保持最大视觉权重 */
+@media (max-width: 360px) {
+  .readout { grid-template-columns: 1fr auto; gap: 8px; }
+  .readout-l { display: none; }
+}
+
+@media (max-height: 620px) {
+  .byline { display: none; }
+  .grille { display: none; }
+}
+
+@media (max-height: 500px) {
+  .readout-r { display: none; }
+  .readout { grid-template-columns: 1fr; }
+  .dial-inner { height: 34px; }
+  .meta { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

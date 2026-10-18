@@ -1,0 +1,91 @@
+{
+  "name": "夜航电台",
+  "slug": "fm-radio-player",
+  "page_type": "component",
+  "palette": [
+    "#26231e",
+    "#da5230",
+    "#ede6d8"
+  ],
+  "tags": [
+    "音频播放",
+    "电台",
+    "调谐接收机"
+  ],
+  "created_at": "2026-10-18 17:38:00",
+  "updated_at": "2026-10-18 21:30:00",
+  "history": [
+    {
+      "prompt": "设计一个FM广播电台播放的单页面组件，高级简约",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "重构：太杂、配色与项目撞车、界面超出浏览器。换在线字体，做 Web Audio 音频",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "重构 UI 设计：补充材质层次、内凹刻度玻璃、印在盘上的台名、示波器、可拖拽旋钮",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "刻度盘去文字只留刻度；拟物化塑料机身/金属旋钮/玻璃读数窗；拟物播放与上下台按键；补全旋钮刻度环；六家电台与更丰富的合成音乐",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "频率改滚轮数字上下切换；MHz 固定锚点不随数字宽度移动；整体放大并加螺丝/网孔等拟物纹理",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "数字改暖白非纯白；MHz 换等宽字体；台名与信号状态移到两侧不再被遮挡；修复小数点丢失；修复旋钮刻度与当前值不对应；每格数字改为独立玻璃小窗加机械翻动",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "每个数字做独立玻璃小窗盖；信号栏加横向矩形玻璃；刻度盘与示波器加玻璃盖；旋钮改水平拖动并用 SVG 统一坐标系修正指针错位；音量读数加内凹玻璃；玻璃底衬改为内凹",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "修复旋钮指针不跟随旋转；音量读数改固定宽度避免数字位数变化时抖动",
+      "model": "space-bunny",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": null,
+      "image_generation": []
+    }
+  ]
+}
