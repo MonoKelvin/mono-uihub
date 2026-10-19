@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alder: field notes</title>
+<meta name="description" content="Alder, a running record of what people actually notice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Geist+Mono:wght@400;500&family=Geist:wght@200..600&family=Newsreader:ital,opsz,wght@6..72,300;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stage">
+<div class="phone" id="phone" role="application" aria-label="Alder">
+
+  <!-- ── status bar ──────────────────────────────────────────── -->
+  <div class="statusbar" aria-hidden="true">
+    <span class="mono">9:41</span>
+    <span class="status-icons"><i class="ti ti-antenna-bars-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span>
+  </div>
+
+  <!-- ── top bar: gains a blurred veil once you scroll ───────── -->
+  <header class="topbar" id="topbar">
+    <span class="mark" aria-hidden="true"><i></i></span>
+    <span class="topbar-mid mono" id="topbarMid">feed</span>
+    <div class="topbar-actions">
+      <button class="icon" type="button" id="searchBtn" aria-label="Search"><i class="ti ti-search"></i></button>
+      <button class="icon" type="button" id="bellBtn" aria-label="Alerts"><i class="ti ti-bell"></i></button>
+    </div>
+    <span class="scroll-progress" id="scrollProgress" aria-hidden="true"></span>
+  </header>
+
+  <div class="screen" id="screen">
+
+    <!-- ══ FEED ═══════════════════════════════════════════════ -->
+    <main class="view" id="view-feed" data-view="feed">
+
+      <!-- masthead: the big-typography moment -->
+      <section class="masthead">
+        <div class="masthead-grid" aria-hidden="true"></div>
+        <p class="kicker mono">Field notes, kept in public</p>
+        <h1 class="wordmark">Alder</h1>
+        <p class="masthead-sub">A running record of what people actually notice.</p>
+        <dl class="rule-stats">
+          <div><dd class="mono" data-count="4140">0</dd><dt class="mono">notes this week</dt></div>
+          <div><dd class="mono" data-count="2846">0</dd><dt class="mono">people</dt></div>
+          <div><dd class="mono" data-count="418">0</dd><dt class="mono">circles</dt></div>
+        </dl>
+      </section>
+
+      <div class="ledger" id="feedList"></div>
+
+      <div class="feed-foot" id="feedFoot">
+        <span class="spinner" aria-hidden="true"></span>
+        <p class="mono">Loading older notes</p>
+      </div>
+
+      <div class="feed-end" id="feedEnd" hidden>
+        <span class="rule"></span>
+        <p>You have reached the beginning of the transect sheet.</p>
+        <span class="rule"></span>
+      </div>
+
+      <button class="to-top" id="toTop" type="button" hidden aria-label="Back to top"><i class="ti ti-arrow-up"></i></button>
+    </main>
+
+    <!-- ══ DISCOVER ═══════════════════════════════════════════ -->
+    <main class="view" id="view-discover" data-view="discover" hidden>
+      <section class="page-head">
+        <p class="kicker mono">Circles &amp; tags</p>
+        <h2 class="page-title">Find</h2>
+      </section>
+
+      <form class="searchbar" data-search>
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <input type="text" placeholder="Circles, people, tags" aria-label="Search Alder" autocomplete="off">
+        <button class="search-clear" type="button" hidden aria-label="Clear"><i class="ti ti-x"></i></button>
+      </form>
+
+      <section class="group" data-filterable>
+        <h3 class="group-label">Circles open to you</h3>
+        <ul class="plain" id="circleList"></ul>
+      </section>
+
+      <section class="group" data-filterable>
+        <h3 class="group-label">Tags in motion</h3>
+        <ul class="plain tallies" id="tagList"></ul>
+      </section>
+
+      <p class="empty" data-empty hidden>Nothing here yet. Try a plainer word.</p>
+    </main>
+
+    <!-- ══ ALERTS ════════════════════════════════════════════ -->
+    <main class="view" id="view-alerts" data-view="alerts" hidden>
+      <section class="page-head">
+        <p class="kicker mono" id="alertSummary">3 unread</p>
+        <h2 class="page-title">Alerts</h2>
+        <button class="linkbtn" type="button" id="markRead">Mark everything read</button>
+      </section>
+      <ul class="ledger-alerts" id="alertList"></ul>
+    </main>
+
+    <!-- ══ PROFILE ═══════════════════════════════════════════ -->
+    <main class="view" id="view-profile" data-view="profile" hidden>
+      <header class="idblock">
+        <div class="idblock-top">
+          <img class="avatar xl" id="pAvatar" alt="Mira Halloran">
+          <div class="idblock-actions">
+            <button class="ghost-btn" type="button" id="editBtn">Edit</button>
+            <button class="ghost-btn" type="button" aria-label="Settings"><i class="ti ti-settings"></i></button>
+          </div>
+        </div>
+        <h2 class="name-xl">Mira Halloran</h2>
+        <p class="handle mono">@mirah</p>
+        <p class="bio" id="pBio"></p>
+        <dl class="figures">
+          <div><dd class="mono">412</dd><dt class="mono">notes</dt></div>
+          <div><dd class="mono">3</dd><dt class="mono">circles</dt></div>
+          <div><dd class="mono">188</dd><dt class="mono">following</dt></div>
+        </dl>
+        <p class="since mono" id="pSince"></p>
+      </header>
+
+      <div class="switcher" role="tablist" aria-label="Profile sections">
+        <button class="switch is-on" role="tab" aria-selected="true" data-pane="notes">Notes</button>
+        <button class="switch" role="tab" aria-selected="false" data-pane="plates">Plates</button>
+        <button class="switch" role="tab" aria-selected="false" data-pane="replies">Replies</button>
+        <span class="switch-ink" id="switchInk" aria-hidden="true"></span>
+      </div>
+
+      <section class="pane" data-pane-body="notes" id="paneNotes"></section>
+      <section class="grid9" data-pane-body="plates" id="panePlates" hidden></section>
+      <ul class="pane replies" data-pane-body="replies" id="paneReplies" hidden></ul>
+    </main>
+
+  </div>
+
+  <!-- ── dock: glass, with a sliding indicator ───────────────── -->
+  <nav class="dock" id="dock" aria-label="Primary">
+    <span class="dock-ink" id="dockInk" aria-hidden="true"></span>
+    <button class="dock-item is-on" type="button" data-tab="feed"><i class="ti ti-home"></i><span class="sr">Feed</span></button>
+    <button class="dock-item" type="button" data-tab="discover"><i class="ti ti-compass"></i><span class="sr">Discover</span></button>
+    <button class="dock-item write" type="button" id="writeBtn" aria-label="Write a note"><i class="ti ti-pencil"></i></button>
+    <button class="dock-item" type="button" data-tab="alerts"><i class="ti ti-bell"></i><span class="sr">Alerts</span><span class="pip" id="pip"></span></button>
+    <button class="dock-item" type="button" data-tab="profile"><i class="ti ti-user"></i><span class="sr">Profile</span></button>
+  </nav>
+
+  <button class="scrim" data-scrim hidden aria-label="Close"></button>
+
+  <!-- ── composer ────────────────────────────────────────────── -->
+  <section class="composer" data-sheet hidden aria-label="Write a note">
+    <span class="grip" aria-hidden="true"></span>
+    <div class="composer-head">
+      <button class="linkbtn" type="button" data-close>Cancel</button>
+      <span class="composer-title">New note</span>
+      <button class="send" type="button" id="sendBtn" disabled>Publish</button>
+    </div>
+    <form class="composer-body" id="composerForm">
+      <img class="avatar sm" alt="" id="composerAvatar">
+      <div class="grow">
+        <textarea id="noteText" rows="6" placeholder="What did you notice?" aria-label="Note text"></textarea>
+        <div class="composer-tools">
+          <div class="tools-l">
+            <button class="tool" type="button" data-tool="plate" aria-label="Attach a photo"><i class="ti ti-photo"></i></button>
+            <button class="tool" type="button" data-tool="place" aria-label="Add a place"><i class="ti ti-map-pin"></i></button>
+            <span class="attached" id="attached" hidden></span>
+          </div>
+          <p class="tally mono"><span id="count">0</span> / 280</p>
+        </div>
+      </div>
+    </form>
+    <p class="composer-note mono">Visible to people you follow</p>
+  </section>
+
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
+  <span class="homebar" aria-hidden="true"></span>
+</div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

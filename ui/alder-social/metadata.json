@@ -1,0 +1,27 @@
+{
+  "name": "Alder",
+  "slug": "alder-social",
+  "page_type": "app",
+  "palette": ["#0f1113", "#e9ebee", "#a7adb4"],
+  "tags": ["社交", "信息流", "兴趣圈子"],
+  "created_at": "2026-10-19 11:22:26",
+  "updated_at": "2026-10-19 12:34:00",
+  "history": [
+    {
+      "prompt": "生成一个国外社交平台软件",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "重构UI设计，要求简约高级富有设计感，不参考任何已有项目的设计和配色",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "保留配色，重构页面布局：加图案、流畅过渡与UI动效、hover交互、高斯模糊、字体、大排版布局，并完善逻辑功能",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "继续重构优化，修正间距与排版问题（首页列表紧贴边界等），并继续美化打磨",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}
