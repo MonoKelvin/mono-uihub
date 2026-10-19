@@ -1,0 +1,95 @@
+{
+  "name": "听间 · AI 语音助手",
+  "slug": "tingjian-voice",
+  "page_type": "app",
+  "tags": [
+    "AI 助手",
+    "语音对话",
+    "个性化"
+  ],
+  "palette": [
+    "#f4f8fb",
+    "#1592e6",
+    "#13263a"
+  ],
+  "created_at": "2026-10-19 11:09:48",
+  "updated_at": "2026-10-19 17:05:00",
+  "history": [
+    {
+      "prompt": "设计一个AI智能语音助手App，包含主界面的语音对话、历史记录、AI性格设置、用户画像等。UI设计要足够简约高级、扁平化圆滑的设计。良好简单的UI/UX交互，动画流畅等",
+      "model": "Space-Bunny",
+      "skills": [
+        "mono-ui-prototype",
+        "frontend-design",
+        "animate",
+        "vibehub",
+        "oil-frontend",
+        "mobile-native"
+      ],
+      "duration_seconds": 2079
+    },
+    {
+      "prompt": "重构 UI：换浅色配色体系（暖纸+墨+黛蓝），重构页面布局为大排版编辑部风格，加图案、过渡动效、hover 交互、高斯模糊、字体层级，并完善逻辑功能",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "继续打磨：字体保留；砍掉不必要的文字与边框（有图标功能的避免同时提供文字），配色提气去低沉闷；做高级交互动画——点击语音按钮背景色展开放大到全屏、中间语音跟随的波动 UI、背景轻微渐变变换",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "继续重构：字号档位收敛（七档字号/三档图标/四档间距 token 化），性格选择改横排，设置行与记忆行删除描述小字",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "继续重构：文字还是太多太杂，对齐与尺寸仍不协调。改为按元素删减——历史条目去掉时间与类型图标、搜索行与收藏筛选合并为一行、滑块去掉两端标签与试聊 CTA、首页去掉人格问候行、页大标与区块间距统一为 32px 节奏",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "首页去问候语与话题卡；话题改为输入面板上方的随机灵感提示；开始对话改为中下方圆形高斯模糊语音球，继续对话改图标置左、键盘置右并加弥散阴影缓慢随机变换背景；声波带减至 8 根随机流畅浮动；修复收藏图标不可见与点击消失",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "声波带改为 rAF 行波推进制造律动感并删除水平基线；语音球加大到 84px、去掉彩色光晕改中性阴影；语音全屏页减文字、重排间距对齐；底栏三键与页面左缘对齐、声波动画离开首页自动暂停",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "波动条横向收紧；键盘键去掉弥散彩色阴影与左侧历史键统一为素玻璃样式；首页背景改为更浅的双层随机弥散大光斑",
+      "model": "step-5-preview",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "继续打磨对齐与尺寸：性格页去卡片改平铺预览 + 滑块分段选择，回答长度改为设置行内分段控件；画像页头像左置、摘要改大字引语、兴趣与记忆合并为统一分组头，记忆开关并入分组头",
+      "model": "claude-opus-5.5",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    },
+    {
+      "prompt": "首页底部三键上提、波动条减为 6 根并加快变浅、背景弥散光斑随机流动；语音展开改为从按钮圆形边界过渡到全屏圆角矩形，内部间距收紧防越界，底部按钮改纯图标、中间文字放大；波动条去掉点击交互；整体配色由暗蓝改为高饱和天空蓝活力体系",
+      "model": "claude-opus-5.5",
+      "skills": [
+        "mono-ui-prototype"
+      ]
+    }
+  ]
+}

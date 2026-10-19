@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#f4f8fb">
+  <meta name="color-scheme" content="light">
+  <title>听间 | 把心事，说给我听</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="phone" aria-label="听间语音助手">
+    <div class="status-bar" aria-hidden="true"><span id="status-time">9:41</span><div class="status-icons"><i class="ti ti-antenna-bars-5"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></div></div>
+    <div class="app-shell" id="app-shell">
+      <section class="view view-home active" id="view-home" aria-label="对话">
+        <header class="app-header">
+          <div class="wordmark"><i class="ti ti-wave-sine" aria-hidden="true"></i><span>听间</span></div>
+          <button class="persona-chip" data-page="personality">
+            <span id="home-persona">知夏</span><i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </button>
+        </header>
+        <div class="view-scroll home-scroll">
+          <div class="home-heading entrance" data-entrance>
+            <h1>把心事，<br>说给我听。</h1>
+          </div>
+          <div class="sound-space entrance" data-entrance>
+            <div class="sound-art" aria-hidden="true">
+              <svg class="sound-ribbon" viewBox="0 0 320 228" fill="none">
+                <g id="ribbon-lines"></g>
+              </svg>
+            </div>
+          </div>
+          <div class="home-dock entrance" data-entrance>
+            <button class="dock-button" id="recent-button" data-history="h1" aria-label="继续对话"><i class="ti ti-history" aria-hidden="true"></i></button>
+            <button class="voice-orb" data-action="voice" aria-label="开始语音对话"><i class="ti ti-microphone" aria-hidden="true"></i></button>
+            <button class="dock-button" data-action="compose" aria-label="用文字聊聊"><i class="ti ti-keyboard" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </section>
+      <section class="view" id="view-history" aria-label="历史记录" hidden>
+        <header class="app-header">
+          <span></span>
+          <button class="icon-button" data-action="compose" aria-label="开启新对话"><i class="ti ti-plus" aria-hidden="true"></i></button>
+        </header>
+        <div class="view-scroll">
+          <div class="editorial-heading" data-entrance>
+            <h1>每一句，<br>都记得。</h1>
+          </div>
+          <div class="history-tools" data-entrance>
+            <label class="search-box">
+              <i class="ti ti-search" aria-hidden="true"></i>
+              <input id="history-search" type="search" placeholder="找一段对话" aria-label="搜索对话" enterkeyhint="search" autocomplete="off">
+            </label>
+            <button class="filter-toggle" id="star-filter" data-filter-toggle="starred" aria-pressed="false" aria-label="只看收藏"><i class="ti ti-bookmark" aria-hidden="true"></i></button>
+          </div>
+          <div id="history-list"></div>
+          <div class="empty-state" id="history-empty" hidden>
+            <i class="ti ti-message-search" aria-hidden="true"></i>
+            <h2 id="empty-title">没有找到这段对话</h2>
+            <button class="text-button" data-action="reset-search">查看全部</button>
+          </div>
+        </div>
+      </section>
+      <section class="view" id="view-personality" aria-label="AI 性格设置" hidden>
+        <header class="app-header">
+          <span></span>
+          <button class="icon-button" data-action="reset-personality" aria-label="恢复默认性格"><i class="ti ti-rotate-clockwise" aria-hidden="true"></i></button>
+        </header>
+        <div class="view-scroll">
+          <div class="editorial-heading" data-entrance>
+            <h1>懂你，<br>也像你。</h1>
+          </div>
+          <div class="persona-stage" data-entrance>
+            <div class="voice-mark" id="preview-mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="persona-id">
+              <h2 id="persona-name">知夏</h2>
+              <p id="persona-description">温柔有分寸，认真听你说。</p>
+            </div>
+            <button class="icon-button preview-play" id="preview-voice" data-action="preview-voice" aria-pressed="false" aria-label="试听当前声音"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+          </div>
+          <div class="segmented persona-options" id="persona-options" role="group" aria-label="选择 AI 性格" data-entrance>
+            <span class="segmented-thumb" aria-hidden="true"></span>
+            <button class="selected" data-persona="gentle" aria-pressed="true">温柔</button>
+            <button data-persona="clear" aria-pressed="false">理性</button>
+            <button data-persona="bright" aria-pressed="false">有趣</button>
+          </div>
+          <div class="settings-list" data-entrance>
+            <button class="setting-row" data-action="voice-picker">
+              <span>声音</span>
+              <span class="setting-value" id="voice-label">清透女声</span>
+              <i class="ti ti-chevron-right" aria-hidden="true"></i>
+            </button>
+            <div class="setting-row">
+              <span>回答长度</span>
+              <div class="segmented segmented-sm" id="pace-options" role="group" aria-label="回答长度">
+                <span class="segmented-thumb" aria-hidden="true"></span>
+                <button data-pace="0" aria-pressed="false">简短</button>
+                <button class="selected" data-pace="1" aria-pressed="true">适中</button>
+                <button data-pace="2" aria-pressed="false">详尽</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <span>聊完，再问一句</span>
+              <button class="switch" id="followup-toggle" role="switch" aria-checked="true" aria-label="聊完，再问一句"><span></span></button>
+            </div>
+            <div class="setting-row">
+              <span>语音播放</span>
+              <button class="switch" id="sound-toggle" role="switch" aria-checked="true" aria-label="语音播放"><span></span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="view" id="view-profile" aria-label="用户画像" hidden>
+        <header class="app-header">
+          <span></span>
+          <button class="icon-button" data-action="edit-profile" aria-label="编辑个人信息"><i class="ti ti-edit" aria-hidden="true"></i></button>
+        </header>
+        <div class="view-scroll">
+          <div class="profile-head" data-entrance>
+            <img src="https://i.pravatar.cc/120?img=47" width="64" height="64" alt="林悦的头像">
+            <div class="profile-id">
+              <h1 id="profile-name">林悦</h1>
+              <p id="profile-bio">设计师，也是生活的观察者。</p>
+            </div>
+          </div>
+          <p class="profile-summary" data-entrance>比起急着给答案，<br>你更喜欢先把事情聊明白。</p>
+          <section class="group" data-entrance>
+            <div class="group-head">
+              <h2>你喜欢的</h2>
+              <button class="icon-button group-action" data-action="edit-interests" aria-label="编辑兴趣"><i class="ti ti-pencil" aria-hidden="true"></i></button>
+            </div>
+            <div class="interest-tags" id="interest-tags"></div>
+          </section>
+          <section class="group" data-entrance>
+            <div class="group-head">
+              <h2>我记得</h2>
+              <button class="switch" id="memory-toggle" role="switch" aria-checked="true" aria-label="记住我的偏好"><span></span></button>
+            </div>
+            <div class="memory-list" id="memory-list"></div>
+          </section>
+          <button class="privacy-link" data-action="privacy" data-entrance>
+            <i class="ti ti-shield-lock" aria-hidden="true"></i>
+            <span>记录与隐私</span>
+            <i class="ti ti-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </section>
+      <nav class="tab-bar" aria-label="主导航">
+        <span class="tab-indicator" id="tab-indicator" aria-hidden="true"></span>
+        <button class="active" data-page="home" aria-label="对话" aria-current="page"><i class="ti ti-wave-sine" aria-hidden="true"></i></button>
+        <button data-page="history" aria-label="历史记录"><i class="ti ti-messages" aria-hidden="true"></i></button>
+        <button data-page="personality" aria-label="AI 性格"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+        <button data-page="profile" aria-label="用户画像"><i class="ti ti-user" aria-hidden="true"></i></button>
+      </nav>
+    </div>
+    <div class="overlay" id="overlay" aria-hidden="true" inert>
+      <div class="scrim" data-action="close-sheet"></div>
+      <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <header class="sheet-header">
+          <h2 id="sheet-title"></h2>
+          <button class="icon-button" data-action="close-sheet" aria-label="关闭面板"><i class="ti ti-x" aria-hidden="true"></i></button>
+        </header>
+        <div class="sheet-body" id="sheet-body"></div>
+        <footer class="sheet-footer" id="sheet-footer"></footer>
+      </section>
+    </div>
+    <div class="voice-stage" id="voice-stage" aria-hidden="true" inert>
+      <div class="voice-stage-body">
+        <canvas class="voice-wave" id="voice-wave" aria-hidden="true"></canvas>
+        <h2 id="voice-stage-state">准备好，开始吧。</h2>
+        <p id="voice-stage-caption">试试一句：“帮我整理一下思路。”</p>
+        <span class="voice-stage-timer" id="voice-stage-timer">00:00</span>
+      </div>
+      <footer class="voice-stage-actions">
+        <button class="stage-icon" data-action="voice-to-text" aria-label="改用文字"><i class="ti ti-keyboard" aria-hidden="true"></i></button>
+        <button class="stage-play" id="voice-demo" data-action="start-demo-voice" aria-label="播放示例"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+        <button class="stage-icon" data-action="close-voice" aria-label="结束语音"><i class="ti ti-phone-off" aria-hidden="true"></i></button>
+      </footer>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="home-indicator" aria-hidden="true"></div>
+  </main>
+</body>
+</html>
