@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trove · Cloud drive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stage">
+  <main class="app" id="app">
+
+    <!-- ══ rail ══ -->
+    <aside class="rail">
+      <div class="rail-top">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <a class="brand" href="#" aria-label="Trove home">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <rect x="2" y="3.5" width="20" height="5" rx="2.5" fill="var(--acid)"/>
+            <rect x="2" y="10" width="14" height="5" rx="2.5" fill="#F4F6EE" opacity=".82"/>
+            <rect x="2" y="16.5" width="8" height="5" rx="2.5" fill="#F4F6EE" opacity=".42"/>
+          </svg>
+          <span>trove</span>
+        </a>
+      </div>
+
+      <div class="rail-scroll">
+        <nav class="nav" id="nav" aria-label="Drive sections"></nav>
+
+        <div class="spaces">
+          <p class="rail-label">Spaces</p>
+          <div id="spaces"></div>
+        </div>
+      </div>
+
+      <div class="rail-foot">
+        <img class="avatar av-lg" src="https://i.pravatar.cc/96?u=mara-okonkwo" alt="">
+        <div class="user-text">
+          <strong>Mara Okonkwo</strong>
+          <span>Studio plan</span>
+        </div>
+        <button class="icon-btn on-ink" id="settingsBtn" aria-label="Settings"><i class="ti ti-settings"></i></button>
+      </div>
+    </aside>
+
+    <!-- ══ main ══ -->
+    <section class="main">
+      <header class="topbar">
+        <div class="search">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input id="search" type="search" placeholder="Search files" aria-label="Search files" autocomplete="off">
+          <kbd>⌘K</kbd>
+        </div>
+        <div class="topbar-right">
+          <span class="sync" id="syncText"><i class="pulse" aria-hidden="true"></i>Synced 2 min ago</span>
+          <button class="icon-btn" id="bellBtn" aria-label="Notifications"><i class="ti ti-bell"></i></button>
+          <div class="stack" id="peopleStack" aria-label="People in this workspace"></div>
+        </div>
+      </header>
+
+      <div class="headline">
+        <div class="headline-text">
+          <h1 id="title">All files</h1>
+          <p class="meta" id="meta">13 items · 4 shared</p>
+          <p class="meta narrow-only" id="metaNarrow">412.6 GB of 1 TB</p>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" id="emptyTrashBtn" hidden><i class="ti ti-trash"></i>Empty trash</button>
+          <button class="btn ghost" id="newFolderBtn"><i class="ti ti-folder-plus"></i>New folder</button>
+          <button class="btn solid" id="uploadBtn"><i class="ti ti-upload"></i>Upload</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="tabs" id="tabs" role="tablist" aria-label="Filter by kind"></div>
+        <div class="toolbar-right">
+          <button class="btn quiet" id="sortBtn" aria-haspopup="menu" aria-expanded="false">
+            <span id="sortLabel">Modified</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="seg" role="group" aria-label="Layout">
+            <button class="seg-btn is-on" id="viewList" aria-label="List view"><i class="ti ti-list"></i></button>
+            <button class="seg-btn" id="viewGrid" aria-label="Grid view"><i class="ti ti-layout-grid"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="files" id="files">
+        <div class="files-head" id="filesHead" role="row">
+          <span>Name</span>
+          <span></span>
+          <span class="num">Size</span>
+          <span class="num">Modified</span>
+          <span></span>
+        </div>
+        <div class="files-body" id="filesBody"></div>
+        <div class="empty" id="empty" hidden>
+          <svg viewBox="0 0 160 120" width="150" height="112" aria-hidden="true" fill="none" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 34h44l8 10h80a6 6 0 0 1 6 6v50a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V40a6 6 0 0 1 6-6Z"/>
+            <path d="M44 76h72" opacity=".55"/>
+            <path d="M104 62l24 28" opacity=".55"/>
+          </svg>
+          <p id="emptyText">No files match</p>
+          <button class="btn ghost" id="emptyBtn">Clear filters</button>
+        </div>
+      </div>
+
+      <footer class="foot">
+        <span id="footLeft">All changes synced</span>
+        <span class="mono" id="footRight">Offline cache 3.4 GB</span>
+      </footer>
+    </section>
+
+    <!-- ══ storage panel ══ -->
+    <aside class="panel" aria-label="Storage">
+      <div class="panel-top">
+        <div class="panel-head">
+          <span class="panel-label">Storage</span>
+          <button class="icon-btn on-acid" id="storageBtn" aria-label="Review large files"><i class="ti ti-adjustments-horizontal"></i></button>
+        </div>
+        <p class="gauge"><b id="gaugeNum">412.6</b><span class="gauge-unit">GB of 1 TB</span></p>
+        <div class="meter" id="meter" role="img" aria-label="412.6 GB of 1 TB used, 40.3 percent"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <div class="panel-mid">
+        <p class="panel-label">Transfers</p>
+        <div class="transfers" id="transferList"></div>
+      </div>
+
+      <div class="panel-bot">
+        <div class="reclaim" id="reclaim">
+          <p id="reclaimLine">8.3 GB in 3 files over 1 GB</p>
+          <button class="btn ink" id="reclaimBtn">Review</button>
+        </div>
+        <p class="panel-foot mono" id="lastSync">Last full sync 20 Oct 14:02</p>
+      </div>
+    </aside>
+
+    <!-- ══ overlays ══ -->
+    <div class="scrim" id="previewScrim" hidden>
+      <article class="sheet sheet-preview" role="dialog" aria-modal="true" aria-labelledby="pvName">
+        <button class="sheet-close" data-close aria-label="Close"><i class="ti ti-x"></i></button>
+        <div class="pv-media" id="pvMedia"></div>
+        <div class="pv-body">
+          <h2 id="pvName"></h2>
+          <dl class="pv-meta" id="pvMeta"></dl>
+          <div class="pv-people" id="pvPeople"></div>
+          <div class="sheet-actions">
+            <button class="btn ghost" id="pvCopy"><i class="ti ti-link"></i>Copy link</button>
+            <button class="btn ghost" id="pvShareBtn"><i class="ti ti-share"></i>Share</button>
+            <button class="btn solid" id="pvStar"><i class="ti ti-star"></i>Star</button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="scrim" id="shareScrim" hidden>
+      <article class="sheet sheet-share" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+        <button class="sheet-close" data-close aria-label="Close"><i class="ti ti-x"></i></button>
+        <h2 id="shTitle">Share</h2>
+        <p class="sheet-sub" id="shSub"></p>
+        <form class="invite" id="inviteForm">
+          <input class="field" id="inviteEmail" type="email" placeholder="name@studio.com" aria-label="Invite by email" required>
+          <button class="btn solid" type="submit"><i class="ti ti-user-plus"></i>Invite</button>
+        </form>
+        <ul class="people" id="peopleList"></ul>
+        <div class="linkrow">
+          <span class="mono" id="shareLink">trove.app/s/</span>
+          <button class="btn quiet" id="copyLinkBtn"><i class="ti ti-link"></i>Copy</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="scrim" id="promptScrim" hidden>
+      <article class="sheet sheet-prompt" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+        <h2 id="pmTitle">New folder</h2>
+        <p class="sheet-sub" id="pmSub"></p>
+        <input class="field" id="pmInput" aria-labelledby="pmTitle">
+        <div class="sheet-actions">
+          <button class="btn ghost" id="pmCancel">Cancel</button>
+          <button class="btn solid" id="pmOk">Create</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="toast" id="toast" hidden><i class="ti ti-check" aria-hidden="true"></i><span id="toastText"></span></div>
+    <div class="menu-layer" id="menuLayer"></div>
+  </main>
+</div>
+
+<input type="file" id="fileInput" multiple hidden>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "Trove 云盘桌面客户端",
+  "slug": "trove-drive",
+  "page_type": "software",
+  "palette": [
+    "#f1f2ec",
+    "#d4f45f",
+    "#11150f"
+  ],
+  "tags": [
+    "云盘",
+    "文件管理",
+    "桌面端"
+  ],
+  "created_at": "2026-10-20 15:31:13",
+  "updated_at": "2026-10-20 20:26:40",
+  "history": [
+    {
+      "prompt": "设计一个云盘桌面端软件，采用大胆冲击感的配色，英文版界面，清新且高级",
+      "model": "claude-opus-5",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 15227
+    }
+  ]
+}
+
