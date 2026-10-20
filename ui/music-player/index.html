@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>正在播放</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stand">
+  <div class="stand__glow" aria-hidden="true">
+    <span class="glow__layer is-active" id="glowA"></span>
+    <span class="glow__layer" id="glowB"></span>
+  </div>
+
+  <section class="player" id="player" aria-label="音乐播放器">
+    <div class="player__ambient" aria-hidden="true">
+      <span class="ambient__layer is-active" id="ambA"></span>
+      <span class="ambient__layer" id="ambB"></span>
+    </div>
+
+    <header class="topbar">
+      <button class="iconbtn" id="btnCollapse" type="button" aria-label="收起为迷你播放器" aria-expanded="true">
+        <i class="ti ti-chevron-down"></i>
+      </button>
+      <p class="topbar__label">
+        <span class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+        正在播放
+      </p>
+      <div class="topbar__side">
+        <button class="iconbtn" id="btnQueue" type="button" aria-label="播放队列" aria-expanded="false" aria-controls="sheet">
+          <i class="ti ti-list"></i>
+        </button>
+        <button class="iconbtn" id="btnMore" type="button" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" aria-controls="menu">
+          <i class="ti ti-dots-vertical"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="artwrap">
+      <figure class="art" id="art">
+        <span class="art__fallback" aria-hidden="true"></span>
+        <img id="artImg" alt="" decoding="async">
+        <span class="art__ring" aria-hidden="true"></span>
+      </figure>
+    </div>
+
+    <div class="meta">
+      <div class="meta__text" aria-live="polite">
+        <h1 class="meta__title" id="title">Tidewater</h1>
+        <p class="meta__artist"><span id="artist">Marta Bell</span><span class="meta__album" id="album">Salt &amp; Signal</span></p>
+      </div>
+      <button class="iconbtn iconbtn--like" id="btnLike" type="button" aria-label="收藏到资料库" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 20.3 4.9 13.6a4.6 4.6 0 0 1 0-6.7 4.9 4.9 0 0 1 6.8 0l.3.3.3-.3a4.9 4.9 0 0 1 6.8 0 4.6 4.6 0 0 1 0 6.7Z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="notice" id="notice" role="status" hidden>
+      <i class="ti ti-alert-triangle"></i>
+      <p class="notice__text" id="noticeText">该曲目尚未下载</p>
+      <div class="notice__actions">
+        <button class="linkbtn" id="noticePrimary" type="button">下载</button>
+        <button class="linkbtn linkbtn--quiet" id="noticeSkip" type="button">跳过</button>
+      </div>
+    </div>
+
+    <div class="scrub">
+      <span class="time" id="timeNow">0:00</span>
+      <div class="scrub__track" id="scrub" role="slider" tabindex="0" aria-label="播放进度" aria-valuemin="0" aria-valuemax="252" aria-valuenow="0" aria-valuetext="0 分 0 秒">
+        <span class="scrub__fill" id="scrubFill"></span>
+        <span class="scrub__knob" id="scrubKnob"></span>
+      </div>
+      <span class="time" id="timeTotal">4:12</span>
+    </div>
+
+    <div class="transport">
+      <button class="tbtn tbtn--minor" id="btnBack" type="button" aria-label="后退 15 秒">
+        <span class="tbtn__icon"><i class="ti ti-rotate-2"></i><b class="tbtn__num">15</b></span>
+      </button>
+      <button class="tbtn" id="btnPrev" type="button" aria-label="上一首">
+        <i class="ti ti-player-skip-back"></i>
+      </button>
+      <button class="tbtn tbtn--main" id="btnPlay" type="button" aria-label="播放">
+        <i class="ti ti-player-play" id="playIcon"></i>
+        <i class="ti ti-loader-2 tbtn__spin" id="playSpin" hidden></i>
+      </button>
+      <button class="tbtn" id="btnNext" type="button" aria-label="下一首">
+        <i class="ti ti-player-skip-forward"></i>
+      </button>
+      <button class="tbtn tbtn--minor" id="btnFwd" type="button" aria-label="前进 15 秒">
+        <span class="tbtn__icon"><i class="ti ti-rotate-clockwise-2"></i><b class="tbtn__num">15</b></span>
+      </button>
+    </div>
+
+    <div class="foot">
+      <div class="vol">
+        <button class="iconbtn iconbtn--tiny" id="btnMute" type="button" aria-label="静音" aria-pressed="false">
+          <i class="ti ti-volume" id="volIcon"></i>
+        </button>
+        <div class="vol__track" id="vol" role="slider" tabindex="0" aria-label="音量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" aria-valuetext="音量 72%">
+          <span class="vol__fill" id="volFill"></span>
+          <span class="vol__knob" id="volKnob"></span>
+        </div>
+      </div>
+      <div class="foot__side">
+        <button class="iconbtn iconbtn--tiny" id="btnShuffle" type="button" aria-label="随机播放" aria-pressed="false">
+          <i class="ti ti-arrows-shuffle"></i>
+        </button>
+        <button class="iconbtn iconbtn--tiny" id="btnRepeat" type="button" aria-label="循环模式：关闭" aria-pressed="false">
+          <i class="ti ti-repeat"></i>
+          <b class="iconbtn__num" id="repeatNum" hidden>1</b>
+        </button>
+        <button class="iconbtn iconbtn--tiny" id="btnOutput" type="button" aria-label="输出设备">
+          <i class="ti ti-device-speaker"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="sheet" id="sheet" hidden>
+      <div class="sheet__grip" aria-hidden="true"></div>
+      <div class="sheet__head">
+        <h2>播放队列</h2>
+        <button class="iconbtn iconbtn--tiny" id="btnQueueClear" type="button" aria-label="清空播放队列">
+          <i class="ti ti-trash"></i>
+        </button>
+        <button class="iconbtn iconbtn--tiny" id="btnSheetClose" type="button" aria-label="关闭播放队列">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <ol class="queue" id="queue"></ol>
+    </div>
+
+    <div class="menu" id="menu" role="menu" hidden>
+      <button class="menu__item" type="button" role="menuitem" data-act="copy">
+        <i class="ti ti-copy"></i>复制曲目链接
+      </button>
+      <button class="menu__item" type="button" role="menuitem" data-act="download">
+        <i class="ti ti-download"></i>下载以供离线播放
+      </button>
+      <button class="menu__item" type="button" role="menuitem" data-act="info">
+        <i class="ti ti-info-circle"></i>曲目信息
+      </button>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      <i class="ti ti-check"></i><span id="toastText"></span>
+    </div>
+  </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
