@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>望云里 402 · 家居控制</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="win" id="win" aria-label="家居控制面板">
+  <header class="top">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3.1 4 7.6v8.8L12 20.9l8-4.5V7.6L12 3.1Z"/>
+        <path d="M4 7.6 12 12.1l8-4.5M12 12.1v8.8"/>
+      </svg>
+      <span class="brand-name">望云里 402</span>
+    </div>
+    <div class="top-meta">
+      <span class="metric"><i class="ti ti-temperature" aria-hidden="true"></i><b id="mTemp">22.4</b><s>°C</s></span>
+      <span class="metric"><i class="ti ti-droplet" aria-hidden="true"></i><b id="mHum">48</b><s>%</s></span>
+      <span class="metric"><i class="ti ti-wind" aria-hidden="true"></i><b id="mPm">12</b><s>PM</s></span>
+      <span class="metric metric--theme" id="mTheme"></span>
+      <span class="top-div"></span>
+      <span class="net" id="mNet"><i class="dot"></i><b>23</b><s>/ 24 在线</s></span>
+    </div>
+  </header>
+
+  <div class="body">
+    <aside class="rail">
+      <div class="rail-sec">
+        <p class="rail-label">场景</p>
+        <div class="rail-list" id="scenes"></div>
+      </div>
+      <div class="rail-sec rail-sec--grow">
+        <div class="rail-label"><span>空间</span><button type="button" class="rail-all" data-act="room" data-id="all" aria-label="全屋"><i class="ti ti-layout-grid" aria-hidden="true"></i></button></div>
+        <div class="rail-list" id="rooms"></div>
+      </div>
+      <div class="energy" id="energy"></div>
+    </aside>
+
+    <section class="main">
+      <div class="stage">
+        <div class="stage-head">
+          <div class="sh-left">
+            <h1 class="sh-title" id="shTitle">全屋</h1>
+            <span class="sh-sub" id="shSub"></span>
+          </div>
+          <div class="sh-right" id="shRight"></div>
+        </div>
+        <div class="canvas" id="canvas">
+          <div class="model" id="model">
+            <svg id="scene" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+            <div class="markers" id="markers"></div>
+          </div>
+          <div class="north" aria-hidden="true"><b>N</b><i></i></div>
+          <div class="canvas-tools">
+            <button type="button" class="tool-btn is-on" id="ltToggle" data-act="lights" aria-label="显示或隐藏沙盘灯光" aria-pressed="true"><i class="ti ti-bulb" aria-hidden="true"></i></button>
+            <button type="button" class="tool-btn is-on" id="mkToggle" data-act="marks" aria-label="显示或隐藏沙盘标注" aria-pressed="true"><i class="ti ti-eye" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <div class="toasts" id="toasts" aria-live="polite"></div>
+      </div>
+      <div class="dock" id="dock"></div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-head">
+        <div class="ph-text">
+          <h2 class="ph-title" id="phTitle">全屋</h2>
+          <p class="ph-sub" id="phSub"></p>
+        </div>
+        <button class="ghost-btn" id="allOff" title="关闭本区全部设备" aria-label="关闭本区全部设备">
+          <i class="ti ti-power" aria-hidden="true"></i><span>全部关闭</span>
+        </button>
+      </div>
+      <div class="panel-body" id="panelBody"></div>
+    </aside>
+  </div>
+
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
