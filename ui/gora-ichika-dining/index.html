@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>強羅 一花 | 御献立と御注文</title>
+<meta name="description" content="箱根強羅の宿、一花。九品の会席と山の湯。お日にちとお時間をお選びいただき、御注文を承ります。">
+<meta name="theme-color" content="#E7E6DF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+SC:wght@400;500&family=Yuji+Syuku&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2322405B'/%3E%3Cpath d='M9 22h14' stroke='%23E7E6DF' stroke-width='2'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="#top">
+    <span class="brand-mark">一花</span>
+    <span class="brand-place" data-i18n="brand.place">箱根強羅</span>
+  </a>
+
+  <nav class="nav" id="nav" aria-label="主要">
+    <a href="#menus" data-i18n="nav.menu">献立</a>
+    <a href="#order" data-i18n="nav.order">御注文</a>
+    <a href="#info" data-i18n="nav.info">宿の案内</a>
+  </nav>
+
+  <div class="langs">
+    <button type="button" class="lang is-on" data-lang="ja" lang="ja">日本語</button>
+    <span class="lang-div" aria-hidden="true"></span>
+    <button type="button" class="lang" data-lang="zh" lang="zh-Hans">中文</button>
+  </div>
+
+  <button type="button" class="burger" id="burger" aria-label="目次" aria-expanded="false" aria-controls="nav">
+    <i class="ti ti-menu-2" aria-hidden="true"></i>
+  </button>
+</header>
+
+<main>
+
+  <!-- hero -->
+  <section class="hero" id="top">
+    <figure class="hero-bg">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Sh%C5%8Dji_and_Engawa_of_the_former_Miura_residence_6-10_Reisenmachi_Hakata-ku_Fukuoka_20240119.jpg/1280px-Sh%C5%8Dji_and_Engawa_of_the_former_Miura_residence_6-10_Reisenmachi_Hakata-ku_Fukuoka_20240119.jpg"
+           alt="障子越しの夕暮れ、畳廊下" width="1280" height="720" data-i18n-alt="hero.alt">
+    </figure>
+
+    <div class="hero-body">
+      <h1 class="hero-title">
+        <span class="line"><span class="line-i" data-i18n="hero.t1">旬は、</span></span>
+        <span class="line"><span class="line-i" data-i18n="hero.t2">待たない。</span></span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">十月の会席、本日より承ります。</p>
+      <a class="hero-cta" href="#order">
+        <span data-i18n="hero.cta">御注文へ</span><i class="ti ti-chevron-right" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <ul class="hero-facts">
+      <li>
+        <i class="ti ti-bed hf-i" aria-hidden="true"></i>
+        <span class="hf-k sr-only" data-i18n="fact.rooms">客室</span>
+        <span class="hf-v"><span class="num">7</span><span class="hf-u" data-i18n="fact.roomsUnit">室</span></span>
+      </li>
+      <li>
+        <i class="ti ti-tools-kitchen-2 hf-i" aria-hidden="true"></i>
+        <span class="hf-k sr-only" data-i18n="fact.courses">会席</span>
+        <span class="hf-v"><span class="num">9</span><span class="hf-u" data-i18n="fact.coursesUnit">品</span></span>
+      </li>
+      <li>
+        <i class="ti ti-bath hf-i" aria-hidden="true"></i>
+        <span class="hf-k sr-only" data-i18n="fact.bath">山の湯</span>
+        <span class="hf-v hf-text" data-i18n="fact.bathText">源泉かけ流し</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- creed -->
+  <section class="creed">
+    <div class="creed-rules" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="creed-body">
+      <span class="creed-mark" aria-hidden="true"></span>
+      <p class="creed-line"><span class="line-i" data-i18n="creed.l1">山の湯に、秋が沈む。</span></p>
+      <p class="creed-line indent"><span class="line-i" data-i18n="creed.l2">器の上に、秋がのぼる。</span></p>
+      <div class="creed-foot">
+        <p class="creed-note" data-i18n="creed.note">献立は、その日の山から。</p>
+        <span class="creed-seal" aria-hidden="true">一花</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- strip -->
+  <figure class="strip" aria-hidden="true">
+    <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Sh%C5%8Dji_and_Engawa_of_the_former_Miura_residence_6-10_Reisenmachi_Hakata-ku_Fukuoka_20240119.jpg/1280px-Sh%C5%8Dji_and_Engawa_of_the_former_Miura_residence_6-10_Reisenmachi_Hakata-ku_Fukuoka_20240119.jpg" alt="" loading="lazy">
+  </figure>
+
+  <!-- menus -->
+  <section class="chapter" id="menus">
+    <div class="wrap">
+      <header class="ch-head">
+        <h2 class="ch-title" data-i18n="menu.title">献立</h2>
+        <div class="orn-grid" aria-hidden="true"></div>
+      </header>
+
+      <div class="menu-bar">
+        <div class="tabs" id="tabs" role="tablist" aria-label="献立">
+          <button type="button" class="tab is-on" role="tab" aria-selected="true" aria-controls="courses" data-tab="kaiseki">
+            <i class="ti ti-tools-kitchen-2 tab-i" aria-hidden="true"></i><span data-i18n="tab.kaiseki">会席</span><span class="tab-n num">9</span>
+          </button>
+          <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="courses" data-tab="breakfast">
+            <i class="ti ti-sunrise tab-i" aria-hidden="true"></i><span data-i18n="tab.breakfast">朝食</span><span class="tab-n num">5</span>
+          </button>
+          <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="courses" data-tab="tea">
+            <i class="ti ti-teapot tab-i" aria-hidden="true"></i><span data-i18n="tab.tea">茶事</span><span class="tab-n num">4</span>
+          </button>
+        </div>
+
+        <div class="allergens">
+          <p class="al-label"><i class="ti ti-ban al-ico" aria-hidden="true"></i><span class="sr-only" data-i18n="menu.allergen">苦手な食材</span></p>
+          <div class="chips" id="chips" role="group" aria-label="苦手な食材"></div>
+        </div>
+      </div>
+
+      <ol class="courses" id="courses" role="tabpanel"></ol>
+      <p class="courses-foot" id="coursesFoot"></p>
+    </div>
+  </section>
+
+  <!-- season -->
+  <section class="season" id="season">
+    <div class="season-inner" id="seasonInner">
+      <figure class="season-bg">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Kaiseki_001.jpg/1280px-Kaiseki_001.jpg"
+             alt="紅葉を添えた秋の八寸" width="1280" height="960" data-i18n-alt="season.alt">
+      </figure>
+      <p class="season-side vlabel" aria-hidden="true">箱根強羅　一花</p>
+      <div class="season-copy" id="seasonCopy">
+        <p class="season-kicker" data-i18n="season.kicker">今月の一品</p>
+        <h2 class="season-title" data-i18n="season.title">秋の八寸</h2>
+        <p class="season-body" data-i18n="season.body">栗、鱒、海老芋。</p>
+      </div>
+      <blockquote class="haiku">
+        <p class="haiku-text vlabel" data-i18n="season.haiku">秋深き　隣は何を　する人ぞ</p>
+        <cite data-i18n="season.attr">松尾芭蕉</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- order -->
+  <section class="order" id="order">
+    <div class="wrap order-grid">
+      <div class="form" role="form" aria-labelledby="orderTitle">
+        <header class="order-head">
+          <h2 class="order-title" id="orderTitle" data-i18n="order.title">御注文</h2>
+        </header>
+
+        <fieldset class="grp">
+          <legend class="grp-leg" data-num="一"><i class="ti ti-tools-kitchen-2 grp-ico" aria-hidden="true"></i><span data-i18n="grp.menu">献立</span></legend>
+          <div class="plans" id="planOpts"></div>
+          <p class="sub-label" data-i18n="grp.main">主菜</p>
+          <div class="opts" id="mainOpts"></div>
+        </fieldset>
+
+        <fieldset class="grp">
+          <legend class="grp-leg" data-num="二"><i class="ti ti-cup grp-ico" aria-hidden="true"></i><span data-i18n="grp.drinks">御酒とお茶</span></legend>
+          <div class="drinks" id="drinks"></div>
+        </fieldset>
+
+        <fieldset class="grp">
+          <legend class="grp-leg" data-num="三"><i class="ti ti-calendar grp-ico" aria-hidden="true"></i><span data-i18n="grp.when">お日にちとお時間</span></legend>
+          <div class="days" id="days" role="group" aria-label="お日にち"></div>
+          <p class="day-note" id="dayNote"></p>
+          <div class="times" id="times"></div>
+        </fieldset>
+
+        <fieldset class="grp">
+          <legend class="grp-leg" data-num="四"><i class="ti ti-users grp-ico" aria-hidden="true"></i><span data-i18n="grp.room">御人数とお席</span></legend>
+          <div class="party">
+            <span class="party-k" data-i18n="party.label">尊客</span>
+            <div class="party-ctl">
+              <div class="stepper">
+                <button type="button" class="step" id="partyMinus" aria-label="御人数を減らす" disabled><i class="ti ti-minus" aria-hidden="true"></i></button>
+                <output class="step-v num" id="partyOut" aria-live="polite">2</output>
+                <button type="button" class="step" id="partyPlus" aria-label="御人数を増やす"><i class="ti ti-plus" aria-hidden="true"></i></button>
+              </div>
+              <span class="party-u" data-i18n="slip.n">名</span>
+            </div>
+          </div>
+          <div class="opts" id="seatOpts"></div>
+        </fieldset>
+
+        <div class="grp">
+          <button type="button" class="disclose" id="reqToggle" data-num="五" aria-expanded="true" aria-controls="reqBody">
+            <span class="grp-leg-in"><i class="ti ti-message-2 grp-ico" aria-hidden="true"></i><span data-i18n="grp.req">ご要望</span></span>
+            <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="req is-open" id="reqBody">
+            <label class="req-label" for="notes" data-i18n="req.note">ご苦手な食材、記念日、お迎えのご希望など。</label>
+            <textarea id="notes" maxlength="120" rows="3" data-i18n-ph="req.ph" placeholder="例　甲殻類を抜いて、椀物を差し替えでお願いします。"></textarea>
+            <div class="counter"><span class="num" id="noteCount">0</span><span class="num">/120</span></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="summary" aria-live="polite">
+        <div class="sum-head">
+          <h3 class="sum-title" data-i18n="sum.title">御注文</h3>
+          <p class="sum-sub" data-i18n="sum.sub">税・サービス料込</p>
+        </div>
+        <ul class="sum-lines" id="sumLines"></ul>
+        <p class="sum-total"><span data-i18n="sum.total">合計</span><strong class="num" id="sumTotal">¥0</strong></p>
+        <p class="sum-rate" id="sumRate"></p>
+        <button type="button" class="btn btn-solid wide" id="openSheet" disabled>
+          <span data-i18n="sum.cta">控えを確認</span>
+        </button>
+        <p class="sum-hint" id="sumHint"></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- info -->
+  <section class="info" id="info">
+    <div class="wrap">
+      <header class="info-head">
+        <h2 class="info-title" data-i18n="info.title">宿の案内</h2>
+      </header>
+
+      <dl class="info-list">
+        <div>
+          <dt><i class="ti ti-map-pin" aria-hidden="true"></i><span class="sr-only" data-i18n="info.addr">住所</span></dt>
+          <dd data-i18n="info.addrValue">神奈川県足柄下郡箱根町強羅1320-4</dd>
+        </div>
+        <div>
+          <dt><i class="ti ti-phone" aria-hidden="true"></i><span class="sr-only" data-i18n="info.tel">電話</span></dt>
+          <dd><a class="num" href="tel:+81460823311">0460 82 3311</a></dd>
+        </div>
+        <div>
+          <dt><i class="ti ti-tools-kitchen-2" aria-hidden="true"></i><span class="sr-only" data-i18n="info.dinner">夕餉</span></dt>
+          <dd class="num">17:30 から 20:30</dd>
+        </div>
+        <div>
+          <dt><i class="ti ti-bath" aria-hidden="true"></i><span class="sr-only" data-i18n="info.bath">山の湯</span></dt>
+          <dd data-i18n="info.bathText">源泉かけ流し、十五時より翌十時まで</dd>
+        </div>
+      </dl>
+    </div>
+
+    <figure class="info-band">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Ryokan_Stepping_Stones.jpg/1280px-Ryokan_Stepping_Stones.jpg"
+           alt="苔の上をのびる飛石" width="1280" height="1707" data-i18n-alt="info.alt">
+      <figcaption>
+        <span class="ib-addr" data-i18n="info.addrValue">神奈川県足柄下郡箱根町強羅1320-4</span>
+      </figcaption>
+    </figure>
+
+    <div class="pattern" aria-hidden="true"></div>
+
+    <footer class="site-foot">
+      <p class="foot-brand">一花</p>
+      <nav class="foot-nav" aria-label="頁内">
+        <a href="#menus" data-i18n="nav.menu">献立</a>
+        <a href="#order" data-i18n="nav.order">御注文</a>
+        <a href="#info" data-i18n="nav.info">宿の案内</a>
+      </nav>
+      <p class="foot-note" data-i18n="info.note">© 2026 強羅 一花</p>
+    </footer>
+  </section>
+
+</main>
+
+<!-- overlays -->
+<div class="veil" id="veil"></div>
+
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden="true">
+  <div class="sheet-top">
+    <p class="sheet-brand">一花</p>
+    <button type="button" class="sheet-x" id="sheetX" aria-label="閉じる"><i class="ti ti-x" aria-hidden="true"></i></button>
+  </div>
+  <div class="sheet-body" id="sheetBody" data-lenis-prevent>
+    <h2 class="sheet-title" id="sheetTitle" data-i18n="sheet.title">御注文控え</h2>
+    <p class="sheet-num num" id="sheetNum"></p>
+    <ul class="slip" id="slip"></ul>
+    <p class="slip-total"><span data-i18n="sum.total">合計</span><span class="num" id="slipTotal">¥0</span></p>
+    <p class="slip-rate" id="slipRate"></p>
+    <p class="slip-note" data-i18n="sheet.note">当日、こちらの控えをフロントにご提示ください。</p>
+
+    <div class="sheet-acts" id="sheetActs">
+      <button type="button" class="btn btn-solid wide" id="submitBtn"><span data-i18n="sheet.submit">御予約を申し込む</span></button>
+      <button type="button" class="btn btn-line wide" id="printBtn"><span data-i18n="sheet.print">控えを印刷</span></button>
+    </div>
+
+    <div class="done" id="done" aria-live="polite">
+      <div class="seal" id="seal"><span>承</span></div>
+      <p class="done-t" data-i18n="sheet.doneTitle">御予約をお預かりしました</p>
+      <p class="done-b" data-i18n="sheet.doneBody">前日までに宿よりご連絡いたします。</p>
+      <button type="button" class="btn btn-line wide" id="againBtn"><span data-i18n="sheet.again">内容を変更する</span></button>
+    </div>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="mbar" id="mbar">
+  <div class="mbar-sum"><span class="mbar-k" data-i18n="sum.total">合計</span><span class="num" id="mbarTotal">¥0</span></div>
+  <button type="button" class="btn btn-solid" id="mbarBtn" disabled><span data-i18n="sum.cta">控えを確認</span></button>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script defer src="app.js"></script>
+</body>
+</html>

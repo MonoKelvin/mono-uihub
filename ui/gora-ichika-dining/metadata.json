@@ -1,0 +1,95 @@
+{
+  "name": "強羅 一花 · 御献立と御注文",
+  "slug": "gora-ichika-dining",
+  "page_type": "website",
+  "palette": ["#e7e6df", "#171a18", "#22405b"],
+  "tags": ["酒店", "餐饮", "预约", "箱根", "会席"],
+  "created_at": "2026-10-22 11:14:00",
+  "updated_at": "2026-10-22 14:40:00",
+  "history": [
+    {
+      "prompt": "一个日式高档酒店订餐网页，主打自然、禅意、清净、设计感和氛围感主题，提供中日文切换",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 1166,
+      "image_generation": []
+    },
+    {
+      "prompt": "很多字体都太小了，而且缺少设计感、动画不流畅、排版太普通，几乎都是文字、文字和图片也都是左右布局没有创意。请仔细重构，多参考一些商业网站的设计效果进行重构",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 2040,
+      "image_generation": []
+    },
+    {
+      "prompt": "文字还是太多了，适当补充一些装饰性质的东西，继续调整排版和设计布局，设计更加简约高级和大留白等",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 720,
+      "image_generation": []
+    },
+    {
+      "prompt": "金额要使用汇率换算，日文使用日币、中文使用人民币",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 480,
+      "image_generation": []
+    },
+    {
+      "prompt": "多加一些图标、图形等，一些常见的可以用图形、图案等来代替文字",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 540,
+      "image_generation": []
+    },
+    {
+      "prompt": "继续多用加些图标、图案/图标/图形等来替换文字",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 540,
+      "image_generation": []
+    },
+    {
+      "prompt": "比如补充一些少量的书法字体等（如果可以获取到，没有就算了）",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 600,
+      "image_generation": []
+    },
+    {
+      "prompt": "御注文 下面的标题数字去除，改成后面的图标代替，数字变浅放到作为背景，就更有设计感。",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 420,
+      "image_generation": []
+    },
+    {
+      "prompt": "是否有行草、草书字体等，作为少量的标题、题文等可以使用（没有就算了）",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 300,
+      "image_generation": []
+    },
+    {
+      "prompt": "御注文第四栏种“加减人数的那一栏组件”放到右侧对齐，不要左侧的图标，图标换成“尊客”这样的文字词语等",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 260,
+      "image_generation": []
+    },
+    {
+      "prompt": "图标稍微有点冗余了，删除：献立下面三组选择框标题前面的图标、御人数とお席下面三栏前面的图标。整个页面第二个section页面“献立”右侧背景种的铜钱图形，再多调浅一点",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 300,
+      "image_generation": []
+    },
+    {
+      "prompt": "ご要望，一栏默认展开不要收缩。宿の案内、御注文、献立这些标题可以使用书法字体；开屏首页面也可以使用书法字体",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 420,
+      "image_generation": []
+    }
+  ]
+}
