@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>白露 · 修图工作台</title>
+<meta name="description" content="面向年轻人的桌面修图工作台，冰灰外壳配深墨画布，只留一个珊瑚橙做强调。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23ff5a36'/%3E%3Ccircle cx='16' cy='16' r='6.4' fill='none' stroke='%23fffaf4' stroke-width='2.2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="desk">
+  <div class="win" id="win">
+
+    <header class="bar">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"><i class="ti ti-aperture ico"></i></span>
+        <span class="wordmark">白露</span>
+      </div>
+
+      <nav class="menus" aria-label="主菜单">
+        <div class="menu-wrap">
+          <button class="menu-btn" type="button" data-menu="file" aria-expanded="false" aria-haspopup="true">文件</button>
+          <div class="menu" data-panel="file" role="menu">
+            <button class="mi" type="button" role="menuitem" data-act="new"><i class="ti ti-file-plus mi-ico"></i>新建画布<span class="k">Ctrl N</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="import"><i class="ti ti-photo mi-ico"></i>导入照片<span class="k">Ctrl O</span></button>
+            <span class="msep" role="separator"></span>
+            <button class="mi" type="button" role="menuitem" data-act="export-png"><i class="ti ti-download mi-ico"></i>导出 PNG<span class="k">Ctrl E</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="export-jpg"><i class="ti ti-download mi-ico"></i>导出 JPG<span class="k"></span></button>
+            <button class="mi" type="button" role="menuitem" data-act="print"><i class="ti ti-printer mi-ico"></i>打印<span class="k">Ctrl P</span></button>
+          </div>
+        </div>
+        <div class="menu-wrap">
+          <button class="menu-btn" type="button" data-menu="edit" aria-expanded="false" aria-haspopup="true">编辑</button>
+          <div class="menu" data-panel="edit" role="menu">
+            <button class="mi" type="button" role="menuitem" data-act="undo"><i class="ti ti-arrow-back-up mi-ico"></i>撤销<span class="k">Ctrl Z</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="redo"><i class="ti ti-arrow-forward-up mi-ico"></i>重做<span class="k">Ctrl Y</span></button>
+            <span class="msep" role="separator"></span>
+            <button class="mi" type="button" role="menuitem" data-act="reset"><i class="ti ti-rotate-clockwise-2 mi-ico"></i>复位全部调整<span class="k"></span></button>
+            <button class="mi" type="button" role="menuitem" data-act="flip"><i class="ti ti-flip-horizontal mi-ico"></i>水平翻转<span class="k"></span></button>
+            <button class="mi" type="button" role="menuitem" data-act="flip-v"><i class="ti ti-flip-horizontal mi-ico"></i>垂直翻转<span class="k"></span></button>
+          </div>
+        </div>
+        <div class="menu-wrap">
+          <button class="menu-btn" type="button" data-menu="view" aria-expanded="false" aria-haspopup="true">视图</button>
+          <div class="menu" data-panel="view" role="menu">
+            <button class="mi" type="button" role="menuitem" data-act="fit"><i class="ti ti-arrows-maximize mi-ico"></i>适应窗口<span class="k">Ctrl 0</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="zoomin"><i class="ti ti-zoom-in mi-ico"></i>放大<span class="k">Ctrl +</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="zoomout"><i class="ti ti-zoom-out mi-ico"></i>缩小<span class="k">Ctrl -</span></button>
+            <span class="msep" role="separator"></span>
+            <button class="mi" type="button" role="menuitem" data-act="grid"><i class="ti ti-layout-grid mi-ico"></i>三分线<span class="k">G</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="full"><i class="ti ti-maximize mi-ico"></i>全屏<span class="k">F</span></button>
+          </div>
+        </div>
+        <div class="menu-wrap">
+          <button class="menu-btn" type="button" data-menu="help" aria-expanded="false" aria-haspopup="true">帮助</button>
+          <div class="menu" data-panel="help" role="menu">
+            <button class="mi" type="button" role="menuitem" data-act="help"><i class="ti ti-keyboard mi-ico"></i>快捷键<span class="k">?</span></button>
+            <button class="mi" type="button" role="menuitem" data-act="about"><i class="ti ti-help-circle mi-ico"></i>关于白露<span class="k"></span></button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="title">
+        <span class="tdot" aria-hidden="true"></span>
+        <span class="fname" id="docName">DSC_2847.jpg</span>
+        <span class="fmeta mono" id="docMeta">1600 × 1067</span>
+      </div>
+
+      <div class="acts">
+        <button class="icon-btn" id="undoBtn" type="button" aria-label="撤销" title="撤销 Ctrl Z"><i class="ti ti-arrow-back-up ico"></i></button>
+        <button class="icon-btn" id="redoBtn" type="button" aria-label="重做" title="重做 Ctrl Y"><i class="ti ti-arrow-forward-up ico"></i></button>
+        <button class="icon-btn" type="button" data-act="help" aria-label="快捷键" title="快捷键 ?"><i class="ti ti-keyboard ico"></i></button>
+        <button class="cta" id="exportBtn" type="button"><i class="ti ti-download ico"></i><span>导出</span></button>
+      </div>
+    </header>
+
+    <main class="main">
+      <nav class="rail" aria-label="工具">
+        <span class="rail-pin" id="railPin" aria-hidden="true"></span>
+        <button class="tool" type="button" data-tool="move" aria-pressed="true" aria-label="移动" title="移动 V"><i class="ti ti-arrows-move ico"></i></button>
+        <button class="tool" type="button" data-tool="crop" aria-pressed="false" aria-label="裁剪" title="裁剪 C"><i class="ti ti-crop ico"></i></button>
+        <button class="tool" type="button" data-tool="brush" aria-pressed="false" aria-label="涂抹" title="涂抹 B"><i class="ti ti-brush ico"></i></button>
+        <button class="tool" type="button" data-tool="split" aria-pressed="false" aria-label="对比" title="对比 S"><i class="ti ti-columns ico"></i></button>
+        <button class="tool" type="button" data-tool="grid" aria-pressed="false" aria-label="三分线" title="三分线 G"><i class="ti ti-layout-grid ico"></i></button>
+        <span class="rail-gap" aria-hidden="true"></span>
+        <button class="tool ghost" type="button" data-act="fit" aria-label="适应窗口" title="适应窗口 Ctrl 0"><i class="ti ti-arrows-maximize ico"></i></button>
+      </nav>
+
+      <section class="stage" id="stage" data-tool="move">
+        <div class="stage-inner">
+          <div class="hud hud-tl">
+            <span class="mode" id="modeLabel">移动</span>
+          </div>
+
+          <div class="hud hud-tr">
+            <div class="ctx-group" data-for="crop" hidden>
+              <div class="glass-row">
+                <div class="chips" role="group" aria-label="裁剪比例">
+                  <button class="chip on" type="button" data-ar="orig">原比例</button>
+                  <button class="chip" type="button" data-ar="1">1:1</button>
+                  <button class="chip" type="button" data-ar="0.8">4:5</button>
+                  <button class="chip" type="button" data-ar="1.777">16:9</button>
+                </div>
+                <div class="chips">
+                  <button class="chip" type="button" data-act="flip"><i class="ti ti-flip-horizontal chip-ico"></i>水平</button>
+                  <button class="chip" type="button" data-act="flip-v"><i class="ti ti-flip-horizontal chip-ico"></i>垂直</button>
+                </div>
+              </div>
+              <div class="glass-row">
+                <button class="chip solid" type="button" data-act="crop-apply">应用裁剪</button>
+                <button class="chip" type="button" data-act="crop-cancel">取消</button>
+              </div>
+            </div>
+            <div class="ctx-group" data-for="brush" hidden>
+              <div class="glass-row">
+                <label class="mini">笔刷<input id="brushSize" type="range" min="4" max="80" value="24" aria-label="笔刷大小"></label>
+                <label class="mini">浓度<input id="brushAlpha" type="range" min="10" max="100" value="100" aria-label="笔刷浓度"></label>
+              </div>
+              <div class="glass-row">
+                <button class="chip" type="button" data-act="brush-clear">清空笔迹</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="canvas-wrap" id="canvasWrap">
+            <div class="photo" id="photo">
+              <img class="base" id="photoImg" alt="正在编辑的照片" draggable="false">
+              <div class="ov" id="ovTemp"></div>
+              <div class="ov" id="ovHi"></div>
+              <div class="ov" id="ovSh"></div>
+              <div class="ov grain" id="ovGrain"></div>
+              <div class="ov vig" id="ovVig"></div>
+              <img class="orig" id="photoOrig" alt="" draggable="false">
+              <canvas class="brush" id="brushCanvas"></canvas>
+              <div class="frame" id="frame" aria-hidden="true"></div>
+              <div class="wm" id="watermark" aria-hidden="true"></div>
+              <div class="grid3" aria-hidden="true"></div>
+              <div class="cropframe" aria-hidden="true">
+                <span class="cf tl"></span><span class="cf tr"></span><span class="cf bl"></span><span class="cf br"></span>
+              </div>
+              <div class="loader" id="loader"><span class="spinner"></span></div>
+              <p class="photo-err" id="photoError" hidden>这张照片读不出来，换一张试试</p>
+              <div class="cmp" id="cmp" hidden>
+                <div class="cmp-line" id="cmpLine"><span class="cmp-grip"><i class="ti ti-chevron-left ico"></i><i class="ti ti-chevron-right ico"></i></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hud hud-bl">
+            <button class="hold" id="holdBtn" type="button"><i class="ti ti-eye ico"></i><span>按住看原图</span></button>
+          </div>
+          <div class="hud hud-br">
+            <div class="zoom">
+              <button type="button" data-act="zoomout" aria-label="缩小"><i class="ti ti-zoom-out ico"></i></button>
+              <button class="zval mono" id="zoomVal" type="button" title="回到适应窗口">适应</button>
+              <button type="button" data-act="zoomin" aria-label="放大"><i class="ti ti-zoom-in ico"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div class="histo">
+          <svg id="histoSvg" viewBox="0 0 320 64" preserveAspectRatio="none" aria-hidden="true"><path id="histoPath" d=""></path></svg>
+          <div class="histo-meta">
+            <span class="mono" id="exifText">1/250s  f/2.8  ISO 400</span>
+            <button class="link" type="button" id="resetAll"><i class="ti ti-rotate-clockwise-2 ico"></i>复位</button>
+          </div>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="面板">
+          <span class="tab-pill" id="tabPill" aria-hidden="true"></span>
+          <button class="tab on" type="button" role="tab" aria-selected="true" data-tab="adjust"><i class="ti ti-adjustments-horizontal ico"></i>调整</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="preset"><i class="ti ti-wand ico"></i>预设</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="history"><i class="ti ti-history ico"></i>历史</button>
+        </div>
+
+        <div class="pane" id="paneAdjust" role="tabpanel"></div>
+        <div class="pane" id="panePreset" role="tabpanel" hidden><div class="presets" id="presets"></div></div>
+        <div class="pane" id="paneHistory" role="tabpanel" hidden><div class="hsteps" id="hsteps"></div></div>
+
+        <div class="out">
+          <div class="out-h">
+            <b>导出</b>
+            <span class="mono" id="outSize">1600 × 1067</span>
+          </div>
+          <div class="out-row">
+            <div class="seg" id="outFormat" role="group" aria-label="导出格式">
+              <button type="button" class="on" data-format="png">PNG</button>
+              <button type="button" data-format="jpg">JPG</button>
+            </div>
+            <div class="seg" id="outScale" role="group" aria-label="导出尺寸">
+              <button type="button" class="on" data-scale="0">原始</button>
+              <button type="button" data-scale="2000">2000</button>
+              <button type="button" data-scale="1280">1280</button>
+            </div>
+          </div>
+          <div class="out-row" id="qRow">
+            <label class="qty" for="quality">质量</label>
+            <input id="quality" type="range" min="60" max="100" value="92" aria-label="导出质量">
+            <span class="mono qv" id="qval">92</span>
+          </div>
+          <button class="btn-wide" type="button" data-act="export-now"><i class="ti ti-download ico"></i>导出当前照片</button>
+        </div>
+      </aside>
+    </main>
+
+    <section class="film-wrap">
+      <section class="film" id="film" aria-label="胶卷"></section>
+      <div class="film-nav">
+        <button type="button" data-act="film-prev" aria-label="向前翻"><i class="ti ti-chevron-left ico"></i></button>
+        <button type="button" data-act="film-next" aria-label="向后翻"><i class="ti ti-chevron-right ico"></i></button>
+      </div>
+    </section>
+
+    <footer class="status">
+      <span class="st-tool" id="barTool">移动</span>
+      <span class="st-hint" id="barHint">拖动平移，滚轮缩放</span>
+      <span class="spacer"></span>
+      <span class="mono" id="barDims">1600 × 1067</span>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <input type="file" id="fileInput" accept="image/*" hidden>
+
+    <div class="modal" id="helpModal" hidden>
+      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+        <button class="sheet-x" type="button" data-act="close-help" aria-label="关闭"><i class="ti ti-x ico"></i></button>
+        <div class="sheet-art" aria-hidden="true">
+          <svg viewBox="0 0 320 116" preserveAspectRatio="xMidYMid meet">
+            <circle cx="248" cy="34" r="21" fill="#ff5226" opacity=".92"></circle>
+            <circle cx="248" cy="34" r="31" fill="none" stroke="#ff5226" stroke-width="1.4" opacity=".35"></circle>
+            <path d="M18 96 78 40l40 38 22-18 34 36z" fill="#ff5226" opacity=".9"></path>
+            <path d="M120 96 176 52l30 24 22-14 30 34z" fill="#0f1419" opacity=".16"></path>
+            <path d="M0 100h320" stroke="#0f1419" stroke-width="1.4" opacity=".22"></path>
+            <rect x="20" y="14" width="46" height="30" rx="6" fill="none" stroke="#0f1419" stroke-width="1.4" opacity=".4"></rect>
+            <circle cx="34" cy="27" r="5" fill="#ff5226" opacity=".85"></circle>
+            <path d="m44 38 10-11 8 9" fill="none" stroke="#0f1419" stroke-width="1.4" opacity=".4"></path>
+          </svg>
+        </div>
+        <h3 id="helpTitle">快捷键</h3>
+        <div class="keys">
+          <div><span>移动</span><b class="mono">V</b></div>
+          <div><span>裁剪</span><b class="mono">C</b></div>
+          <div><span>涂抹</span><b class="mono">B</b></div>
+          <div><span>对比</span><b class="mono">S</b></div>
+          <div><span>三分线</span><b class="mono">G</b></div>
+          <div><span>全屏</span><b class="mono">F</b></div>
+          <div><span>撤销</span><b class="mono">Ctrl Z</b></div>
+          <div><span>重做</span><b class="mono">Ctrl Y</b></div>
+          <div><span>导入</span><b class="mono">Ctrl O</b></div>
+          <div><span>导出</span><b class="mono">Ctrl E</b></div>
+          <div><span>适应窗口</span><b class="mono">Ctrl 0</b></div>
+          <div><span>看原图</span><b class="mono">按住空格</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
