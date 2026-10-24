@@ -17,7 +17,7 @@
   "history": [
     {
       "prompt": "一个桌面端的修图软件，配色大胆高级，清新活力，年轻积极，简约干净",
-      "model": "deepseek-v4.1-flash-free",
+      "model": "deepseek-v4.1-flash",
       "skills": [
         "mono-ui-prototype"
       ],
@@ -25,7 +25,7 @@
     },
     {
       "prompt": "换一套活力大胆的配色，重构UI设计，要求简约高级，完善动画和交互感、设计感，合理调整布局、对齐和间距",
-      "model": "deepseek-v4.1-flash-free",
+      "model": "deepseek-v4.1-flash",
       "skills": [
         "mono-ui-prototype"
       ],
@@ -33,7 +33,7 @@
     },
     {
       "prompt": "继续优化UI：拉开间距消除紧凑感、用珊瑚色替换黑色、重构动画滚动条组件、菜单加阴影并修复顶部黑条、导出面板毛玻璃悬浮、关于页去掉快捷键",
-      "model": "deepseek-v4.1-flash-free",
+      "model": "deepseek-v4.1-flash",
       "skills": [
         "mono-ui-prototype"
       ],
@@ -41,7 +41,7 @@
     },
     {
       "prompt": "舞台背景改浅色、直方图随调色实时更新、修滑块高亮左右方向、水印与边框取色组件右对齐、修左侧导航图标与背景块居中",
-      "model": "deepseek-v4.1-flash-free",
+      "model": "deepseek-v4.1-flash",
       "skills": [
         "mono-ui-prototype"
       ],
