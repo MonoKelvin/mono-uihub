@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>战功阁 · 云间客 · 王者荣耀战绩</title>
+  <meta name="description" content="王者荣耀个人战绩展示：主题英雄舞台、五维战力、英雄志、对局录与勋章墙。" />
+  <meta name="theme-color" content="#05060a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://game.gtimg.cn" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap"
+  />
+  <link rel="stylesheet" href="https://unpkg.com/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 国风纹样 sprite：水墨笔触（祥云已移除，见 styles.css .meander 回纹带） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="m-brush" viewBox="0 0 224 26">
+      <!-- 墨形：起笔尖、中段饱满、收笔回锋 -->
+      <path class="b-body" d="M 8 17
+        C 38 11, 68 12, 100 7
+        C 130 3, 160 4, 190 6
+        C 201 6.6, 209 7.4, 215 8.6
+        C 217.5 9.2, 219 10, 219 11
+        C 218 12.4, 214 13.2, 207 14
+        C 186 16, 156 18, 126 20
+        C 96 22.5, 64 23.5, 34 22
+        C 22 21.4, 12 19.6, 8 17 Z" />
+      <!-- 飞白：两道干笔扫痕 + 一道湿笔高光 -->
+      <path class="b-streak b-streak--dark" d="M 24 16 C 54 11.5, 84 12, 114 8 C 144 4.5, 172 5.4, 200 7.6" />
+      <path class="b-streak b-streak--dark" d="M 36 20 C 66 17.5, 96 18, 126 15 C 156 12.4, 182 12.6, 206 11" />
+      <path class="b-streak b-streak--light" d="M 60 13 C 88 9.5, 116 9, 144 7 C 168 5.4, 188 5.6, 208 7" />
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="shell" id="shell">
+    <aside class="rail">
+      <a class="brand" href="#legacy" aria-label="战功阁 · 回到战功">
+        <span class="brand__seal">战</span>
+        <span class="brand__text">
+          <b>战功阁</b>
+          <i>HONOR LEDGER</i>
+        </span>
+      </a>
+
+      <nav class="railnav" aria-label="页面分区">
+        <button class="nav is-on" type="button" data-view="legacy" aria-selected="true">
+          <i class="ti ti-trophy" aria-hidden="true"></i>
+          <span class="nav__cn">战功</span>
+          <span class="nav__en">LEGACY</span>
+        </button>
+        <button class="nav" type="button" data-view="heroes" aria-selected="false">
+          <i class="ti ti-sword" aria-hidden="true"></i>
+          <span class="nav__cn">英雄志</span>
+          <span class="nav__en">HEROES</span>
+        </button>
+        <button class="nav" type="button" data-view="matches" aria-selected="false">
+          <i class="ti ti-history" aria-hidden="true"></i>
+          <span class="nav__cn">对局录</span>
+          <span class="nav__en">MATCHES</span>
+        </button>
+        <button class="nav" type="button" data-view="honors" aria-selected="false">
+          <i class="ti ti-medal" aria-hidden="true"></i>
+          <span class="nav__cn">勋章</span>
+          <span class="nav__en">HONORS</span>
+        </button>
+      </nav>
+
+      <span class="rail__spine" aria-hidden="true"></span>
+
+      <div class="rail__season">
+        <span class="rail__label">SEASON</span>
+        <div class="season" id="seasonSeg" role="group" aria-label="切换赛季"></div>
+      </div>
+    </aside>
+
+    <section class="stage" id="stage">
+      <!-- 金粉（置于舞台层内，位于内容之下） -->
+      <div class="motes" id="motes" aria-hidden="true"></div>
+
+      <!-- 装饰层：光柱、回纹带、舞台环、地光、水印、切换辉光 -->
+      <div class="decor" aria-hidden="true">
+        <span class="beam"></span>
+        <span class="spot"></span>
+        <span class="meander"></span>
+        <span class="ring">
+          <i class="ring__ticks"></i>
+          <i class="ring__arc"></i>
+          <i class="ring__orbit"><i class="ring__dot"></i></i>
+        </span>
+        <span class="pool"></span>
+        <span class="ghost"><b id="ghostWord">澜</b></span>
+        <span class="glint" id="glint"></span>
+      </div>
+
+      <header class="topbar">
+        <div class="topbar__meta">
+          <span id="seasonMeta">S42 · 2026.01 至 2026.04</span>
+          <span class="topbar__dot" aria-hidden="true"></span>
+          <span id="serverMeta">微信 128 区 · 凤凰于飞</span>
+        </div>
+        <button class="share" type="button" data-share>
+          <i class="ti ti-share-3" aria-hidden="true"></i>
+          <span>分享战绩</span>
+        </button>
+      </header>
+
+      <figure class="hero" id="heroStage">
+        <img id="heroArt" src="https://game.gtimg.cn/images/yxzj/img201606/skin/hero-info/528/528-bigskin-2.jpg" alt="澜 · 鲨之猎刃" fetchpriority="high" referrerpolicy="no-referrer" />
+      </figure>
+
+      <div class="identity">
+        <!-- 顶：题名 -->
+        <div class="identity__grp">
+          <p class="identity__eyebrow">
+            <b id="heroName">澜</b>
+            <span class="sep">/</span>
+            <span id="heroRole">刺客</span>
+            <span class="flag" id="heroFlag">本命</span>
+          </p>
+          <div class="identity__row">
+            <h1 class="identity__name" id="playerName">云间客</h1>
+            <span class="stamp" id="nameStamp" aria-hidden="true">客</span>
+          </div>
+          <p class="identity__en" id="playerEn">YUN JIAN KE</p>
+          <svg class="brush" aria-hidden="true"><use href="#m-brush" /></svg>
+        </div>
+
+        <!-- 中：段位 -->
+        <div class="identity__grp identity__grp--mid">
+          <div class="tier">
+            <span class="tier__mark" aria-hidden="true">◆</span>
+            <span class="tier__rank" id="tierRank">最强王者</span>
+            <span class="tier__stars"><b id="tierStars">32</b><i>星</i></span>
+          </div>
+          <div class="meter" role="img" aria-label="王者星级进度">
+            <span class="meter__fill" id="starBar"></span>
+          </div>
+          <p class="identity__note" id="starNote">距荣耀王者 18 星</p>
+        </div>
+
+        <!-- 底：数据 + 出装（出装随本命英雄联动，故与英雄同侧） -->
+        <div class="identity__grp">
+          <dl class="kpi">
+            <div class="kpi__item">
+              <dt>胜率</dt>
+              <dd><b id="kpiWin">58.4</b><i>%</i></dd>
+              <span class="kpi__delta" id="kpiWinD"></span>
+            </div>
+            <div class="kpi__item">
+              <dt>场均 KDA</dt>
+              <dd><b id="kpiKda">4.8</b></dd>
+              <span class="kpi__delta" id="kpiKdaD"></span>
+            </div>
+            <div class="kpi__item">
+              <dt>巅峰</dt>
+              <dd><b id="kpiPeak">1856</b></dd>
+              <span class="kpi__delta" id="kpiPeakD"></span>
+            </div>
+          </dl>
+
+          <div class="build">
+            <span class="build__cap">核心出装<i>CORE BUILD</i></span>
+            <div class="build__row" id="buildRow"></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel" aria-label="战绩面板">
+        <span class="panel__frame" aria-hidden="true"></span>
+        <div class="panel__head">
+          <h2 class="panel__title" id="paneTitle">战功</h2>
+          <span class="panel__hair" aria-hidden="true"></span>
+          <span class="panel__en" id="paneEn">LEGACY</span>
+        </div>
+
+        <div class="panes">
+          <section class="pane is-on" id="pane-legacy" role="tabpanel" aria-label="战功">
+            <div class="radar" id="radar"></div>
+
+            <div class="mini">
+              <div class="mini__head">
+                <span>巅峰赛 · 十二周</span>
+                <b id="trendPeak">1902</b>
+              </div>
+              <div class="trend" id="trendPlot"></div>
+            </div>
+
+            <ul class="metrics" id="metrics"></ul>
+          </section>
+
+          <section class="pane" id="pane-heroes" role="tabpanel" aria-label="英雄志">
+            <p class="pane__lead">本季出战 · 前八</p>
+            <ul class="hlist" id="heroList"></ul>
+          </section>
+
+          <section class="pane" id="pane-matches" role="tabpanel" aria-label="对局录">
+            <div class="search">
+              <i class="ti ti-search" aria-hidden="true"></i>
+              <input id="matchSearch" type="search" placeholder="搜索英雄" autocomplete="off" />
+              <button class="search__clear" type="button" id="matchClear" hidden aria-label="清空搜索">
+                <i class="ti ti-x" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="chips" id="matchFilter" role="group" aria-label="按分路筛选"></div>
+            <p class="pane__count" id="matchCount">已显示 10 / 24 场</p>
+            <ul class="mlist" id="matchList"></ul>
+            <p class="empty" id="matchEmpty" hidden>没有匹配的对局</p>
+            <button class="more" type="button" id="loadMore">加载更多</button>
+          </section>
+
+          <section class="pane" id="pane-honors" role="tabpanel" aria-label="勋章">
+            <div class="honor__hero">
+              <div class="donut" id="sealDonut">
+                <span class="donut__num"><b id="sealPct">50</b><i>%</i></span>
+              </div>
+              <p class="honor__caption">
+                <b id="sealCount">24</b> / <span id="sealTotal">48</span> 枚已收集<br />
+                集满可兑换专属局内称号
+              </p>
+            </div>
+            <div class="seals" id="sealGrid"></div>
+          </section>
+        </div>
+
+        <footer class="panel__foot">
+          <span id="footNote">S42 赛季 · 数据更新于 2026-04-17 22:30</span>
+          <span class="foot__keys" title="快捷键切换视图">
+            <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd>
+          </span>
+        </footer>
+      </aside>
+
+      <div class="roster" id="roster" role="list" aria-label="常驻英雄"></div>
+
+      <p class="toast" id="toast" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

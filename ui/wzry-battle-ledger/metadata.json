@@ -1,0 +1,44 @@
+{
+  "name": "战功阁",
+  "slug": "wzry-battle-ledger",
+  "page_type": "software",
+  "palette": ["#05060a", "#e9c27b", "#f1ede5"],
+  "tags": ["游戏", "战绩", "国风"],
+  "created_at": "2026-10-21 18:41:00",
+  "updated_at": "2026-10-23 22:20:00",
+  "history": [
+    {
+      "prompt": "生成一个王者荣耀个人战绩展示单页面，相关图片、图标和装饰等资源可以从开源的github搜索获取下载下来。设计高级大气简约，符合王者荣耀的UI设计风格，比如中国风元素，游戏级装饰图案等，配色大胆清新活力",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 2480
+    },
+    {
+      "prompt": "请重构成单个页面的组件形式，不要绿色，要高级感的金色等风格，不要设计成简单的软件，而是更接近游戏UI的画风",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 3120
+    },
+    {
+      "prompt": "继续优化，目前太老气了，配色要大胆且简约，界面布局和排版要高级干净，多使用一些真实游戏素材（装备、图片、立绘和图案等，全网搜索有效的资源），也要加上完备的交互UI动画和动效，甚至可以考虑给英雄设计卡牌的边框装饰效果，立体感和3D纵深交互干，要保留大留白和排版布局，体现主题英雄（如果有抠图的英雄人物最好，适合产品级的介绍或者一般游戏中的主界面那种人物居中的效果），尽量换一种艺术字体或者高级感字体，适当补充一些英文等体现高级，但是要保证界面整体简洁高级。请持续优化",
+      "model": "deepseek-v4.1-flash",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 3300
+    },
+    {
+      "prompt": "进入 wzry-battle-ledger 这个项目，请大胆的优化UI设计，尽量设计高级简约感，补充一些装饰国风的游戏质感的图案、形状和字体等设计，充分完善动画和交互设计，注意排版和间距等不要出现UI错误（如遮挡、位置、大小、布局等错误）",
+      "model": "step-5-preview",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "这些新增的图新也太简单了吧，请重构，至少要确保正确，要达到手绘精美的程度",
+      "model": "step-5-preview",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "云纹理的图形加的太违和了，要么改对要么去除重构布局",
+      "model": "step-5-preview",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}
