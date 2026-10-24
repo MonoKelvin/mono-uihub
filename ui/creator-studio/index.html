@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>砚舟 · 创作台</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- 字体走 jsDelivr（Fontsource）：Google Fonts 在部分网络下不可达，会静默回退成宋体 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/archivo@5/400.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/archivo@5/500.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/400.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5/500.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/zcool-xiaowei@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ma-shan-zheng@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="desk">
+    <div class="app" id="app">
+      <div class="aura" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <button class="brand" type="button" data-nav="today">
+          <span class="brand-mark">砚</span>
+          <span class="brand-name">砚舟</span>
+        </button>
+
+        <nav class="tabs" aria-label="主视图">
+          <button class="tab is-active" type="button" data-nav="today"><i class="ti ti-sun" aria-hidden="true"></i>今日</button>
+          <button class="tab" type="button" data-nav="content"><i class="ti ti-stack-2" aria-hidden="true"></i>内容</button>
+          <button class="tab" type="button" data-nav="schedule"><i class="ti ti-calendar-month" aria-hidden="true"></i>排期</button>
+          <button class="tab" type="button" data-nav="assets"><i class="ti ti-photo" aria-hidden="true"></i>素材</button>
+          <button class="tab" type="button" data-nav="insights"><i class="ti ti-chart-line" aria-hidden="true"></i>数据</button>
+        </nav>
+
+        <div class="topbar-right">
+          <button class="search" type="button" data-action="palette" aria-label="搜索内容、素材与评论">
+            <i class="ti ti-search" aria-hidden="true"></i>
+            <span class="search-ph">搜索内容、素材、评论</span>
+            <kbd>⌘K</kbd>
+          </button>
+          <button class="icon-btn" type="button" data-action="inbox" aria-label="待回复的评论">
+            <i class="ti ti-message-dots" aria-hidden="true"></i>
+            <span class="dot" aria-hidden="true"></span>
+          </button>
+          <button class="avatar" type="button" data-nav="settings" aria-label="设置">
+            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Yanzhou&backgroundColor=transparent" alt="林砚舟" width="30" height="30">
+          </button>
+        </div>
+      </header>
+
+      <main class="stage" id="stage">
+
+        <!-- 今日 -->
+        <section class="view view-today is-active" data-view="today">
+
+          <header class="today-head">
+            <div class="today-lead">
+              <p class="stamp" data-date-label>10月24日 周六</p>
+              <h1 class="lede">
+                <span class="lede-num" data-due-count>3</span>
+                <span class="lede-unit">篇待发</span>
+              </h1>
+              <p class="lede-note">最近一条 <b data-next-slot>今晚 20:00</b> 上小红书</p>
+            </div>
+
+            <div class="today-side">
+              <div class="goal">
+                <p class="goal-label"><i class="ti ti-target" aria-hidden="true"></i>本周 <b data-goal-label>已发 3 / 4</b></p>
+                <div class="goal-bar"><i data-goal-fill style="width:60%"></i></div>
+              </div>
+              <dl class="facts">
+                <div><dt>草稿</dt><dd data-count-draft>3</dd></div>
+                <div><dt>待审</dt><dd data-count-review>1</dd></div>
+                <div><dt>7 日涨粉</dt><dd class="is-accent" data-count-follow>+204</dd></div>
+              </dl>
+            </div>
+          </header>
+
+          <div class="board" id="board">
+            <section class="col" data-status="idea">
+              <header class="col-head"><h2>选题</h2><span class="col-count" data-col-count>0</span><button class="col-add" type="button" data-add="idea" aria-label="新建选题"><i class="ti ti-plus" aria-hidden="true"></i></button></header>
+              <div class="col-body" data-drop="idea"></div>
+            </section>
+            <section class="col" data-status="draft">
+              <header class="col-head"><h2>草稿</h2><span class="col-count" data-col-count>0</span><button class="col-add" type="button" data-add="draft" aria-label="新建草稿"><i class="ti ti-plus" aria-hidden="true"></i></button></header>
+              <div class="col-body" data-drop="draft"></div>
+            </section>
+            <section class="col" data-status="queued">
+              <header class="col-head"><h2>待发</h2><span class="col-count" data-col-count>0</span><button class="col-add" type="button" data-add="queued" aria-label="新建待发"><i class="ti ti-plus" aria-hidden="true"></i></button></header>
+              <div class="col-body" data-drop="queued"></div>
+            </section>
+            <section class="col" data-status="published">
+              <header class="col-head"><h2>已发</h2><span class="col-count" data-col-count>0</span><button class="col-add" type="button" data-add="published" aria-label="登记已发布"><i class="ti ti-plus" aria-hidden="true"></i></button></header>
+              <div class="col-body" data-drop="published"></div>
+            </section>
+          </div>
+
+          <div class="ticker" id="ticker"></div>
+        </section>
+
+        <!-- 内容库 -->
+        <section class="view view-content" data-view="content">
+          <header class="view-head">
+            <div class="view-title">
+              <span class="vt-mark"><i class="ti ti-stack-2" aria-hidden="true"></i></span>
+              <div class="vt-copy">
+                <h1>内容库</h1>
+                <p>共 <b data-total-count>14</b> 条 · <span data-filter-note>全部状态</span></p>
+              </div>
+            </div>
+            <div class="view-tools">
+              <div class="seg" id="status-filter" role="tablist" aria-label="按状态筛选">
+                <button class="is-on" type="button" data-status="all">全部</button>
+                <button type="button" data-status="idea">选题</button>
+                <button type="button" data-status="draft">草稿</button>
+                <button type="button" data-status="queued">待发</button>
+                <button type="button" data-status="published">已发</button>
+              </div>
+              <button class="btn btn-solid" type="button" data-action="new"><i class="ti ti-plus" aria-hidden="true"></i>新建</button>
+            </div>
+          </header>
+          <div class="table" id="content-table" role="table" aria-label="内容列表"></div>
+        </section>
+
+        <!-- 排期 -->
+        <section class="view view-schedule" data-view="schedule">
+          <header class="view-head">
+            <div class="view-title">
+              <span class="vt-mark"><i class="ti ti-calendar-month" aria-hidden="true"></i></span>
+              <div class="vt-copy">
+                <h1>排期</h1>
+                <p>本周 <b data-week-due>2</b> 条待发 · <span data-week-note>空档 2 天</span></p>
+              </div>
+            </div>
+            <div class="view-tools">
+              <button class="icon-btn" type="button" data-action="week-prev" aria-label="上一周"><i class="ti ti-chevron-left" aria-hidden="true"></i></button>
+              <span class="week-label" data-week-label>10月19日 至 10月25日</span>
+              <button class="icon-btn" type="button" data-action="week-next" aria-label="下一周"><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+            </div>
+          </header>
+          <div class="week-grid" id="week-grid"></div>
+          <section class="pool">
+            <header class="pool-head"><h2>待排期</h2><span data-pool-count></span></header>
+            <div class="pool-list" id="pool-list"></div>
+          </section>
+        </section>
+
+        <!-- 素材 -->
+        <section class="view view-assets" data-view="assets">
+          <header class="view-head">
+            <div class="view-title">
+              <span class="vt-mark"><i class="ti ti-folder" aria-hidden="true"></i></span>
+              <div class="vt-copy">
+                <h1>素材</h1>
+                <p>共 <b data-asset-count>32</b> 项 · 图片 <b data-asset-img>12</b> 张 · 占用 <b data-asset-size>93.4 MB</b></p>
+              </div>
+            </div>
+            <div class="view-tools">
+              <button class="btn btn-ghost" type="button" data-action="upload"><i class="ti ti-plus" aria-hidden="true"></i>收录</button>
+            </div>
+          </header>
+          <div class="kindbar" id="asset-filter" role="tablist" aria-label="按类型筛选"></div>
+          <div class="asset-grid" id="asset-grid"></div>
+        </section>
+
+        <!-- 数据 -->
+        <section class="view view-insights" data-view="insights">
+
+          <header class="view-head">
+            <div class="view-title">
+              <span class="vt-mark"><i class="ti ti-chart-histogram" aria-hidden="true"></i></span>
+              <div class="vt-copy">
+                <h1>数据</h1>
+                <p>30 天 <b data-total-read>135,990</b> 次阅读 · 互动率 <b>6.4%</b> · 本月变现 <b>¥5,180</b></p>
+              </div>
+            </div>
+            <div class="view-tools">
+              <div class="seg" id="range-filter" role="tablist" aria-label="时间范围">
+                <button class="is-on" type="button" data-range="7">7 天</button>
+                <button type="button" data-range="30">30 天</button>
+              </div>
+              <button class="btn btn-ghost" type="button" data-action="export-report"><i class="ti ti-download" aria-hidden="true"></i>导出报表</button>
+            </div>
+          </header>
+
+          <div class="ana" id="ana">
+            <div class="ana-row r1" id="kpi-row"></div>
+
+            <div class="ana-row r2">
+              <section class="panel p-trend">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-chart-area-line" aria-hidden="true"></i></span>
+                    <div><h2>阅读与播放</h2><p data-chart-note>近 7 天，日均 4,287</p></div>
+                  </div>
+                  <div class="legend"><span class="legend-item"><i class="legend-dot is-main"></i>本期</span><span class="legend-item"><i class="legend-dot"></i>上期</span></div>
+                </header>
+                <div class="chart-holder" id="trend-chart"></div>
+                <div class="chart-axis" id="chart-axis"></div>
+              </section>
+
+              <section class="panel p-audience">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-chart-pie" aria-hidden="true"></i></span>
+                    <div><h2>流量来源</h2><p>受众从哪来</p></div>
+                  </div>
+                </header>
+                <div class="donut-wrap">
+                  <div class="donut" id="donut-box"></div>
+                  <ul class="donut-legend" id="donut-legend"></ul>
+                </div>
+              </section>
+            </div>
+
+            <div class="ana-row r3">
+              <section class="panel p-fans">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-user-plus" aria-hidden="true"></i></span>
+                    <div><h2>粉丝增长</h2><p>四平台每日净增</p></div>
+                  </div>
+                  <span class="panel-hint" data-fans-total>+204</span>
+                </header>
+                <div class="chart-holder chart-short" id="fan-chart"></div>
+                <div class="chart-axis" id="fan-axis"></div>
+              </section>
+
+              <section class="panel p-revenue">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-report-money" aria-hidden="true"></i></span>
+                    <div><h2>营收构成</h2><p>近 6 个月，商单仍是主力</p></div>
+                  </div>
+                  <span class="panel-hint" data-rev-total>¥5.18k</span>
+                </header>
+                <div class="chart-holder chart-short" id="rev-chart"></div>
+                <div class="chart-axis" id="rev-axis"></div>
+              </section>
+            </div>
+
+            <div class="ana-row r4">
+              <section class="panel p-plat">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-users" aria-hidden="true"></i></span>
+                    <div><h2>平台现状</h2><p>粉丝结构、互动与七日变化</p></div>
+                  </div>
+                </header>
+                <div class="plat-table" id="plat-rows"></div>
+              </section>
+
+              <section class="panel p-funnel">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-filter" aria-hidden="true"></i></span>
+                    <div><h2>转化漏斗</h2><p>曝光到最后关注</p></div>
+                  </div>
+                </header>
+                <div class="funnel" id="funnel-box"></div>
+              </section>
+            </div>
+
+            <div class="ana-row r5">
+              <section class="panel p-heat">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-clock-hour-4" aria-hidden="true"></i></span>
+                    <div><h2>发布时段</h2><p>颜色越深，平均阅读越高</p></div>
+                  </div>
+                </header>
+                <div class="heat" id="heat-box"></div>
+              </section>
+
+              <section class="panel p-types">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></span>
+                    <div><h2>栏目表现</h2><p>按平均阅读排序</p></div>
+                  </div>
+                </header>
+                <div class="hbars" id="type-box"></div>
+              </section>
+            </div>
+
+            <div class="ana-row r6">
+              <section class="panel p-rank">
+                <header class="panel-head">
+                  <div class="ph-copy">
+                    <span class="ph-icon"><i class="ti ti-flame" aria-hidden="true"></i></span>
+                    <div><h2>近 30 天表现</h2><p>点开可查看全文</p></div>
+                  </div>
+                  <span class="panel-hint">按阅读量</span>
+                </header>
+                <ol class="rank-list" id="rank-list"></ol>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- 设置 -->
+        <section class="view view-settings" data-view="settings">
+          <header class="view-head">
+            <div class="view-title">
+              <span class="vt-mark"><i class="ti ti-adjustments" aria-hidden="true"></i></span>
+              <div class="vt-copy">
+                <h1>设置</h1>
+                <p>偏好只存在本机浏览器，不上传</p>
+              </div>
+            </div>
+          </header>
+          <div class="settings-grid">
+            <section class="set-block">
+              <h2>更新节奏</h2>
+              <div class="set-row">
+                <div class="set-copy"><b>每周更新目标</b><span>影响今日页的进度标记</span></div>
+                <div class="seg" id="goal-set" role="tablist" aria-label="每周目标">
+                  <button type="button" data-goal="3">3 篇</button>
+                  <button class="is-on" type="button" data-goal="4">4 篇</button>
+                  <button type="button" data-goal="5">5 篇</button>
+                </div>
+              </div>
+              <div class="set-row">
+                <div class="set-copy"><b>提醒时间</b><span>当晚待发内容的提醒</span></div>
+                <button class="pick" type="button" data-pick="remind"><span data-pick-label>19:30</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+              </div>
+            </section>
+
+            <section class="set-block">
+              <h2>本地数据</h2>
+              <div class="set-row">
+                <div class="set-copy"><b>界面动效</b><span>关闭后所有过渡立即生效</span></div>
+                <button class="switch is-on" type="button" role="switch" aria-checked="true" data-toggle="motion"><span></span></button>
+              </div>
+              <div class="set-row">
+                <div class="set-copy"><b>导出全部内容</b><span>Markdown，含平台与排期</span></div>
+                <button class="btn btn-ghost" type="button" data-action="export-all"><i class="ti ti-download" aria-hidden="true"></i>导出</button>
+              </div>
+            </section>
+
+            <section class="set-block set-wide">
+              <div class="set-block-head">
+                <div>
+                  <h2>平台账号与授权</h2>
+                  <p>通过 OAuth 或 API Key 绑定，授权范围内可直接发布、编辑、删除 · 令牌只存本机</p>
+                </div>
+                <div class="set-row set-row-inline">
+                  <div class="set-copy"><b>常发平台</b><span>新建内容时默认勾选</span></div>
+                  <div class="chips" id="default-plat"></div>
+                </div>
+              </div>
+              <div class="auth-list" id="auth-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <!-- 编辑（在主界面里，不是抽屉） -->
+        <section class="view view-editor" data-view="editor">
+          <div class="editor" id="editor"></div>
+        </section>
+
+      </main>
+
+      <div class="scrim" id="scrim" hidden></div>
+
+      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <header class="modal-head">
+          <div class="modal-heading">
+            <span class="modal-kicker" id="modal-kicker"></span>
+            <h2 id="modal-title">标题</h2>
+          </div>
+          <button class="icon-btn" type="button" data-action="close-modal" aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button>
+        </header>
+        <div class="modal-body" id="modal-body"></div>
+        <footer class="modal-foot" id="modal-foot"></footer>
+      </div>
+
+      <div class="palette" id="palette" hidden>
+        <div class="palette-field">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input id="palette-input" type="text" placeholder="搜索内容、素材或操作" autocomplete="off" spellcheck="false">
+          <kbd>Esc</kbd>
+        </div>
+        <div class="palette-list" id="palette-list" role="listbox" aria-label="搜索结果"></div>
+      </div>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+      <input class="file-input" id="file-input" type="file" accept="image/*" multiple hidden>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

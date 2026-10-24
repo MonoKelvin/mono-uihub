@@ -334,6 +334,21 @@ tl.to(".step-1", { autoAlpha: 0 }).from(".step-2", { autoAlpha: 0 }, "<");
 
 图片必须服务内容、契合方向卡，不是随手塞风景大图；带尺寸与质量参数，写好 `alt`。
 
+### 透明底插画（"扣好图"效果）
+
+需要**没有背景、形状不受方框限制**的矢量插画时，用 **DiceBear**。它直接返回 `image/svg+xml`，透明底，既是插画也是头像，改 `seed` 就换一张，不会像占位图那样出现方方正正的底色块。
+
+```
+https://api.dicebear.com/9.x/<style>/svg?seed=<seed>&backgroundColor=transparent
+```
+
+- `backgroundColor=transparent` **必带**，否则默认给一个纯色圆/方底。
+- 已验证可用的 style：`shapes`（抽象几何色块，最像"装饰插画"）、`notionists`（线描人物半身，适合头像与空态）、`adventurer`、`lorelei`、`micah`、`glass`、`rings`、`identicon`、`thumbs`。
+- `seed` 定死即可复现同一张；尺寸交给 CSS，`<img>` 写 `width`/`height` + `loading="lazy"`。
+- 想让它退成纯装饰：CSS `filter: grayscale(1) opacity(.45)`，或 `mix-blend-mode: multiply` 融进纸色底。
+
+**已确认拿不到稳定直链，不要再用**：`illustrations.popsy.co`（连接超时）、`popsy.co`（530）、`api.iconify.design/undraw:*`（404）、`svgrepo.com/show/*.svg`（429 限流）、`cdn.jsdelivr.net/gh/realvjy/illustrations`（404）、`botanimals` 风格（404）。
+
 ### 图标
 
 只用 **Tabler Icons** 一套，不混其他图标库，不用 emoji 当功能图标。图标名在 `https://tabler.io/icons` 查。每个图标都有 **线性（outline）** 与 **实心（filled）** 两种形态，按状态选用。

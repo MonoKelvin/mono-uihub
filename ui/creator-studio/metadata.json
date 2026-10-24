@@ -1,0 +1,95 @@
+{
+  "name": "砚舟 · 创作台",
+  "slug": "creator-studio",
+  "page_type": "software",
+  "tags": [
+    "内容管理",
+    "自媒体",
+    "排期",
+    "看板",
+    "分发",
+    "素材库",
+    "AI 助手"
+  ],
+  "palette": [
+    "#f2efe6",
+    "#24318f",
+    "#17160f"
+  ],
+  "created_at": "2026-10-24 14:14:41",
+  "updated_at": "2026-10-24 17:10:00",
+  "history": [
+    {
+      "prompt": "一个个人自媒体创作管理平台",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1680
+    },
+    {
+      "prompt": "这UI设计和配色太平淡普通了，一股AI味道和廉价感，请重构美化",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1560
+    },
+    {
+      "prompt": "内容创作面板不可能设计成右侧抽屉的，太小气了，就是应该在主界面中创建支持保存撤销还原等；蓝色的主题色可以，但是左侧的黑色不协调。整体还是AI味道浓，建议调整排版布局和间距样式等，设计一些动画、交互、简化设计，扁平化设计，减少边框、阴影，多加毛玻璃、圆角、装饰、大排版、图标、插画、艺术字体等，减少冗余重复小字（最后搜索一下有没有cdn或者矢量图插画（非方方正正的限制，而是那种没有背景的类似扣好图效果的）的免费网站可以使用的，能搜索获取一些有效资源的可以尝试使用，如果有的话也补充到skill中作为素材来源）",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 3120
+    },
+    {
+      "prompt": "总感觉除了主体内容外的标题、副标题、小子和装饰等太紧凑了，间距都好小；少了的装饰性字体太普通了，请找一些艺术字；数据模块又太简单了，请设计复杂一点的各种分析、粉丝、营收、受众、比例、现状、趋势等待数据都以不同表格、折线或者饼状图等方式添加，反正又不是真实的数据，又来模拟UI程序效果的；很多小字又太小了请调大一点，多使用一些图标和插画等。整体继续优化设计，打磨更美观一点",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 3480
+    },
+    {
+      "prompt": "要支持一键发送推送到平台等相关的功能（假设通过账号、API等方式绑定了可以支持辅助推送、删除、编辑等），请补充对应的逻辑和UI设计",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 1860
+    },
+    {
+      "prompt": "修复一下下拉框组件，现在单击下拉后，如果不点击选项不会自动关闭，要设计成点击任意空白位置自动收起来",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 420
+    },
+    {
+      "prompt": "背景的插画的模糊效果太强烈了，请稍微调小点模糊，调大插画",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 360
+    },
+    {
+      "prompt": "素材模块不只有图片，还有链接、新闻、知识库、文件、文档、灵感随机、笔记等。文章编写页面中也要支持AI智能推荐、辅助编写等（只要设计UI表达有这个组件，模拟即可，不要真的就实现一个AI逻辑）",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 2520
+    },
+    {
+      "prompt": "创作面板右侧的信息面板、助手等请使用一个两栏的圆角悬浮面板停靠在右侧；整体继续优化美化其他UI设计和存在的样式问题（比如检查间距、大小、对齐等，检查一些弹窗的样式等）",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 2400
+    }
+  ]
+}
