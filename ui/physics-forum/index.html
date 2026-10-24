@@ -1,242 +1,406 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>量界 · 物理爱好者交流社区</title>
+<title>量界 · 物理讨论社区</title>
+<meta name="description" content="量界：面向物理爱好者的讨论社区，讨论从经典力学到量子场论。">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5/latin.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/chinese-simplified.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dm-mono@5/latin.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/92/main/result.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="shell">
+<!-- ══════════════════════════════ 图标 sprite（内联，零外链依赖） ══════════════════════════════ -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21.5 2.5L11 13"/><path d="M21.5 2.5l-8.5 19-4-8.5-8.5-4z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8.5a6 6 0 1 0-12 0c0 6.5-2.5 8.5-2.5 8.5h17S18 15 18 8.5"/><path d="M13.7 20.5a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a6.6 6.6 0 0 0 10.8 10.8z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2.5 12h2M19.5 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M20.5 14.5a2 2 0 0 1-2 2H8l-4.5 4V4.5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.3 13.7l-6.6 6.6a2 2 0 0 1-2.8 0l-6.9-6.9A2 2 0 0 1 3.4 12V4.6a1.2 1.2 0 0 1 1.2-1.2H12a2 2 0 0 1 1.4.6l6.9 6.9a2 2 0 0 1 0 2.8z"/><circle cx="7.8" cy="7.8" r="1.1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6.5v6.5H4zM13.5 4H20v6.5h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.4L5.5 20.5v-16a1 1 0 0 1 1-1z"/></symbol>
+  <symbol id="i-bookmark-fill" viewBox="0 0 24 24"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.4L5.5 20.5v-16a1 1 0 0 1 1-1z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6.5L9.5 17 4 11.5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6 12 6s9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5.5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.5" r="2.6"/><path d="M8.3 10.7l7.4-3.9M8.3 13.3l7.4 3.9"/></symbol>
+  <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.4v.2"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.2 13.8a4.5 4.5 0 0 0 6.4 0l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4L11.5 6"/><path d="M13.8 10.2a4.5 4.5 0 0 0-6.4 0l-2.6 2.6a4.5 4.5 0 0 0 6.4 6.4L12.5 18"/></symbol>
+  <symbol id="i-sigma" viewBox="0 0 24 24"><path d="M18 6.5H6.5L12 12l-5.5 5.5H18"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5.5h16l-6.2 7.2v6L10.2 20v-7.3z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 24 24"><path d="M3.5 20v-4M8 20v-8M12.5 20V8M17 20V4M21.5 20V2"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><circle cx="12" cy="12" r="1.6"/><path d="M10.6 6.4 6.3 17M13.4 6.4 17.7 17M7 19h10M11.4 10.6 6.6 17.6M12.6 10.6l4.8 7"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M4 5.5 9 10l-5 4.5M11.5 15.5H20"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12.5 12 17.5l9-5M3 16.5 12 21.5l9-5"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M9.5 1.5v2M14.5 1.5v2M9.5 20.5v2M14.5 20.5v2M1.5 9.5h2M1.5 14.5h2M20.5 9.5h2M20.5 14.5h2"/></symbol>
+</svg>
 
-  <!-- ══════════════════════════════ 顶栏 ══════════════════════════════ -->
-  <header class="bar">
-    <a class="brand" href="#" data-nav="home">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-          <ellipse cx="12" cy="12" rx="10" ry="4.4"/>
-          <ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(60 12 12)"/>
-          <ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(120 12 12)"/>
-          <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
-        </svg>
-      </span>
-      <span class="brand-text">
-        <b>量界</b>
-        <em>物理爱好者社区</em>
-      </span>
-    </a>
+<!-- ══════════════════════════════ 顶栏（粘性） ══════════════════════════════ -->
+<header class="bar" id="bar">
+  <div class="bar-inner">
+    <div class="bar-left">
+      <a class="brand" href="#/" data-route="home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="var(--ink)" stroke-width="1.2"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="var(--ink)" stroke-width="1.2" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="var(--ink)" stroke-width="1.2" transform="rotate(-60 12 12)"/>
+            <circle cx="12" cy="12" r="1.6" fill="var(--ink-2)" stroke="none"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <b>量界</b>
+          <em>物理讨论社区</em>
+        </span>
+      </a>
 
-    <nav class="bar-nav" aria-label="主导航">
-      <button class="bnav is-on" type="button" data-nav="home">讨论</button>
-      <button class="bnav" type="button" data-nav="channels">频道</button>
-      <button class="bnav" type="button" data-nav="tags">标签</button>
-      <button class="bnav" type="button" data-nav="bookmarks">收藏</button>
-    </nav>
-
-    <button class="omni" type="button" data-action="omni">
-      <i class="ti ti-search" aria-hidden="true"></i>
-      <span class="omni-ph">搜公式、问题、标签</span>
-      <kbd>⌘K</kbd>
-    </button>
+      <nav class="bar-nav" aria-label="主导航">
+        <a class="bnav is-on" href="#/" data-route="home"><svg class="ic"><use href="#i-message"/></svg><span>讨论</span></a>
+        <a class="bnav" href="#/channels" data-route="channels"><svg class="ic"><use href="#i-grid"/></svg><span>频道</span></a>
+        <a class="bnav" href="#/tags" data-route="tags"><svg class="ic"><use href="#i-tag"/></svg><span>标签</span></a>
+        <a class="bnav" href="#/me" data-route="me"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+        <span class="nav-ind" id="nav-ind" aria-hidden="true"></span>
+      </nav>
+    </div>
 
     <div class="bar-right">
-      <button class="ibtn" type="button" data-action="theme" aria-label="切换主题">
-        <i class="ti ti-moon" aria-hidden="true"></i>
+      <button class="omni" type="button" data-action="omni">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <span class="omni-ph">搜问题、公式、标签</span>
+        <kbd>⌘K</kbd>
       </button>
-      <button class="ibtn has-dot" type="button" data-action="notify" aria-label="通知">
-        <i class="ti ti-bell" aria-hidden="true"></i>
+
+      <div class="bar-readout" aria-hidden="true">
+        <span class="rd"><svg class="ic ic-sm"><use href="#i-cpu"/></svg><b id="rd-node">08</b></span>
+        <span class="rd"><i>LINK</i><b id="rd-link">24</b></span>
+        <span class="rd"><i>LAT</i><b id="rd-lat">12</b>ms</span>
+      </div>
+
+      <button class="ibtn" type="button" data-action="theme" aria-label="切换明暗主题">
+        <svg class="ic"><use href="#i-moon"/></svg>
+      </button>
+      <button class="ibtn" type="button" data-action="notify" aria-label="通知">
+        <svg class="ic"><use href="#i-bell"/></svg>
         <span class="dot" aria-hidden="true"></span>
       </button>
-      <button class="compose" type="button" data-action="compose">
-        <i class="ti ti-plus" aria-hidden="true"></i>提问
+      <button class="compose glitch-btn" type="button" data-action="compose">
+        <svg class="ic"><use href="#i-plus"/></svg><span data-text="提问">提问</span>
       </button>
       <button class="avatar" type="button" data-nav="me" aria-label="我的主页">
         <img src="https://api.dicebear.com/9.x/notionists/svg?seed=ChenYanbo&backgroundColor=transparent" alt="陈砚博" width="30" height="30">
       </button>
     </div>
-  </header>
+  </div>
+  <div class="ruler" aria-hidden="true"></div>
+  <div class="progress" id="progress" aria-hidden="true"><span></span></div>
+</header>
 
-  <!-- ══════════════════════════════ 主体 ══════════════════════════════ -->
-  <main class="stage">
+<!-- ══════════════════════════════ 主体 ══════════════════════════════ -->
+<main class="page" id="page">
 
-    <!-- ─────────────── 首页：讨论流 ─────────────── -->
-    <section class="pane is-on" data-pane="home">
-      <div class="home-grid">
+  <!-- ─────────────── 首页 ─────────────── -->
+  <section class="route is-on" data-route="home">
 
-        <!-- 左：频道目录 -->
-        <aside class="rail">
-          <div class="rail-block">
-            <h2 class="rail-h">频道</h2>
-            <nav class="chan-list" id="chan-list"></nav>
-          </div>
+    <header class="masthead">
+      <div class="hud-frame" aria-hidden="true"><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>
 
-          <div class="rail-block">
-            <h2 class="rail-h">本月热榜</h2>
-            <ol class="hot-list" id="hot-list"></ol>
-          </div>
+      <div class="mh-main">
+        <p class="mh-meta"><span class="mh-date" id="mh-date"></span><span>今日焦点</span><span class="mh-tag">PRIORITY / 01</span></p>
+        <h1 class="mh-title" id="mh-title"></h1>
+        <div class="mh-eq" id="mh-eq"></div>
+      </div>
 
-          <div class="rail-block rail-stats" id="home-stats"></div>
-        </aside>
+      <div class="mh-side" id="mh-side" aria-hidden="true">
+        <div class="mh-wm" id="mh-wm"></div>
+        <svg class="atom" viewBox="0 0 360 360" fill="none">
+          <defs>
+            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="var(--ink)" stop-opacity=".95"/>
+              <stop offset="45%" stop-color="var(--ink)" stop-opacity=".32"/>
+              <stop offset="100%" stop-color="var(--ink)" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
 
-        <!-- 右：主流水 -->
-        <div class="feed">
+          <!-- 量程环 -->
+          <g class="atom-rings">
+            <circle cx="180" cy="180" r="172"/>
+            <circle cx="180" cy="180" r="120"/>
+            <circle cx="180" cy="180" r="66"/>
+          </g>
 
-          <header class="feed-head">
-            <div class="fh-copy">
-              <h1>今日讨论</h1>
-              <p><span data-stat="threads">128</span> 个主题 · <span data-stat="active">37</span> 人在线</p>
-            </div>
-            <div class="seg" id="sort-seg" role="tablist" aria-label="排序">
-              <button class="is-on" type="button" data-sort="hot">热门</button>
-              <button type="button" data-sort="new">最新</button>
-              <button type="button" data-sort="unanswered">待答</button>
-            </div>
-          </header>
+          <!-- 电子轨道 + 公转电子 -->
+          <g class="atom-orbit o1">
+            <ellipse class="orbit-path" cx="180" cy="180" rx="160" ry="72"/>
+            <circle class="electron" cx="340" cy="180" r="5.5"/>
+          </g>
+          <g class="atom-orbit o2">
+            <ellipse class="orbit-path" cx="180" cy="180" rx="160" ry="72" transform="rotate(60 180 180)"/>
+            <circle class="electron" cx="340" cy="180" r="5.5" transform="rotate(60 180 180)"/>
+          </g>
+          <g class="atom-orbit o3">
+            <ellipse class="orbit-path" cx="180" cy="180" rx="160" ry="72" transform="rotate(120 180 180)"/>
+            <circle class="electron" cx="340" cy="180" r="5.5" transform="rotate(120 180 180)"/>
+          </g>
 
-          <div class="threads" id="thread-list"></div>
+          <!-- 核芯辉光 + 粒子簇 -->
+          <circle class="atom-core" cx="180" cy="180" r="34" fill="url(#coreGlow)"/>
+          <g class="atom-nucleus">
+            <circle cx="180" cy="180" r="9" fill="var(--ink)"/>
+            <circle cx="171" cy="175" r="3.6" fill="var(--ink)"/>
+            <circle cx="189" cy="175" r="3.6" fill="var(--ink)"/>
+            <circle cx="174" cy="188" r="3.4" fill="var(--ink)"/>
+            <circle cx="187" cy="188" r="3.4" fill="var(--ink)"/>
+            <circle cx="180" cy="169" r="3" fill="none" stroke="var(--ink-2)" stroke-width="1.4"/>
+            <circle cx="168" cy="183" r="3" fill="none" stroke="var(--ink-2)" stroke-width="1.4"/>
+            <circle cx="192" cy="183" r="3" fill="none" stroke="var(--ink-2)" stroke-width="1.4"/>
+          </g>
+          <circle class="atom-halo" cx="180" cy="180" r="15" fill="none" stroke="var(--ink)" stroke-width="1"/>
+        </svg>
+        <canvas id="matrix"></canvas>
+        <span class="crosshair" aria-hidden="true"></span>
+      </div>
 
-          <button class="more-btn" type="button" data-action="load-more">
-            <span>加载更早的讨论</span>
-            <i class="ti ti-chevron-down" aria-hidden="true"></i>
+      <div class="mh-foot">
+        <div class="mh-byline" id="mh-byline"></div>
+        <div class="mh-cta">
+          <button class="btn btn-solid glitch-btn" type="button" id="mh-enter">
+            <svg class="ic"><use href="#i-chevron-right"/></svg><span data-text="进入讨论">进入讨论</span>
           </button>
-
+          <button class="btn btn-ghost" type="button" id="mh-save">
+            <svg class="ic"><use href="#i-bookmark"/></svg><span>收藏</span>
+          </button>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- ─────────────── 频道总览 ─────────────── -->
-    <section class="pane" data-pane="channels">
-      <header class="page-head">
-        <h1>频道</h1>
-        <p>按物理分支划分。选一个进入。</p>
-      </header>
-      <div class="chan-grid" id="chan-grid"></div>
-    </section>
+    <div class="statbar rv rv-scroll" id="statbar"></div>
 
-    <!-- ─────────────── 标签墙 ─────────────── -->
-    <section class="pane" data-pane="tags">
-      <header class="page-head">
-        <h1>标签</h1>
-        <p>被追问最多的概念。点开看相关推导。</p>
-      </header>
-      <div class="tag-wall" id="tag-wall"></div>
-    </section>
+    <div class="body-grid">
+      <aside class="rail">
+        <div class="rail-block">
+          <p class="rail-h"><i></i>频道索引</p>
+          <nav class="idx" id="idx-channels"></nav>
+        </div>
+        <div class="rail-block">
+          <p class="rail-h"><i></i>贡献者</p>
+          <div class="contrib" id="rail-contrib"></div>
+        </div>
+      </aside>
 
-    <!-- ─────────────── 收藏 ─────────────── -->
-    <section class="pane" data-pane="bookmarks">
-      <header class="page-head">
-        <h1>收藏</h1>
-        <p>存下的推导与讨论。</p>
-      </header>
-      <div class="threads" id="bookmark-list"></div>
-    </section>
-
-    <!-- ─────────────── 我的主页 ─────────────── -->
-    <section class="pane" data-pane="me">
-      <div class="me-grid">
-        <aside class="me-card" id="me-card"></aside>
-        <div class="me-main">
-          <div class="seg" id="me-seg" role="tablist" aria-label="切换内容">
-            <button class="is-on" type="button" data-tab="posts">提问</button>
-            <button type="button" data-tab="answers">回答</button>
-            <button type="button" data-tab="saved">收藏</button>
+      <div class="main-col">
+        <div class="toolbar">
+          <div class="seg" id="sort-seg" role="tablist" aria-label="排序">
+            <span class="seg-ind" id="seg-ind" aria-hidden="true"></span>
+            <button class="is-on" type="button" role="tab" data-sort="hot">热门</button>
+            <button type="button" role="tab" data-sort="new">最新</button>
+            <button type="button" role="tab" data-sort="unanswered">待答</button>
           </div>
-          <div class="threads" id="me-list"></div>
+          <button class="filter-note" type="button" id="filter-note" hidden>
+            <svg class="ic"><use href="#i-filter"/></svg><span></span>
+            <svg class="ic"><use href="#i-x"/></svg>
+          </button>
         </div>
+
+        <div class="entries" id="thread-list"></div>
+
+        <button class="more-btn" type="button" data-action="load-more">
+          <span>加载更早的讨论</span>
+          <svg class="ic"><use href="#i-chevron-down"/></svg>
+        </button>
+      </div>
+
+      <aside class="telemetry">
+        <section class="tele-block">
+          <p class="tele-h"><i></i>事件流<span class="tele-tag"><svg class="ic ic-sm"><use href="#i-terminal"/></svg>实时</span></p>
+          <ul class="event-log" id="event-log"></ul>
+        </section>
+      </aside>
+    </div>
+
+    <!-- 高潮段：网络拓扑全宽 + 粘性图 -->
+    <section class="sec-net rv rv-scroll" id="sec-net">
+      <header class="sec-title">
+        <h2><svg class="ic ic-lg"><use href="#i-network"/></svg>讨论网络</h2>
+        <p>成员在频道之间的流动。节点越大，主题越集中；连线越亮，交流越活跃。</p>
+      </header>
+      <div class="net-wrap">
+        <div class="net-stage">
+          <svg id="net-big" viewBox="0 0 560 440" fill="none" aria-hidden="true"></svg>
+          <div class="net-legend" id="net-legend"></div>
+        </div>
+        <div class="net-notes" id="net-notes"></div>
       </div>
     </section>
 
-  </main>
-
-  <!-- ══════════════════════════════ 详情抽屉 ══════════════════════════════ -->
-  <div class="scrim" id="scrim" hidden></div>
-
-  <aside class="drawer" id="drawer" hidden aria-label="主题详情">
-    <div class="drawer-inner" id="drawer-inner"></div>
-  </aside>
-
-  <!-- ══════════════════════════════ 提问编辑器 ══════════════════════════════ -->
-  <div class="modal" id="composer" hidden role="dialog" aria-modal="true" aria-label="发起提问">
-    <div class="modal-inner">
-      <header class="modal-head">
-        <span class="mh-mark"><i class="ti ti-math-function" aria-hidden="true"></i></span>
-        <div class="mh-copy">
-          <h2>发起提问</h2>
-          <p>写清条件、给出尝试、附上公式。</p>
-        </div>
-        <button class="ibtn" type="button" data-action="close-modal" aria-label="关闭">
-          <i class="ti ti-x" aria-hidden="true"></i>
-        </button>
+    <!-- 贡献者段 -->
+    <section class="sec-people rv rv-scroll" id="sec-people">
+      <header class="sec-title">
+        <h2><svg class="ic ic-lg"><use href="#i-user"/></svg>活跃成员</h2>
+        <p>按本周贡献排序。声望来自被采纳的推导，不来自发帖数量。</p>
       </header>
+      <div class="people-grid" id="people-grid"></div>
+    </section>
 
-      <div class="modal-body">
-        <div class="fld">
-          <label for="cp-title">标题</label>
-          <input id="cp-title" type="text" placeholder="例如：为什么光子没有静质量，但引力不为零" autocomplete="off">
-        </div>
+  </section>
 
-        <div class="fld">
-          <label for="cp-body">正文</label>
-          <div class="editor">
-            <div class="ed-tools">
-              <button type="button" data-tex="$$" title="行间公式">行间</button>
-              <button type="button" data-tex="$" title="行内公式">行内</button>
-              <button type="button" data-tex="\\frac{}{}" title="分式">分式</button>
-              <button type="button" data-tex="\\sqrt{}" title="根式">根式</button>
-              <button type="button" data-tex="\\sum_{}^{}" title="求和">求和</button>
-              <button type="button" data-tex="\\int_{}^{}" title="积分">积分</button>
-              <button type="button" data-tex="\\partial" title="偏导">偏导</button>
-              <button type="button" data-tex="\\nabla" title="梯度">梯度</button>
-            </div>
-            <textarea id="cp-body" placeholder="已知：…&#10;尝试：…&#10;卡在：…"></textarea>
-          </div>
-          <p class="fld-hint">支持 $...$ 行内公式与 $$...$$ 行间公式</p>
-        </div>
+  <!-- ─────────────── 频道 ─────────────── -->
+  <section class="route" data-route="channels">
+    <header class="sec-head">
+      <h1>频道</h1>
+      <p class="sec-sub" id="chan-sub"></p>
+    </header>
+    <ol class="chan-index" id="chan-index"></ol>
+  </section>
 
-        <div class="fld">
-          <label for="cp-chan">频道</label>
-          <div class="chip-row" id="cp-chans"></div>
-        </div>
+  <!-- ─────────────── 标签 ─────────────── -->
+  <section class="route" data-route="tags">
+    <header class="sec-head">
+      <h1>标签</h1>
+      <p class="sec-sub" id="tag-sub"></p>
+    </header>
+    <div class="tag-index" id="tag-wall"></div>
+  </section>
 
-        <div class="fld">
-          <label for="cp-tag">标签</label>
-          <input id="cp-tag" type="text" placeholder="用空格分隔，最多 4 个" autocomplete="off">
+  <!-- ─────────────── 我的 ─────────────── -->
+  <section class="route" data-route="me">
+    <div class="me-grid">
+      <aside class="me-side" id="me-card"></aside>
+      <div class="me-main">
+        <div class="seg" id="me-seg" role="tablist" aria-label="切换内容">
+          <span class="seg-ind" aria-hidden="true"></span>
+          <button class="is-on" type="button" role="tab" data-tab="posts">提问</button>
+          <button type="button" role="tab" data-tab="answers">回答</button>
+          <button type="button" role="tab" data-tab="saved">收藏</button>
         </div>
+        <div class="entries" id="me-list"></div>
       </div>
+    </div>
+  </section>
 
-      <footer class="modal-foot">
-        <button class="btn btn-ghost" type="button" data-action="close-modal">取消</button>
-        <button class="btn btn-solid" type="button" data-action="submit-question">
-          <i class="ti ti-send" aria-hidden="true"></i>发布提问
-        </button>
-      </footer>
+  <!-- ─────────────── 详情页（主题 / 频道 / 标签 共用） ─────────────── -->
+  <section class="route route-detail" data-route="detail">
+    <div class="detail-wrap" id="detail-inner"></div>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════ 页脚 ══════════════════════════════ -->
+<footer class="site-foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <span class="foot-mark">量界</span>
+      <p>讨论从经典力学到量子场论。这里只讨论能被推导的东西。</p>
+    </div>
+    <nav class="foot-col" aria-label="站点">
+      <p class="foot-h">站点</p>
+      <a href="#/">讨论流</a>
+      <a href="#/channels">频道目录</a>
+      <a href="#/tags">标签索引</a>
+    </nav>
+    <nav class="foot-col" aria-label="参与">
+      <p class="foot-h">参与</p>
+      <a href="#/me">我的主页</a>
+      <button type="button" data-action="compose">发起提问</button>
+      <button type="button" data-action="notify">通知设置</button>
+    </nav>
+    <div class="foot-col">
+      <p class="foot-h">状态</p>
+      <p class="foot-read" id="foot-read"></p>
     </div>
   </div>
-
-  <!-- ══════════════════════════════ 命令面板 ══════════════════════════════ -->
-  <div class="palette" id="palette" hidden role="dialog" aria-label="全局搜索">
-    <div class="pal-field">
-      <i class="ti ti-search" aria-hidden="true"></i>
-      <input id="pal-input" type="text" placeholder="搜公式、问题、标签、频道" autocomplete="off" spellcheck="false">
-      <kbd>ESC</kbd>
-    </div>
-    <div class="pal-list" id="pal-list"></div>
+  <div class="foot-base">
+    <span>量界 · 演示原型</span>
+    <span class="foot-eq">ℏ = 1.054571817 × 10⁻³⁴ J·s</span>
   </div>
+</footer>
 
-  <!-- ══════════════════════════════ Toast ══════════════════════════════ -->
-  <div class="toast" id="toast" hidden></div>
+<!-- ══════════════════════════════ 提问编辑器 ══════════════════════════════ -->
+<div class="modal" id="composer" hidden role="dialog" aria-modal="true" aria-label="发起提问">
+  <div class="modal-inner">
+    <header class="modal-head">
+      <span class="mh-mark" aria-hidden="true"><svg class="ic"><use href="#i-sigma"/></svg></span>
+      <div class="mh-copy">
+        <h2>发起提问</h2>
+        <p>写清条件、尝试与卡点</p>
+      </div>
+      <button class="ibtn" type="button" data-action="close-modal" aria-label="关闭">
+        <svg class="ic"><use href="#i-x"/></svg>
+      </button>
+    </header>
 
+    <div class="modal-body">
+      <div class="fld">
+        <label for="cp-title">标题</label>
+        <input id="cp-title" type="text" placeholder="一句话说清问题" autocomplete="off">
+      </div>
+
+      <div class="fld">
+        <label for="cp-body">正文</label>
+        <div class="editor">
+          <div class="ed-tools">
+            <button type="button" data-tex="$$" title="行间公式">行间</button>
+            <button type="button" data-tex="$" title="行内公式">行内</button>
+            <span class="ed-sep" aria-hidden="true"></span>
+            <button type="button" data-tex="\frac{}{}" title="分式">分式</button>
+            <button type="button" data-tex="\sqrt{}" title="根式">根式</button>
+            <button type="button" data-tex="\sum_{}^{}" title="求和">求和</button>
+            <button type="button" data-tex="\int_{}^{}" title="积分">积分</button>
+            <button type="button" data-tex="\partial" title="偏导">偏导</button>
+            <button type="button" data-tex="\nabla" title="梯度">梯度</button>
+          </div>
+          <textarea id="cp-body" placeholder="已知：…&#10;尝试：…&#10;卡在：…"></textarea>
+        </div>
+        <p class="fld-hint">LaTeX：$…$ 行内 · $$…$$ 行间</p>
+      </div>
+
+      <div class="fld">
+        <label>频道</label>
+        <div class="chip-row" id="cp-chans"></div>
+      </div>
+
+      <div class="fld">
+        <label for="cp-tag">标签</label>
+        <input id="cp-tag" type="text" placeholder="空格分隔，最多 4 个" autocomplete="off">
+      </div>
+    </div>
+
+    <footer class="modal-foot">
+      <button class="btn btn-ghost" type="button" data-action="close-modal">取消</button>
+      <button class="btn btn-solid glitch-btn" type="button" data-action="submit-question">
+        <svg class="ic"><use href="#i-send"/></svg><span data-text="发布提问">发布提问</span>
+      </button>
+    </footer>
+  </div>
 </div>
 
+<!-- ══════════════════════════════ 命令面板 ══════════════════════════════ -->
+<div class="palette" id="palette" hidden role="dialog" aria-label="全局搜索">
+  <div class="pal-field">
+    <svg class="ic"><use href="#i-search"/></svg>
+    <input id="pal-input" type="text" placeholder="搜问题、公式、标签、频道" autocomplete="off" spellcheck="false">
+    <kbd>ESC</kbd>
+  </div>
+  <div class="pal-list" id="pal-list"></div>
+</div>
+
+<!-- ══════════════════════════════ Toast ══════════════════════════════ -->
+<div class="toast" id="toast" hidden></div>
+
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

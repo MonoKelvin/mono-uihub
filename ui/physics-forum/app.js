@@ -1,6 +1,15 @@
 /* =================================================================
-   量界 · 物理爱好者交流社区
-   纯前端演示数据与交互，无后端依赖。
+   量界 · 物理讨论社区 · 网页模式
+   数据全部来自 data.js（window.QJ），本文件不含任何硬编码内容。
+
+   关键约定：
+   1. 网页模式：整页滚动 + hash 路由（#/、#/channels、#/tags、#/me、
+      #/thread/:id、#/chan/:id、#/tag/:id），浏览器前进后退可用。
+   2. 滚动驱动的出场：区块进入视口时点亮（IntersectionObserver），
+      同时保留兜底扫描，保证任何情况下内容都可见。
+   3. 图标全部走内联 SVG sprite，不依赖任何图标字体外链。
+   4. HUD 特效：矩阵雨、量子态旋转、拓扑脉冲、信号条、进度线、
+      按钮级故障撕裂；reduce-motion 下全部降级。
    ================================================================= */
 
 (function () {
@@ -8,280 +17,75 @@
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ------------------------------------------------------------ 数据 */
+  const DATA = window.QJ || { channels: [], tags: [], users: {}, threads: [] };
+  const CHANNELS = DATA.channels;
+  const TAGS = DATA.tags;
+  const USERS = DATA.users;
+  const THREADS = DATA.threads;
+  const USER_KEYS = Object.keys(USERS);
 
-  const CHANNELS = [
-    { id: 'mech', name: '力学', icon: 'ti-wave-sine', desc: '牛顿力学、分析力学、刚体与连续介质', count: 428 },
-    { id: 'em', name: '电磁学', icon: 'ti-bolt', desc: '静电场、麦克斯韦方程、电路与电磁波', count: 371 },
-    { id: 'quantum', name: '量子力学', icon: 'ti-atom', desc: '波函数、算符、量子化与纠缠态', count: 512 },
-    { id: 'rel', name: '相对论', icon: 'ti-wave-sine', desc: '狭义与广义相对论、时空几何与引力', count: 246 },
-    { id: 'thermo', name: '热力学统计', icon: 'ti-temperature', desc: '热力学定律、配分函数与相变', count: 289 },
-    { id: 'optics', name: '光学', icon: 'ti-sun', desc: '干涉、衍射、偏振与波动光学', count: 197 },
-    { id: 'astro', name: '天体物理', icon: 'ti-telescope', desc: '恒星演化、宇宙学与引力波', count: 158 },
-    { id: 'exp', name: '实验物理', icon: 'ti-microscope', desc: '测量技术、仪器与数据处理', count: 133 }
-  ];
+  const ic = (name, cls = '') => `<svg class="ic ${cls}"><use href="#${name}"/></svg>`;
 
-  const TAGS = [
-    { id: 'schrodinger', name: 'schrodinger', n: 128, desc: '方程、本征值与波函数' },
-    { id: 'lagrangian', name: 'lagrangian', n: 96, desc: '作用量与变分原理' },
-    { id: 'noether', name: 'noether', n: 54, desc: '对称性与守恒律' },
-    { id: 'duality', name: 'duality', n: 41, desc: '对偶性与对偶字典' },
-    { id: 'renorm', name: 'renorm', n: 63, desc: '重整化与有效场论' },
-    { id: 'scattering', name: 'scattering', n: 87, desc: '散射振幅与截面' },
-    { id: 'tensor', name: 'tensor', n: 72, desc: '张量与协变导数' },
-    { id: 'adiabatic', name: 'adiabatic', n: 33, desc: '绝热定理与循环量' },
-    { id: 'superconduct', name: 'superconduct', n: 58, desc: 'BCS 与能隙方程' },
-    { id: 'gauge', name: 'gauge', n: 91, desc: '规范场与连接' },
-    { id: 'feynman', name: 'feynman', n: 45, desc: '路径积分与图形' },
-    { id: 'emergence', name: 'emergence', n: 38, desc: '有效理论与临界现象' }
-  ];
+  /* ------------------------------------------------------------ 频道图形 */
 
-  const USERS = {
-    chen: { name: '陈砚博', avatar: 'ChenYanbo', rep: 4820, tag: '凝聚态' },
-    lin: { name: '林晚舟', avatar: 'LinWanzhou', rep: 3610, tag: '广义相对论' },
-    su: { name: '苏鹤鸣', avatar: 'SuHeming', rep: 2940, tag: '量子信息' },
-    zhou: { name: '周聿川', avatar: 'ZhouYuchuan', rep: 2180, tag: '实验物理' },
-    he: { name: '何宴清', avatar: 'HeYanqing', rep: 1760, tag: '热力学' },
-    qi: { name: '祁远山', avatar: 'QiYuanshan', rep: 1320, tag: '光学' }
+  const ART_SET = {
+    mech: {
+      icon: '<path d="M12 3v6"/><circle cx="12" cy="11.4" r="2"/><path d="M6.2 15.6c.9 2.6 3.2 4 5.8 4s4.9-1.4 5.8-4" stroke-dasharray="1.8 2.2"/>',
+      art: '<path d="M60 12v20"/><circle cx="60" cy="38" r="6.5"/><path d="M36 54Q60 76 84 54" stroke-dasharray="2 3.4"/><circle cx="36" cy="54" r="1.8" fill="var(--ink)" stroke="none"/><circle cx="84" cy="54" r="1.8" fill="var(--ink)" stroke="none"/><path d="M22 70c7-7 14-7 21 0s14 7 21 0 14-7 21 0" stroke="var(--ink-2)" stroke-opacity=".7"/>'
+    },
+    em: {
+      icon: '<circle cx="8.4" cy="12" r="2.2"/><circle cx="15.6" cy="12" r="2.2"/><path d="M8.4 9.8V7.6M15.6 9.8V7.6M8.4 14.2v2.2M15.6 14.2v2.2M10.8 8.6c1.6-2 3.2-2 4.8 0M10.8 15.4c1.6 2 3.2 2 4.8 0"/>',
+      art: '<circle cx="46" cy="42" r="9.5"/><circle cx="74" cy="42" r="9.5"/><path d="M41.5 19h9M46 14.5v9" stroke="var(--ink)"/><path d="M69.5 60h9" stroke="var(--ink-2)"/><path d="M52 26C56 18 64 18 68 26M52 58C56 66 64 66 68 58M30 30C22 36 22 48 30 54M90 30C98 36 98 48 90 54"/>'
+    },
+    quantum: {
+      icon: '<circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9.2" ry="3.6"/><ellipse cx="12" cy="12" rx="9.2" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.2" ry="3.6" transform="rotate(-60 12 12)"/>',
+      art: '<circle cx="60" cy="42" r="5" fill="var(--ink)" stroke="none"/><ellipse cx="60" cy="42" rx="38" ry="14"/><ellipse cx="60" cy="42" rx="38" ry="14" transform="rotate(60 60 42)"/><ellipse cx="60" cy="42" rx="38" ry="14" transform="rotate(-60 60 42)"/><circle cx="98" cy="42" r="3" fill="var(--ink-2)" stroke="none"/><circle cx="79" cy="74.9" r="2.6" fill="var(--ink)" stroke="none"/><circle cx="79" cy="9.1" r="2.2" fill="var(--ink-3)" stroke="none"/>'
+    },
+    rel: {
+      icon: '<path d="M3 7h18"/><path d="M3 12c3.4 0 5 2.6 9 2.6S17.6 12 21 12"/><path d="M3 17h18"/><circle cx="12" cy="14.8" r="1.3" fill="currentColor" stroke="none"/>',
+      art: '<path d="M12 20h96"/><path d="M12 42c13 0 20 9 48 9s35-9 48-9"/><path d="M12 64c19 0 29 13 48 13s29-13 48-13"/><circle cx="60" cy="58" r="5.5" fill="var(--ink)" stroke="none"/><ellipse cx="60" cy="58" rx="11" ry="3.6" transform="rotate(-14 60 58)" stroke="var(--ink-2)" stroke-opacity=".8"/>'
+    },
+    thermo: {
+      icon: '<path d="M9.2 3h5.6M10.4 3v5.2L6 17a2.7 2.7 0 0 0 2.4 4h7.2A2.7 2.7 0 0 0 18 17l-4.4-8.8V3"/><circle cx="9.6" cy="15.4" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="13" r=".9" fill="currentColor" stroke="none"/><circle cx="11.8" cy="17.2" r=".9" fill="currentColor" stroke="none"/>',
+      art: '<path d="M51 14h18M53 14v13L38 58a9 9 0 0 0 8 13h28a9 9 0 0 0 8-13L67 27V14"/><circle cx="50" cy="56" r="2.4" fill="var(--ink)" stroke="none"/><circle cx="66" cy="49" r="2" fill="var(--ink-2)" stroke="none"/><circle cx="58" cy="64" r="2.2" fill="var(--ink-3)" stroke="none"/><path d="M49 8c2.5-3-2.5-5 0-8M60 8c2.5-3-2.5-5 0-8M71 8c2.5-3-2.5-5 0-8" stroke="var(--ink)" stroke-opacity=".6"/>'
+    },
+    optics: {
+      icon: '<path d="M12 3.4 20.6 19H3.4z"/><path d="M2.6 6.6 9.8 13"/><path d="M14.6 13.4 19.4 11M14.6 13.4 19.6 13.6M14.6 13.4 18.8 16"/>',
+      art: '<path d="M60 18 94 68H26z"/><path d="M6 28 44 44" stroke="var(--ink-2)"/><path d="M76 45 110 33" stroke="var(--ink)"/><path d="M76 45 112 45"/><path d="M76 45 110 57" stroke="var(--ink-2)" stroke-opacity=".7"/>'
+    },
+    astro: {
+      icon: '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9.4" ry="3.8" transform="rotate(-22 12 12)"/><circle cx="20.4" cy="8.6" r="1.2" fill="currentColor" stroke="none"/><path d="M12 6.6v1.6M12 15.8v1.6M6.8 12h1.6M15.6 12h1.6"/>',
+      art: '<circle cx="50" cy="42" r="8.5" stroke="var(--ink)"/><path d="M50 29v-4M50 55v4M37 42h-4M63 42h4" stroke="var(--ink)"/><ellipse cx="50" cy="42" rx="42" ry="15" transform="rotate(-16 50 42)"/><ellipse cx="50" cy="42" rx="30" ry="10.5" transform="rotate(30 50 42)"/><circle cx="90.4" cy="30.4" r="3" fill="var(--ink-2)" stroke="none"/><circle cx="76" cy="57" r="2.4" fill="var(--ink)" stroke="none"/><path d="M18 16v5M15.5 18.5h5M100 62v4M98 64h4" stroke="var(--ink-3)"/>'
+    },
+    exp: {
+      icon: '<rect x="3" y="5" width="18" height="11" rx="2"/><path d="M6 12.6c1.8-4.4 3.4 1.2 5.4-2.6 1.6-3 3.4-.8 5.2 1"/><path d="M8.5 21h7M12 16v5"/>',
+      art: '<rect x="22" y="14" width="76" height="46" rx="7"/><path d="M32 38q7-13 14 0t14 0t14 0"/><path d="M32 52h56" stroke-opacity=".4"/><circle cx="88" cy="24" r="3" stroke="var(--ink)"/><path d="M60 14V9M48 60v8M72 60v8M40 68h40"/>'
+    }
   };
 
-  const AV = (key) => `https://api.dicebear.com/9.x/notionists/svg?seed=${USERS[key].avatar}&backgroundColor=transparent`;
+  const chanIcon = (id) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${(ART_SET[id] || ART_SET.mech).icon}</svg>`;
+  const chanArt = (id) => `<svg viewBox="0 0 120 84" fill="none" stroke="var(--ink-2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${(ART_SET[id] || ART_SET.mech).art}</svg>`;
 
-  const THREADS = [
-    {
-      id: 't1',
-      chan: 'quantum',
-      user: 'su',
-      title: '测量在位置本征态和动量本征态之间连续切换，是否违反不确定性原理？',
-      excerpt: '设想用一台装置以概率 $p$ 测量位置、以 $1-p$ 测量动量。无论 $p$ 取何值，测后状态的方差至少有一个不为零 —— 但这是否真的构成对 $\\Delta x \\Delta p \\geq \\hbar/2$ 的违反？关键在于装置本身的量子涨落。',
-      tags: ['schrodinger', 'quantum'],
-      votes: 142,
-      answers: 23,
-      views: 1840,
-      time: '2 小时前',
-      solved: true,
-      eq: '\\Delta x \\, \\Delta p \\geq \\frac{\\hbar}{2}',
-      eqNote: '位置与动量测量的标准差乘积下界',
-      body: [
-        '设想一台装置以概率 $p$ 测量位置、以概率 $1-p$ 测量动量。无论 $p$ 取何值，测后状态的方差至少有一个不为零。但这是否真的构成对 $\\Delta x \\Delta p \\geq \\hbar/2$ 的违反？',
-        '我认为关键不在被测系统，而在装置本身的量子涨落：测量位置时动量方差被放大，测量动量时位置方差被放大。混合后的态是否仍满足 Robertson 关系，需要显式计算混合矩阵元的贡献。',
-        '有人认为这与 Delbrück 的 $1/k^2$ 实验是同一类问题，也有人认为根本无关。请指正。'
-      ],
-      answerList: [
-        {
-          user: 'chen',
-          accepted: true,
-          time: '1 小时前',
-          body: '不违反。Robertson 关系约束的是**同一个态**上的两个算符期望，与测量方案无关。混合后得到的不是纯态，而是密度矩阵 $\\rho = p|\\psi_x\\rangle\\langle\\psi_x| + (1-p)|\\psi_p\\rangle\\langle\\psi_p|$，对混合态要用 $\\Delta A^2 = \\operatorname{Tr}(\\rho A^2) - \\operatorname{Tr}(\\rho A)^2$ 计算。',
-          eq: '\\Delta x^2 = p\\,\\sigma_x^2 + (1-p)\\,\\sigma_p^2 + p(1-p)|x_0 - p_0|^2',
-          eqNote: '混合态位置方差，含非对角项'
-        },
-        {
-          user: 'lin',
-          accepted: false,
-          time: '48 分钟前',
-          body: '补一个角度：如果把测量装置也算进系统，整体演化是幺正的，不确定性从未被破坏，只是被"转移"到了装置自由度上。所谓"违反"通常是把粗粒化后的经典描述当成了精确的量子态。'
-        }
-      ]
-    },
-    {
-      id: 't2',
-      chan: 'rel',
-      user: 'lin',
-      title: '等效原理到底陈述了什么？推导时容易忽略哪些前提？',
-      excerpt: '引力质量与惯性质量相等并非恒等式 —— 它来自更一般的等效性假设 $m_g = m_i$。讨论中常把"弱场极限"和"局域性"两个限定丢掉，结果推导出比原定理更强的结论。',
-      tags: ['tensor', 'emergence'],
-      votes: 96,
-      answers: 17,
-      views: 1220,
-      time: '4 小时前',
-      solved: false,
-      eq: 'm_g = m_i, \\qquad \\frac{F}{m_i} = \\frac{F}{m_g}',
-      eqNote: '两种质量的定义式，其相等并非先验',
-      body: [
-        '等效原理常被简述为"引力和惯性等价"，但这个表述丢掉了很多东西。等效性假设说的是：可以在足够小的区域内把均匀引力场与匀加速参考系等同。',
-        '由此推出 $m_g = m_i$，前提是局部性：等效区域必须小到潮汐效应可以忽略。讨论中我们经常直接写"引力质量等于惯性质量"，这其实是结论而非假设。',
-        '有人能讲清楚从爱因斯坦 1907 年的原始表述到强等效原理，中间缺了哪些论证？'
-      ],
-      answerList: [
-        {
-          user: 'su',
-          accepted: false,
-          time: '3 小时前',
-          body: '1907 年的原始表述只覆盖了弱场、静态、局部匀加速参考系，是"弱等效原理"。从它到强等效原理要靠后续的数学发展，包括费马原理的表述和 1911 年的爱因斯坦论文。弱等效原理本身不足以导出广义相对论 —— 这是常见误解。'
-        }
-      ]
-    },
-    {
-      id: 't3',
-      chan: 'em',
-      user: 'zhou',
-      title: '平面波导中 TE 与 TM 模式的截止条件为何不同？',
-      excerpt: '金属波导中 TE 模式有截止频率而 TM 模式没有，矩形介质波导则相反。这个差异源自边界条件施加在哪个场分量上，追一下本征方程的来源。',
-      tags: ['scattering', 'duality'],
-      votes: 78,
-      answers: 11,
-      views: 940,
-      time: '6 小时前',
-      solved: true,
-      eq: 'k_z^2 = k_0^2 - \\left(\\frac{m\\pi}{a}\\right)^2',
-      eqNote: '矩形波导纵向传播常数',
-      body: [
-        '金属波导中 TE 模式有截止频率而 TM 模式没有，矩形介质波导情况相反。这个差异不是记号问题，源自边界条件施加在不同的场分量上。',
-        '金属边界切向 $E = 0$，这直接作用在 $E_x$（TE）上给出离散本征值；而 TM 的边界条件作用在 $H_x$ 上，得到的方程形式不同。介质波导换成全反射条件后，结论又反过来。',
-        '有没有一个统一的角度把这两组本征方程串起来，而不是分别记忆？'
-      ],
-      answerList: [
-        {
-          user: 'qi',
-          accepted: true,
-          time: '5 小时前',
-          body: '统一角度看，本质是**对偶变换**：把 $E \\leftrightarrow H$、$\\epsilon \\leftrightarrow \\mu$ 互换，TE 与 TM 的方程形式互换。金属边界与介质边界的差异，实质是 $\\epsilon/\\mu$ 的符号结构不同 —— 金属内部 $\\epsilon < 0$ 使纵向传播常数的条件反号。',
-          eq: '\\epsilon \\, E \\leftrightarrow \\mu \\, H',
-          eqNote: '对偶变换的场与本构量互换'
-        }
-      ]
-    },
-    {
-      id: 't4',
-      chan: 'mech',
-      user: 'he',
-      title: '小角度近似下单摆周期的修正项为何是负的？',
-      excerpt: '精确周期展开为 $T = 2\\pi\\sqrt{l/g}\\left(1 + \\frac{1}{16}\\theta_0^2 + \\cdots\\right)$，系数为正，意味着周期随振幅增大而变长。直观图像是什么？',
-      tags: ['adiabatic', 'feynman'],
-      votes: 64,
-      answers: 9,
-      views: 810,
-      time: '昨天',
-      solved: true,
-      eq: 'T = 2\\pi\\sqrt{\\frac{l}{g}}\\left(1 + \\frac{1}{16}\\theta_0^2 + \\frac{11}{3072}\\theta_0^4 + \\cdots\\right)',
-      eqNote: '单摆周期的振幅展开',
-      body: [
-        '精确周期展开后系数为正，说明振幅越大周期越长。初学者常觉得"摆得高一点应该更快到达底部"，直觉给不出正确符号。',
-        '我猜和大摆幅时轨迹不再是圆弧、有效摆长变长有关，但不确定该怎么严谨地讲清楚这个图像。'
-      ],
-      answerList: [
-        {
-          user: 'chen',
-          accepted: true,
-          time: '昨天',
-          body: '图像是**等时椭圆**（等时摆线）。大振幅时摆锤走的是被拉长的椭圆弧，弧的曲率半径大于摆长。等时性要求沿轨迹速度分布使得每四分之一周期时间相同，弧变长意味着平均速度变小，于是周期变长。',
-          eq: '\\oint \\frac{ds}{v} = 4T',
-          eqNote: '等时摆线的弧长积分'
-        }
-      ]
-    },
-    {
-      id: 't5',
-      chan: 'thermo',
-      user: 'chen',
-      title: '配分函数中的简并度因子，在相变点附近失效的判据是什么？',
-      excerpt: '平均场近似给出 $T_c = z|J|/\ln z$ 一类结果，但临界点附近涨落不可忽略，平均场失效。Landau 判据 $k_BT_c = z|J|$ 如何从涨落关联长度的发散导出？',
-      tags: ['emergence', 'superconduct'],
-      votes: 53,
-      answers: 8,
-      views: 640,
-      time: '2 天前',
-      solved: false,
-      eq: '\\xi \\sim \\left(1 - \\frac{T}{T_c}\\right)^{-\\nu}',
-      eqNote: '关联长度的临界发散',
-      body: [
-        '平均场近似给出 $T_c = z|J|/\ln z$ 一类结果，但临界点附近涨落不可忽略，平均场失效。',
-        'Landau 判据 $k_B T_c = z|J|$ 是怎么从涨落关联长度发散导出来的？涨落离散化判据给出的是 $k_B T_c = z|J|\\sqrt{z}$，两者已经不一致。'
-      ],
-      answerList: []
-    },
-    {
-      id: 't6',
-      chan: 'astro',
-      user: 'lin',
-      title: '引力波源的标准警报能量分布，为什么在低频段偏低？',
-      excerpt: 'LIGO-Virgo 的 BNS 警报在 10 Hz 以下迅速截止，源的约化质量、SNR 频带依赖与探测器噪声曲线三者耦合，想理清截止频率的物理来源。',
-      tags: ['scattering', 'emergence'],
-      votes: 47,
-      answers: 6,
-      views: 520,
-      time: '3 天前',
-      solved: false,
-      eq: '\\rho \\propto \\frac{M_c^{5/3} f^{2/3}}{d_L(z)}',
-      eqNote: '应变振幅的标度关系',
-      body: [
-        'LIGO-Virgo 的双中子星警报在 10 Hz 以下迅速截止。直觉上低频处引力波振幅更大（$f^{2/3}$），应该更容易探测到才对，为什么反而截止了？',
-        '我认为根源在探测器噪声：低频地震噪声主导。但这解释不了为什么 10 Hz 以下是"突然"截止而非平滑退化。'
-      ],
-      answerList: []
-    },
-    {
-      id: 't7',
-      chan: 'optics',
-      user: 'qi',
-      title: '菲涅耳衍射的半波带法，为什么划分半波带比全波带更自然？',
-      excerpt: '半波带法把波前切成相邻相位差 $\\pi$ 的条带，使各带贡献两两抵消，得到级数收敛。全波带法也可用，但收敛慢且要处理首带贡献，物理含义不如半波带清晰。',
-      tags: ['feynman', 'scattering'],
-      votes: 41,
-      answers: 7,
-      views: 480,
-      time: '4 天前',
-      solved: true,
-      eq: '\\delta = \\frac{2\\lambda\\pi r}{D}',
-      eqNote: '半波带的划分条件',
-      body: [
-        '半波带法把波前切成相邻相位差 $\\pi$ 的条带，使各带贡献两两抵消。全波带法也可用，但要处理首带的贡献，收敛慢。',
-        '除了计算上的便利，半波带划分在物理上有没有更深的理由？'
-      ],
-      answerList: [
-        {
-          user: 'zhou',
-          accepted: true,
-          time: '3 天前',
-          body: '物理原因是**相位差的均匀分割对应振幅矢量首尾相接的菱形**。相邻半波带的复振幅夹角恰为 $\\pi$，两两相消后总振幅只剩首带的投影。这个几何图像比全波带直观得多 —— 全波带的两两相消会留下首尾不闭合的缺口。'
-        }
-      ]
-    },
-    {
-      id: 't8',
-      chan: 'quantum',
-      user: 'su',
-      title: '路径积分中，经典路径的偏微分方程从哪个变分条件来？',
-      excerpt: '由 $\\delta S = 0$ 得到的是 $\\delta \\mathcal{L} = 0$，写成分子形式是 $\\frac{\\partial \\mathcal{L}}{\\partial q} - \\frac{d}{dt}\\frac{\\partial \\mathcal{L}}{\\partial \\dot q} = 0$。这个式子和通常的欧拉-拉格朗日方程差了一个符号约定，容易搞混。',
-      tags: ['lagrangian', 'feynman'],
-      votes: 38,
-      answers: 4,
-      views: 390,
-      time: '5 天前',
-      solved: true,
-      eq: '\\frac{d}{dt}\\frac{\\partial \\mathcal{L}}{\\partial \\dot q} - \\frac{\\partial \\mathcal{L}}{\\partial q} = 0',
-      eqNote: '欧拉-拉格朗日方程的标准形式',
-      body: [
-        '路径积分里由 $\\delta S = 0$ 得到的驻值条件，和教科书上的欧拉-拉格朗日方程式子长得不太一样，符号约定到底怎么统一的？',
-        '另外，如果作用量含显式时间依赖，这个变分过程的边界条件还需要额外讨论吗？'
-      ],
-      answerList: [
-        {
-          user: 'chen',
-          accepted: true,
-          time: '4 天前',
-          body: '两式只是约定不同：路径积分文献多用 $\\delta\\mathcal{L} = 0$ 把整体变分 $\\delta\\mathcal{L} = \\sum \\frac{\\partial \\mathcal{L}}{\\partial q}\\delta q$ 与 $\\sum \\frac{\\partial \\mathcal{L}}{\\partial \\dot q}\\delta\\dot q$ 分别积分后配对，$\\delta\\dot q = \\frac{d}{dt}\\delta q$，配对项移到左边。显式时间依赖不改变变分过程 —— 端点固定时 $\\delta t = 0$。'
-        }
-      ]
-    }
-  ];
+  /* ------------------------------------------------------------ 状态 */
 
   const state = {
-    pane: 'home',
+    view: 'home',
     sort: 'hot',
-    chan: null,
-    meTab: 'posts',
     chanFilter: null,
+    meTab: 'posts',
     votes: {},
     saved: new Set(['t1', 't5']),
     results: [],
     cursor: 0,
-    shown: 6,
-    openThread: null,
-    theme: 'dark'
+    shown: 10,
+    page: null,
+    theme: 'dark',
+    logCursor: 0
   };
+
+  const PAGE_SIZE = 10;
 
   /* ------------------------------------------------------------ 工具 */
 
@@ -290,31 +94,38 @@
 
   const chanById = (id) => CHANNELS.find((c) => c.id === id);
   const chanName = (id) => (chanById(id) || {}).name || '';
+  const tagById = (id) => TAGS.find((t) => t.id === id);
+  const sep = '<span class="sep" aria-hidden="true"></span>';
+  const AV = (key) => `https://api.dicebear.com/9.x/notionists/svg?seed=${(USERS[key] || {}).avatar || key}&backgroundColor=transparent`;
 
-  /* 主题正文里的 $...$ / $$...$$ 走 KaTeX。
-     自己切分而不是用 auto-render 的 DOM 遍历 —— 后者在嵌套结构里会漏节点，
-     且渲染时机依赖脚本加载顺序。直接调 katex.renderToString 更确定。 */
+  function sigLevel(seed) {
+    let h = 2166136261;
+    const str = String(seed);
+    for (let i = 0; i < str.length; i += 1) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return (h % 5) + 1;
+  }
+  const sigBars = (seed, cool) => {
+    const n = sigLevel(seed);
+    return `<span class="sig-bars${cool ? ' cool' : ''}" aria-hidden="true">${[0, 1, 2, 3, 4].map((i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}</span>`;
+  };
+
   const MATH_RE = /\$\$([\s\S]+?)\$\$|\$([^$\n]+?)\$/g;
 
-  /* 单条公式渲染为 HTML；KaTeX 不可用或出错时退回等宽文本 */
   function katexHTML(source, displayMode) {
-    const plain = source.trim();
+    const plain = String(source).trim();
     if (!window.katex) {
-      return `<code style="font-family:var(--font-mono)">${esc(plain)}</code>`;
+      return `<code style="font-family:var(--font-mono);font-size:.92em">${esc(plain)}</code>`;
     }
     try {
-      return katex.renderToString(plain, {
-        displayMode: !!displayMode,
-        throwOnError: false,
-        strict: false
-      });
+      return katex.renderToString(plain, { displayMode: !!displayMode, throwOnError: false, strict: false });
     } catch (e) {
-      return `<code style="font-family:var(--font-mono)">${esc(plain)}</code>`;
+      return `<code style="font-family:var(--font-mono);font-size:.92em">${esc(plain)}</code>`;
     }
   }
 
-  /* 把含公式标记的纯文本转成 HTML：
-     先做数学替换，其余部分转义，最后处理 **粗体** */
   function mathify(text) {
     const out = [];
     let last = 0;
@@ -330,109 +141,215 @@
     return out.join('').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   }
 
-  /* 把段落拆成 <p>，每段内联公式走 mathify */
-  function prose(text) {
-    return text.split('\n').filter(Boolean).map((line) => `<p>${mathify(line)}</p>`).join('');
-  }
+  const prose = (text) => text.split('\n').filter(Boolean).map((line) => `<p>${mathify(line)}</p>`).join('');
 
   let toastTimer = null;
-  function toast(msg, icon = 'ti-circle-check') {
+  function toast(msg, iconName = 'i-circle-check') {
     const el = $('#toast');
-    el.innerHTML = `<i class="ti ${icon}" aria-hidden="true"></i>${esc(msg)}`;
+    el.innerHTML = `${ic(iconName)}<span>${esc(msg)}</span>`;
     el.hidden = false;
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
   }
 
-  /* ------------------------------------------------------------ 渲染：频道 */
+  /* ------------------------------------------------------------ 滚动出场 */
 
-  function renderChannels() {
-    $('#chan-list').innerHTML = CHANNELS.map((c) => `
-      <button class="chan" type="button" data-chan="${c.id}">
-        <i class="ti ${c.icon}" aria-hidden="true"></i>
-        <span>${esc(c.name)}</span>
-        <b>${c.count}</b>
-      </button>`).join('');
+  const io = ('IntersectionObserver' in window)
+    ? new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          en.target.classList.remove('rv-wait');
+          en.target.classList.add('rv-on');
+          io.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 })
+    : null;
 
-    $('#chan-grid').innerHTML = CHANNELS.map((c) => `
-      <button class="ccard" type="button" data-chan="${c.id}">
-        <span class="ccard-top">
-          <i class="ti ${c.icon}" aria-hidden="true"></i>
-          <b>${esc(c.name)}</b>
-        </span>
-        <p>${esc(c.desc)}</p>
-        <span class="ccard-foot">
-          <span>${c.count} 主题</span>
-          <span>${THREADS.filter((t) => t.chan === c.id).length} 在讨论</span>
-        </span>
-      </button>`).join('');
+  function observeReveals(root = document) {
+    $$('.rv:not(.rv-on):not(.rv-wait)', root).forEach((el) => {
+      el.classList.add('rv-wait');
+      if (io) io.observe(el);
+      else { el.classList.remove('rv-wait'); el.classList.add('rv-on'); }
+    });
   }
 
-  function renderHot() {
-    const hot = [...THREADS].sort((a, b) => b.votes - a.votes).slice(0, 5);
-    $('#hot-list').innerHTML = hot.map((t, i) => `
-      <li>
-        <button class="hot" type="button" data-thread="${t.id}">
-          <i>${String(i + 1).padStart(2, '0')}</i>
-          <span>
-            <p>${esc(t.title)}</p>
-            <em>${esc(chanName(t.chan))} · ${t.answers} 回答</em>
-          </span>
-        </button>
-      </li>`).join('');
+  /* 兜底：任何仍在等待的元素，若已在视口内则点亮 */
+  function sweepReveals() {
+    $$('.rv.rv-wait').forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.remove('rv-wait');
+        el.classList.add('rv-on');
+        if (io) io.unobserve(el);
+      }
+    });
   }
 
-  function renderHomeStats() {
-    const answered = THREADS.filter((t) => t.answers > 0).length;
+  /* ------------------------------------------------------------ 渲染：焦点区 */
+
+  function renderMasthead() {
+    const t = THREADS[0];
+    const u = USERS[t.user] || {};
+    const c = chanById(t.chan);
+    const now = new Date();
+
+    $('#mh-date').textContent = `${String(now.getMonth() + 1).padStart(2, '0')} / ${String(now.getDate()).padStart(2, '0')}`;
+    $('#mh-title').textContent = t.title;
+
+    $('#mh-eq').innerHTML = `
+      <div class="eq-block">
+        <span class="eq-no">式 (1)</span>
+        <div class="eq-body">
+          ${katexHTML(t.eq, true)}
+          <p class="eq-note">${esc(t.eqNote)}</p>
+        </div>
+      </div>`;
+
+    $('#mh-byline').innerHTML = `
+      <span class="who"><img src="${AV(t.user)}" alt="" width="22" height="22">${esc(u.name || '')}</span>${sep}
+      <span>${esc(u.tag || '')}</span>${sep}
+      <span>${esc(t.time)}</span>${sep}
+      <span class="stat up">${ic('i-chevron-up', 'ic-sm')}<b data-hvote="${t.id}">${t.votes}</b></span>${sep}
+      <span class="stat">${ic('i-message', 'ic-sm')}<b>${t.answers}</b> 回答</span>${sep}
+      <span class="stat">${ic('i-eye', 'ic-sm')}<b>${t.views.toLocaleString()}</b></span>`;
+
+    $('#mh-enter').dataset.thread = t.id;
+    $('#mh-save').dataset.save = t.id;
+    refreshSaveButtons(t.id);
+
+    $('#mh-wm').innerHTML = katexHTML('i\\hbar\\,\\partial_t\\Psi = \\hat{H}\\Psi', false);
+  }
+
+  /* ------------------------------------------------------------ 渲染：数据条 */
+
+  function renderStatbar() {
     const totalVotes = THREADS.reduce((s, t) => s + t.votes, 0);
-    $('#home-stats').innerHTML = `
-      <div class="rstat"><span>累计赞同</span><b>${totalVotes.toLocaleString()}</b></div>
-      <div class="rstat"><span>已有回答</span><b>${answered} / ${THREADS.length}</b></div>
-      <div class="rstat"><span>注册成员</span><b>12,846</b></div>
-      <div class="rstat"><span>平均响应</span><b>2.4 小时</b></div>`;
+    const answered = THREADS.filter((t) => t.answers > 0).length;
+    const online = 12846;
+
+    $('#statbar').innerHTML = `
+      <div class="stat">
+        <span class="stat-v"><b data-count="${totalVotes}">0</b></span>
+        <span class="stat-k">累计赞同</span>
+      </div>
+      <div class="stat">
+        <span class="stat-v"><b data-count="${answered}">0</b><i>/ ${THREADS.length}</i></span>
+        <span class="stat-k">已回答</span>
+      </div>
+      <div class="stat">
+        <span class="stat-v"><b data-count="${online}" data-fmt="locale">0</b></span>
+        <span class="stat-k">在线成员</span>
+      </div>
+      <div class="stat">
+        <span class="stat-v"><b data-count="2.4" data-fmt="dec1">0</b><i>小时</i></span>
+        <span class="stat-k">平均响应</span>
+      </div>
+      <div class="stat-sig">
+        ${sigBars(`sig-${totalVotes}`)}
+        <span class="rd">${ic('i-signal', 'ic-sm')}<i>SIGNAL</i><b>${sigLevel(`sig-${totalVotes}`) * 20}</b>%</span>
+        <span class="rd">${ic('i-clock', 'ic-sm')}<i>UPDATE</i><b>2</b>min</span>
+      </div>`;
   }
 
-  /* ------------------------------------------------------------ 渲染：主题流 */
+  /* ------------------------------------------------------------ 渲染：左索引栏 */
 
-  function threadCard(t, i) {
-    const u = USERS[t.user];
+  function renderRail() {
+    $('#idx-channels').innerHTML = CHANNELS.map((c, i) => `
+      <button class="idx-row ${state.chanFilter === c.id ? 'is-on' : ''}" type="button" data-chan="${c.id}">
+        <span class="idx-no">${String(i + 1).padStart(2, '0')}</span>
+        <span class="idx-name">${esc(c.name)}</span>
+        <span class="idx-n">${c.count}</span>
+      </button>`).join('');
+
+    const contrib = USER_KEYS
+      .map((k) => ({ key: k, u: USERS[k] }))
+      .sort((a, b) => b.u.rep - a.u.rep)
+      .slice(0, 4);
+
+    $('#rail-contrib').innerHTML = contrib.map((x) => `
+      <div class="contrib-row">
+        <img src="${AV(x.key)}" alt="" width="24" height="24">
+        <b>${esc(x.u.name)}</b>
+        <span>${x.u.rep.toLocaleString()}</span>
+      </div>`).join('');
+  }
+
+  /* ------------------------------------------------------------ 渲染：频道目录 */
+
+  function renderChanIndex() {
+    const sorted = [...CHANNELS].sort((a, b) => b.count - a.count);
+    const total = CHANNELS.reduce((s, c) => s + c.count, 0);
+    $('#chan-sub').textContent = `${CHANNELS.length} 个分支 · ${total.toLocaleString()} 个主题`;
+
+    $('#chan-index').innerHTML = sorted.map((c, i) => {
+      const live = THREADS.filter((t) => t.chan === c.id).length;
+      return `
+        <li>
+          <button class="chan-row rv rv-on" style="--d:${Math.min(i * 55, 400)}ms" type="button" data-chango="${c.id}">
+            <span class="ci-no">${String(i + 1).padStart(2, '0')}</span>
+            <span class="ci-name">${esc(c.name)}</span>
+            <span class="ci-desc">${esc(c.desc)}</span>
+            <span class="ci-art">${chanArt(c.id)}</span>
+            <span class="ci-end">
+              <b class="ci-count">${c.count}</b>
+              <span class="ci-live">${live} 在讨论</span>
+              ${sigBars(`chan-${c.id}`)}
+            </span>
+          </button>
+        </li>`;
+    }).join('');
+  }
+
+  /* ------------------------------------------------------------ 渲染：标签术语表 */
+
+  function renderTags() {
+    const sum = TAGS.reduce((s, t) => s + t.n, 0);
+    const max = Math.max.apply(null, TAGS.map((t) => t.n));
+    $('#tag-sub').textContent = `${TAGS.length} 个概念 · ${sum} 次引用`;
+
+    $('#tag-wall').innerHTML = TAGS.map((t, i) => {
+      const pct = Math.round((t.n / max) * 100);
+      return `
+        <button class="trow rv rv-on" style="--d:${Math.min(i * 40, 400)}ms" type="button" data-taggo="${t.id}">
+          <b>${esc(t.name)}</b>
+          <span class="n">${t.n}</span>
+          <span class="bar"><i style="width:${pct}%"></i></span>
+        </button>`;
+    }).join('');
+  }
+
+  /* ------------------------------------------------------------ 渲染：讨论条目 */
+
+  function entryHTML(t, i) {
+    const u = USERS[t.user] || {};
     const score = t.votes + (state.votes[t.id] || 0);
     const saved = state.saved.has(t.id);
-    const voteState = state.votes[t.id] ? (state.votes[t.id] > 0 ? 'on-up' : 'on-down') : '';
+    const v = state.votes[t.id] || 0;
 
     return `
-      <article class="thread" style="animation-delay:${Math.min(i * 55, 400)}ms">
-        <div class="vote">
-          <button type="button" data-vote="up" data-id="${t.id}" class="${voteState === 'on-up' ? 'on-up' : ''}" aria-label="赞同">
-            <i class="ti ti-chevron-up" aria-hidden="true"></i>
-          </button>
-          <b>${score}</b>
-          <button type="button" data-vote="down" data-id="${t.id}" class="${voteState === 'on-down' ? 'on-down' : ''}" aria-label="反对">
-            <i class="ti ti-chevron-down" aria-hidden="true"></i>
-          </button>
+      <article class="entry" style="animation-delay:${Math.min(i * 42, 300)}ms">
+        <span class="entry-idx">${String(i + 1).padStart(3, '0')}</span>
+        <div class="entry-vote">
+          <button type="button" data-vote="up" data-id="${t.id}" class="${v > 0 ? 'on-up' : ''}" aria-label="赞同">${ic('i-chevron-up', 'ic-sm')}</button>
+          <span class="vnum"><span class="vnum-in" data-score="${t.id}">${score}</span></span>
+          <button type="button" data-vote="down" data-id="${t.id}" class="${v < 0 ? 'on-down' : ''}" aria-label="反对">${ic('i-chevron-down', 'ic-sm')}</button>
         </div>
-        <div class="t-body">
-          <button class="t-title" type="button" data-thread="${t.id}">${esc(t.title)}</button>
-          <div class="t-excerpt">${mathify(t.excerpt)}</div>
-          <div class="t-tags">
-            ${t.tags.map((g) => `<span class="tag" data-tag="${g}">${esc(g)}</span>`).join('')}
-            ${t.solved ? '<span class="tag is-on"><i class="ti ti-circle-check" style="font-size:13px;margin-right:4px"></i>已解决</span>' : ''}
+        <div class="entry-main">
+          <button class="entry-title" type="button" data-thread="${t.id}">${esc(t.title)}</button>
+          <div class="entry-tags">
+            ${t.tags.map((g) => `<button class="tag" type="button" data-taggo="${g}">${esc(g)}</button>`).join('')}
+            ${t.solved ? `<span class="tag solved">${ic('i-circle-check', 'ic-sm')}已解决</span>` : ''}
           </div>
-          <div class="t-meta">
-            <span class="who"><img src="${AV(t.user)}" alt="" width="18" height="18">${esc(u.name)}</span>
-            <span class="sep"></span>
-            <span>${esc(t.time)}</span>
-            <span class="sep"></span>
-            <span class="stat ${t.answers > 0 ? 'answered' : ''}">
-              <i class="ti ti-message" aria-hidden="true"></i><b>${t.answers}</b> 回答
-            </span>
-            <span class="sep"></span>
-            <span class="stat"><i class="ti ti-eye" aria-hidden="true"></i><b>${t.views}</b></span>
-            <button class="ibtn bookmark ${saved ? 'is-saved' : ''}" type="button" data-save="${t.id}" aria-label="${saved ? '取消收藏' : '收藏'}" title="${saved ? '取消收藏' : '收藏'}" style="width:26px;height:26px;font-size:15px">
-              <i class="ti ${saved ? 'ti-bookmark' : 'ti-bookmark-off'}" aria-hidden="true" style="${saved ? 'color:var(--accent)' : ''}"></i>
-            </button>
+          <div class="entry-foot">
+            <span class="who"><img src="${AV(t.user)}" alt="" width="18" height="18">${esc(u.name || '')}</span>${sep}
+            <span>${esc(t.time)}</span>${sep}
+            <span class="stat ${t.answers > 0 ? 'answered' : ''}">${ic('i-message', 'ic-sm')}<b>${t.answers}</b> 回答</span>${sep}
+            <span class="stat">${ic('i-eye', 'ic-sm')}<b>${t.views.toLocaleString()}</b></span>
+            <button class="bookmark-btn ${saved ? 'is-saved' : ''}" type="button" data-save="${t.id}" aria-label="${saved ? '取消收藏' : '收藏'}">${ic(saved ? 'i-bookmark-fill' : 'i-bookmark', 'ic-sm')}</button>
           </div>
         </div>
+        <div class="entry-eq">${katexHTML(t.eqRow, false)}</div>
       </article>`;
   }
 
@@ -440,190 +357,608 @@
     let list = [...THREADS];
     if (state.chanFilter) list = list.filter((t) => t.chan === state.chanFilter);
     if (state.sort === 'hot') list.sort((a, b) => b.votes - a.votes);
-    else if (state.sort === 'new') list.sort((a, b) => a.id.localeCompare(b.id));
+    else if (state.sort === 'new') list.sort((a, b) => b.id.localeCompare(a.id));
     else list.sort((a, b) => (a.answers - b.answers) || (b.votes - a.votes));
     return list;
   }
 
-  function renderThreads() {
+  function renderEntries() {
     const list = sortedThreads();
     const visible = list.slice(0, state.shown);
-    const box = $('#thread-list');
-    box.innerHTML = visible.length
-      ? visible.map(threadCard).join('')
+    $('#thread-list').innerHTML = visible.length
+      ? visible.map(entryHTML).join('')
       : '<p class="pempty" style="padding:40px 0">这个频道还没有人提问</p>';
 
     const more = $('.more-btn');
     more.hidden = visible.length >= list.length;
     more.querySelector('span').textContent = `加载更早的讨论（剩余 ${Math.max(0, list.length - visible.length)}）`;
 
-    const stat = $('[data-stat="threads"]');
-    if (stat) stat.textContent = String(list.length);
-  }
-
-  function renderBookmarks() {
-    const list = THREADS.filter((t) => state.saved.has(t.id));
-    const box = $('#bookmark-list');
-    box.innerHTML = list.length
-      ? list.map(threadCard).join('')
-      : '<p class="pempty" style="padding:40px 0">还没有收藏任何讨论</p>';
-  }
-
-  /* ------------------------------------------------------------ 渲染：标签 */
-
-  function renderTags() {
-    $('#tag-wall').innerHTML = TAGS.map((t) => `
-      <button class="tagcard" type="button" data-taggo="${t.id}">
-        <b>${esc(t.name)}</b>
-        <span>${esc(t.desc)}</span>
-        <em>${t.n} 主题</em>
-      </button>`).join('');
+    const note = $('#filter-note');
+    if (state.chanFilter) {
+      note.hidden = false;
+      note.querySelector('span').textContent = `仅看 ${chanName(state.chanFilter)}`;
+    } else {
+      note.hidden = true;
+    }
   }
 
   /* ------------------------------------------------------------ 渲染：我的 */
 
   function renderMe() {
-    const u = USERS.chen;
-    const myThreads = THREADS.filter((t) => t.user === 'chen');
-    const myAnswers = THREADS.flatMap((t) => t.answerList.filter((a) => a.user === 'chen').map((a) => ({ t, a })));
+    const key = USER_KEYS.find((k) => USERS[k].name === '陈砚博') || USER_KEYS[0];
+    const u = USERS[key];
+    const myThreads = THREADS.filter((t) => t.user === key);
+    const myAnswers = THREADS.flatMap((t) => t.answerList.filter((a) => a.user === key).map((a) => ({ t, a })));
 
     $('#me-card').innerHTML = `
       <div class="me-top">
-        <img src="${AV('chen')}" alt="${esc(u.name)}" width="62" height="62">
+        <img src="${AV(key)}" alt="${esc(u.name)}" width="56" height="56">
         <div>
           <h2>${esc(u.name)}</h2>
-          <p>${esc(u.tag)} · 已认证</p>
+          <p>${ic('i-circle-check', 'ic-sm')}${esc(u.tag)}</p>
         </div>
       </div>
       <p class="me-bio">写凝聚态，也写统计力学。擅长把粗粒化过程讲清楚，不擅长承认自己想错了。</p>
-      <div class="me-kpis">
-        <div><b>${u.rep.toLocaleString()}</b><span>声望</span></div>
-        <div><b>${myThreads.length + myAnswers.length}</b><span>贡献</span></div>
-        <div><b>92%</b><span>采纳率</span></div>
+      <div class="me-metrics">
+        <div class="me-metric"><span>声望</span><b>${u.rep.toLocaleString()}</b></div>
+        <div class="me-metric"><span>提问与回答</span><b>${myThreads.length + myAnswers.length}</b></div>
+        <div class="me-metric"><span>采纳率</span><b>92%</b></div>
       </div>`;
 
     const box = $('#me-list');
     if (state.meTab === 'posts') {
       box.innerHTML = myThreads.length
-        ? myThreads.map(threadCard).join('')
-        : '<p class="pempty" style="padding:40px 0">还没有提问</p>';
+        ? myThreads.map(entryHTML).join('')
+        : emptyBox('还没有提问', '去讨论区看看第一个问题');
     } else if (state.meTab === 'answers') {
       box.innerHTML = myAnswers.length
         ? myAnswers.map(({ t, a }, i) => `
-          <article class="thread" style="animation-delay:${i * 55}ms">
-            <div class="vote"><i class="ti ti-message" style="font-size:17px;color:var(--ink-3)"></i></div>
-            <div class="t-body">
-              <button class="t-title" type="button" data-thread="${t.id}">${esc(t.title)}</button>
-              <div class="t-excerpt">${mathify(a.body.slice(0, 120))}…</div>
-              <div class="t-meta">
-                <span class="stat ${a.accepted ? 'answered' : ''}">
-                  <i class="ti ${a.accepted ? 'ti-circle-check' : 'ti-message'}" aria-hidden="true"></i>
-                  <b>${a.accepted ? '已采纳' : '待采纳'}</b>
-                </span>
-                <span class="sep"></span>
+          <article class="entry" style="animation-delay:${Math.min(i * 42, 300)}ms">
+            <div class="entry-vote">${ic('i-message', 'ic-sm')}</div>
+            <div class="entry-main">
+              <button class="entry-title" type="button" data-thread="${t.id}">${esc(t.title)}</button>
+              <div class="entry-foot">
+                <span class="stat ${a.accepted ? 'answered' : ''}">${ic(a.accepted ? 'i-circle-check' : 'i-message', 'ic-sm')}<b>${a.accepted ? '已采纳' : '待采纳'}</b></span>${sep}
                 <span>${esc(a.time)}</span>
               </div>
             </div>
+            <div class="entry-eq"></div>
           </article>`).join('')
-        : '<p class="pempty" style="padding:40px 0">还没有回答</p>';
+        : emptyBox('还没有回答', '找一个问题开始推导');
     } else {
-      box.innerHTML = state.saved.size
-        ? THREADS.filter((t) => state.saved.has(t.id)).map(threadCard).join('')
-        : '<p class="pempty" style="padding:40px 0">还没有收藏</p>';
+      const list = THREADS.filter((t) => state.saved.has(t.id));
+      box.innerHTML = list.length
+        ? list.map(entryHTML).join('')
+        : emptyBox('还没有收藏', '看到想留的推导，按书签存进来');
     }
   }
 
-  /* ------------------------------------------------------------ 渲染：详情抽屉 */
-
-  function answerHTML(a, i) {
-    const u = USERS[a.user];
+  function emptyBox(text, btnText) {
     return `
-      <article class="answer ${a.accepted ? 'is-accepted' : ''}" style="animation:thread-in 380ms var(--ease) both;animation-delay:${i * 60}ms">
+      <div class="pempty">
+        <svg viewBox="0 0 120 84" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <ellipse cx="60" cy="42" rx="40" ry="15" stroke-dasharray="3 4"/>
+          <circle cx="60" cy="42" r="4" fill="currentColor" stroke="none"/>
+          <circle cx="98" cy="38" r="2.4" fill="currentColor" stroke="none"/>
+        </svg>
+        <p>${esc(text)}</p>
+        <button class="btn btn-ghost" type="button" data-nav="home">${esc(btnText)}</button>
+      </div>`;
+  }
+
+  /* ------------------------------------------------------------ 渲染：遥测栏 */
+
+  function renderTelemetry() {
+    const graph = buildGraph();
+    $('#net-big').innerHTML = graph.full;
+    $('#net-legend').innerHTML = `
+      <span><i></i>频道</span>
+      <span><i class="ghost"></i>成员</span>
+      <span>边宽 = 主题数</span>`;
+
+    $('#net-notes').innerHTML = CHANNELS.map((c, i) => {
+      const live = THREADS.filter((t) => t.chan === c.id).length;
+      return `
+        <article class="net-note">
+          <h3><i>${String(i + 1).padStart(2, '0')}</i>${esc(c.name)}</h3>
+          <p>${esc(c.desc)}</p>
+          <p class="note-meta"><span><b>${c.count}</b> 主题</span><span><b>${live}</b> 在讨论</span></p>
+        </article>`;
+    }).join('');
+
+    $('#rd-node').textContent = String(CHANNELS.length).padStart(2, '0');
+    $('#rd-link').textContent = String(graph.edgeCount).padStart(2, '0');
+    $('#rd-lat').textContent = String(8 + sigLevel('lat') * 2);
+
+    renderEventLog();
+  }
+
+  /* 讨论网络图：8 个频道节点 + 12 个成员节点，边由数据推导 */
+  function buildGraph() {
+    const CX = 280;
+    const CY = 210;
+    const RX = 168;
+    const RY = 142;
+
+    const chanNodes = CHANNELS.map((c, i) => {
+      const a = (i / CHANNELS.length) * Math.PI * 2 - Math.PI / 2;
+      const live = THREADS.filter((t) => t.chan === c.id).length;
+      return {
+        id: c.id,
+        name: c.name,
+        x: CX + Math.cos(a) * RX,
+        y: CY + Math.sin(a) * RY,
+        r: 6 + Math.min(9, c.count / 70),
+        live,
+        hot: live >= 3
+      };
+    });
+
+    const userNodes = USER_KEYS.map((k, i) => {
+      const a = (i / USER_KEYS.length) * Math.PI * 2 - Math.PI / 2 + 0.3;
+      return {
+        key: k,
+        x: CX + Math.cos(a) * (RX * 0.46),
+        y: CY + Math.sin(a) * (RY * 0.46)
+      };
+    });
+
+    const edges = [];
+    userNodes.forEach((u, i) => {
+      const d = chanNodes
+        .map((c, j) => ({ c, d: Math.hypot(c.x - u.x, c.y - u.y) }))
+        .sort((p, q) => p.d - q.d);
+      const targets = [d[0].c, d[1].c, d[2].c];
+      targets.forEach((c, k) => {
+        const live = (i + k) % 3 === 0;
+        edges.push({ a: u, b: c, live });
+      });
+    });
+
+    const full = `
+      ${edges.map((e) => `<path class="edge${e.live ? ' live' : ''}" d="M${e.a.x} ${e.a.y}L${e.b.x} ${e.b.y}"/>`).join('')}
+      <circle class="core" cx="${CX}" cy="${CY}" r="58"/>
+      ${userNodes.map((u) => `<circle class="us-node" cx="${u.x}" cy="${u.y}" r="4"/>`).join('')}
+      ${chanNodes.map((c) => `
+        <circle class="ch-node${c.hot ? ' hot' : ''}" cx="${c.x}" cy="${c.y}" r="${c.r.toFixed(1)}"/>
+        <text class="ch-label${c.hot ? ' hot' : ''}" x="${c.x.toFixed(1)}" y="${(c.y + c.r + 15).toFixed(1)}" text-anchor="middle">${esc(c.name)}</text>
+      `).join('')}`;
+
+    return { full, edgeCount: edges.length };
+  }
+
+  function eventItem(t, i) {
+    const u = USERS[t.user] || {};
+    const act = t.answers > 0 && i % 2 === 0 ? '回答了' : '在';
+    const where = act === '在' ? `${chanName(t.chan)} 提问` : `${chanName(t.chan)} 的提问`;
+    return `
+      <li class="${i === 0 ? 'is-new' : ''}">
+        <time>${esc(t.time)}</time>
+        <span><b>${esc(u.name || '')}</b> ${act} ${where}</span>
+      </li>`;
+  }
+
+  function renderEventLog() {
+    const pool = [...THREADS].sort((a, b) => b.votes - a.votes).slice(0, 24);
+    const start = state.logCursor % 12;
+    const items = pool.slice(start, start + 5);
+    $('#event-log').innerHTML = items.map(eventItem).join('');
+  }
+
+  /* ------------------------------------------------------------ 渲染：活跃成员段 */
+
+  function renderPeople() {
+    const list = USER_KEYS
+      .map((k) => {
+        const u = USERS[k];
+        const posts = THREADS.filter((t) => t.user === k).length;
+        const answers = THREADS.reduce((s, t) => s + t.answerList.filter((a) => a.user === k).length, 0);
+        return { key: k, u, posts, answers, total: posts + answers };
+      })
+      .sort((a, b) => b.u.rep - a.u.rep);
+
+    $('#people-grid').innerHTML = list.map((x, i) => `
+      <div class="person">
+        <div class="person-top">
+          <img src="${AV(x.key)}" alt="" width="44" height="44">
+          <div>
+            <b>${esc(x.u.name)}</b>
+            <span>${esc(x.u.tag)}</span>
+          </div>
+          <span class="person-rank">${String(i + 1).padStart(2, '0')}</span>
+        </div>
+        <div class="person-meta">
+          <span>声望 <b>${x.u.rep.toLocaleString()}</b></span>
+          <span>提问 <b>${x.posts}</b></span>
+          <span>回答 <b>${x.answers}</b></span>
+        </div>
+      </div>`).join('');
+
+    const totalVotes = THREADS.reduce((s, t) => s + t.votes, 0);
+    $('#foot-read').innerHTML = `
+      主题 <b>${THREADS.length}</b><br>
+      赞同 <b>${totalVotes.toLocaleString()}</b><br>
+      成员 <b>${USER_KEYS.length}</b><br>
+      频道 <b>${CHANNELS.length}</b>`;
+  }
+
+  /* ------------------------------------------------------------ 渲染：详情页 */
+
+  function eqBlock(tex, note, label, delay) {
+    return `
+      <div class="eq-block rv rv-on" style="--d:${delay}">
+        <span class="eq-no">${label}</span>
+        <div class="eq-body">
+          ${katexHTML(tex, true)}
+          ${note ? `<p class="eq-note">${esc(note)}</p>` : ''}
+        </div>
+      </div>`;
+  }
+
+  function answerHTML(a, eqNo, delay) {
+    const u = USERS[a.user] || {};
+    return `
+      <article class="answer rv rv-on" style="--d:${delay}">
         <div class="ans-head">
           <img src="${AV(a.user)}" alt="" width="26" height="26">
-          <b>${esc(u.name)}</b>
-          <span>${esc(u.tag)} · ${esc(a.time)}</span>
-          ${a.accepted ? '<span class="ans-badge"><i class="ti ti-circle-check" aria-hidden="true"></i>最佳回答</span>' : ''}
+          <b>${esc(u.name || '')}</b>
+          <span class="ans-tag">${esc(u.tag || '')}</span>
+          <span class="ans-time">${esc(a.time)}</span>
+          ${a.accepted ? `<span class="ans-badge">${ic('i-circle-check', 'ic-sm')}最佳回答</span>` : ''}
         </div>
         <div class="ans-body">${prose(a.body)}</div>
-        ${a.eq ? `<div class="eq">${katexHTML(a.eq, true)}</div>` : ''}
+        ${a.eq ? eqBlock(a.eq, a.eqNote, `式 (${eqNo})`, delay) : ''}
         <div class="ans-foot">
-          <span class="stat"><i class="ti ti-chevron-up" style="font-size:13px"></i>赞同</span>
-          <span>回复</span>
-          <span>分享</span>
+          <button type="button" data-action="ans-vote">${ic('i-chevron-up', 'ic-sm')}赞同</button>
+          <button type="button" data-action="ans-reply">${ic('i-message', 'ic-sm')}回复</button>
+          <button type="button" data-action="share">${ic('i-share', 'ic-sm')}分享</button>
         </div>
       </article>`;
   }
 
-  function openThread(id) {
+  function renderDetail(kind, id) {
+    state.page = null;
+    if (kind === 'thread') {
+      const t = THREADS.find((x) => x.id === id);
+      if (t) { state.page = id; return renderThreadDetail(t); }
+    } else if (kind === 'chan') {
+      const c = chanById(id);
+      if (c) return renderChanDetail(c);
+    } else if (kind === 'tag') {
+      const tag = tagById(id);
+      if (tag) return renderTagDetail(tag);
+    }
+    location.hash = '#/';
+  }
+
+  function renderThreadDetail(t) {
+    const u = USERS[t.user] || {};
+    const c = chanById(t.chan);
+    const voted = (state.votes[t.id] || 0) > 0;
+    const saved = state.saved.has(t.id);
+    const related = THREADS.filter((x) => x.chan === t.chan && x.id !== t.id)
+      .sort((a, b) => b.votes - a.votes).slice(0, 3);
+    const keyEqs = [t.eq, ...t.answerList.filter((a) => a.eq).map((a) => a.eq)];
+    const shown = t.answerList.length;
+    const rest = Math.max(0, t.answers - shown);
+    let eqNo = 2;
+
+    $('#detail-inner').innerHTML = `
+      <div class="detail-bar">
+        <a class="back-btn" href="#/"><svg class="ic"><use href="#i-arrow-left"/></svg><span>返回讨论</span></a>
+        <nav class="crumbs">
+          <span class="crumb-chan">${chanIcon(c.id)}${esc(c.name)}</span>
+          <span class="crumb-sep">${ic('i-chevron-right', 'ic-sm')}</span>
+          <span class="crumb-tags">${t.tags.map(esc).join('  ')}</span>
+        </nav>
+        <span class="crumb-read">
+          <span>THREAD <b>${esc(t.id.toUpperCase())}</b></span>
+          <span>VIEW <b>${t.views.toLocaleString()}</b></span>
+          <span>CHAN <b>${esc(c.id.toUpperCase())}</b></span>
+        </span>
+      </div>
+      <div class="article">
+        <div class="art-main">
+          <h1 class="art-title rv rv-on" style="--d:.02s">${esc(t.title)}</h1>
+          <div class="art-meta rv rv-on" style="--d:.06s">
+            <span class="who"><img src="${AV(t.user)}" alt="" width="24" height="24">${esc(u.name || '')}</span>${sep}
+            <span>${esc(u.tag || '')}</span>${sep}
+            <span>${esc(t.time)}</span>${sep}
+            <span class="stat">${ic('i-eye', 'ic-sm')}<b>${t.views.toLocaleString()}</b></span>
+          </div>
+          <div class="art-prose rv rv-on" style="--d:.1s">${prose(t.body.join('\n'))}</div>
+          ${eqBlock(t.eq, t.eqNote, '式 (1)', '.14s')}
+          <div class="art-tags rv rv-on" style="--d:.18s">
+            ${t.tags.map((g) => `<button class="tag" type="button" data-taggo="${g}">${esc(g)}</button>`).join('')}
+          </div>
+          <section class="answers">
+            <div class="ans-head-row rv rv-on" style="--d:.2s"><b>${t.answers}</b><span>个回答</span></div>
+            ${t.answerList.length
+              ? t.answerList.map((a, i) => answerHTML(a, eqNo++, '.22s')).join('')
+              : '<p class="pempty" style="padding:30px 0">还没有回答，成为第一个</p>'}
+            ${rest > 0 ? `
+              <p class="ans-more">${ic('i-layers', 'ic-sm')}仅显示前 ${shown} 条
+                <button type="button" data-action="more-answers">查看其余 ${rest} 条</button>
+              </p>` : ''}
+          </section>
+          <div class="reply-box rv rv-on" style="--d:.26s">
+            <textarea placeholder="补充你的推导。先写条件，再写结论。" id="reply-input" aria-label="写回答"></textarea>
+            <div class="reply-foot">
+              <span class="reply-hint">支持 $…$ 行内公式</span>
+              <button class="btn btn-solid glitch-btn" type="button" data-action="submit-reply">
+                ${ic('i-send')}<span data-text="发表回答">发表回答</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <aside class="art-aside">
+          <div class="aside-block rv rv-on" style="--d:.1s">
+            <p class="aside-h">${ic('i-user', 'ic-sm')}提问者</p>
+            <div class="author-row">
+              <img src="${AV(t.user)}" alt="" width="48" height="48">
+              <div>
+                <b>${esc(u.name || '')}</b>
+                <span>${esc(u.tag || '')}</span>
+                <div class="author-rep">${(u.rep || 0).toLocaleString()} 声望</div>
+              </div>
+            </div>
+          </div>
+          <div class="aside-block rv rv-on" style="--d:.14s">
+            <p class="aside-h">${ic('i-sigma', 'ic-sm')}数据</p>
+            <div class="aside-stat">${ic('i-chevron-up', 'ic-sm')}赞同<b data-qvote="${t.id}">${t.votes}</b></div>
+            <div class="aside-stat">${ic('i-message', 'ic-sm')}回答<b>${t.answers}</b></div>
+            <div class="aside-stat">${ic('i-eye', 'ic-sm')}浏览<b>${t.views.toLocaleString()}</b></div>
+            <div class="aside-stat">${ic('i-signal', 'ic-sm')}信号${sigBars(`sig-${t.id}`, true)}</div>
+            <div class="aside-actions">
+              <button class="btn ${voted ? 'btn-ghost is-voted' : 'btn-solid glitch-btn'}" type="button" data-vote="up" data-id="${t.id}">
+                ${ic(voted ? 'i-check' : 'i-chevron-up', 'ic-sm')}<span data-text="${voted ? '已赞同' : '赞同'}">${voted ? '已赞同' : '赞同'}</span>
+              </button>
+              <button class="btn btn-ghost ${saved ? 'is-on' : ''}" type="button" data-save="${t.id}" aria-label="${saved ? '取消收藏' : '收藏'}">
+                ${ic(saved ? 'i-bookmark-fill' : 'i-bookmark', 'ic-sm')}
+              </button>
+              <button class="btn btn-ghost" type="button" data-action="share" aria-label="分享">
+                ${ic('i-share', 'ic-sm')}
+              </button>
+            </div>
+          </div>
+          <div class="aside-block rv rv-on" style="--d:.16s">
+            <p class="aside-h">${ic('i-sigma', 'ic-sm')}关键公式</p>
+            <div class="aside-eqs">
+              ${keyEqs.map((eq, i) => `
+                <div class="aside-eq">
+                  <span class="aside-eq-no">式 (${i + 1})</span>
+                  <div class="aside-eq-body">${katexHTML(eq, true)}</div>
+                </div>`).join('')}
+            </div>
+          </div>
+          ${related.length ? `
+            <div class="aside-block rv rv-on" style="--d:.18s">
+              <p class="aside-h">${ic('i-message', 'ic-sm')}相关讨论</p>
+              ${related.map((x) => `
+                <button class="rel-row" type="button" data-thread="${x.id}">
+                  <p>${esc(x.title)}</p><b>${x.votes}</b>
+                </button>`).join('')}
+              <button class="rel-more" type="button" data-chango="${t.chan}">
+                查看 ${esc(c.name)} 全部 ${ic('i-chevron-right', 'ic-sm')}
+              </button>
+            </div>` : ''}
+        </aside>
+      </div>`;
+  }
+
+  function renderChanDetail(c) {
+    const live = THREADS.filter((t) => t.chan === c.id);
+    $('#detail-inner').innerHTML = `
+      <div class="detail-bar">
+        <a class="back-btn" href="#/channels"><svg class="ic"><use href="#i-arrow-left"/></svg><span>返回频道</span></a>
+        <nav class="crumbs">
+          <span class="crumb-chan">${ic('i-grid')}频道</span>
+          <span class="crumb-sep">${ic('i-chevron-right', 'ic-sm')}</span>
+          <span class="crumb-tags">${esc(c.name)}</span>
+        </nav>
+        <span class="crumb-read"><span>CHAN <b>${esc(c.id.toUpperCase())}</b></span><span>THREAD <b>${live.length}</b></span></span>
+      </div>
+      <div class="subpage-head rv rv-on" style="--d:.02s">
+        <span class="subpage-art">${chanArt(c.id)}</span>
+        <div class="subpage-copy">
+          <h1>${esc(c.name)}</h1>
+          <p class="sub-desc">${esc(c.desc)}</p>
+          <div class="sub-meta"><span><b>${c.count}</b> 个主题</span><span><b>${live.length}</b> 在讨论</span><span>信号 ${sigBars(`chan-${c.id}`)}</span></div>
+        </div>
+      </div>
+      <div class="entries">
+        ${live.length
+          ? live.map(entryHTML).join('')
+          : '<p class="pempty" style="padding:40px 0">这个频道还没有人提问</p>'}
+      </div>`;
+  }
+
+  function renderTagDetail(tag) {
+    const list = THREADS.filter((t) => t.tags.includes(tag.id));
+    $('#detail-inner').innerHTML = `
+      <div class="detail-bar">
+        <a class="back-btn" href="#/tags"><svg class="ic"><use href="#i-arrow-left"/></svg><span>返回标签</span></a>
+        <nav class="crumbs">
+          <span class="crumb-chan">${ic('i-tag')}标签</span>
+          <span class="crumb-sep">${ic('i-chevron-right', 'ic-sm')}</span>
+          <span class="crumb-tags">${esc(tag.name)}</span>
+        </nav>
+        <span class="crumb-read"><span>TAG <b>${esc(tag.id.toUpperCase())}</b></span><span>THREAD <b>${list.length}</b></span></span>
+      </div>
+      <div class="subpage-head rv rv-on" style="--d:.02s">
+        <div class="subpage-copy">
+          <h1 class="tagpage-name">${esc(tag.name)}</h1>
+          <p class="sub-desc">${esc(tag.desc)}</p>
+          <div class="sub-meta"><span><b>${tag.n}</b> 次引用</span><span><b>${list.length}</b> 个主题</span></div>
+        </div>
+      </div>
+      <div class="entries">
+        ${list.length
+          ? list.map(entryHTML).join('')
+          : '<p class="pempty" style="padding:40px 0">这个标签下还没有主题</p>'}
+      </div>`;
+  }
+
+  /* ------------------------------------------------------------ 路由 */
+
+  function parseRoute() {
+    const raw = (location.hash || '#/').replace(/^#/, '').replace(/^\//, '');
+    const parts = raw.split('/').filter(Boolean);
+    if (!parts.length) return { view: 'home' };
+    const [head, param] = parts;
+    if (head === 'thread' && param) return { view: 'detail', kind: 'thread', id: param };
+    if (head === 'chan' && param) return { view: 'detail', kind: 'chan', id: param };
+    if (head === 'tag' && param) return { view: 'detail', kind: 'tag', id: param };
+    if (['home', 'channels', 'tags', 'me'].indexOf(head) >= 0) return { view: head };
+    return { view: 'home' };
+  }
+
+  function navigate() {
+    const r = parseRoute();
+    state.view = r.view;
+
+    const routeEl = $(`.route[data-route="${r.view}"]`);
+    $$('.route').forEach((s) => s.classList.toggle('is-on', s.dataset.route === r.view));
+
+    const navKey = r.view === 'detail'
+      ? ({ thread: 'home', chan: 'channels', tag: 'tags' }[r.kind] || 'home')
+      : r.view;
+    $$('.bnav').forEach((b) => b.classList.toggle('is-on', b.dataset.route === navKey));
+    positionInd($('#nav-ind'), $('.bnav.is-on'));
+
+    if (r.view === 'detail') renderDetail(r.kind, r.id);
+    if (r.view === 'me') renderMe();
+    if (r.view === 'home') renderEntries();
+
+    /* 段落级重新出场：进入视图时把滚动出场区块重新压暗，进入视口再点亮 */
+    if (routeEl) {
+      $$('.rv-scroll', routeEl).forEach((el) => {
+        el.classList.remove('rv-on');
+        el.classList.add('rv-wait');
+      });
+    }
+
+    jumpTop();
+    requestAnimationFrame(() => {
+      observeReveals();
+      sweepReveals();
+      if (r.view === 'me') positionInd($('#me-seg .seg-ind'), $('#me-seg button.is-on'));
+    });
+  }
+
+  /* 立即回到顶部，不受 html{scroll-behavior:smooth} 影响 */
+  function jumpTop() {
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    html.style.scrollBehavior = prev;
+  }
+
+  /* 立即滚动到指定位置 */
+  function scrollToY(y) {
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    html.style.scrollBehavior = prev;
+  }
+
+  function positionInd(ind, btn) {
+    if (!ind || !btn || !btn.offsetParent) return;
+    ind.style.width = `${btn.offsetWidth}px`;
+    ind.style.transform = `translateX(${btn.offsetLeft}px)`;
+  }
+
+  /* ------------------------------------------------------------ 投票 / 收藏 */
+
+  function setScore(el, val) {
+    el.textContent = val;
+    el.classList.remove('roll');
+    void el.offsetWidth;
+    el.classList.add('roll');
+  }
+
+  function refreshVoteUI(id) {
     const t = THREADS.find((x) => x.id === id);
     if (!t) return;
-    state.openThread = id;
-    const u = USERS[t.user];
-    const c = chanById(t.chan);
+    const v = state.votes[id] || 0;
 
-    $('#drawer-inner').innerHTML = `
-      <header class="dr-head">
-        <div>
-          <span class="dr-chan"><i class="ti ${c.icon}" aria-hidden="true"></i>${esc(c.name)}</span>
-          <h2>${esc(t.title)}</h2>
-        </div>
-        <button class="ibtn" type="button" data-action="close-drawer" aria-label="关闭">
-          <i class="ti ti-x" aria-hidden="true"></i>
-        </button>
-      </header>
+    $$(`[data-score="${id}"]`).forEach((el) => setScore(el, t.votes));
+    $$(`[data-vote][data-id="${id}"]`).forEach((btn) => {
+      const isUp = btn.dataset.vote === 'up';
+      btn.classList.toggle('on-up', isUp && v > 0);
+      btn.classList.toggle('on-down', !isUp && v < 0);
+    });
 
-      <div class="t-meta" style="margin-top:0;margin-bottom:var(--s5)">
-        <span class="who"><img src="${AV(t.user)}" alt="" width="18" height="18">${esc(u.name)}</span>
-        <span class="sep"></span>
-        <span>${esc(t.time)}</span>
-        <span class="sep"></span>
-        <span class="stat"><i class="ti ti-eye" aria-hidden="true"></i><b>${t.views}</b></span>
-      </div>
-
-      <div class="dr-body">${prose(t.body.join('\n'))}</div>
-      <div class="eq">${katexHTML(t.eq, true)}</div>
-      <p class="eq-note">${esc(t.eqNote)}</p>
-
-      <div class="t-tags">
-        ${t.tags.map((g) => `<span class="tag" data-tag="${g}">${esc(g)}</span>`).join('')}
-      </div>
-
-      <section class="dr-answers">
-        <h3>${t.answers} 个回答</h3>
-        ${t.answerList.length
-          ? t.answerList.map(answerHTML).join('')
-          : '<p class="pempty" style="padding:26px 0">还没有回答，成为第一个</p>'}
-      </section>
-
-      <div class="reply-box">
-        <textarea placeholder="补充你的推导。先写条件，再写结论。" id="reply-input"></textarea>
-        <div class="reply-foot">
-          <span>支持 $...$ 行内公式</span>
-          <button class="btn btn-solid" type="button" data-action="submit-reply">
-            <i class="ti ti-send" aria-hidden="true"></i>发表回答
-          </button>
-        </div>
-      </div>`;
-
-    $('#scrim').hidden = false;
-    $('#drawer').hidden = false;
-    $('#drawer').scrollTop = 0;
+    const qv = $(`[data-qvote="${id}"]`);
+    if (qv) qv.textContent = t.votes;
+    const hv = $(`[data-hvote="${id}"]`);
+    if (hv) hv.textContent = t.votes;
   }
 
-  function closeDrawer() {
-    $('#scrim').hidden = true;
-    $('#drawer').hidden = true;
+  function castVote(id, dir) {
+    const t = THREADS.find((x) => x.id === id);
+    if (!t) return;
+    const cur = state.votes[id] || 0;
+    const next = cur === dir ? 0 : dir;
+    state.votes[id] = next;
+    t.votes += next - cur;
+    refreshVoteUI(id);
+
+    if (state.view === 'home') renderEntries();
+    if (state.view === 'me') renderMe();
+    if (state.view === 'detail' && state.page === id) {
+      const keep = window.scrollY;
+      const ta = $('#reply-input');
+      const keepText = ta ? ta.value : '';
+      renderDetail('thread', id);
+      scrollToY(keep);
+      const ta2 = $('#reply-input');
+      if (ta2) ta2.value = keepText;
+    }
+
+    toast(next === 0 ? '已取消投票' : next > 0 ? '已赞同' : '已标记有争议',
+      next > 0 ? 'i-chevron-up' : next < 0 ? 'i-alert' : 'i-chevron-up');
   }
 
-  /* ------------------------------------------------------------ 视图切换 */
+  function refreshSaveButtons(id) {
+    const saved = state.saved.has(id);
+    $$(`[data-save="${id}"]`).forEach((btn) => {
+      if (btn.classList.contains('bookmark-btn')) {
+        btn.classList.toggle('is-saved', saved);
+        btn.innerHTML = ic(saved ? 'i-bookmark-fill' : 'i-bookmark', 'ic-sm');
+        btn.setAttribute('aria-label', saved ? '取消收藏' : '收藏');
+      } else {
+        btn.classList.toggle('is-on', saved);
+        const use = btn.querySelector('use');
+        if (use) use.setAttribute('href', saved ? '#i-bookmark-fill' : '#i-bookmark');
+        const span = btn.querySelector('span');
+        if (span && btn.id === 'mh-save') span.textContent = saved ? '已收藏' : '收藏';
+      }
+    });
+  }
 
-  function showPane(name) {
-    state.pane = name;
-    $$('.pane').forEach((p) => p.classList.toggle('is-on', p.dataset.pane === name));
-    $$('.bnav').forEach((b) => b.classList.toggle('is-on', b.dataset.nav === name));
-    const pane = $(`.pane[data-pane="${name}"]`);
-    if (pane) pane.scrollTop = 0;
+  function toggleSave(id) {
+    if (state.saved.has(id)) { state.saved.delete(id); toast('已取消收藏', 'i-bookmark'); }
+    else { state.saved.add(id); toast('已收藏', 'i-bookmark'); }
+    refreshSaveButtons(id);
+    if (state.view === 'home') renderEntries();
+    if (state.view === 'me' && state.meTab !== 'answers') renderMe();
+  }
+
+  /* ------------------------------------------------------------ 主题切换 */
+
+  let starsRefresh = null;
+
+  function toggleTheme() {
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = state.theme;
+    try { localStorage.setItem('qj-theme', state.theme); } catch (e) { /* 忽略 */ }
+    const btn = $('[data-action="theme"] use');
+    if (btn) btn.setAttribute('href', state.theme === 'dark' ? '#i-moon' : '#i-sun');
+    if (starsRefresh) starsRefresh();
+    toast(state.theme === 'dark' ? '已切换到暗色' : '已切换到亮色', state.theme === 'dark' ? 'i-moon' : 'i-sun');
   }
 
   /* ------------------------------------------------------------ 命令面板 */
@@ -632,49 +967,61 @@
     const q = query.trim().toLowerCase();
 
     const actions = [
-      { kind: 'action', action: 'compose', label: '发起提问', hint: '提问', icon: 'ti-plus' },
-      { kind: 'action', action: 'go-channels', label: '浏览全部频道', hint: '导航', icon: 'ti-layout' },
-      { kind: 'action', action: 'go-tags', label: '按标签检索', hint: '导航', icon: 'ti-tags' },
-      { kind: 'action', action: 'toggle-theme', label: '切换明暗主题', hint: '外观', icon: 'ti-moon' }
+      { kind: 'action', action: 'compose', label: '发起提问', hint: '操作', icon: 'i-plus' },
+      { kind: 'action', action: 'go-channels', label: '浏览全部频道', hint: '导航', icon: 'i-grid' },
+      { kind: 'action', action: 'go-tags', label: '按标签检索', hint: '导航', icon: 'i-tag' },
+      { kind: 'action', action: 'toggle-theme', label: '切换明暗主题', hint: '外观', icon: 'i-moon' }
     ].filter((a) => !q || a.label.toLowerCase().includes(q));
 
     const threads = THREADS
       .filter((t) => !q
         || t.title.toLowerCase().includes(q)
-        || t.excerpt.toLowerCase().includes(q)
+        || (t.excerpt || '').toLowerCase().includes(q)
         || chanName(t.chan).toLowerCase().includes(q)
         || t.tags.some((g) => g.includes(q)))
-      .slice(0, 7)
-      .map((t) => ({ kind: 'thread', id: t.id, label: t.title, hint: chanName(t.chan), icon: 'ti-math-function' }));
+      .slice(0, 8)
+      .map((t) => ({ kind: 'thread', id: t.id, label: t.title, hint: chanName(t.chan), icon: 'i-sigma' }));
 
     const tags = TAGS
       .filter((t) => !q || t.name.includes(q) || t.desc.toLowerCase().includes(q))
-      .slice(0, 4)
-      .map((t) => ({ kind: 'tag', id: t.id, label: t.name, hint: `${t.n} 主题`, icon: 'ti-tag' }));
+      .slice(0, 5)
+      .map((t) => ({ kind: 'tag', id: t.id, label: t.name, hint: `${t.n} 主题`, icon: 'i-tag' }));
 
-    const results = actions.concat(threads, tags);
-    state.results = results;
+    const groups = [
+      { name: '操作', items: actions },
+      { name: '讨论', items: threads },
+      { name: '标签', items: tags }
+    ].filter((g) => g.items.length);
+
+    state.results = [];
+    let html = '';
+    let idx = 0;
+    for (const g of groups) {
+      html += `<p class="pal-h">${g.name}</p>`;
+      for (const item of g.items) {
+        state.results.push(item);
+        html += `
+          <button class="pitem ${idx === 0 ? 'is-cursor' : ''}" type="button" data-index="${idx}">
+            ${ic(item.icon)}
+            <span>${esc(item.label)}</span>
+            <small>${esc(item.hint)}</small>
+          </button>`;
+        idx += 1;
+      }
+    }
     state.cursor = 0;
-
-    $('#pal-list').innerHTML = results.length
-      ? results.map((r, i) => `
-        <button class="pitem ${i === 0 ? 'is-cursor' : ''}" type="button" data-index="${i}">
-          <i class="ti ${r.icon}" aria-hidden="true"></i>
-          <span>${esc(r.label)}</span>
-          <small>${esc(r.hint)}</small>
-        </button>`).join('')
-      : '<p class="pempty">没有匹配的内容</p>';
+    $('#pal-list').innerHTML = html || '<p class="pempty" style="padding:30px 0">没有匹配的内容</p>';
   }
 
   function runPalette(index) {
     const item = state.results[index];
     if (!item) return;
     closePalette();
-    if (item.kind === 'thread') { openThread(item.id); return; }
-    if (item.kind === 'tag') { showPane('tags'); toast(`标签 ${item.id}`, 'ti-tag'); return; }
+    if (item.kind === 'thread') { location.hash = `#/thread/${item.id}`; return; }
+    if (item.kind === 'tag') { location.hash = `#/tag/${item.id}`; return; }
     if (item.action === 'compose') openComposer();
-    if (item.action === 'go-channels') showPane('channels');
-    if (item.action === 'go-tags') showPane('tags');
+    if (item.action === 'go-channels') location.hash = '#/channels';
+    if (item.action === 'go-tags') location.hash = '#/tags';
     if (item.action === 'toggle-theme') toggleTheme();
   }
 
@@ -685,9 +1032,7 @@
     $('#pal-input').focus();
   }
 
-  function closePalette() {
-    $('#palette').hidden = true;
-  }
+  function closePalette() { $('#palette').hidden = true; }
 
   /* ------------------------------------------------------------ 提问编辑器 */
 
@@ -698,9 +1043,7 @@
     $('#cp-title').focus();
   }
 
-  function closeComposer() {
-    $('#composer').hidden = true;
-  }
+  function closeComposer() { $('#composer').hidden = true; }
 
   function insertTex(snippet) {
     const ta = $('#cp-body');
@@ -708,22 +1051,14 @@
     const end = ta.selectionEnd;
     const text = ta.value;
     let insert = snippet;
+    let caret = start + snippet.length;
     if (snippet.endsWith('{}')) {
       insert = snippet.replace('{}', '{$}');
+      caret = start + insert.indexOf('{$') + 2;
     }
     ta.value = text.slice(0, start) + insert + text.slice(end);
     ta.focus();
-    ta.setSelectionRange(start + insert.length - (insert.includes('{}') ? 3 : 0), start + insert.length - (insert.includes('{}') ? 3 : 0));
-  }
-
-  /* ------------------------------------------------------------ 主题切换 */
-
-  function toggleTheme() {
-    state.theme = state.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = state.theme;
-    const btn = $('[data-action="theme"] .ti');
-    btn.className = `ti ${state.theme === 'dark' ? 'ti-moon' : 'ti-sun'}`;
-    toast(state.theme === 'dark' ? '已切到暗色' : '已切到亮色', state.theme === 'dark' ? 'ti-moon' : 'ti-sun');
+    ta.setSelectionRange(caret, caret);
   }
 
   /* ------------------------------------------------------------ 事件 */
@@ -731,197 +1066,153 @@
   document.addEventListener('click', (e) => {
     const t = e.target;
 
-    /* 导航 */
     const nav = t.closest('[data-nav]');
     if (nav) {
       e.preventDefault();
-      showPane(nav.dataset.nav);
-      if (nav.dataset.nav === 'me') renderMe();
-      if (nav.dataset.nav === 'bookmarks') renderBookmarks();
+      location.hash = nav.dataset.nav === 'me' ? '#/me' : '#/';
       return;
     }
 
-    /* 主题详情 */
     const threadBtn = t.closest('[data-thread]');
-    if (threadBtn) { openThread(threadBtn.dataset.thread); return; }
+    if (threadBtn) { location.hash = `#/thread/${threadBtn.dataset.thread}`; return; }
 
-    /* 频道筛选 */
+    const chanGo = t.closest('[data-chango]');
+    if (chanGo) { location.hash = `#/chan/${chanGo.dataset.chango}`; return; }
+
     const chanBtn = t.closest('[data-chan]');
     if (chanBtn) {
       const id = chanBtn.dataset.chan;
       state.chanFilter = state.chanFilter === id ? null : id;
-      $$('#chan-list .chan').forEach((b) => b.classList.toggle('is-on', b.dataset.chan === state.chanFilter));
-      state.shown = 6;
-      showPane('home');
-      renderThreads();
-      toast(state.chanFilter ? `只看「${chanName(id)}」` : '已显示全部频道', 'ti-filter');
+      renderRail();
+      state.shown = PAGE_SIZE;
+      if (state.view !== 'home') location.hash = '#/';
+      else renderEntries();
       return;
     }
 
-    /* 投票 */
     const voteBtn = t.closest('[data-vote]');
-    if (voteBtn) {
-      const id = voteBtn.dataset.id;
-      const dir = voteBtn.dataset.vote === 'up' ? 1 : -1;
-      const cur = state.votes[id] || 0;
-      const next = cur === dir ? 0 : dir;
-      state.votes[id] = next;
-      const score = THREADS.find((x) => x.id === id);
-      score.votes += next - cur;
-      renderThreads();
-      if (state.pane === 'me') renderMe();
-      toast(next === 0 ? '已取消投票' : next > 0 ? '已赞同' : '已标记有争议', 'ti-chevron-up');
-      return;
-    }
+    if (voteBtn) { castVote(voteBtn.dataset.id, voteBtn.dataset.vote === 'up' ? 1 : -1); return; }
 
-    /* 收藏 */
     const saveBtn = t.closest('[data-save]');
-    if (saveBtn) {
-      const id = saveBtn.dataset.save;
-      if (state.saved.has(id)) { state.saved.delete(id); toast('已取消收藏', 'ti-bookmark'); }
-      else { state.saved.add(id); toast('已收藏', 'ti-bookmark'); }
-      renderThreads();
-      renderBookmarks();
-      if (state.pane === 'me') renderMe();
-      return;
-    }
+    if (saveBtn) { toggleSave(saveBtn.dataset.save); return; }
 
-    /* 标签 */
-    const tagBtn = t.closest('[data-tag]');
-    if (tagBtn) {
-      $('#pal-input').value = tagBtn.dataset.tag;
-      openPalette(tagBtn.dataset.tag);
-      $('#palette').hidden = false;
-      $('#pal-input').focus();
-      return;
-    }
     const tagGo = t.closest('[data-taggo]');
-    if (tagGo) {
-      $('#pal-input').value = tagGo.dataset.taggo;
-      openPalette(tagGo.dataset.taggo);
-      $('#palette').hidden = false;
-      $('#pal-input').focus();
-      return;
-    }
+    if (tagGo) { location.hash = `#/tag/${tagGo.dataset.taggo}`; return; }
 
-    /* 排序 */
     const sortBtn = t.closest('#sort-seg button');
     if (sortBtn) {
       state.sort = sortBtn.dataset.sort;
       $$('#sort-seg button').forEach((b) => b.classList.toggle('is-on', b === sortBtn));
-      state.shown = 6;
-      renderThreads();
+      positionInd($('#seg-ind'), sortBtn);
+      state.shown = PAGE_SIZE;
+      renderEntries();
       return;
     }
 
-    /* 我的 tab */
     const meTab = t.closest('#me-seg button');
     if (meTab) {
       state.meTab = meTab.dataset.tab;
       $$('#me-seg button').forEach((b) => b.classList.toggle('is-on', b === meTab));
+      positionInd($('#me-seg .seg-ind'), meTab);
       renderMe();
       return;
     }
 
-    /* 命令面板项 */
     const pitem = t.closest('.pitem');
     if (pitem) { runPalette(Number(pitem.dataset.index)); return; }
 
-    /* 动作 */
     const act = t.closest('[data-action]');
     if (act) {
       const a = act.dataset.action;
       if (a === 'omni') { openPalettePanel(); return; }
       if (a === 'close-modal') { closeComposer(); return; }
-      if (a === 'close-drawer') { closeDrawer(); return; }
       if (a === 'compose') { openComposer(); return; }
       if (a === 'theme') { toggleTheme(); return; }
-      if (a === 'notify') { toast('没有新的未读提醒', 'ti-bell'); return; }
-      if (a === 'load-more') {
-        state.shown += 4;
-        renderThreads();
+      if (a === 'notify') { toast('暂无新提醒', 'i-bell'); return; }
+      if (a === 'share') { toast('链接已复制', 'i-link'); return; }
+      if (a === 'ans-vote') { act.classList.toggle('is-on'); toast('已赞同', 'i-chevron-up'); return; }
+      if (a === 'more-answers') { toast('演示数据仅展示部分回答', 'i-layers'); return; }
+      if (a === 'ans-reply') {
+        const ta = $('#reply-input');
+        if (ta) { ta.focus(); ta.scrollIntoView({ block: 'center', behavior: REDUCE ? 'auto' : 'smooth' }); }
         return;
       }
+      if (a === 'load-more') { state.shown += PAGE_SIZE; renderEntries(); return; }
       if (a === 'submit-question') {
         const title = $('#cp-title').value.trim();
         const body = $('#cp-body').value.trim();
-        if (!title || !body) { toast('标题和正文都要填', 'ti-alert-circle'); return; }
-        const chan = $('.chip.is-on');
-        const chid = chan ? chan.dataset.pickChan : 'quantum';
+        if (!title || !body) { toast('标题和正文都要填', 'i-alert'); return; }
+        const chip = $('#cp-chans .chip.is-on');
+        const chid = chip ? chip.dataset.pickChan : CHANNELS[0].id;
         THREADS.unshift({
-          id: 't' + (THREADS.length + 1),
-          chan: chid,
-          user: 'chen',
-          title,
-          excerpt: body.slice(0, 90),
+          id: 'n' + (THREADS.length + 1),
+          chan: chid, user: 'chen',
+          title, excerpt: body.slice(0, 90),
+          eqRow: 'E = mc^2',
           tags: ($('#cp-tag').value.trim().split(/\s+/).filter(Boolean) || ['new']).slice(0, 4),
           votes: 0, answers: 0, views: 1, time: '刚刚', solved: false,
-          eq: 'E = mc^2', eqNote: '占位公式',
+          eq: 'E = mc^2', eqNote: '质能等价',
           body: [body], answerList: []
         });
         closeComposer();
         $('#cp-title').value = '';
         $('#cp-body').value = '';
         $('#cp-tag').value = '';
-        state.shown = 6;
-        showPane('home');
-        renderThreads();
-        renderChannels();
-        toast('提问已发布', 'ti-circle-check');
+        state.shown = PAGE_SIZE;
+        renderEntries();
+        renderChanIndex();
+        renderRail();
+        toast('提问已发布', 'i-circle-check');
         return;
       }
       if (a === 'submit-reply') {
         const ta = $('#reply-input');
-        if (!ta.value.trim()) { toast('先写点内容', 'ti-alert-circle'); return; }
-        const t = THREADS.find((x) => x.id === state.openThread);
-        if (t) {
-          t.answers += 1;
-          t.answerList.push({
-            user: 'chen', accepted: false, time: '刚刚', body: ta.value.trim()
-          });
-          state.shown = 6;
-          renderThreads();
-          openThread(t.id);
+        if (!ta || !ta.value.trim()) { toast('先写点内容', 'i-alert'); return; }
+        const t2 = THREADS.find((x) => x.id === (state.page || ''));
+        if (t2) {
+          t2.answers += 1;
+          t2.answerList.push({ user: 'chen', accepted: false, time: '刚刚', body: ta.value.trim() });
+          const keep = window.scrollY;
+          renderDetail('thread', t2.id);
+          scrollToY(keep);
+          toast('回答已发表', 'i-circle-check');
         }
-        ta.value = '';
-        toast('回答已发表', 'ti-circle-check');
         return;
       }
       return;
     }
 
-    /* 公式工具 */
     const texBtn = t.closest('[data-tex]');
     if (texBtn) { insertTex(texBtn.dataset.tex); return; }
 
-    /* 频道 chip */
     const chip = t.closest('[data-pick-chan]');
     if (chip) {
-      $$('.chip').forEach((c) => c.classList.toggle('is-on', c === chip));
+      $$('#cp-chans .chip').forEach((c) => c.classList.toggle('is-on', c === chip));
       return;
     }
 
-    /* 点空白收起 */
     if (!t.closest('#palette')) closePalette();
   });
 
-  /* 命令面板输入 */
+  $('#filter-note').addEventListener('click', () => {
+    state.chanFilter = null;
+    renderRail();
+    renderEntries();
+  });
+
   $('#pal-input').addEventListener('input', (e) => openPalette(e.target.value));
 
-  /* 键盘 */
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
-      $('#palette').hidden ? openPalettePanel() : closePalette();
+      if ($('#palette').hidden) openPalettePanel(); else closePalette();
       return;
     }
     if (e.key === 'Escape') {
       if (!$('#composer').hidden) { closeComposer(); return; }
       if (!$('#palette').hidden) { closePalette(); return; }
-      if (!$('#drawer').hidden) { closeDrawer(); return; }
       return;
     }
-    /* 命令面板上下选择 */
     if (!$('#palette').hidden) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
@@ -939,10 +1230,6 @@
     }
   });
 
-  /* 点遮罩关抽屉 */
-  $('#scrim').addEventListener('click', closeDrawer);
-
-  /* 提交提问的快捷键 */
   $('#cp-body').addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
       e.preventDefault();
@@ -950,19 +1237,221 @@
     }
   });
 
+  window.addEventListener('hashchange', navigate);
+
+  /* ------------------------------------------------------------ 计数动画 */
+
+  function countUp(el) {
+    const target = parseFloat(el.dataset.count);
+    const fmt = el.dataset.fmt;
+    if (REDUCE) {
+      el.textContent = fmt === 'locale' ? target.toLocaleString() : fmt === 'dec1' ? target.toFixed(1) : String(target);
+      return;
+    }
+    const dur = 900;
+    const t0 = performance.now();
+    function frame(now) {
+      const p = Math.min(1, (now - t0) / dur);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const v = target * ease;
+      el.textContent = fmt === 'locale'
+        ? Math.round(v).toLocaleString()
+        : fmt === 'dec1' ? v.toFixed(1) : String(Math.round(v));
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* ------------------------------------------------------------ 矩阵雨 */
+
+  function initMatrix() {
+    const cv = $('#matrix');
+    const host = $('#mh-side');
+    if (!cv || !host) return;
+    const ctx = cv.getContext('2d');
+    const GLYPHS = '01ΔΨΩ∫φλℏ⊗Σ√∞∂±∴≈ψΛξεμϕ'.split('');
+    const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    let ink = css('--matrix-ink') || '255 255 255';
+    let w = 0, h = 0, cols = 0, drops = [];
+
+    function resize() {
+      const r = host.getBoundingClientRect();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = r.width; h = r.height;
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.max(4, Math.floor(w / 16));
+      drops = Array.from({ length: cols }, () => ({
+        y: Math.random() * -h,
+        speed: 0.3 + Math.random() * 0.9,
+        len: 4 + Math.floor(Math.random() * 7)
+      }));
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = '12px "IBM Plex Mono", monospace';
+      for (let i = 0; i < cols; i += 1) {
+        const d = drops[i];
+        const x = i * 16 + 6;
+        const y = d.y;
+        for (let k = 0; k < d.len; k += 1) {
+          const ch = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+          ctx.fillStyle = k === 0 ? `rgba(${ink},.2)` : `rgba(${ink},${Math.max(0, 0.07 - k * 0.012).toFixed(3)})`;
+          ctx.fillText(ch, x, y - k * 16);
+        }
+        d.y += d.speed;
+        if (y > h + 40 && Math.random() > 0.978) d.y = -Math.random() * 120;
+      }
+      requestAnimationFrame(frame);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    starsRefresh = () => {
+      ink = css('--matrix-ink') || '255 255 255';
+      resize();
+    };
+    if (REDUCE) { frame(); return; }
+    frame();
+  }
+
+  /* ------------------------------------------------------------ 滚动：进度、视差、顶栏状态 */
+
+  function bindScroll() {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 8 ? Math.min(1, y / max) : 0;
+        const bar = $('#progress span');
+        if (bar) bar.style.transform = `scaleX(${p})`;
+        $('#bar').classList.toggle('is-scrolled', y > 12);
+
+        /* 分层视差：焦点区的插画层比文字慢 */
+        const side = $('#mh-side');
+        const wm = $('#mh-wm');
+        const lim = Math.min(y, 600);
+        if (side) side.style.transform = `translateY(${lim * 0.12}px)`;
+        if (wm) wm.style.transform = `translate(-50%, calc(-50% + ${lim * 0.05}px))`;
+
+        sweepReveals();
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ------------------------------------------------------------ 事件流轮播 */
+
+  function startEventFeed() {
+    if (REDUCE) return;
+    setInterval(() => {
+      state.logCursor += 5;
+      renderEventLog();
+    }, 9000);
+  }
+
+  /* ------------------------------------------------- 焦点区指针视差 */
+
+  function initMastheadParallax() {
+    if (REDUCE) return;
+    const mh = $('.masthead');
+    if (!mh) return;
+    const atom = $('.mh-side .atom', mh);
+    const wm = $('.mh-wm', mh);
+    if (!atom) return;
+
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+
+    function tick() {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      atom.style.transform = 'rotateX(' + cy.toFixed(2) + 'deg) rotateY(' + cx.toFixed(2) + 'deg)';
+      if (wm) wm.style.transform = 'translate(-50%, -50%) translate(' + (-cx * 1.6).toFixed(2) + 'px, ' + (cy * 1.6).toFixed(2) + 'px)';
+      if (Math.abs(tx - cx) > 0.01 || Math.abs(ty - cy) > 0.01) raf = requestAnimationFrame(tick);
+      else raf = 0;
+    }
+    function onMove(e) {
+      const r = mh.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      tx = px * 11; ty = -py * 9;
+      mh.style.setProperty('--mx', (px * 100 + 50) + '%');
+      mh.style.setProperty('--my', (py * 100 + 50) + '%');
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    function onLeave() {
+      tx = 0; ty = 0;
+      mh.style.setProperty('--mx', '50%');
+      mh.style.setProperty('--my', '42%');
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    mh.addEventListener('mousemove', onMove);
+    mh.addEventListener('mouseleave', onLeave);
+  }
+
   /* ------------------------------------------------------------ 启动 */
 
   function boot() {
-    renderChannels();
-    renderHot();
-    renderHomeStats();
-    renderThreads();
-    renderTags();
-    renderBookmarks();
-    renderMe();
+    try {
+      const saved = localStorage.getItem('qj-theme');
+      if (saved === 'light' || saved === 'dark') state.theme = saved;
+    } catch (e) { /* 忽略 */ }
+    document.documentElement.dataset.theme = state.theme;
+    const tbtn = $('[data-action="theme"] use');
+    if (tbtn) tbtn.setAttribute('href', state.theme === 'dark' ? '#i-moon' : '#i-sun');
+
+    const steps = [
+      ['焦点区', renderMasthead],
+      ['数据条', renderStatbar],
+      ['索引栏', renderRail],
+      ['遥测栏', renderTelemetry],
+      ['成员段', renderPeople],
+      ['频道目录', renderChanIndex],
+      ['讨论流', renderEntries],
+      ['标签表', renderTags],
+      ['我的', renderMe]
+    ];
+    steps.forEach(([name, fn]) => {
+      try { fn(); } catch (err) { console.error(`[量界] 渲染「${name}」失败`, err); }
+    });
+
+    $$('.masthead .mh-meta, .masthead .mh-title, .masthead .mh-eq, .masthead .mh-foot').forEach((el, i) => {
+      el.style.animation = 'rv-in 560ms var(--ease-2) both';
+      el.style.animationDelay = `${0.06 + i * 0.07}s`;
+    });
+
+    positionInd($('#nav-ind'), $('.bnav.is-on'));
+    positionInd($('#seg-ind'), $('#sort-seg button.is-on'));
+    requestAnimationFrame(() => {
+      positionInd($('#nav-ind'), $('.bnav.is-on'));
+      positionInd($('#seg-ind'), $('#sort-seg button.is-on'));
+    });
+
+    window.addEventListener('resize', () => {
+      positionInd($('#nav-ind'), $('.bnav.is-on'));
+      positionInd($('#seg-ind'), $('#sort-seg button.is-on'));
+      positionInd($('#me-seg .seg-ind'), $('#me-seg button.is-on'));
+    });
+
+    setTimeout(() => {
+      $$('#statbar b[data-count]').forEach(countUp);
+    }, 420);
+
+    bindScroll();
+    initMatrix();
+    startEventFeed();
+    initMastheadParallax();
+
+    if (!location.hash) { location.hash = '#/'; }
+    else navigate();
   }
 
-  /* KaTeX 走 CDN，若脚本晚于 app.js 就绪，等它加载后重绘一次 */
   if (window.katex) boot();
   else window.addEventListener('load', boot);
 })();
