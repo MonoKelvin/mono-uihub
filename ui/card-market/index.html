@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e0c14">
+  <meta name="description" content="卡场，收藏卡牌交易市集。发现宝可梦、游戏王、航海王与万智牌的下一张心头好。">
+  <title>卡场｜好牌，值得易手</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.pokemontcg.io">
+  <link rel="preconnect" href="https://fontsapi.zeoseven.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#market">跳至卡市</a>
+  <header class="site-header">
+    <div class="header-inner page-width">
+      <a class="brand" href="#" aria-label="卡场首页" data-action="home">
+        <span class="brand-mark"><i class="ti ti-cards" aria-hidden="true"></i></span>
+        <span>卡场<span class="brand-period">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="#market" class="nav-link is-active" data-action="market" aria-current="page">探索卡市</a>
+        <a href="#market" class="nav-link" data-action="favorites">我的收藏<span id="favorites-count" class="nav-count">0</span></a>
+        <button class="nav-link" type="button" data-action="guide">交易指南</button>
+      </nav>
+      <form class="header-search" role="search" id="search-form">
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <input id="search-input" type="search" placeholder="搜一张心头好" aria-label="搜索卡名、系列或编号" autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </form>
+      <div class="header-actions">
+        <button class="button button-small button-secondary header-sell" type="button" data-action="sell"><i class="ti ti-plus" aria-hidden="true"></i>出售卡牌</button>
+        <button class="icon-button bag-button" type="button" data-action="cart" aria-label="购物袋，0 张卡牌"><i class="ti ti-shopping-bag" aria-hidden="true"></i><span class="bag-count" id="cart-count" hidden>0</span></button>
+        <button class="icon-button account-button" type="button" data-action="account" aria-label="我的卡夹"><i class="ti ti-user" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero page-width" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow hero-eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Collector's Market · 2026</p>
+        <h1 id="hero-title"><span class="hero-title-en" lang="en">Rare finds.</span><span class="hero-title-cn">好牌，值得易手。</span></h1>
+        <p class="hero-description">遇见心头好，让收藏有下一站。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#market" data-action="market"><i class="ti ti-cards" aria-hidden="true"></i>逛逛卡市</a>
+          <button class="button button-quiet" type="button" data-action="sell">让好牌出场<i class="ti ti-plus" aria-hidden="true"></i></button>
+        </div>
+        <ul class="hero-stats" aria-label="卡市概况">
+          <li><b id="stat-cards">12</b><span>在售单卡</span></li>
+          <li><b id="stat-games">04</b><span>卡牌品类</span></li>
+          <li><b class="is-text">PSA</b><span>评级卡源</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-showcase">
+        <div class="collector-scene" aria-hidden="true">
+          <span class="scene-light"></span>
+          <span class="scene-grid"></span>
+          <span class="scene-orbit"></span>
+          <span class="scene-orbit scene-orbit-alt"></span>
+          <span class="scene-spark scene-spark-a"></span>
+          <span class="scene-spark scene-spark-b"></span>
+        </div>
+        <span class="featured-label"><span class="status-dot" aria-hidden="true"></span>本周精选</span>
+        <div class="card-fan" id="card-fan">
+          <button class="fan-side fan-left image-frame" type="button" data-action="detail" data-id="gengar" aria-label="查看耿鬼 VMAX">
+            <img src="https://images.pokemontcg.io/swsh8/271_hires.png" alt="耿鬼 VMAX 异图卡面" width="734" height="1024" decoding="async">
+            <span class="media-fallback"><i class="ti ti-photo-off" aria-hidden="true"></i>耿鬼 VMAX</span>
+          </button>
+          <button class="fan-side fan-right image-frame" type="button" data-action="detail" data-id="rayquaza" aria-label="查看烈空坐 VMAX">
+            <img src="https://images.pokemontcg.io/swsh7/218_hires.png" alt="烈空坐 VMAX 异图卡面" width="734" height="1024" decoding="async">
+            <span class="media-fallback"><i class="ti ti-photo-off" aria-hidden="true"></i>烈空坐 VMAX</span>
+          </button>
+          <div class="hero-card-mount">
+            <button class="hero-slab" id="hero-card" type="button" data-action="detail" data-id="umbreon" aria-label="查看月亮伊布 VMAX，PSA 10">
+              <span class="slab-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <span class="slab-label"><span><strong id="slab-name">月亮伊布 VMAX</strong><small id="slab-number">215 / 203 · 异图</small></span><span class="slab-grade"><small>PSA</small><b id="slab-grade">10</b></span></span>
+              <span class="slab-art image-frame">
+                <img id="hero-image" src="https://images.pokemontcg.io/swsh7/215_hires.png" alt="月亮伊布伸向月亮的 VMAX 异图卡面" width="734" height="1024" fetchpriority="high">
+                <span class="media-fallback"><i class="ti ti-photo-off" aria-hidden="true"></i>月亮伊布 VMAX</span>
+              </span>
+              <span class="slab-shine" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+        <div class="featured-caption">
+          <div class="featured-info" aria-live="polite"><span id="featured-series">宝可梦 / 进化苍穹</span><strong id="featured-name">月亮伊布 VMAX <span id="featured-price">¥8,640</span></strong></div>
+          <div class="feature-controls"><span class="feature-position"><b id="feature-position">01</b> / 03</span><button class="icon-button" type="button" data-action="hero-prev" aria-label="上一张精选卡牌"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="icon-button" type="button" data-action="hero-next" aria-label="下一张精选卡牌"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <div class="ticker-group">
+          <span>Pokémon</span><i class="ticker-dot"></i><span>游戏王</span><i class="ticker-dot"></i><span>One Piece</span><i class="ticker-dot"></i><span>万智牌</span><i class="ticker-dot"></i><span>PSA 评级</span><i class="ticker-dot"></i><span>单卡交易</span><i class="ticker-dot"></i><span>卡场 2026</span><i class="ticker-dot"></i>
+        </div>
+        <div class="ticker-group">
+          <span>Pokémon</span><i class="ticker-dot"></i><span>游戏王</span><i class="ticker-dot"></i><span>One Piece</span><i class="ticker-dot"></i><span>万智牌</span><i class="ticker-dot"></i><span>PSA 评级</span><i class="ticker-dot"></i><span>单卡交易</span><i class="ticker-dot"></i><span>卡场 2026</span><i class="ticker-dot"></i>
+        </div>
+      </div>
+    </div>
+
+    <section class="pulse page-width" id="pulse" aria-labelledby="pulse-title">
+      <div class="pulse-head">
+        <div class="section-title">
+          <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Market Pulse</p>
+          <div class="section-title-row"><h2 id="pulse-title">市场脉搏</h2><span class="result-count">近 7 日成交均价</span></div>
+        </div>
+        <button class="text-button" type="button" data-action="weekly-report">本周行情周报<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+      </div>
+      <div class="pulse-grid">
+        <article class="pulse-card pulse-index">
+          <div class="pulse-index-head"><span class="pulse-label">卡场指数</span><span class="change-pill is-flat" id="index-change"><i class="ti ti-minus" aria-hidden="true"></i>—</span></div>
+          <div class="pulse-value" id="index-value">—</div>
+          <div class="pulse-chart" id="index-chart" aria-hidden="true"></div>
+          <dl class="pulse-metrics">
+            <div><dt>在售总量</dt><dd id="metric-total">—</dd></div>
+            <div><dt>平均单价</dt><dd id="metric-average">—</dd></div>
+            <div><dt>评级占比</dt><dd id="metric-graded">—</dd></div>
+          </dl>
+        </article>
+        <article class="pulse-card pulse-movers">
+          <div class="pulse-card-head"><span class="pulse-label">涨幅榜</span><span class="pulse-sub">7 日变化</span></div>
+          <ul class="mover-list" id="mover-list" aria-label="七日涨幅榜"></ul>
+          <p class="pulse-foot">按 7 日成交均价排序 · 每日 09:00 更新</p>
+        </article>
+        <div class="pulse-services">
+          <button class="service-card" type="button" data-action="cert"><i class="ti ti-shield-check" aria-hidden="true"></i><strong>证书核验</strong><small>输入评级编号，核对卡牌与分数</small><i class="ti ti-chevron-right service-arrow" aria-hidden="true"></i></button>
+          <button class="service-card" type="button" data-action="offer-help"><i class="ti ti-hand-stop" aria-hidden="true"></i><strong>议价成交</strong><small>向卖家提交出价，72 小时内回复</small><i class="ti ti-chevron-right service-arrow" aria-hidden="true"></i></button>
+          <button class="service-card" type="button" data-action="protection"><i class="ti ti-lock-square" aria-hidden="true"></i><strong>交易保障</strong><small>平台托管，确认收卡后放款</small><i class="ti ti-chevron-right service-arrow" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="market-section page-width" id="market" aria-labelledby="market-title">
+      <div class="market-heading">
+        <div class="section-title">
+          <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Weekly Market</p>
+          <div class="section-title-row"><h2 id="market-title">卡市热选</h2><span id="result-count" class="result-count" role="status">正在整理卡牌</span></div>
+        </div>
+        <div class="market-tools">
+          <button class="button button-small button-secondary filter-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel" data-action="toggle-filter"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i>筛选<span id="filter-count" hidden></span></button>
+          <div class="sort-control">
+            <span class="sr-only" id="sort-label">卡牌排序</span>
+            <span class="select-control"><select id="sort-select" aria-labelledby="sort-label"><option value="featured">精选推荐</option><option value="newest">最新上架</option><option value="price-asc">价格从低到高</option><option value="price-desc">价格从高到低</option><option value="graded">评级优先</option></select></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-row">
+        <div class="category-tabs" role="group" aria-label="卡牌类别">
+          <span class="category-indicator" aria-hidden="true" hidden></span>
+          <button class="category-button is-active" type="button" data-category="all" aria-pressed="true">全部卡牌</button>
+          <button class="category-button" type="button" data-category="pokemon" aria-pressed="false"><i class="ti ti-pokeball" aria-hidden="true"></i>宝可梦</button>
+          <button class="category-button" type="button" data-category="yugioh" aria-pressed="false"><i class="ti ti-pyramid" aria-hidden="true"></i>游戏王</button>
+          <button class="category-button" type="button" data-category="onepiece" aria-pressed="false"><i class="ti ti-flag" aria-hidden="true"></i>航海王</button>
+          <button class="category-button" type="button" data-category="magic" aria-pressed="false"><i class="ti ti-flame" aria-hidden="true"></i>万智牌</button>
+        </div>
+        <button class="text-button category-guide" type="button" data-action="grading"><i class="ti ti-rosette-discount-check" aria-hidden="true"></i>如何判断品相</button>
+      </div>
+
+      <form class="filter-panel" id="filter-panel" hidden>
+        <div class="filter-fields">
+          <label class="field">最低价格<span class="input-with-prefix"><span>¥</span><input id="min-price" type="text" inputmode="decimal" placeholder="不限" autocomplete="off"></span></label>
+          <label class="field">最高价格<span class="input-with-prefix"><span>¥</span><input id="max-price" type="text" inputmode="decimal" placeholder="不限" autocomplete="off"></span></label>
+          <div class="field"><span id="grade-label">品相 / 评级</span><span class="select-control"><select id="grade-select" aria-labelledby="grade-label"><option value="all">全部品相</option><option value="PSA 10">PSA 10</option><option value="PSA 9">PSA 9</option><option value="NM">近全新 NM</option><option value="LP">轻微使用 LP</option></select></span></div>
+          <div class="filter-actions"><button class="button button-small button-quiet" type="button" data-action="reset-filter">重置</button><button class="button button-small button-primary" type="submit">应用筛选</button></div>
+        </div>
+        <p class="form-error" id="filter-error" role="alert" hidden></p>
+      </form>
+      <div class="active-query" id="active-query" hidden><span id="query-label"></span><button type="button" class="text-button" data-action="clear-query">清除<i class="ti ti-x" aria-hidden="true"></i></button></div>
+
+      <div class="product-grid" id="product-grid" aria-label="在售卡牌"></div>
+      <noscript><p class="noscript-message">开启 JavaScript，即可浏览卡市与收藏卡牌。</p></noscript>
+      <div class="empty-state" id="empty-state" hidden><i class="ti ti-cards" aria-hidden="true"></i><h3 id="empty-title">没有找到这张牌</h3><p id="empty-description">换个关键词，再碰碰运气。</p><button class="button button-secondary" type="button" data-action="reset-all">看看全部卡牌</button></div>
+      <div class="market-bottom"><span class="market-bottom-rule" aria-hidden="true"></span><button class="button button-secondary load-more" id="load-more" type="button" data-action="load-more">再逛逛<i class="ti ti-chevron-down" aria-hidden="true"></i></button><span id="list-end" hidden>好牌总会再相遇</span></div>
+    </section>
+
+    <section class="sell-banner page-width reveal" aria-labelledby="sell-title">
+      <span class="banner-grid" aria-hidden="true"></span>
+      <span class="banner-cross banner-cross-a" aria-hidden="true"></span>
+      <span class="banner-cross banner-cross-b" aria-hidden="true"></span>
+      <div class="sell-banner-art" aria-hidden="true"><span class="banner-card banner-card-a"></span><span class="banner-card banner-card-b"></span><i class="ti ti-cards"></i></div>
+      <div class="sell-banner-copy"><p class="eyebrow eyebrow-invert"><span class="eyebrow-line" aria-hidden="true"></span>Sell with us</p><h2 id="sell-title">下一位，<br>懂你这张牌的人。</h2><p>给收藏腾个位置，也给热爱一个回应。</p></div>
+      <button class="button button-primary" type="button" data-action="sell"><i class="ti ti-plus" aria-hidden="true"></i>出售我的卡牌</button>
+    </section>
+  </main>
+
+  <footer class="site-footer page-width">
+    <div class="footer-top"><a class="brand footer-brand" href="#" data-action="home"><i class="ti ti-cards" aria-hidden="true"></i>卡场.</a><span>让每一份热爱，都有人接住。</span><nav aria-label="页脚导航"><button type="button" data-action="guide">交易指南</button><button type="button" data-action="grading">品相说明</button><button type="button" data-action="cert">证书核验</button><button type="button" data-action="support">联系我们</button></nav></div>
+    <div class="footer-bottom"><span>© 2026 卡场</span><span>卡牌图像版权归各发行方所有</span><button class="text-button" type="button" data-action="sources">素材来源<i class="ti ti-external-link" aria-hidden="true"></i></button></div>
+  </footer>
+
+  <dialog class="market-dialog" id="market-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><h2 id="dialog-title" tabindex="-1">卡牌详情</h2><button class="icon-button" type="button" data-action="close-dialog" aria-label="关闭窗口"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+    <div class="dialog-body" id="dialog-body"></div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+</body>
+</html>
