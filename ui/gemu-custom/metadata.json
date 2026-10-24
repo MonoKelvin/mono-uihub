@@ -1,0 +1,23 @@
+{
+  "name": "格木 GEMU 全屋定制",
+  "slug": "gemu-custom",
+  "page_type": "website",
+  "palette": ["#ECECE8", "#B03B27", "#16171A"],
+  "tags": ["家居定制", "作品集", "量房预约"],
+  "created_at": "2026-10-24 23:05:00",
+  "updated_at": "2026-10-24 23:36:00",
+  "history": [
+    {
+      "prompt": "一个家居设计定制服务平台，极致的留白和大气的排版，商业级配色，艺术气息",
+      "model": "step-5-preview",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 2400
+    },
+    {
+      "prompt": "太廉价了，请重新设计",
+      "model": "step-5-preview",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 2100
+    }
+  ]
+}

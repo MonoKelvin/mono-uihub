@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>格木 GEMU 全屋定制家居</title>
+<meta name="description" content="格木 GEMU 全屋定制家居平台，设计师上门出图，自有工厂交付，平均 45 天完成整屋柜体。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="格木 GEMU 首页">
+      <span class="brand-cn">格木</span>
+      <span class="brand-en">GEMU</span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="主导航"></nav>
+    <div class="nav-act">
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="切换深浅主题">
+        <i class="ti ti-moon" id="theme-icon"></i>
+      </button>
+      <a class="nav-cta" href="#book">预约量房</a>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="展开导航" aria-expanded="false">
+        <i class="ti ti-menu"></i>
+      </button>
+    </div>
+  </div>
+  <div class="drawer" id="drawer" hidden>
+    <nav class="drawer-links" id="drawer-links" aria-label="移动端导航"></nav>
+    <a class="btn btn-primary" href="#book">预约量房</a>
+  </div>
+</header>
+
+<main>
+  <!-- 首屏 -->
+  <section class="hero" id="top">
+    <div class="wrap hero-in">
+      <p class="eyebrow" id="hero-eyebrow"></p>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="hero-act">
+        <a class="btn btn-primary" href="#book">预约量房</a>
+        <a class="hero-link" href="#works">看已落地案例</a>
+      </div>
+    </div>
+    <figure class="hero-figure">
+      <img id="hero-img" alt="" fetchpriority="high">
+      <figcaption class="wrap hero-cap">
+        <span class="cap-no" id="hero-cap-no"></span>
+        <span class="cap-name" id="hero-cap-name"></span>
+        <span class="cap-meta" id="hero-cap-meta"></span>
+        <span class="cap-price" id="hero-cap-price"></span>
+      </figcaption>
+    </figure>
+    <div class="wrap">
+      <div class="stats" id="hero-stats"></div>
+    </div>
+  </section>
+
+  <!-- 作品 -->
+  <section class="sec" id="works">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">已落地的家</h2>
+        <div class="sec-tools">
+          <label class="search">
+            <i class="ti ti-search" aria-hidden="true"></i>
+            <input id="q" type="search" placeholder="项目名或城市" autocomplete="off" aria-label="搜索案例">
+          </label>
+          <div class="sort">
+            <button class="sort-btn" id="sort-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span id="sort-label">默认排序</span>
+              <i class="ti ti-chevron-down" aria-hidden="true"></i>
+            </button>
+            <ul class="sort-menu" id="sort-menu" role="listbox" hidden>
+              <li role="option" data-sort="none" aria-selected="true">默认排序</li>
+              <li role="option" data-sort="area" aria-selected="false">按面积</li>
+              <li role="option" data-sort="days" aria-selected="false">按交付周期</li>
+              <li role="option" data-sort="price" aria-selected="false">按造价</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="fgroup">
+          <span class="flabel">户型</span>
+          <div class="picks" id="f-type" role="group" aria-label="按户型筛选"></div>
+        </div>
+        <div class="fgroup">
+          <span class="flabel">风格</span>
+          <div class="picks" id="f-style" role="group" aria-label="按风格筛选"></div>
+        </div>
+        <p class="fcount" id="fcount" aria-live="polite"></p>
+      </div>
+      <div class="cases" id="cases"></div>
+      <div class="empty" id="empty" hidden>
+        <svg class="empty-art" viewBox="0 0 160 118" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 100h128"/>
+          <path d="M34 100V44l46-22 46 22v56"/>
+          <path d="M80 22v78"/>
+          <path d="M54 62h16v38H54z"/>
+          <path d="M104 66a10 10 0 1 0 0 .1"/>
+          <path d="M104 76v10"/>
+        </svg>
+        <p class="empty-text">该组合下暂无案例</p>
+        <button class="btn btn-ghost" id="reset" type="button">清除筛选</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 定制清单 -->
+  <section class="sec" id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">定制清单与报价</h2>
+        <p class="sec-sub">按投影面积计价，含安装与基础五金配置</p>
+      </div>
+      <div class="plist" id="plist">
+        <div class="plist-head">
+          <span>项目</span><span>规格</span><span>起价</span><span>周期</span>
+        </div>
+        <div id="services-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 材料 -->
+  <section class="sec" id="materials">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">四种材料</h2>
+        <p class="sec-sub">可替换、可升级，样板间实物对比</p>
+      </div>
+      <div class="mats" id="mats"></div>
+    </div>
+  </section>
+
+  <!-- 流程 -->
+  <section class="sec" id="flow">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">从量房到验收</h2>
+        <p class="sec-sub">每个环节有明确交付物与周期</p>
+      </div>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </section>
+
+  <!-- 团队与评价 -->
+  <section class="sec" id="voices">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">主案设计师与业主反馈</h2>
+      </div>
+      <div class="team" id="team"></div>
+      <div class="voices" id="voice-list"></div>
+    </div>
+  </section>
+
+  <!-- 预约量房 -->
+  <section class="sec book" id="book">
+    <div class="wrap book-in">
+      <div class="book-lead">
+        <h2 class="sec-title">预约量房</h2>
+        <p class="sec-sub">留下户型与面积，48 小时内收到平面方案与预算区间</p>
+        <ul class="stores" id="stores"></ul>
+        <p class="hotline">设计热线 <span id="hotline"></span></p>
+      </div>
+      <form class="form" id="form" novalidate>
+        <div class="frow">
+          <div class="field">
+            <label for="f-name">姓名</label>
+            <input id="f-name" name="name" type="text" placeholder="怎么称呼您" autocomplete="name">
+            <p class="err" data-err="name"></p>
+          </div>
+          <div class="field">
+            <label for="f-phone">手机号</label>
+            <input id="f-phone" name="phone" type="tel" inputmode="numeric" placeholder="11 位手机号" autocomplete="tel">
+            <p class="err" data-err="phone"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-area">房屋面积</label>
+          <input id="f-area" name="area" type="text" inputmode="numeric" placeholder="建筑面积，20 至 999">
+          <p class="err" data-err="area"></p>
+        </div>
+        <div class="field">
+          <span class="label">所在城市</span>
+          <div class="picks-box" id="f-city" role="group" aria-label="选择城市"></div>
+          <p class="err" data-err="city"></p>
+        </div>
+        <div class="field">
+          <span class="label">户型</span>
+          <div class="picks-box" id="f-type2" role="group" aria-label="选择户型"></div>
+          <p class="err" data-err="type"></p>
+        </div>
+        <div class="field">
+          <span class="label">期望风格</span>
+          <div class="picks-box" id="f-style2" role="group" aria-label="选择风格"></div>
+        </div>
+        <div class="field">
+          <label for="f-note">备注</label>
+          <textarea id="f-note" name="note" rows="2" placeholder="收纳需求、宠物、老人同住等"></textarea>
+        </div>
+        <div class="form-foot">
+          <button class="btn btn-primary" id="submit" type="submit">提交预约</button>
+          <p class="form-msg" id="form-msg" role="status"></p>
+        </div>
+      </form>
+      <div class="done" id="done" hidden>
+        <p class="done-no">预约编号 <span id="done-no"></span></p>
+        <h3 class="done-title">顾问将在 2 小时内联系你</h3>
+        <p class="done-sub" id="done-sub"></p>
+        <button class="btn btn-ghost" id="again" type="button">再填一份</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-brand">
+      <span class="brand-cn">格木</span>
+      <span class="brand-en">GEMU</span>
+      <p class="foot-line">全屋定制家居</p>
+    </div>
+    <nav class="foot-col" id="foot-links" aria-label="页脚导航"></nav>
+    <div class="foot-col">
+      <span class="foot-h">门店</span>
+      <ul id="foot-stores"></ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 格木家居定制</span>
+    <span>设计热线 <span id="foot-phone"></span></span>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
