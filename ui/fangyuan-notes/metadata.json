@@ -1,0 +1,35 @@
+{
+  "name": "方圆 · 附近匿名留言",
+  "slug": "fangyuan-notes",
+  "page_type": "software",
+  "tags": ["社交", "地图", "匿名留言"],
+  "palette": ["#dde8e5", "#0d7c7c", "#1a373c"],
+  "created_at": "2026-10-23 19:29:49",
+  "updated_at": "2026-10-23 21:35:00",
+  "history": [
+    {
+      "prompt": "一个个人方圆区域内的匿名留言桌面端软件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz"],
+      "duration_seconds": 823
+    },
+    {
+      "prompt": "请重构UI设计和配色，多加一些UI交互动画，软件宽度小一点",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "animate"],
+      "duration_seconds": 469
+    },
+    {
+      "prompt": "UI设计的布局排版和配色太普通了，没有一点设计感，很明显的AI味道，请重新设计。比如加一些毛玻璃效果、UI/UX动效、少量的彩色设计、高级感的字体等辅助设计。继续。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "redesign-existing-projects"],
+      "duration_seconds": 327
+    },
+    {
+      "prompt": "继续，提高饱和度",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 123
+    }
+  ]
+}

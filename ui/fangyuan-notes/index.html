@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#dde8e5">
+  <title>方圆 · 听见附近</title>
+  <link rel="preconnect" href="https://fontsapi.zeoseven.com">
+  <link rel="preconnect" href="https://cores.zeoseven.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fontsapi.zeoseven.com/906/main/result.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-window">
+    <header class="titlebar">
+      <a class="brand" href="#" aria-label="方圆首页">
+        <svg width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><rect x="2.5" y="2.5" width="20" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12.5" cy="12.5" r="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12.5" cy="12.5" r="1.6" fill="currentColor"/></svg>
+        <span>方圆</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <span class="selection-indicator" aria-hidden="true"></span>
+        <button class="nav-item is-active" data-view="nearby" aria-label="附近" aria-current="page"><i class="ti ti-radar-2" aria-hidden="true"></i><span>附近</span></button>
+        <button class="nav-item" data-view="saved" aria-label="收藏"><i class="ti ti-bookmark" aria-hidden="true"></i><span>收藏</span></button>
+        <button class="nav-item" data-view="mine" aria-label="我留下的"><i class="ti ti-pencil-minus" aria-hidden="true"></i><span>我的</span></button>
+      </nav>
+      <div class="titlebar-end">
+        <label class="search-box"><i class="ti ti-search" aria-hidden="true"></i><input id="search-input" type="search" placeholder="搜索附近留言" maxlength="80" aria-label="搜索留言"><kbd>Ctrl K</kbd></label>
+        <button class="icon-button notification-nav" id="notifications-button" aria-label="查看回音通知"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot"></span></button>
+        <button class="icon-button" id="settings-button" aria-label="隐私与偏好"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+        <button class="primary-button" id="compose-button"><i class="ti ti-pencil" aria-hidden="true"></i><span>留个言</span></button>
+      </div>
+    </header>
+    <div class="app-body">
+      <main class="workspace">
+        <div class="content-grid">
+          <section class="map-panel" aria-label="附近留言地图">
+            <div class="map-topline"><button class="location-button" id="location-button"><i class="ti ti-map-pin" aria-hidden="true"></i><span id="location-label">杭州，北山街</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><button class="map-info-button icon-button" id="map-info-button" aria-label="了解位置隐私"><i class="ti ti-shield-lock" aria-hidden="true"></i></button></div>
+            <svg class="neighborhood-map" id="neighborhood-map" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice" role="group" aria-label="西湖北侧街区地图，可拖动或使用缩放按钮浏览">
+              <defs><clipPath id="map-clip"><rect width="1000" height="800"/></clipPath></defs>
+              <g clip-path="url(#map-clip)">
+                <g id="map-scene">
+                  <rect class="map-ground" x="-1500" y="-1500" width="4000" height="4000"/>
+                  <path class="park-land" d="M-70-40H505L564 36 548 98 592 153 538 205 529 251 438 292 390 343 302 332 234 369 171 329 119 362 73 309-40 299Z"/>
+                  <path class="park-detail" d="M63 25C177 89 139 174 258 166S333 241 451 205M-20 221C86 197 78 109 192 82S312 61 380 100M240-25C200 41 354 27 398 114S496 141 514 202M105 276C170 215 277 246 309 307"/>
+                  <path class="park-trail" d="M9 160C90 120 151 136 196 185S255 265 328 255 403 183 471 193 520 239 540 271"/>
+                  <path class="water-land" d="M-50 460C77 431 91 466 154 440S239 404 310 451 365 492 422 499 494 543 502 608 590 674 668 800H-50Z"/>
+                  <path class="island-land" d="M55 606C132 562 228 574 273 606S349 636 348 674 276 722 196 702 103 715 60 675Z"/>
+                  <path class="water-ripple" d="M26 530C82 515 122 535 153 520M385 698C447 676 475 699 508 686M12 748C66 737 114 747 144 737"/>
+                  <g class="city-blocks">
+                    <path d="M625-20H728L712 92 626 105 594 63Z"/><path d="M754-20H850L844 79 738 91Z"/><path d="M874-20H1020V64L869 77Z"/>
+                    <path d="M618 126L706 116 692 202 606 211 581 171Z"/><path d="M731 113L839 101 831 194 716 201Z"/><path d="M865 99L1020 84V177L855 191Z"/>
+                    <path d="M598 239L688 225 676 310 562 323 553 281Z"/><path d="M713 228L825 214 821 300 701 310Z"/><path d="M850 215L1020 200V282L846 299Z"/>
+                    <path d="M540 350L672 337 659 405 543 409 486 384Z"/><path d="M697 335L814 321 809 397 684 405Z"/><path d="M840 322L1020 301V384L834 395Z"/>
+                    <path d="M556 450L653 445 636 544 585 533Z"/><path d="M679 441L800 431 794 529 662 541Z"/><path d="M825 429L1020 409V511L818 526Z"/>
+                    <path d="M609 565L630 565 621 622 636 678 603 680 567 613Z"/><path d="M655 563L786 551 782 671 657 679 645 623Z"/><path d="M810 552L1020 536V652L802 670Z"/>
+                    <path d="M668 702L778 694 773 817H733L682 764Z"/><path d="M803 696L1020 678V820H795Z"/>
+                    <path d="M291 355L366 363 410 404 365 435 298 410 261 397Z"/><path d="M164 358L217 382 257 416 205 429 143 409Z"/>
+                  </g>
+                  <g class="building-details"><path d="M640 22H689V62H640Z M772 19H818V58H772Z M887 8H961V50H887Z M747 137H797V171H747Z M867 129H926V164H867Z M731 248H785V280H731Z M877 238H950V270H877Z M708 353H778V380H708Z M862 336H934V373H862Z M699 465H768V502H699Z M845 451H905V487H845Z M942 449H982V486H942Z M682 588H736V640H682Z M832 578H894V629H832Z M939 575H981V620H939Z M826 717H892V769H826Z M921 711H979V767H921Z"/></g>
+                  <g class="road-edges"><path d="M-80 390C108 399 132 447 232 438S354 433 420 438 668 421 1060 394"/><path d="M546-70C518 48 595 83 571 182S544 280 509 342 501 419 549 507 547 620 633 704 663 785 716 860"/><path d="M745-70L632 830"/><path d="M861-70L789 870"/><path d="M569 113L1070 62M554 225L1060 184M539 337L1060 289M582 556L1090 522M637 694L1060 663"/><path d="M-20 647C140 633 204 614 314 660S413 738 492 736"/></g>
+                  <g class="main-roads"><path d="M-80 390C108 399 132 447 232 438S354 433 420 438 668 421 1060 394"/><path d="M546-70C518 48 595 83 571 182S544 280 509 342 501 419 549 507 547 620 633 704 663 785 716 860"/><path d="M745-70L632 830"/><path d="M861-70L789 870"/></g>
+                  <g class="minor-roads"><path d="M569 113L1070 62M554 225L1060 184M539 337L1060 289M582 556L1090 522M637 694L1060 663"/><path d="M-20 647C140 633 204 614 314 660S413 738 492 736"/></g>
+                  <g class="park-patches"><path d="M897 339H981V377H897Z"/><path d="M699 588H747V644H699Z"/><path d="M194 589C221 578 263 610 254 635S210 662 187 640 171 607 194 589Z"/></g>
+                  <g class="map-labels" aria-hidden="true"><text class="landmark-label" x="237" y="157">宝 石 山</text><text class="landmark-label lake-label" x="287" y="578">西 湖</text><text x="144" y="692">孤山</text><text x="776" y="157">松木场</text><text x="731" y="617">黄龙体育中心</text><text x="360" y="379">葛岭</text><text class="road-label" x="264" y="432" transform="rotate(3 264 432)">北 山 街</text><text class="road-label" x="533" y="109" transform="rotate(77 533 109)">曙 光 路</text><text class="road-label" x="677" y="491" transform="rotate(-83 677 491)">保 俶 路</text><text class="road-label" x="831" y="481" transform="rotate(-86 831 481)">环 城 西 路</text><text class="road-label" x="888" y="199" transform="rotate(-5 888 199)">体 育 场 路</text><text class="road-label" x="149" y="628">孤 山 路</text></g>
+                  <circle class="range-fill" id="range-fill" cx="0" cy="0" r="205"/>
+                  <circle class="range-boundary" id="range-boundary" cx="0" cy="0" r="205" vector-effect="non-scaling-stroke"/>
+                  <g id="map-markers"></g>
+                  <g id="origin-marker" transform="translate(500 415)"><circle class="origin-halo" r="20"/><circle class="origin-ring" r="10"/><circle class="origin-dot" r="6"/><text class="origin-label" y="43" text-anchor="middle">你在附近</text></g>
+                </g>
+              </g>
+            </svg>
+            <div class="map-voices" id="map-voices" aria-label="地图上的留言短句"></div>
+            <div class="map-tooltip" id="map-tooltip" role="tooltip" hidden></div>
+            <div class="map-bottom">
+              <div class="radius-control"><span class="radius-title"><i class="ti ti-radar" aria-hidden="true"></i>我的方圆</span><div class="radius-options" role="group" aria-label="留言半径"><span class="selection-indicator" aria-hidden="true"></span><button data-radius="300" aria-pressed="false">300<span>m</span></button><button class="is-active" data-radius="500" aria-pressed="true">500<span>m</span></button><button data-radius="1000" aria-pressed="false">1<span>km</span></button><button data-radius="3000" aria-pressed="false">3<span>km</span></button></div></div>
+              <div class="map-tools"><div class="zoom-control"><button class="icon-button" id="zoom-in" aria-label="放大地图"><i class="ti ti-plus" aria-hidden="true"></i></button><button class="icon-button" id="zoom-out" aria-label="缩小地图"><i class="ti ti-minus" aria-hidden="true"></i></button></div><button class="icon-button recenter-button" id="recenter-button" aria-label="回到我的位置"><i class="ti ti-current-location" aria-hidden="true"></i></button></div>
+            </div>
+            <div class="map-footnote"><span><span class="map-scale" id="map-scale"></span><span id="scale-label">200 m</span></span><span>西湖北侧街区</span></div>
+          </section>
+          <aside class="feed-panel" aria-label="留言列表与详情">
+            <div class="feed-header" id="feed-header">
+              <div class="feed-title-row"><h1 id="feed-title" tabindex="-1">附近留言 <span id="feed-count">6</span></h1><button class="icon-button" id="export-button" aria-label="导出我的留言" hidden><i class="ti ti-download" aria-hidden="true"></i></button></div>
+              <div class="feed-filters" role="group" aria-label="留言分类"><span class="selection-indicator" aria-hidden="true"></span><button class="is-active" data-category="all" aria-pressed="true">全部</button><button data-category="日常" aria-pressed="false">日常</button><button data-category="提问" aria-pressed="false">提问</button><button data-category="搭子" aria-pressed="false">搭子</button></div>
+              <div class="sort-wrapper"><button class="sort-button" id="sort-button" aria-haspopup="menu" aria-expanded="false"><span id="sort-label">最新</span><i class="ti ti-arrows-sort" aria-hidden="true"></i></button><div class="dropdown sort-menu" id="sort-menu" role="menu" hidden><button role="menuitem" data-sort="latest">最新留下</button><button role="menuitem" data-sort="distance">离我最近</button><button role="menuitem" data-sort="popular">最多共鸣</button></div></div>
+              <div class="feed-pager" aria-label="留言翻页"><span id="page-label" aria-live="polite">1 / 2</span><button class="icon-button" id="feed-prev" aria-label="上一页留言"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="icon-button" id="feed-next" aria-label="下一页留言"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
+            </div>
+            <div class="feed-list" id="feed-list"></div>
+            <div class="detail-panel" id="detail-panel" hidden></div>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+  </div>
+  <dialog id="compose-dialog" class="modal compose-modal" aria-labelledby="compose-title">
+    <form id="compose-form">
+      <header class="modal-header"><div><span class="modal-kicker"><i class="ti ti-pencil" aria-hidden="true"></i> 一颗松果</span><h2 id="compose-title">留一点声音。</h2></div><button type="button" class="icon-button" data-close-dialog aria-label="关闭发布窗口"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+      <label class="sr-only" for="note-content">留言内容</label><textarea id="note-content" placeholder="一个念头，一件小事，或一个想问的问题…" maxlength="280" required></textarea>
+      <div class="compose-counter"><span id="compose-error" role="alert"></span><span><b id="character-count">0</b> / 280</span></div>
+      <div class="compose-categories" role="group" aria-label="发布分类"><button class="is-active" type="button" data-compose-category="日常" aria-pressed="true"><i class="ti ti-coffee" aria-hidden="true"></i>日常</button><button type="button" data-compose-category="提问" aria-pressed="false"><i class="ti ti-message-question" aria-hidden="true"></i>提问</button><button type="button" data-compose-category="搭子" aria-pressed="false"><i class="ti ti-users" aria-hidden="true"></i>搭子</button></div>
+      <div class="compose-options"><div><i class="ti ti-map-pin" aria-hidden="true"></i><span id="compose-location">北山街附近</span></div><label><i class="ti ti-hourglass" aria-hidden="true"></i><span>保留</span><select id="note-lifetime" aria-label="留言保留时间"><option value="24">24 小时</option><option value="72" selected>3 天</option><option value="168">7 天</option></select></label></div>
+      <footer class="compose-footer"><span><i class="ti ti-shield-lock" aria-hidden="true"></i>不显示你的精确位置</span><button class="primary-button" type="submit" id="publish-button">匿名留下<i class="ti ti-send" aria-hidden="true"></i></button></footer>
+    </form>
+  </dialog>
+  <dialog id="location-dialog" class="modal location-modal" aria-labelledby="location-title"><header class="modal-header"><div><span class="modal-kicker">选择浏览区域</span><h2 id="location-title">今天在哪一带？</h2></div><button class="icon-button" data-close-dialog aria-label="关闭区域选择"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="location-list"><button data-location="beishan"><span class="location-icon"><i class="ti ti-trees" aria-hidden="true"></i></span><span><strong>北山街</strong><small>西湖北岸</small></span><i class="ti ti-check location-check" aria-hidden="true"></i></button><button data-location="songmu"><span class="location-icon"><i class="ti ti-building-community" aria-hidden="true"></i></span><span><strong>松木场</strong><small>体育场路一带</small></span><i class="ti ti-check location-check" aria-hidden="true" hidden></i></button><button data-location="gushan"><span class="location-icon"><i class="ti ti-leaf" aria-hidden="true"></i></span><span><strong>孤山路</strong><small>湖心与小岛</small></span><i class="ti ti-check location-check" aria-hidden="true" hidden></i></button></div><p class="privacy-note"><i class="ti ti-shield-lock" aria-hidden="true"></i>按街区浏览，不请求设备定位。</p></dialog>
+  <dialog id="settings-dialog" class="modal settings-modal" aria-labelledby="settings-title"><header class="modal-header"><div><span class="modal-kicker">一颗松果</span><h2 id="settings-title">隐私与偏好</h2></div><button class="icon-button" data-close-dialog aria-label="关闭设置"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="settings-list"><label><span><strong>显示大致距离</strong><small>距离按街区中心估算</small></span><input class="switch" id="distance-setting" type="checkbox" checked></label><label><span><strong>允许收到回复</strong><small>应用于你之后留下的留言</small></span><input class="switch" id="reply-setting" type="checkbox" checked></label><label><span><strong>界面轻动效</strong><small>跟随系统减少动态效果设置</small></span><input class="switch" id="motion-setting" type="checkbox" checked></label></div><div class="settings-note"><i class="ti ti-fingerprint-off" aria-hidden="true"></i><p>公开的是声音，不是身份。</p></div></dialog>
+  <dialog id="notifications-dialog" class="modal notifications-modal" aria-labelledby="notifications-title"><header class="modal-header"><div><span class="modal-kicker">有人听见了</span><h2 id="notifications-title">我的回音</h2></div><button class="icon-button" data-close-dialog aria-label="关闭通知"><i class="ti ti-x" aria-hidden="true"></i></button></header><div id="notification-list"></div></dialog>
+  <dialog id="report-dialog" class="modal report-modal" aria-labelledby="report-title"><form id="report-form"><header class="modal-header"><h2 id="report-title">不想看到这条留言</h2><button type="button" class="icon-button" data-close-dialog aria-label="关闭隐藏留言窗口"><i class="ti ti-x" aria-hidden="true"></i></button></header><label class="report-option"><input type="radio" name="reason" value="不感兴趣" checked>不感兴趣</label><label class="report-option"><input type="radio" name="reason" value="广告或骚扰">广告或骚扰</label><label class="report-option"><input type="radio" name="reason" value="不友善的内容">不友善的内容</label><p class="privacy-note">这条留言将从你的列表和地图中隐藏。</p><button class="primary-button" type="submit">隐藏这条留言</button></form></dialog>
+  <dialog id="delete-dialog" class="modal delete-modal" aria-labelledby="delete-title"><header class="modal-header"><h2 id="delete-title">收回这条留言？</h2><button class="icon-button" data-close-dialog aria-label="关闭收回确认"><i class="ti ti-x" aria-hidden="true"></i></button></header><p class="privacy-note">留言和它收到的回复都会移除。</p><div class="dialog-actions"><button class="secondary-button" data-close-dialog>再想想</button><button class="primary-button" id="confirm-delete">收回留言</button></div></dialog>
+</body>
+</html>
