@@ -182,7 +182,7 @@ A / C / D 这类有外框的单屏容器，尺寸取"理想值 ∧ 视口值，�
 
 **图形的要求**
 
-- 图标只用 Tabler 一套（见第六节），统一线宽与尺寸，必须承载信息，不做装饰。
+- 图标只用 Tabler 一套（见第六节）：统一尺寸，线宽按第六节选一种（可因图标大小在 1–1.5 间微调）；激活 / 选中态用实心，必须承载信息，不做装饰。
 - 插画用手写内联 SVG：单色线稿、1.5–2px 线宽、统一端点与圆角，尺寸 120–200px。这种简单图形不要用 AI 生图。
 - 图形与文字二选一，选一眼看懂的那个。**唯一例外**：当排版本身（大字号、精确字距、讲究的断行）比图形更有表现力时，保留文字——那是设计，不是偷懒。
 
@@ -336,15 +336,38 @@ tl.to(".step-1", { autoAlpha: 0 }).from(".step-2", { autoAlpha: 0 }, "<");
 
 ### 图标
 
-只用 **Tabler Icons** 一套，不混其他图标库，不用 emoji 当功能图标：
+只用 **Tabler Icons** 一套，不混其他图标库，不用 emoji 当功能图标。图标名在 `https://tabler.io/icons` 查。每个图标都有 **线性（outline）** 与 **实心（filled）** 两种形态，按状态选用。
+
+**1. 线性（outline，默认态）**
+
+最省事用 webfont：
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
 <i class="ti ti-flask"></i>
 ```
 
+线宽（stroke）**由加载哪套样式表决定，全站统一选一种**，不要在同一页切样式表混用：
 
-图标名在 `https://tabler.io/icons` 查，类名 `ti ti-<name>`；全站统一字号、线宽、颜色。
+| 样式表 | 线宽 | 适用 |
+| --- | --- | --- |
+| `tabler-icons.min.css` | 2（默认，偏厚重） | 大号展示图标、需要存在感时 |
+| `tabler-icons-300.min.css` | 1.5 | **推荐**：轻盈精致，多数 UI 通用 |
+| `tabler-icons-200.min.css` | 1 | 极细，适合小图标、高密度工具栏 |
+
+> 多数界面用 1–1.5 比死用 2 更好看。若同一页确实需要两种线宽（如大号 hero 图标 2、列表小图标 1.5），**改用内联 SVG 单独控 `stroke-width`**，不要切 webfont 样式表。
+
+**2. 实心（filled，激活 / 选中 / "开"态）**
+
+线性图标在激活态经常"看不出变化"——**收藏、书签、星标、tab 选中、开关打开、已读**这类必须有可见状态差异的，一律用实心，否则状态不可见（这是最常见的"激活态不显示"根因）。三种取法按场景选：
+
+- **React / Vue / 组件项目**：导入实心组件，命名为「同名 + `Filled`」后缀，例如 `IconHeart` → `IconHeartFilled`、`IconKey` → `IconKeyFilled`；线宽用 `stroke={1.5}`（或 `strokeWidth`）单独调。
+- **纯 HTML 原型**：webfont 的实心是另一套字体（`tabler-icons-filled.min.css`），与线框共用 `ti ti-<name>` 类名但字形码不同，同一页混排易冲突。**最稳的做法是直接内联 SVG**——在 tabler.io 切到 *Filled* 标签页取该图标 SVG：激活态 `<svg … fill="currentColor">`（实心），非激活态 `<svg … fill="none" stroke="currentColor" stroke-width="1.5">`（线框）。同一图标两态各留一份 SVG，按状态切 class。
+- **成对设计**：凡是带"开 / 关"语义的图标（heart / star / bookmark / bell / check / eye / lock 等），都准备 outline + filled 两份，激活时切 filled；实心**只**出现在激活 / 选中态，不滥用。
+
+**3. 统一原则**
+
+全站图标统一字号与颜色；线性态统一一种线宽（可因图标大小在 1–1.5 间微调，不必全程锁死 2）；实心仅用于激活 / 选中态。图标必须承载信息，不做纯装饰。
 
 ### AI 生图（最次选项）
 

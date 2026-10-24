@@ -132,7 +132,7 @@ const colors = COLOR_BINS.filter((bin) => usedColors.has(bin.key));
           data-created={it.createdAt ? Date.parse(it.createdAt) || 0 : 0} data-name={it.name}>
           <a class="media" href={it.href} target="_blank" rel="noopener" aria-label={it.name}>
             <span class="frame">
-            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1200" />)
+            {it.screenshots.length ? it.screenshots.map((s, i) => <img src={s} alt="" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" class={i === 0 ? 'is-on' : ''} width="1600" height="1000" />)
               : <span class="none" data-i18n="noShot">暂无截图</span>}
             {it.screenshots.length > 1 && <span class="dots">{it.screenshots.map((_, i) => <span class={i === 0 ? 'is-on' : ''}></span>)}</span>}
             </span>

@@ -120,7 +120,7 @@ test('safe-path rules deny traversal, hidden files, histories, maps and credenti
 test('screenshot CLI argument parsing', () => {
   assert.deepEqual(parseArgs(['--slug', 'a', '--count', '3']).count, 3);
   assert.equal(parseArgs(['--all']).width, 1600);
-  assert.equal(parseArgs(['--all']).height, 1200);
+  assert.equal(parseArgs(['--all']).height, 1000);
   assert.throws(() => parseArgs([]));
   assert.throws(() => parseArgs(['--slug', '../x']));
 });

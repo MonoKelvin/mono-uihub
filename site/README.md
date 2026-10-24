@@ -40,11 +40,11 @@ npm test           # 元数据规则、截图排序、发布白名单测试
 # 仓库根目录或 site/ 下均可（site 下用 npm run screenshots -- ...）
 node tools/screenshots/capture.mjs --all
 node tools/screenshots/capture.mjs --slug spidey-watch --overwrite
-node tools/screenshots/capture.mjs --all --width 1600 --height 1200 --count 3
+node tools/screenshots/capture.mjs --all --width 1600 --height 1000 --count 3
 ```
 
 - 输出 `ui/<slug>/screenshots/1.jpg`、`2.jpg`…（`--count N` 截 N 张）；已存在的文件默认保留，`--overwrite` 覆盖。
-- 默认 1600×1200（4:3），与卡片比例一致。软件类原型多以 900px 高度为紧凑布局断点，低于该高度会折叠面板，所以视口不宜过小。
+- 默认 1600×1000（8:5），与卡片比例一致。软件类原型多以 900px 高度为紧凑布局断点，低于该高度会折叠面板，所以视口不宜过小。
 - 优先用本机 Edge；没有时运行 `npx playwright install chromium`。
 - 手动截图同样按 `1.jpg`、`2.jpg` 命名放入该目录即可，多张时卡片悬停会轮播。
 

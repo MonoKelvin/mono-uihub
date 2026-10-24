@@ -6,7 +6,7 @@ import { loadCatalog, UI_ROOT } from '../../site/lib/catalog.mjs';
 import { startPrototypeServer } from './server.mjs';
 
 export function parseArgs(args) {
-  const options = { all: false, overwrite: false, slug: null, width: 1600, height: 1200, count: 1 };
+  const options = { all: false, overwrite: false, slug: null, width: 1600, height: 1000, count: 1 };
   for (let index = 0; index < args.length; index++) {
     const arg = args[index];
     if (arg === '--all') options.all = true;
@@ -49,7 +49,7 @@ export async function capture(options, { uiRoot = UI_ROOT } = {}) {
       const directory = path.join(uiRoot, item.slug, 'screenshots');
       if (existsSync(directory) && (!lstatSync(directory).isDirectory() || lstatSync(directory).isSymbolicLink())) throw new Error('Unsafe screenshot directory: ' + directory);
       mkdirSync(directory, { recursive: true });
-      const page = await browser.newPage({ viewport: { width: options.width ?? 1600, height: options.height ?? 1200 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+      const page = await browser.newPage({ viewport: { width: options.width ?? 1600, height: options.height ?? 1000 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
       try {
         const files = Array.from({ length: options.count ?? 1 }, (_, index) => path.join(directory, (index + 1) + '.jpg')).filter((file) => options.overwrite || !existsSync(file));
         if (!files.length) { console.log('Preserved ' + item.slug); continue; }
@@ -79,7 +79,7 @@ export async function capture(options, { uiRoot = UI_ROOT } = {}) {
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
     const options = parseArgs(process.argv.slice(2));
-    if (options.help) console.log('Usage: node tools/screenshots/capture.mjs (--all | --slug <name>) [--overwrite] [--width 1600] [--height 1200] [--count 1]');
+    if (options.help) console.log('Usage: node tools/screenshots/capture.mjs (--all | --slug <name>) [--overwrite] [--width 1600] [--height 1000] [--count 1]');
     else { const results = await capture(options); if (results.some((result) => typeof result !== 'string')) process.exitCode = 1; }
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

@@ -122,7 +122,7 @@ html[lang="en"] .hero-title h1{font-size:clamp(44px,6vw,96px)}
 .card{display:flex;flex-direction:column;min-width:0}
 .card[hidden]{display:none}
 .media{display:block;transition:transform .5s var(--ease)}
-.frame{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;border:7px solid var(--card);box-shadow:inset 0 0 0 1px var(--line),var(--shadow-sm);background:var(--mat);transition:box-shadow .5s var(--ease)}
+.frame{position:relative;display:block;aspect-ratio:8/5;overflow:hidden;border:7px solid var(--card);box-shadow:inset 0 0 0 1px var(--line),var(--shadow-sm);background:var(--mat);transition:box-shadow .5s var(--ease)}
 .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0;transition:opacity .4s var(--ease),transform .6s var(--ease)}
 .frame img.is-on{opacity:1}
 .card:hover .media{transform:translateY(-6px)}
