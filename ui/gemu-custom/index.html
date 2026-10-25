@@ -8,174 +8,255 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-<div class="progress" id="progress" aria-hidden="true"></div>
+<!-- ============ 图标体系：内联 SVG sprite，线性 1.5，圆角端点 ============ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13.5 6.5l6 5.5-6 5.5"/></symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l10-10"/><path d="M9 7h8v8"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6.5 10.5L12 5l5.5 5.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2L19 19M19 5l-1.8 1.8M6.8 17.2L5 19"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 4h3.2l1.5 4-2 1.5a12 12 0 0 0 6.3 6.3l1.5-2 4 1.5v3.2a2 2 0 0 1-2.2 2A17 17 0 0 1 3.5 6.2 2 2 0 0 1 5.5 4z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.4 7-11.4a7 7 0 1 0-14 0c0 5 7 11.4 7 11.4z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h11v17l-5.5-3.8-5.5 3.8z"/></symbol>
+  <symbol id="i-bookmark-fill" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6.5 3.5h11v17l-5.5-3.8-5.5 3.8z"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 6.5c-2.6 1.5-4 3.9-4 7.1V18h5.5V11h-3.3c.1-2.1 1-3.7 2.6-4.7z"/><path d="M19.2 6.5c-2.6 1.5-4 3.9-4 7.1V18h5.5V11h-3.3c.1-2.1 1-3.7 2.6-4.7z"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 14.8L4 19l4.2.8L20.8 7.2a1.8 1.8 0 0 0-2.5-2.5z"/><path d="M8 10l1.8 1.8M11 7l1.8 1.8M14 16l1.8 1.8"/></symbol>
+  <symbol id="i-wardrobe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18"/><path d="M12 3v18"/><path d="M4 7.5h16"/><circle cx="9.8" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="14.2" cy="12" r=".9" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l8.5 4.7L12 12.9 3.5 8.2z"/><path d="M3.5 12.8l8.5 4.7 8.5-4.7"/></symbol>
+  <symbol id="i-tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.2 3.8a4.6 4.6 0 0 0-5.9 6l-6 6v2.8h2.8l6-6a4.6 4.6 0 0 0 6-5.9l-2.9 2.9-2.6-.6-.6-2.6z"/></symbol>
+  <symbol id="i-sofa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5V8.8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1.7"/><path d="M5 10.5a2.3 2.3 0 0 0 0 4.6h14a2.3 2.3 0 0 0 0-4.6"/><path d="M5 15.1V19M19 15.1V19"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="3.6"/><path d="M11.6 12H21"/><path d="M17.5 12v3.2"/><path d="M14.5 12v2.4"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11V16h-11z"/><path d="M13.5 9.5h3.6l3.4 3.4v3.1h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l.9-3.6L16.6 4.7a2 2 0 0 1 2.8 0l.9.9a2 2 0 0 1 0 2.8L7.6 20z"/><path d="M14.8 6.5l2.8 2.8"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2.1 5.4-5.4 2.1 2.1-5.4z"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3.5l1.6 4.6 4.6 1.6-4.6 1.6L11 15.9l-1.6-4.6L4.8 9.7l4.6-1.6z"/><path d="M18 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-diamond" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 4.5L19.5 12 12 19.5 4.5 12z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 10 12 4.5 20 4.5c0 8.5-5.5 14.5-15 14.5z"/><path d="M5 19c3-6.5 7-9.5 11-11"/></symbol>
+</svg>
 
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span>view</span></div>
+
+<!-- ============ 导航 ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="格木 GEMU 首页">
       <span class="brand-cn">格木</span>
       <span class="brand-en">GEMU</span>
+      <svg class="ic brand-orn" aria-hidden="true"><use href="#i-diamond"/></svg>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="主导航"></nav>
     <div class="nav-act">
       <button class="icon-btn" id="theme-btn" type="button" aria-label="切换深浅主题">
-        <i class="ti ti-moon" id="theme-icon"></i>
+        <svg class="ic" aria-hidden="true"><use href="#i-sun" id="theme-use"/></svg>
       </button>
-      <a class="nav-cta" href="#book">预约量房</a>
+      <a class="btn btn-ink" href="#book">预约量房<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
       <button class="icon-btn burger" id="burger" type="button" aria-label="展开导航" aria-expanded="false">
-        <i class="ti ti-menu"></i>
+        <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
     </div>
   </div>
   <div class="drawer" id="drawer" hidden>
     <nav class="drawer-links" id="drawer-links" aria-label="移动端导航"></nav>
-    <a class="btn btn-primary" href="#book">预约量房</a>
+    <a class="btn btn-ink drawer-cta" href="#book">预约量房<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
   </div>
 </header>
 
 <main>
-  <!-- 首屏 -->
+  <!-- ============ 首屏：编辑式不对称构图 ============ -->
   <section class="hero" id="top">
+    <p class="hero-side" id="hero-side" aria-hidden="true">格木定制家居</p>
+    <svg class="hero-deco" data-parallax="0.05" viewBox="0 0 520 340" fill="none" aria-hidden="true">
+      <path d="M-20 46C80 14 168 76 268 44s160-42 292-8"/>
+      <path d="M-20 98C90 66 184 128 284 96s156-40 288-6"/>
+      <path d="M-20 150C96 118 190 180 290 148s150-38 282-4"/>
+      <path d="M-20 202C102 170 196 232 296 200s144-36 276-2"/>
+      <path d="M-20 254C108 222 202 284 302 252s138-34 270 0"/>
+    </svg>
     <div class="wrap hero-in">
-      <p class="eyebrow" id="hero-eyebrow"></p>
-      <h1 class="hero-title" id="hero-title"></h1>
-      <p class="hero-sub" id="hero-sub"></p>
-      <div class="hero-act">
-        <a class="btn btn-primary" href="#book">预约量房</a>
-        <a class="hero-link" href="#works">看已落地案例</a>
+      <div class="hero-copy">
+        <p class="label hero-label" id="hero-label"></p>
+        <h1 class="hero-title" id="hero-title"></h1>
+        <p class="hero-sub" id="hero-sub"></p>
+        <div class="hero-act">
+          <a class="btn btn-ink btn-lg" href="#book" id="hero-primary">预约量房<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="link-ghost" href="#works" id="hero-ghost">看已落地的家<svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+        </div>
       </div>
+      <figure class="hero-fig rv">
+        <div class="hero-fig-frame imgz">
+          <img id="hero-img" alt="" fetchpriority="high">
+        </div>
+        <svg class="hero-ring" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <path d="M60 6a54 54 0 1 1-0.2 0.1"/>
+        </svg>
+        <figcaption class="hero-cap">
+          <span class="cap-no" id="hero-cap-no"></span>
+          <span class="cap-name" id="hero-cap-name"></span>
+          <span class="cap-meta" id="hero-cap-meta"></span>
+          <span class="cap-price" id="hero-cap-price"></span>
+        </figcaption>
+      </figure>
     </div>
-    <figure class="hero-figure">
-      <img id="hero-img" alt="" fetchpriority="high">
-      <figcaption class="wrap hero-cap">
-        <span class="cap-no" id="hero-cap-no"></span>
-        <span class="cap-name" id="hero-cap-name"></span>
-        <span class="cap-meta" id="hero-cap-meta"></span>
-        <span class="cap-price" id="hero-cap-price"></span>
-      </figcaption>
-    </figure>
     <div class="wrap">
-      <div class="stats" id="hero-stats"></div>
+      <div class="hero-stats rv" id="hero-stats"></div>
     </div>
   </section>
 
-  <!-- 作品 -->
+  <!-- ============ 慢速跑马灯 ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+
+  <!-- ============ 01 作品 ============ -->
   <section class="sec" id="works">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 class="sec-title">已落地的家</h2>
-        <div class="sec-tools">
+      <header class="sec-head rv">
+        <p class="sec-no">01</p>
+        <div class="sec-head-main">
+          <h2 class="sec-title">已落地的家</h2>
+          <p class="sec-sub">每一个项目都从一张户型图开始，按真实交付归档</p>
+        </div>
+        <span class="sec-ghost" aria-hidden="true">01</span>
+      </header>
+      <div class="works-grid">
+        <aside class="filters" id="filters">
           <label class="search">
-            <i class="ti ti-search" aria-hidden="true"></i>
+            <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
             <input id="q" type="search" placeholder="项目名或城市" autocomplete="off" aria-label="搜索案例">
           </label>
-          <div class="sort">
-            <button class="sort-btn" id="sort-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
-              <span id="sort-label">默认排序</span>
-              <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          <div class="fgroup">
+            <p class="fgroup-label">户型</p>
+            <div class="picks" id="f-type" role="group" aria-label="按户型筛选"></div>
+          </div>
+          <div class="fgroup">
+            <p class="fgroup-label">风格</p>
+            <div class="picks" id="f-style" role="group" aria-label="按风格筛选"></div>
+          </div>
+          <div class="fgroup">
+            <p class="fgroup-label">排序</p>
+            <div class="picks picks-sort" id="f-sort" role="group" aria-label="排序方式"></div>
+          </div>
+          <div class="fmeta">
+            <p class="fcount" id="f-count" aria-live="polite"></p>
+            <button class="freset" id="f-reset" type="button" hidden>
+              <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>清除筛选
             </button>
-            <ul class="sort-menu" id="sort-menu" role="listbox" hidden>
-              <li role="option" data-sort="none" aria-selected="true">默认排序</li>
-              <li role="option" data-sort="area" aria-selected="false">按面积</li>
-              <li role="option" data-sort="days" aria-selected="false">按交付周期</li>
-              <li role="option" data-sort="price" aria-selected="false">按造价</li>
-            </ul>
+          </div>
+        </aside>
+        <div class="works-body">
+          <article class="feature" id="feature"></article>
+          <div class="case-list" id="cases"></div>
+          <div class="empty" id="empty" hidden>
+            <svg class="empty-art" viewBox="0 0 160 118" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 100h128"/>
+              <path d="M34 100V44l46-22 46 22v56"/>
+              <path d="M80 22v78"/>
+              <path d="M54 62h16v38H54z"/>
+              <path d="M104 66a10 10 0 1 0 0 .1"/>
+              <path d="M104 76v10"/>
+            </svg>
+            <p class="empty-text">该组合下暂无案例</p>
+            <button class="btn btn-ghost" id="reset" type="button">清除筛选条件</button>
           </div>
         </div>
       </div>
-      <div class="filters">
-        <div class="fgroup">
-          <span class="flabel">户型</span>
-          <div class="picks" id="f-type" role="group" aria-label="按户型筛选"></div>
-        </div>
-        <div class="fgroup">
-          <span class="flabel">风格</span>
-          <div class="picks" id="f-style" role="group" aria-label="按风格筛选"></div>
-        </div>
-        <p class="fcount" id="fcount" aria-live="polite"></p>
-      </div>
-      <div class="cases" id="cases"></div>
-      <div class="empty" id="empty" hidden>
-        <svg class="empty-art" viewBox="0 0 160 118" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M16 100h128"/>
-          <path d="M34 100V44l46-22 46 22v56"/>
-          <path d="M80 22v78"/>
-          <path d="M54 62h16v38H54z"/>
-          <path d="M104 66a10 10 0 1 0 0 .1"/>
-          <path d="M104 76v10"/>
-        </svg>
-        <p class="empty-text">该组合下暂无案例</p>
-        <button class="btn btn-ghost" id="reset" type="button">清除筛选</button>
-      </div>
     </div>
   </section>
 
-  <!-- 定制清单 -->
+  <!-- ============ 02 定制清单 ============ -->
   <section class="sec" id="services">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 class="sec-title">定制清单与报价</h2>
-        <p class="sec-sub">按投影面积计价，含安装与基础五金配置</p>
-      </div>
-      <div class="plist" id="plist">
-        <div class="plist-head">
-          <span>项目</span><span>规格</span><span>起价</span><span>周期</span>
+      <header class="sec-head rv">
+        <p class="sec-no">02</p>
+        <div class="sec-head-main">
+          <h2 class="sec-title">定制清单与报价</h2>
+          <p class="sec-sub">计价方式逐条标注，签约后不再产生增项</p>
         </div>
-        <div id="services-body"></div>
-      </div>
+        <span class="sec-ghost" aria-hidden="true">02</span>
+      </header>
+      <div class="menu rv" id="services-body"></div>
     </div>
   </section>
 
-  <!-- 材料 -->
+  <!-- ============ 03 材料 ============ -->
   <section class="sec" id="materials">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 class="sec-title">四种材料</h2>
-        <p class="sec-sub">可替换、可升级，样板间实物对比</p>
-      </div>
+      <header class="sec-head rv">
+        <p class="sec-no">03</p>
+        <div class="sec-head-main">
+          <h2 class="sec-title">四种材料</h2>
+          <p class="sec-sub">可替换、可升级，签约前在样板间实物对比</p>
+        </div>
+        <span class="sec-ghost" aria-hidden="true">03</span>
+      </header>
       <div class="mats" id="mats"></div>
     </div>
   </section>
 
-  <!-- 流程 -->
+  <!-- ============ 04 流程 ============ -->
   <section class="sec" id="flow">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 class="sec-title">从量房到验收</h2>
-        <p class="sec-sub">每个环节有明确交付物与周期</p>
+      <header class="sec-head rv">
+        <p class="sec-no">04</p>
+        <div class="sec-head-main">
+          <h2 class="sec-title">从量房到验收</h2>
+          <p class="sec-sub">每个环节有明确交付物与周期，全程可查</p>
+        </div>
+        <span class="sec-ghost" aria-hidden="true">04</span>
+      </header>
+      <div class="flow rv" id="flow-steps">
+        <div class="flow-line" aria-hidden="true"></div>
+        <ol class="steps" id="steps"></ol>
       </div>
-      <ol class="steps" id="steps"></ol>
     </div>
   </section>
 
-  <!-- 团队与评价 -->
+  <!-- ============ 05 团队与评价 ============ -->
   <section class="sec" id="voices">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 class="sec-title">主案设计师与业主反馈</h2>
-      </div>
+      <header class="sec-head rv">
+        <p class="sec-no">05</p>
+        <div class="sec-head-main">
+          <h2 class="sec-title">主案设计师与业主反馈</h2>
+          <p class="sec-sub">方案由主案设计师跟进到底，不转手</p>
+        </div>
+        <span class="sec-ghost" aria-hidden="true">05</span>
+      </header>
       <div class="team" id="team"></div>
       <div class="voices" id="voice-list"></div>
     </div>
   </section>
 
-  <!-- 预约量房 -->
+  <!-- ============ 06 预约量房 ============ -->
   <section class="sec book" id="book">
     <div class="wrap book-in">
-      <div class="book-lead">
+      <div class="book-lead rv">
+        <p class="sec-no">06</p>
         <h2 class="sec-title">预约量房</h2>
         <p class="sec-sub">留下户型与面积，48 小时内收到平面方案与预算区间</p>
         <ul class="stores" id="stores"></ul>
-        <p class="hotline">设计热线 <span id="hotline"></span></p>
+        <div class="hotline">
+          <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
+          <div>
+            <p class="hotline-label">设计热线</p>
+            <p class="hotline-no" id="hotline"></p>
+          </div>
+        </div>
       </div>
-      <form class="form" id="form" novalidate>
+      <form class="form rv" id="form" novalidate>
         <div class="frow">
           <div class="field">
             <label for="f-name">姓名</label>
@@ -190,7 +271,10 @@
         </div>
         <div class="field">
           <label for="f-area">房屋面积</label>
-          <input id="f-area" name="area" type="text" inputmode="numeric" placeholder="建筑面积，20 至 999">
+          <div class="field-suffix">
+            <input id="f-area" name="area" type="text" inputmode="numeric" placeholder="建筑面积，20 至 999">
+            <span class="suffix">㎡</span>
+          </div>
           <p class="err" data-err="area"></p>
         </div>
         <div class="field">
@@ -198,25 +282,31 @@
           <div class="picks-box" id="f-city" role="group" aria-label="选择城市"></div>
           <p class="err" data-err="city"></p>
         </div>
-        <div class="field">
-          <span class="label">户型</span>
-          <div class="picks-box" id="f-type2" role="group" aria-label="选择户型"></div>
-          <p class="err" data-err="type"></p>
-        </div>
-        <div class="field">
-          <span class="label">期望风格</span>
-          <div class="picks-box" id="f-style2" role="group" aria-label="选择风格"></div>
+        <div class="frow">
+          <div class="field">
+            <span class="label">户型</span>
+            <div class="picks-box" id="f-type2" role="group" aria-label="选择户型"></div>
+            <p class="err" data-err="type"></p>
+          </div>
+          <div class="field">
+            <span class="label">期望风格</span>
+            <div class="picks-box" id="f-style2" role="group" aria-label="选择风格"></div>
+          </div>
         </div>
         <div class="field">
           <label for="f-note">备注</label>
           <textarea id="f-note" name="note" rows="2" placeholder="收纳需求、宠物、老人同住等"></textarea>
         </div>
         <div class="form-foot">
-          <button class="btn btn-primary" id="submit" type="submit">提交预约</button>
+          <button class="btn btn-ink btn-lg" id="submit" type="submit">提交预约<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
           <p class="form-msg" id="form-msg" role="status"></p>
         </div>
       </form>
       <div class="done" id="done" hidden>
+        <svg class="done-art" viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="36" cy="36" r="30" class="done-ring"/>
+          <path d="M24 37.5l8 8 16-16" class="done-tick"/>
+        </svg>
         <p class="done-no">预约编号 <span id="done-no"></span></p>
         <h3 class="done-title">顾问将在 2 小时内联系你</h3>
         <p class="done-sub" id="done-sub"></p>
@@ -226,24 +316,35 @@
   </section>
 </main>
 
+<!-- ============ 页脚 ============ -->
 <footer class="foot">
-  <div class="wrap foot-in">
-    <div class="foot-brand">
-      <span class="brand-cn">格木</span>
-      <span class="brand-en">GEMU</span>
-      <p class="foot-line">全屋定制家居</p>
+  <div class="wrap">
+    <div class="foot-mark">
+      <span class="fw-cn">格木</span>
+      <span class="fw-en">GEMU</span>
     </div>
-    <nav class="foot-col" id="foot-links" aria-label="页脚导航"></nav>
-    <div class="foot-col">
-      <span class="foot-h">门店</span>
-      <ul id="foot-stores"></ul>
+    <div class="foot-in">
+      <nav class="foot-col" id="foot-links" aria-label="页脚导航"></nav>
+      <div class="foot-col">
+        <p class="foot-h">门店</p>
+        <ul id="foot-stores"></ul>
+      </div>
+      <div class="foot-col">
+        <p class="foot-h">联系</p>
+        <p class="foot-line">设计热线 <span id="foot-phone"></span></p>
+        <p class="foot-line">周一至周日 10:00 至 20:00</p>
+      </div>
     </div>
-  </div>
-  <div class="wrap foot-bottom">
-    <span>© 2026 格木家居定制</span>
-    <span>设计热线 <span id="foot-phone"></span></span>
+    <div class="foot-bottom">
+      <span>© 2026 格木家居定制</span>
+      <button class="to-top" id="to-top" type="button">
+        回到顶部<svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+      </button>
+    </div>
   </div>
 </footer>
+
+<div class="peek" id="peek" aria-hidden="true"><img id="peek-img" alt=""></div>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
