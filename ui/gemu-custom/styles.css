@@ -305,7 +305,8 @@ button { font: inherit; color: inherit; }
 .w-stage::-webkit-scrollbar { display: none; }
 .w-stage.is-pin {
   overflow: hidden;
-  /* 标题被固定的导航压住，舞台需要为它多留一段顶部空间 */
+  /* 标题被固定的导航压住，舞台需要为它多留一段顶部空间；
+     卡片尺寸另按 vh 收敛，保证矮窗口下价格行仍完整 */
   padding-top: calc(var(--nav-h) + 150px);
 }
 
@@ -320,8 +321,10 @@ button { font: inherit; color: inherit; }
   gap: 6px clamp(16px, 3vw, 40px);
   align-items: end;
 }
-/* 被 pin 固定在视口顶部时，标题要让开吸顶导航 */
-.w-stage.is-pin .w-head { top: calc(var(--nav-h) + clamp(12px, 2.2vh, 28px)); }
+/* 被 pin 固定在视口顶部时，标题要让开吸顶导航。
+   注意 .w-stage 本身已在导航下方（导航在流内占 --nav-h），
+   这里不能再加一次导航高，否则头部整体下沉、挤压卡片。 */
+.w-stage.is-pin .w-head { top: clamp(12px, 2.2vh, 28px); }
 .w-intro { grid-area: intro; display: flex; flex-direction: column; gap: 2px; }
 .w-label {
   font-family: var(--font-mono); font-size: 11px; letter-spacing: .22em;
@@ -359,16 +362,19 @@ button { font: inherit; color: inherit; }
 }
 .w-card {
   flex: none; position: relative;
-  width: clamp(240px, min(30vw, 42vh), 420px);
+  /* 宽度同时受视口宽与视口高约束：640px 高的窗口也不裁掉价格行 */
+  width: clamp(240px, min(30vw, 39vh), 420px);
   display: block; text-decoration: none; color: var(--ink);
 }
 /* 偶数位收窄一档：尺寸差构成层次，底缘仍与其他卡片对齐 */
 .w-card:nth-child(even) {
-  width: clamp(210px, min(25vw, 35vh), 350px);
+  width: clamp(210px, min(25vw, 32vh), 350px);
 }
 .w-media {
   position: relative; z-index: 1; display: block;
   aspect-ratio: 4 / 5; overflow: hidden;
+  /* 卡片纵向不能超出一屏：视口矮时按高度封顶，避免居中溢出到标题上 */
+  max-height: max(220px, calc(100svh - 420px));
   background: var(--paper-2);
 }
 .w-card:nth-child(even) .w-media { aspect-ratio: 3 / 4; }
