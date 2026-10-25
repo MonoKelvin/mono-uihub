@@ -80,10 +80,9 @@
     $('#w-latin').textContent = w.latin;
     $('#w-count').textContent = w.count;
     $('#w-lead').textContent = w.lead;
-    $('#w-hint').innerHTML = esc(w.hint) + icon('arrow-right');
     $('#w-track').innerHTML = w.items.map(function (c) {
       return '<a class="w-card" href="#book" data-cursor="view">' +
-        '<span class="w-media imgz"><img src="' + photo(c.img, 900, 1125) + '" alt="' + esc(c.alt) + '" loading="lazy"></span>' +
+        '<span class="w-media imgz"><span class="w-shot"><img src="' + photo(c.img, 900, 1125) + '" alt="' + esc(c.alt) + '" loading="lazy"></span></span>' +
         '<span class="w-no"><b>' + esc(c.no) + '</b>' + esc(c.type) + '</span>' +
         '<span class="w-name">' + esc(c.name) + '</span>' +
         '<span class="w-meta">' +
@@ -384,7 +383,6 @@
       .from('.hero-frame img', { scale: 1.14, duration: 1.4, ease: 'power2.out' }, '-=1.15')
       .from('.hero-cap', { y: 10, autoAlpha: 0, duration: .5 }, '-=.75')
       .from('.hero-meta span', { y: 10, autoAlpha: 0, duration: .5, stagger: .07 }, '-=.55')
-      .from('.hero-scroll', { autoAlpha: 0, duration: .5 }, '-=.4')
       .from('.hero-outline', { yPercent: 24, autoAlpha: 0, duration: 1.1 }, '-=.95');
   }
 
@@ -462,10 +460,27 @@
       });
       tl.to(track, { x: function () { return -dist(); }, ease: 'none' });
 
+      /* 卡片内部纵深：横向经过时图片反向微移，
+         由 containerAnimation 挂在同一条横向时间线上 */
+      g.utils.toArray('.w-shot').forEach(function (shot) {
+        g.fromTo(shot, { xPercent: -3.2, scale: 1.08 }, {
+          xPercent: 3.2, scale: 1.08, ease: 'none',
+          scrollTrigger: {
+            trigger: shot.closest('.w-card'),
+            containerAnimation: tl,
+            start: 'left right',
+            end: 'right left',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+
       return function () {
         stage.classList.remove('is-pin');
         g.set(track, { clearProps: 'transform' });
         g.set(bar, { clearProps: 'transform' });
+        g.set('.w-shot', { clearProps: 'transform' });
       };
     });
   }
