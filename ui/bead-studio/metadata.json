@@ -1,0 +1,26 @@
+{
+  "name": "串间 · 手串设计工房",
+  "slug": "bead-studio",
+  "page_type": "software",
+  "tags": ["手串", "定制", "国风"],
+  "palette": ["#f7f4ec", "#2f5480", "#24292e"],
+  "created_at": "2026-10-25 11:38:37",
+  "updated_at": "2026-10-25 14:02:17",
+  "history": [
+    {
+      "prompt": "一个手串定制化构建软件",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype", "frontend-design"]
+    },
+    {
+      "prompt": "继续。配色和UI设计尽量简约和高级，尝试多使用图标、矢量图和插画等装饰，换一些高级感的艺术字体，补充国风、日式等设计元素",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype", "frontend-design", "oil-ui"]
+    },
+    {
+      "prompt": "重新读取项目。开始优化UI设计，要国风高级感设计，简约风，调整配色使用国风配色体系。检查各种组件的间距、尺寸和大小等确保不要出错，完善各种动画等。完善手串模型展示页面的各种交互（如多选、滚动缩放、移动等）",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype", "frontend-design"]
+    }
+  ]
+}
