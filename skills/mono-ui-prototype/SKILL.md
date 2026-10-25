@@ -322,32 +322,60 @@ tl.to(".step-1", { autoAlpha: 0 }).from(".step-2", { autoAlpha: 0 }, "<");
 
 ## 六、素材
 
-**优先级：在线热链 > 手绘 SVG > AI 生图。** 一律不下载到本地。
+**统一用 `tools/resource-getter/get.py` 取素材**，不要手拼站点 URL，也不要在页面里散落一堆来源不明的外链。完整来源矩阵、许可与故障排查见 `tools/resource-getter/README.md`。
 
-### 图片（热链）
+### 选型优先级
 
-- Lorem Picsum：`https://picsum.photos/seed/lab/1200/800`（带 seed 可复现同一张）
-- Unsplash：`https://images.unsplash.com/photo-xxxx?w=1600&q=80&auto=format&fit=crop`
-- Pexels：`https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg?auto=compress&w=1600`
-- 纯色占位：`https://placehold.co/600x400`
-- 头像：`https://i.pravatar.cc/120?u=<seed>` 或 DiceBear `https://api.dicebear.com/9.x/<style>/svg?seed=xxx`
+1. **透明矢量插画**：unDraw / Storyset / DiceBear / Doodle Ipsum
+2. **抠图 PNG**：Pixabay（`--transparent`）/ pngimg
+3. **摄影**：Pixabay / Picsum / Unsplash / Pexels
+4. **手绘 SVG**（几何、装饰、图表）
+5. **AI 生图**（最次，规则见下）
 
-图片必须服务内容、契合方向卡，不是随手塞风景大图；带尺寸与质量参数，写好 `alt`。
+**默认热链，慢则落盘。** `get` 的 `auto` 模式会实测 TTFB：> 0.9s 或读取 > 2.5s 判定为慢，必须下载到 `ui/<page>/assets/`；再快也别把二十张远程大图堆进首屏。
 
-### 透明底插画（"扣好图"效果）
+```bash
+# 透明 SVG 插画
+python tools/resource-getter/get.py search undraw "developer" --limit 5
+python tools/resource-getter/get.py get undraw "developer" --page <page>
 
-需要**没有背景、形状不受方框限制**的矢量插画时，用 **DiceBear**。它直接返回 `image/svg+xml`，透明底，既是插画也是头像，改 `seed` 就换一张，不会像占位图那样出现方方正正的底色块。
+# 透明插画 / 抠图 PNG
+python tools/resource-getter/get.py get pixabay "fox" --type illustration --transparent --page <page>
+python tools/resource-getter/get.py get pngimg "fox" --page <page>
 
+# Storyset（免费版需署名）
+python tools/resource-getter/get.py get storyset "developer" --style rafiki --page <page>
+
+# 占位插画（会自动换成可复现的静态 URL）
+python tools/resource-getter/get.py url doodleipsum --width 700 --height 1244 --style avatar --page <page>
+
+# 头像 / 抽象图形
+python tools/resource-getter/get.py url dicebear --style shapes --seed mono --page <page>
+
+# 先看延迟再决定
+python tools/resource-getter/get.py probe <url>
 ```
-https://api.dicebear.com/9.x/<style>/svg?seed=<seed>&backgroundColor=transparent
-```
 
-- `backgroundColor=transparent` **必带**，否则默认给一个纯色圆/方底。
-- 已验证可用的 style：`shapes`（抽象几何色块，最像"装饰插画"）、`notionists`（线描人物半身，适合头像与空态）、`adventurer`、`lorelei`、`micah`、`glass`、`rings`、`identicon`、`thumbs`。
-- `seed` 定死即可复现同一张；尺寸交给 CSS，`<img>` 写 `width`/`height` + `loading="lazy"`。
-- 想让它退成纯装饰：CSS `filter: grayscale(1) opacity(.45)`，或 `mix-blend-mode: multiply` 融进纸色底。
+`--page` 自动建 `ui/<page>/assets/` 并打印 `<img src="./assets/...">`；`--mode hotlink` 只输出 URL，`--mode download` 强制落盘，`--force` 覆盖同名文件。
 
-**已确认拿不到稳定直链，不要再用**：`illustrations.popsy.co`（连接超时）、`popsy.co`（530）、`api.iconify.design/undraw:*`（404）、`svgrepo.com/show/*.svg`（429 限流）、`cdn.jsdelivr.net/gh/realvjy/illustrations`（404）、`botanimals` 风格（404）。
+### 透明底 / 不要方框
+
+- **unDraw** 有稳定直链 `https://cdn.undraw.co/illustration/<slug>.svg`，但每张都带一层满幅 `#f8f8f8` 背景；resource-getter 会自动移除（保守判定，覆盖不到 97% viewBox 就不动）。`--no-strip-bg` 可保留。
+- **Storyset** 返回透明 SVG（`stories.freepiklabs.com`），免费使用需署名 `Illustration by Storyset`。
+- **Doodle Ipsum** 用 `?bg=transparent`；裸 URL 每次刷新换图，`get` 会跟随一次 307 并缓存 `?i=` 静态地址。
+- **DiceBear** 的 `backgroundColor=transparent` **必带**，否则默认给一个纯色圆/方底。
+- **Pixabay** 的 `--transparent` 先按 `transparent` 标签过滤，没有标签命中时对前 8 条候选只取 64 字节做 PNG IHDR alpha 检查。
+- **pngimg** 是原生抠图 PNG，但许可是 **CC BY-NC 4.0**，只用于原型演示。
+- 换主色：unDraw 直接 `--recolor '#c8a24a'`（替换 `#6c63ff`）；其他 SVG 用 `--from-color '#6c63ff' --recolor '#c8a24a'`。
+
+### 许可红线
+
+- **可商用**：unDraw、Pixabay、Doodle / Blush、Unsplash、Pexels、Picsum。
+- **需署名**：Storyset / Freepik（去署名需 Flaticon Premium）。
+- **禁止商用**：pngimg（CC BY-NC 4.0，需署名）、Pixiv 作品（作者版权，仅私人参考）、Pravatar（来源授权不明确，仅原型）。
+- unDraw 不得打包转售、不得用于训练模型；Pixabay / Unsplash / Pexels 不得原样转售。
+
+**已确认拿不到稳定直链，不要再用**：`illustrations.popsy.co`（连接超时）、`popsy.co`（530）、`svgrepo.com/show/*.svg`（429 限流）、`cdn.jsdelivr.net/gh/realvjy/illustrations`（404）、`botanimals` 风格（404）。`api.iconify.design/undraw:*` 仍是 404，但 unDraw 官方 CDN 直链可用，走 resource-getter 即可。
 
 ### 图标
 

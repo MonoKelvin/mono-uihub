@@ -17,7 +17,8 @@ mono-uihub/
 │       ├── SKILL.md
 │       └── purify.json        # 唯一词源，生图工具直接读取
 ├── tools/                     # 给助手用的脚本
-│   └── image-forge/           # 按需生成透明 PNG（提示词自动叠加干净词）
+│   ├── image-forge/           # 按需生成透明 PNG（提示词自动叠加干净词）
+│   └── resource-getter/       # 免费插画 / 抠图 PNG / 摄影，按延迟自动热链或下载
 ├── LICENSE                    # MIT
 └── README.md / README.zh.md
 ```
@@ -31,6 +32,7 @@ mono-uihub/
 - **可交互，不是死壳**：能点的元素都用最简 JS 接上本地假数据，拿来即可演示。
 - **自带"去 AI 味"检查**：交付前按硬性清单自检，一个强调色、一套圆角、真实文案、刻意的留白。
 - **生成的图也要干净**：页面需要定制素材时，[`skills/image-purify`](skills/image-purify/SKILL.md) 的干净词会在生图前自动叠加，避免噪点、鳞片感、满屏碎片这类一眼 AI 的脏图。
+- **优先抠图素材**：[`tools/resource-getter`](tools/resource-getter/README.md) 负责取透明 SVG 插画（unDraw / Storyset）、抠图 PNG（Pixabay / pngimg）与摄影，自动去掉 SVG 的满幅背景；探测到源站太慢时改为下载，不再硬挂远程链接。
 
 ## 使用方式
 

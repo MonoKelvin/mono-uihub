@@ -1,0 +1,7 @@
+# Local third-party checkouts — never commit
+
+# Ignore every vendored source tree; keep only the reference metadata.
+*
+!.gitignore
+!README.md
+!manifest.json

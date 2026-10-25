@@ -17,7 +17,8 @@ mono-uihub/
 │       ├── SKILL.md
 │       └── purify.json        # single source of truth, read by the tool
 ├── tools/                     # helper scripts for the agent
-│   └── image-forge/           # on-demand transparent PNG generation (auto-purified prompts)
+│   ├── image-forge/           # on-demand transparent PNG generation (auto-purified prompts)
+│   └── resource-getter/       # free illustrations / cut-out PNGs / photos, with latency-aware hot-link vs download
 ├── LICENSE                    # MIT
 └── README.md / README.zh.md
 ```
@@ -31,6 +32,7 @@ Describe a page in one sentence — say, "an online configurator for a mechanica
 - **Interactive, not a dead mock** — clickable elements are wired with minimal JS and local mock data, so prototypes can be demoed as-is.
 - **Anti-slop by design** — a hard checklist of "AI look" tells is enforced before delivery: one accent color, one radius system, real copy, deliberate whitespace.
 - **Clean generated imagery** — when a page needs a custom asset, [`skills/image-purify`](skills/image-purify/SKILL.md) is layered onto the prompt automatically, so assets come back free of noise, fish-scale micro-texture and floating debris.
+- **Cut-out assets first** — [`tools/resource-getter`](tools/resource-getter/README.md) pulls transparent SVG illustrations (unDraw, Storyset), cut-out PNGs (Pixabay, pngimg) and photos, strips baked-in SVG backgrounds, and downloads instead of hot-linking when the origin is slow.
 
 ## How to use
 

@@ -1,0 +1,10 @@
+{
+  "pixiv-mcp-server": {
+    "repo": "https://github.com/222wcnm/pixiv-mcp-server",
+    "commit": "c02e5e67c82f7774b028ccf669567a4d386d1016",
+    "short": "c02e5e6",
+    "license": "MIT",
+    "purpose": "One-time Pixiv OAuth refresh-token acquisition (get_token.py)",
+    "fetched_at": "2026-10-25"
+  }
+}

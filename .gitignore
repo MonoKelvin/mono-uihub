@@ -19,6 +19,12 @@ Desktop.ini
 # Image Forge — never commit real credentials
 .env
 tools/image-forge/.env
+tools/resource-getter/.env
+tools/resource-getter/.env.local
+tools/resource-getter/.cache/
+tools/resource-getter/test-output/
+# Vendored third-party source (cloned by pixiv-login; never committed)
+tools/resource-getter/vendor/pixiv-mcp-server/
 __pycache__/
 
 # Image Forge — large matting models fetched on demand (keep vendored u2netp.onnx)
