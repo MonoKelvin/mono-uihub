@@ -21,7 +21,7 @@ export function normalizeMetadata(metadata, slug = '') {
   const root = record(metadata);
   const initial = record(root?.history?.[0]) ?? record(root?.generation?.history?.[0]);
   const prompt = text(initial?.prompt);
-  const explicitType = fold(initial?.page_type ?? initial?.type);
+  const explicitType = fold(initial?.page_type ?? initial?.type ?? root?.page_type ?? root?.type);
   const typeAliases = { webpage: 'website', web: 'website', '网页': 'website', '软件': 'software', '组件': 'component', '应用': 'app' };
   const type = explicitType ? (typeAliases[explicitType] ?? explicitType) : typePatterns.find(([, pattern]) => pattern.test(prompt))?.[0] ?? 'unknown';
   const tags = initial?.tags != null ? list(initial.tags) : tagPatterns.filter((tag) => prompt.includes(tag));

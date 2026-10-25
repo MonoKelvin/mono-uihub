@@ -17,7 +17,7 @@ const meta = {
   ],
 };
 
-test('only the initial history record drives filter fields', () => {
+test('revisions do not drive filter fields; root page_type is only a fallback', () => {
   const it = normalizeMetadata(meta, 'demo');
   assert.equal(it.model, 'gpt-x');
   assert.equal(it.type, 'software');
@@ -65,7 +65,7 @@ test('only safe public assets are published', () => {
 });
 
 test('initial explicit fields win; mutable display names and dates are not searchable', () => {
-  const item = normalizeMetadata({ name: 'NameOnlySecret', colors: ['pink'], tags: ['RootOnlySecret'], history: [
+  const item = normalizeMetadata({ name: 'NameOnlySecret', page_type: 'website', colors: ['pink'], tags: ['RootOnlySecret'], history: [
     { prompt: 'initial brief', model: 'GPT-X', tags: ['initial'], colors: ['blue'], page_type: 'component' },
     { prompt: 'RevisionOnlySecret', model: 'RevisionModel', tags: ['revision'], colors: ['pink'], page_type: 'website' },
   ] }, 'SlugOnlySecret');
@@ -78,23 +78,28 @@ test('initial explicit fields win; mutable display names and dates are not searc
   assert.equal(filterCatalog([item], { model: 'GPT-X', tags: ['initial'], type: 'component' }).length, 1);
 });
 
-test('empty history does not fall back to mutable root fields or slug', () => {
+test('root page_type supplies the type when the initial record omits it', () => {
+  const item = normalizeMetadata({ page_type: 'website', history: [{ prompt: '一个卡牌交易平台', model: 'X' }] }, 'card-market');
+  assert.equal(item.type, 'website');
+});
+
+test('empty history keeps prompt/model/tags unknown but uses explicit root page_type', () => {
   const item = normalizeMetadata({ prompt: 'blue website', model: 'RootModel', page_type: 'website', tags: ['blue'], colors: ['blue'], history: [] }, 'blue-website');
   assert.equal(item.prompt, '');
   assert.equal(item.model, 'unknown');
-  assert.equal(item.type, 'unknown');
+  assert.equal(item.type, 'website');
   assert.deepEqual(item.tags, []);
   assert.deepEqual(item.colors, []);
 });
 
-test('repository prototypes all carry a palette; missing history stays unknown', () => {
+test('repository prototypes all carry a palette; missing history keeps prompt/model/tags unknown', () => {
   const catalog = loadCatalog();
   assert.ok(catalog.length > 0);
   for (const item of catalog) {
     assert.ok(item.colors.length > 0, item.slug);
+    assert.ok(['software', 'website', 'app', 'component', 'unknown'].includes(item.type), item.slug);
     if (item.prompt) continue;
     assert.equal(item.model, 'unknown', item.slug);
-    assert.equal(item.type, 'unknown', item.slug);
     assert.deepEqual(item.tags, [], item.slug);
   }
 });
