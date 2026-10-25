@@ -3,39 +3,55 @@
 
   const $ = (id) => document.getElementById(id);
   const materials = [
+    /* 石瓷 · 十七种（花纹优先，避免同色重复） */
     { id: 'porcelain', name: '青花瓷', description: '釉下青花陶瓷珠', category: 'stone', kind: 'porcelain', light: '#f6f9fd', mid: '#e7edf7', dark: '#a0b3cd', price: 7.5, sizes: [6, 8, 10, 12] },
+    { id: 'crackle', name: '哥窑冰裂', description: '开片冰裂釉陶瓷珠', category: 'stone', kind: 'crackle', light: '#f0f3ee', mid: '#dee4dd', dark: '#a3afa4', line: '#7c8a7e', price: 9.5, sizes: [6, 8, 10, 12] },
+    { id: 'celadon', name: '青瓷', description: '梅子青釉陶瓷珠', category: 'stone', kind: 'cloud', light: '#eaf3ec', mid: '#c2d7ca', dark: '#7f9c8c', price: 7.9, sizes: [6, 8, 10, 12] },
+    { id: 'white-jade', name: '白玉', description: '和田羊脂白玉', category: 'stone', kind: 'marble', light: '#fbfbf6', mid: '#eceee5', dark: '#c3cab9', line: '#aab3a2', price: 11.5, sizes: [6, 8, 10, 12] },
+    { id: 'malachite', name: '孔雀石', description: '同心环带铜矿', category: 'stone', kind: 'banded', light: '#a8d0b6', mid: '#5f9b76', dark: '#2f6247', price: 8.4, sizes: [6, 8, 10, 12] },
     { id: 'aventurine', name: '绿东陵', description: '天然石英岩玉', category: 'stone', kind: 'jade', light: '#b4c6a4', mid: '#78956f', dark: '#465c43', price: 5.2, sizes: [6, 8, 10, 12] },
-    { id: 'agate', name: '白玛瑙', description: '温润半透玉髓', category: 'stone', kind: 'cloud', light: '#f2f0e3', mid: '#dfdfd0', dark: '#b3b8a7', price: 4.6, sizes: [6, 8, 10, 12] },
     { id: 'amazonite', name: '天河石', description: '天然微斜长石', category: 'stone', kind: 'jade', light: '#b2d6cd', mid: '#78aaa0', dark: '#4d7770', price: 6.8, sizes: [6, 8, 10, 12] },
-    { id: 'rose-quartz', name: '粉晶', description: '天然蔷薇石英', category: 'stone', kind: 'cloud', light: '#edced1', mid: '#d3a9b3', dark: '#a07b8b', price: 5.8, sizes: [6, 8, 10, 12] },
-    { id: 'obsidian', name: '黑曜石', description: '天然火山玻璃', category: 'stone', kind: 'glass', light: '#8a9491', mid: '#424e4a', dark: '#202d28', price: 3.8, sizes: [6, 8, 10, 12] },
-    { id: 'amethyst', name: '紫水晶', description: '天然紫色石英', category: 'stone', kind: 'cloud', light: '#c7bbd4', mid: '#9a89af', dark: '#645275', price: 7.2, sizes: [6, 8, 10, 12] },
-    { id: 'tiger-eye', name: '虎眼石', description: '天然猫眼光泽', category: 'stone', kind: 'tiger', light: '#d8bf82', mid: '#a58949', dark: '#63502c', price: 4.8, sizes: [6, 8, 10, 12] },
     { id: 'aquamarine', name: '海蓝宝', description: '天然蓝色绿柱石', category: 'stone', kind: 'cloud', light: '#d0e3e4', mid: '#a6c6ca', dark: '#73979e', price: 8.6, sizes: [6, 8, 10, 12] },
+    { id: 'lapis', name: '洒金青金', description: '青金石带黄铁矿星点', category: 'stone', kind: 'fleck', light: '#c4d1e9', mid: '#5f7bb0', dark: '#2f4677', spec: '#e0c377', price: 9.8, sizes: [6, 8, 10, 12] },
+    { id: 'amethyst', name: '紫水晶', description: '天然紫色石英', category: 'stone', kind: 'cloud', light: '#c7bbd4', mid: '#9a89af', dark: '#645275', price: 7.2, sizes: [6, 8, 10, 12] },
+    { id: 'rose-quartz', name: '粉晶', description: '天然蔷薇石英', category: 'stone', kind: 'cloud', light: '#edced1', mid: '#d3a9b3', dark: '#a07b8b', price: 5.8, sizes: [6, 8, 10, 12] },
+    { id: 'southern-red', name: '南红', description: '凉山南红玛瑙', category: 'stone', kind: 'cloud', light: '#f3d2c7', mid: '#d0937f', dark: '#96584a', price: 8.8, sizes: [6, 8, 10, 12] },
+    { id: 'amber', name: '琥珀', description: '天然树脂包裹体', category: 'stone', kind: 'mottle', light: '#f4dcab', mid: '#d3a05c', dark: '#8a5f2c', price: 10.2, sizes: [6, 8, 10, 12] },
+    { id: 'sardonyx', name: '缠丝玛瑙', description: '天然层状缠丝纹', category: 'stone', kind: 'banded', light: '#f0e2cd', mid: '#cdb08a', dark: '#987651', price: 6.9, sizes: [6, 8, 10, 12] },
+    { id: 'citrine', name: '黄水晶', description: '天然黄色石英', category: 'stone', kind: 'cloud', light: '#f5e8c1', mid: '#ddc17b', dark: '#a98c42', price: 6.6, sizes: [6, 8, 10, 12] },
+    { id: 'tiger-eye', name: '虎眼石', description: '天然猫眼光泽', category: 'stone', kind: 'tiger', light: '#d8bf82', mid: '#a58949', dark: '#63502c', price: 4.8, sizes: [6, 8, 10, 12] },
+    { id: 'obsidian', name: '黑曜石', description: '天然火山玻璃', category: 'stone', kind: 'glass', light: '#8a9491', mid: '#424e4a', dark: '#202d28', price: 3.8, sizes: [6, 8, 10, 12] },
+    /* 木珠 · 四种 */
     { id: 'sandalwood', name: '檀木', description: '细磨原木珠', category: 'wood', kind: 'wood', light: '#b69a6e', mid: '#8b6b41', dark: '#553e27', price: 3.6, sizes: [6, 8, 10, 12] },
     { id: 'walnut', name: '胡桃木', description: '深色天然木纹', category: 'wood', kind: 'wood', light: '#93806b', mid: '#665241', dark: '#3c3028', price: 4.2, sizes: [6, 8, 10, 12] },
+    { id: 'wenge', name: '鸡翅木', description: '细密鸡翅纹', category: 'wood', kind: 'wood', light: '#a58f78', mid: '#6d5845', dark: '#3d2f26', price: 5.4, sizes: [6, 8, 10, 12] },
+    { id: 'bodhi', name: '星月菩提', description: '星点密布菩提籽', category: 'wood', kind: 'fleck', light: '#ede0c5', mid: '#d2bc97', dark: '#9c8562', spec: '#6f5b40', price: 3.2, sizes: [6, 8, 10, 12] },
+    /* 配饰 · 四种 */
     { id: 'brass', name: '黄铜隔珠', description: '哑光黄铜配饰', category: 'metal', kind: 'metal', light: '#e8dcb2', mid: '#b6a16a', dark: '#7c683c', price: 2.5, sizes: [2, 4, 6] },
-    { id: 'silver', name: '银色隔珠', description: '镀银合金配饰', category: 'metal', kind: 'metal', light: '#e3e8e4', mid: '#b4bfba', dark: '#75847c', price: 3.2, sizes: [2, 4, 6] }
+    { id: 'silver', name: '银色隔珠', description: '镀银合金配饰', category: 'metal', kind: 'metal', light: '#e3e8e4', mid: '#b4bfba', dark: '#75847c', price: 3.2, sizes: [2, 4, 6] },
+    { id: 'rose-gold', name: '玫瑰金', description: '镀玫瑰金配饰', category: 'metal', kind: 'metal', light: '#f6ded2', mid: '#d8ab94', dark: '#a87a66', price: 4.2, sizes: [2, 4, 6] },
+    { id: 'gunmetal', name: '黑钢隔珠', description: '枪黑电镀钢', category: 'metal', kind: 'metal', light: '#b5bcc2', mid: '#7d878f', dark: '#474f56', price: 3.6, sizes: [2, 4, 6] }
   ];
   const byMaterial = new Map(materials.map((material) => [material.id, material]));
-  const cords = { ivory: { color: '#dfe6f0', name: '瓷白' }, green: { color: '#77938a', name: '松绿' }, pink: { color: '#cda6a4', name: '浅粉' }, dark: { color: '#4e5554', name: '岩灰' } };
+  const cords = { ivory: { color: '#dfe6f0', name: '瓷白' }, green: { color: '#77938a', name: '松绿' }, pink: { color: '#cda6a4', name: '浅粉' }, dark: { color: '#4e5554', name: '岩灰' }, indigo: { color: '#45608a', name: '靛青' }, ink: { color: '#2f3438', name: '墨黑' } };
   const presets = {
-    porcelain: { name: '素青', description: '青花瓷、白玛瑙与银色隔珠', cord: 'ivory' },
-    jade: { name: '翠玉', description: '绿东陵、白玛瑙与黄铜隔珠', cord: 'ivory' },
-    rose: { name: '映桃', description: '粉晶、白玛瑙与银色隔珠', cord: 'pink' },
-    wood: { name: '见山', description: '檀木、虎眼石与黄铜隔珠', cord: 'dark' }
+    porcelain: { name: '素青', description: '青花瓷、白玉与银色隔珠', cord: 'ivory', main: 'porcelain', accent: 'white-jade', metal: 'silver', swatch: '#2a4f88' },
+    celadon: { name: '雨过', description: '青瓷、孔雀石与黄铜隔珠', cord: 'green', main: 'celadon', accent: 'malachite', metal: 'brass', swatch: '#7f9c8c' },
+    lapis: { name: '靛青', description: '洒金青金、白玉与银色隔珠', cord: 'indigo', main: 'lapis', accent: 'white-jade', metal: 'silver', swatch: '#3a5180' },
+    jade: { name: '翠玉', description: '绿东陵、白玉与黄铜隔珠', cord: 'ivory', main: 'aventurine', accent: 'white-jade', metal: 'brass', swatch: '#78956f' },
+    rose: { name: '映桃', description: '粉晶、白玉与银色隔珠', cord: 'pink', main: 'rose-quartz', accent: 'white-jade', metal: 'silver', swatch: '#c59caa' },
+    amber: { name: '暖珀', description: '琥珀、南红与玫瑰金隔珠', cord: 'dark', main: 'amber', accent: 'southern-red', metal: 'rose-gold', swatch: '#b07a3f' },
+    wood: { name: '见山', description: '檀木、虎眼石与黄铜隔珠', cord: 'dark', main: 'sandalwood', accent: 'tiger-eye', metal: 'brass', swatch: '#8c7050' }
   };
   const MAX_BEADS = 80;
   let nextId = 1;
   const makeBead = (material, diameter) => ({ id: nextId++, material, diameter });
   function presetBeads(key) {
-    const main = key === 'porcelain' ? 'porcelain' : key === 'jade' ? 'aventurine' : key === 'rose' ? 'rose-quartz' : 'sandalwood';
-    const accent = key === 'wood' ? 'tiger-eye' : 'agate';
-    const metal = key === 'rose' || key === 'porcelain' ? 'silver' : 'brass';
+    const preset = presets[key] || presets.porcelain;
     return Array.from({ length: 24 }, (_, index) => {
-      if (index === 10 || index === 13) return makeBead(metal, 4);
-      if (index === 11 || index === 12) return makeBead(accent, 10);
-      return makeBead(main, 8);
+      if (index === 10 || index === 13) return makeBead(preset.metal, 4);
+      if (index === 11 || index === 12) return makeBead(preset.accent, 10);
+      return makeBead(preset.main, 8);
     });
   }
   const initialBeads = presetBeads('porcelain');
@@ -58,6 +74,7 @@
   let selection = [initialBeads[0].id];
   let scene = null;
   let dragBead = null;
+  let hoveredId = null;
   let dragMoved = false;
   let dragOrigin = null;
   let dragSlot = -1;
@@ -70,6 +87,9 @@
   let drawFrame = 0;
   const spriteCache = new Map();
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobileLayout = window.matchMedia('(max-width: 760px)');
+  const selectedActions = document.querySelector('.selected-buttons');
+  let inspectorTrigger = null;
   const canvas = $('bracelet-canvas');
   const ctx = canvas.getContext('2d');
   const theme = getComputedStyle(document.documentElement);
@@ -83,9 +103,9 @@
   beadShadow.width = beadShadow.height = 128;
   const shadowPaint = beadShadow.getContext('2d');
   const shadowGradient = shadowPaint.createRadialGradient(64, 64, 0, 64, 64, 64);
-  shadowGradient.addColorStop(0, '#23344d26');
-  shadowGradient.addColorStop(0.55, '#23344d14');
-  shadowGradient.addColorStop(1, '#23344d00');
+  shadowGradient.addColorStop(0, '#1e3a5f26');
+  shadowGradient.addColorStop(0.55, '#1e3a5f12');
+  shadowGradient.addColorStop(1, '#1e3a5f00');
   shadowPaint.fillStyle = shadowGradient;
   shadowPaint.fillRect(0, 0, 128, 128);
   const snapshot = () => JSON.parse(JSON.stringify(state));
@@ -94,6 +114,46 @@
   const priceFor = (bead) => { const material = byMaterial.get(bead.material); return Math.round(material.price * (bead.diameter / (material.category === 'metal' ? 4 : 8)) * 100) / 100; };
   const money = (amount) => amount.toFixed(2);
   const escapeHTML = (text) => String(text).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+
+  /* ---------- 本地草稿：刷新后接着改 ---------- */
+  const STORAGE_KEY = 'chuanjian:draft:v1';
+  let persistTimer;
+  function persistDraft() {
+    clearTimeout(persistTimer);
+    persistTimer = setTimeout(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          format: 'chuanjian', version: 1, name: state.name, wrist: state.wrist, ease: state.ease,
+          cord: state.cord, preset: state.preset,
+          beads: state.beads.map(({ material, diameter }) => ({ material, diameter }))
+        }));
+      } catch { /* 隐私模式或存储被禁用时静默跳过 */ }
+    }, 400);
+  }
+  function readDraft() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      return validImport(data) ? data : null;
+    } catch { return null; }
+  }
+  function restoreDraft(data) {
+    state.name = data.name.trim();
+    state.wrist = data.wrist;
+    state.ease = data.ease;
+    state.cord = data.cord;
+    state.preset = presets[data.preset] ? data.preset : null;
+    state.beads = data.beads.map((bead) => makeBead(bead.material, bead.diameter));
+    state.selected = state.beads[0]?.id ?? null;
+    selection = state.selected != null ? [state.selected] : [];
+    if (state.beads.length) {
+      libraryMaterial = state.beads[0].material;
+      category = byMaterial.get(libraryMaterial).category;
+      libraryDiameter = diameterFor(byMaterial.get(libraryMaterial));
+    }
+    $('material-search').value = '';
+  }
 
   function animateElement(element, frames, duration = timing.step) {
     if (!canAnimate()) return;
@@ -122,7 +182,7 @@
   }
 
   function beadMarkup(material, extraClass = '') {
-    return `<span class="bead ${extraClass}" data-kind="${material.category === 'metal' ? 'metal' : material.kind}" style="--bead-light:${material.light};--bead-mid:${material.mid};--bead-dark:${material.dark}" aria-hidden="true"></span>`;
+    return `<span class="bead ${extraClass}" data-kind="${material.category === 'metal' ? 'metal' : material.kind}" style="--bead-light:${material.light};--bead-mid:${material.mid};--bead-dark:${material.dark};--bead-spec:${material.spec || material.light}" aria-hidden="true"></span>`;
   }
 
   function notify(message, error = false) {
@@ -145,6 +205,7 @@
     sliderSnapshot = null;
     renderHistory();
     renderPresets();
+    persistDraft();
   }
 
   function commit(mutate, label) {
@@ -189,23 +250,59 @@
     $('redo').disabled = redoStack.length === 0;
   }
 
+  /* 某颗珠子在当前珠径下真实可用的直径：优先沿用当前选择，否则回落到该材质的常用尺寸 */
+  function diameterFor(material, preferred = libraryDiameter) {
+    if (material.sizes.includes(preferred)) return preferred;
+    if (material.sizes.includes(8)) return 8;
+    if (material.sizes.includes(4)) return 4;
+    return material.sizes[0];
+  }
+
   function renderLibrary() {
     const query = $('material-search').value.trim().toLowerCase();
     const visible = materials.filter((material) => (!query ? material.category === category : true) && `${material.name} ${material.description} ${material.id}`.toLowerCase().includes(query));
     $('material-count').textContent = String(visible.length).padStart(2, '0');
-    $('material-list').innerHTML = visible.length ? visible.map((material) => `<button class="material-card ${material.id === libraryMaterial ? 'active' : ''}" data-material="${material.id}" aria-pressed="${material.id === libraryMaterial}" aria-label="${material.name}，${material.price.toFixed(1)} 元每颗，${material.category === 'metal' ? 4 : 8} 毫米">${beadMarkup(material)}<i class="ti ti-check" aria-hidden="true"></i><h3>${material.name}</h3><p>¥${material.price.toFixed(1)} / ${material.category === 'metal' ? 4 : 8}mm</p></button>`).join('') : '<div class="material-empty"><i class="ti ti-search" aria-hidden="true"></i>没有找到这颗珠子<br><button id="clear-search">清除搜索</button></div>';
+    /* 只有分类或搜索词变化时才重建列表，其余情况原地更新，避免点选后焦点丢失与列表闪烁 */
+    const listKey = `${category}|${query}`;
+    const host = $('material-list');
+    if (host.dataset.listKey !== listKey) {
+      host.dataset.listKey = listKey;
+      host.innerHTML = visible.length ? visible.map((material) => `<button class="material-card" data-material="${material.id}" title="${escapeHTML(material.description)}"><span class="bead-stage">${beadMarkup(material)}</span><i class="ti ti-check" aria-hidden="true"></i><h3>${material.name}</h3><p></p></button>`).join('') : '<div class="material-empty"><i class="ti ti-search" aria-hidden="true"></i>没有找到这颗珠子<br><button id="clear-search">清除搜索</button></div>';
+    }
+    host.querySelectorAll('[data-material]').forEach((button) => {
+      const material = byMaterial.get(button.dataset.material);
+      const diameter = diameterFor(material);
+      const active = material.id === libraryMaterial;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+      button.setAttribute('aria-label', `${material.name}，${material.price.toFixed(1)} 元每颗，${diameter} 毫米`);
+      const caption = button.querySelector('p');
+      if (caption.textContent !== `¥${material.price.toFixed(1)} / ${diameter}mm`) caption.textContent = `¥${material.price.toFixed(1)} / ${diameter}mm`;
+    });
     document.querySelectorAll('[data-category]').forEach((button) => {
       const active = button.dataset.category === category;
       button.classList.toggle('active', active);
       button.setAttribute('aria-selected', String(active));
     });
-    renderSizes('library-sizes', byMaterial.get(libraryMaterial).sizes, libraryDiameter);
+    const library = byMaterial.get(libraryMaterial);
+    libraryDiameter = diameterFor(library);
+    renderSizes('library-sizes', library.sizes, libraryDiameter);
     $('add-bead').disabled = state.beads.length >= MAX_BEADS;
-    $('add-bead').title = state.beads.length >= MAX_BEADS ? '最多可编排 80 颗珠子' : `加入一颗 ${libraryDiameter} mm ${byMaterial.get(libraryMaterial).name}`;
+    $('add-bead').title = state.beads.length >= MAX_BEADS ? '最多可编排 80 颗珠子' : `加入一颗 ${libraryDiameter} mm ${library.name}`;
   }
 
   function renderSizes(id, sizes, activeDiameter) {
-    $(id).innerHTML = sizes.map((diameter) => `<button data-diameter="${diameter}" class="${diameter === activeDiameter ? 'active' : ''}" aria-pressed="${diameter === activeDiameter}" aria-label="${diameter} 毫米">${diameter}</button>`).join('');
+    const host = $(id);
+    const listKey = sizes.join(',');
+    if (host.dataset.listKey !== listKey) {
+      host.dataset.listKey = listKey;
+      host.innerHTML = sizes.map((diameter) => `<button data-diameter="${diameter}" aria-label="${diameter} 毫米">${diameter}</button>`).join('');
+    }
+    host.querySelectorAll('[data-diameter]').forEach((button) => {
+      const active = Number(button.dataset.diameter) === activeDiameter;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
   }
 
   function renderSequence() {
@@ -244,9 +341,11 @@
     $('selected-bead-preview').innerHTML = beadMarkup(material);
     if (selectedPreviewKey && selectedPreviewKey !== previewKey) animateElement($('selected-bead-preview'), [{ opacity: .75, transform: 'scale(.98)' }, { opacity: 1, transform: 'scale(1)' }], timing.fast);
     selectedPreviewKey = previewKey;
-    $('selected-name').textContent = multi ? `批量 · ${ids.length} 颗` : material.name;
-    $('selected-description').textContent = multi ? '同时调整珠径与珠材' : material.description;
+    $('selected-name').textContent = multi ? '多选珠子' : material.name;
+    $('selected-material').title = multi ? `同时调整 ${ids.length} 颗珠子` : material.description;
     const diameters = new Set(ids.map((id) => state.beads.find((item) => item.id === id)?.diameter));
+    $('selected-size-label').textContent = diameters.size === 1 ? `${bead.diameter} mm` : '混合珠径';
+    $('edit-bead').setAttribute('aria-label', multi ? `编辑 ${ids.length} 颗珠子的规格` : `编辑 ${material.name} 的珠径`);
     renderSizes('selected-sizes', material.sizes, diameters.size === 1 ? bead.diameter : null);
     $('move-left').disabled = multi || selectedIndex() === 0;
     $('move-right').disabled = multi || selectedIndex() === state.beads.length - 1;
@@ -274,10 +373,10 @@
     const fits = total.count > 2 && difference >= -0.2 && difference <= 0.8;
     $('fit-feedback').classList.toggle('needs-adjustment', !fits);
     $('fit-feedback').querySelector('.ti').className = `ti ${fits ? 'ti-circle-check' : 'ti-info-circle'}`;
-    $('fit-label').textContent = !total.count ? '未配珠' : fits ? '合适' : difference < -.2 ? '偏小' : '偏大';
+    $('fit-label').textContent = !total.count ? '未配珠' : fits ? '合适' : `${difference < -.2 ? '偏小' : '偏大'} ${Math.abs(difference).toFixed(1)}`;
     $('fit-feedback').title = `目标内围 ${total.target.toFixed(1)} cm；估算内围 ${total.inner.toFixed(1)} cm，实物会因珠径和穿线产生差异`;
     $('total-price').textContent = money(total.price);
-    $('total-beads').textContent = `${total.count} 颗珠子`;
+    $('wrist-summary').textContent = `${state.wrist.toFixed(1)} cm 腕围`;
     document.querySelectorAll('[data-ease]').forEach((button) => {
       const active = Number(button.dataset.ease) === state.ease;
       button.classList.toggle('active', active);
@@ -293,11 +392,14 @@
   }
 
   function renderPresets() {
-    document.querySelectorAll('.preset-button').forEach((button) => {
-      const active = button.dataset.preset === state.preset;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-pressed', String(active));
-    });
+    const preset = state.preset ? presets[state.preset] : null;
+    $('inspiration-info').setAttribute('aria-label', preset ? `配色方案，当前为${preset.name}` : '选择配色方案');
+    const tag = $('preset-tag');
+    tag.hidden = !preset;
+    if (preset) {
+      tag.textContent = preset.name;
+      tag.style.setProperty('--preset-color', preset.swatch);
+    }
   }
 
   function render() {
@@ -309,6 +411,7 @@
     renderTotals();
     renderHistory();
     renderPresets();
+    persistDraft();
     queueDraw();
   }
 
@@ -342,7 +445,7 @@
     const material = byMaterial.get(id);
     if (!material) return;
     libraryMaterial = id;
-    if (!material.sizes.includes(libraryDiameter)) libraryDiameter = material.sizes.includes(8) ? 8 : 4;
+    libraryDiameter = diameterFor(material);
     renderLibrary();
   }
 
@@ -411,19 +514,93 @@
     libraryMaterial = state.beads[0].material;
     category = byMaterial.get(libraryMaterial).category;
     $('material-search').value = '';
-    libraryDiameter = 8;
+    libraryDiameter = diameterFor(byMaterial.get(libraryMaterial));
     renderLibrary();
     setMobilePanel('preview');
     notify(`已应用「${preset.name}」，可撤销`);
   }
 
+  function openInspector(trigger = $('toggle-inspector'), section = 'fit') {
+    if ($('inspector').hidden) beginSceneMotion();
+    closeFileMenu();
+    inspectorTrigger = trigger;
+    $('inspector').hidden = false;
+    $('inspector').inert = false;
+    $('toggle-inspector').setAttribute('aria-expanded', 'true');
+    if (mobileLayout.matches) {
+      $('workspace').dataset.mobilePanel = 'properties';
+      document.querySelectorAll('[data-panel]').forEach((button) => {
+        const active = button.dataset.panel === 'properties';
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    }
+    const target = section === 'bead' && selectedBead() ? $('selected-sizes').querySelector('button[aria-pressed="true"]') || $('selected-sizes').querySelector('button') : $('wrist-size');
+    target.focus({ preventScroll: true });
+    if (section === 'bead') target.scrollIntoView({ block: 'nearest' });
+    queueDraw();
+  }
+
+  function closeInspector(restoreFocus = true) {
+    if ($('inspector').hidden) return;
+    const focusInside = $('inspector').contains(document.activeElement);
+    beginSceneMotion();
+    $('inspector').inert = true;
+    $('inspector').hidden = true;
+    $('toggle-inspector').setAttribute('aria-expanded', 'false');
+    if ($('workspace').dataset.mobilePanel === 'properties') {
+      $('workspace').dataset.mobilePanel = 'preview';
+      document.querySelectorAll('[data-panel]').forEach((button) => {
+        const active = button.dataset.panel === 'preview';
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    }
+    if (restoreFocus && focusInside) {
+      const target = inspectorTrigger?.isConnected && inspectorTrigger.getClientRects().length ? inspectorTrigger : $('toggle-inspector');
+      target.focus({ preventScroll: true });
+    }
+    queueDraw();
+  }
+
+  function syncResponsiveActions() {
+    const focused = document.activeElement;
+    const restoreFocus = selectedActions.contains(focused);
+    (mobileLayout.matches ? $('mobile-selected-actions') : $('dock-actions-slot')).append(selectedActions);
+    if (mobileLayout.matches && !$('inspector').hidden) $('workspace').dataset.mobilePanel = 'properties';
+    else if (!mobileLayout.matches && $('workspace').dataset.mobilePanel === 'properties') $('workspace').dataset.mobilePanel = 'preview';
+    if (restoreFocus) {
+      if (mobileLayout.matches && $('inspector').hidden) {
+        $('workspace').dataset.mobilePanel = 'preview';
+        $('edit-bead').focus({ preventScroll: true });
+      } else focused.focus({ preventScroll: true });
+    }
+    document.querySelectorAll('[data-panel]').forEach((button) => {
+      const active = button.dataset.panel === $('workspace').dataset.mobilePanel;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    queueDraw();
+  }
+
   function setMobilePanel(panel) {
+    if (panel === 'properties') {
+      openInspector(document.querySelector('[data-panel="properties"]'));
+      return;
+    }
+    const focused = document.activeElement;
+    const wasHiddenFocus = mobileLayout.matches && (document.querySelector('.material-panel').contains(focused) || $('inspector').contains(focused));
+    if (mobileLayout.matches) closeInspector(false);
     $('workspace').dataset.mobilePanel = panel;
     document.querySelectorAll('[data-panel]').forEach((button) => {
       const active = button.dataset.panel === panel;
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', String(active));
     });
+    if (wasHiddenFocus) {
+      const target = panel === 'materials' ? $('material-search') : document.querySelector(`.sequence-bead[data-bead="${state.selected}"]`) || $('empty-add');
+      target.focus({ preventScroll: true });
+    }
     queueDraw();
   }
 
@@ -460,8 +637,8 @@
         paint.save();
         paint.translate(x, y);
         paint.rotate(rotation + random() * .25);
-        paint.strokeStyle = '#28538c';
-        paint.fillStyle = '#28538c';
+        paint.strokeStyle = '#2a4f88';
+        paint.fillStyle = '#2a4f88';
         paint.globalAlpha = .8;
         paint.lineWidth = 2;
         paint.lineCap = 'round';
@@ -489,6 +666,93 @@
         }
         paint.restore();
       });
+    } else if (material.kind === 'crackle') {
+      /* 哥窑开片：细密折线交错的冰裂纹 */
+      /* 抖动网格：近似开片的网状裂纹 */
+      const crackLine = material.line || material.dark;
+      const step = 44;
+      const count = Math.ceil(216 / step) + 3;
+      const grid = [];
+      for (let row = 0; row < count; row++) {
+        grid[row] = [];
+        for (let col = 0; col < count; col++) {
+          grid[row][col] = { x: (col - 1) * step + (random() - .5) * step * .5, y: (row - 1) * step + (random() - .5) * step * .5 };
+        }
+      }
+      const crack = (a, b) => {
+        paint.beginPath();
+        paint.moveTo(a.x, a.y);
+        paint.quadraticCurveTo((a.x + b.x) / 2 + (random() - .5) * 10, (a.y + b.y) / 2 + (random() - .5) * 10, b.x, b.y);
+        paint.strokeStyle = `${crackLine}${random() > .35 ? '8c' : 'c4'}`;
+        paint.lineWidth = 1.2 + random() * 2;
+        paint.lineCap = 'round';
+        paint.stroke();
+      };
+      for (let row = 0; row < count; row++) {
+        for (let col = 0; col < count; col++) {
+          if (col + 1 < count) crack(grid[row][col], grid[row][col + 1]);
+          if (row + 1 < count) crack(grid[row][col], grid[row + 1][col]);
+        }
+      }
+    } else if (material.kind === 'banded') {
+      /* 缠丝 / 环带：宽窄不一的平行条带 */
+      paint.save();
+      paint.translate(cx, cy);
+      paint.rotate(random() * .9 - .45);
+      for (let index = 0; index < 10; index++) {
+        const y = -110 + index * 24;
+        paint.beginPath();
+        paint.moveTo(-130, y);
+        paint.bezierCurveTo(-50, y - 16 + random() * 12, 40, y + 18 - random() * 12, 130, y - 6);
+        paint.strokeStyle = index % 2 ? `${material.dark}59` : `${material.light}8c`;
+        paint.lineWidth = 3 + random() * 9;
+        paint.stroke();
+      }
+      paint.restore();
+    } else if (material.kind === 'fleck') {
+      /* 洒金 / 星点：碎屑状高光颗粒 */
+      for (let index = 0; index < 30; index++) {
+        const x = 22 + random() * 172;
+        const y = 22 + random() * 172;
+        const size = 2.6 + random() * 5.4;
+        paint.save();
+        paint.translate(x, y);
+        paint.rotate(random() * 3.14);
+        paint.beginPath();
+        paint.moveTo(-size, 0);
+        paint.lineTo(0, -size * .68);
+        paint.lineTo(size, 0);
+        paint.lineTo(0, size * .68);
+        paint.closePath();
+        paint.fillStyle = `${material.spec}${index % 3 ? 'd9' : 'f2'}`;
+        paint.fill();
+        paint.restore();
+      }
+    } else if (material.kind === 'marble') {
+      /* 大理石纹：柔和长纹 */
+      const marbleLine = material.line || material.dark;
+      for (let index = 0; index < 9; index++) {
+        const y = 30 + random() * 150;
+        paint.beginPath();
+        paint.moveTo(-12, y);
+        paint.bezierCurveTo(48, y - 26 + random() * 18, 122, y + 26 - random() * 18, 228, y - 10);
+        paint.strokeStyle = `${marbleLine}${index % 2 ? '4d' : '7a'}`;
+        paint.lineWidth = 1 + random() * 3.4;
+        paint.stroke();
+      }
+    } else if (material.kind === 'mottle') {
+      /* 琥珀包裹体：块状深浅斑 */
+      for (let index = 0; index < 13; index++) {
+        const x = 18 + random() * 180;
+        const y = 18 + random() * 180;
+        const size = 14 + random() * 40;
+        const patch = paint.createRadialGradient(x, y, 0, x, y, size);
+        patch.addColorStop(0, `${material.dark}${index % 3 ? '5c' : '8a'}`);
+        patch.addColorStop(.62, `${material.dark}1a`);
+        patch.addColorStop(1, `${material.dark}00`);
+        paint.fillStyle = patch;
+        paint.fillRect(x - size, y - size, size * 2, size * 2);
+      }
     } else if (material.kind === 'wood' || material.kind === 'tiger') {
       paint.save();
       paint.translate(cx, cy);
@@ -510,8 +774,8 @@
         const y = 26 + random() * 164;
         const size = 3 + random() * 17;
         const mineral = paint.createRadialGradient(x, y, 0, x, y, size);
-        mineral.addColorStop(0, index % 3 ? '#f6f7e52d' : `${material.dark}16`);
-        mineral.addColorStop(1, index % 3 ? '#f6f7e500' : `${material.dark}00`);
+        mineral.addColorStop(0, index % 3 ? '#f5faff2d' : `${material.dark}16`);
+        mineral.addColorStop(1, index % 3 ? '#f5faff00' : `${material.dark}00`);
         paint.fillStyle = mineral;
         paint.fillRect(x - size, y - size, size * 2, size * 2);
       }
@@ -530,24 +794,24 @@
     }
 
     const rim = paint.createRadialGradient(cx - 8, cy - 12, 52, cx, cy, radius);
-    rim.addColorStop(0, '#f1f7de00');
-    rim.addColorStop(0.82, '#f1f7de00');
-    rim.addColorStop(1, '#ecf3d536');
+    rim.addColorStop(0, '#dceaf900');
+    rim.addColorStop(0.82, '#dceaf900');
+    rim.addColorStop(1, '#d9e8fa3d');
     paint.fillStyle = rim;
     paint.fillRect(15, 15, 186, 186);
     const sheen = paint.createRadialGradient(77, 61, 2, 82, 66, 55);
-    sheen.addColorStop(0, material.kind === 'wood' ? '#f9faf22b' : '#f9faf2b8');
-    sheen.addColorStop(0.23, material.kind === 'wood' ? '#f9faf214' : '#f9faf25e');
-    sheen.addColorStop(1, '#f9faf200');
+    sheen.addColorStop(0, material.kind === 'wood' ? '#fbfdff2b' : '#fbfdffb8');
+    sheen.addColorStop(0.23, material.kind === 'wood' ? '#fbfdff14' : '#fbfdff5e');
+    sheen.addColorStop(1, '#fbfdff00');
     paint.fillStyle = sheen;
     paint.fillRect(18, 18, 180, 180);
     if (material.kind !== 'wood') {
       paint.translate(77, 57);
       paint.rotate(-0.5);
       const glint = paint.createRadialGradient(0, 0, 1, 0, 0, 13);
-      glint.addColorStop(0, '#fcfdf5b3');
-      glint.addColorStop(0.6, '#fcfdf540');
-      glint.addColorStop(1, '#fcfdf500');
+      glint.addColorStop(0, '#fbfdffb3');
+      glint.addColorStop(0.6, '#fbfdff40');
+      glint.addColorStop(1, '#fbfdff00');
       paint.scale(1.2, 0.48);
       paint.fillStyle = glint;
       paint.fillRect(-16, -16, 32, 32);
@@ -579,7 +843,7 @@
     paint.stroke();
     paint.beginPath();
     paint.ellipse(-radius * 0.12, -radius * 0.45, radius * 0.52, radius * 0.11, -0.5, 0, Math.PI * 2);
-    paint.fillStyle = '#f8f5e57d';
+    paint.fillStyle = '#f4faff7a';
     paint.fill();
     paint.restore();
   }
@@ -600,11 +864,13 @@
     const worldRadius = circumference / (2 * Math.PI);
     const maxDiameter = Math.max(...state.beads.map((bead) => bead.diameter));
     const outerDiameter = worldRadius * 2 + maxDiameter;
-    const availableHeight = exporting ? height * .73 : Math.max(50, height - 96);
-    const scale = Math.min(width * (exporting ? .77 : .8) / outerDiameter, availableHeight / outerDiameter) * (exporting ? 1 : zoom);
+    const availableHeight = exporting ? height * .73 : Math.max(20, height - 80);
+    const inspectorSpace = !exporting && !mobileLayout.matches && !$('inspector').hidden ? parseFloat(theme.getPropertyValue('--inspector-width')) + 24 : 0;
+    const availableWidth = Math.max(1, width - inspectorSpace);
+    const scale = Math.min(availableWidth * (exporting ? .77 : .8) / outerDiameter, availableHeight / outerDiameter) * (exporting ? 1 : zoom);
     const targetRadius = worldRadius * scale;
-    const targetCenterX = width / 2;
-    const targetCenterY = exporting ? height * .44 : (height - 64) / 2;
+    const targetCenterX = availableWidth / 2;
+    const targetCenterY = exporting ? height * .44 : Math.max(10, (height - 64) / 2);
     const targetProjection = view === 'perspective' && !exporting ? .68 : 1;
     const radius = transition ? blend(transition.shape.orbit, targetRadius) : targetRadius;
     const centerX = transition ? blend(transition.shape.centerX, targetCenterX) : targetCenterX;
@@ -640,11 +906,19 @@
       if (progress === 1) sceneMotion = null;
     }
 
+    // 瓷盘：中心提亮，让珠串落在釉面上而不是悬空
+    const plate = paint.createRadialGradient(centerX, centerY - radius * .05, radius * .1, centerX, centerY, radius * 1.78);
+    plate.addColorStop(0, '#ffffffb0');
+    plate.addColorStop(0.58, '#ffffff5c');
+    plate.addColorStop(1, '#ffffff00');
+    paint.fillStyle = plate;
+    paint.fillRect(0, 0, width, height);
+
     paint.save();
     paint.beginPath();
     paint.ellipse(centerX + 2 * scale, centerY + 3 * scale, radius, radius * yScale, 0, 0, Math.PI * 2);
     paint.lineWidth = maxDiameter * scale * .55;
-    paint.strokeStyle = '#23344d09';
+    paint.strokeStyle = '#1e3a5f0a';
     paint.filter = `blur(${Math.max(4, scale * 2)}px)`;
     paint.stroke();
     paint.restore();
@@ -708,6 +982,18 @@
         }
         paint.restore();
       });
+      if (hoveredId != null && !selection.includes(hoveredId)) {
+        const position = positions.find((item) => item.bead.id === hoveredId);
+        if (position) {
+          paint.save();
+          paint.beginPath();
+          paint.arc(position.x, position.y, position.radius + 4, 0, Math.PI * 2);
+          paint.strokeStyle = `${colors.accent}40`;
+          paint.lineWidth = 1;
+          paint.stroke();
+          paint.restore();
+        }
+      }
       if (dragBead && dragSlot >= 0 && positions[dragSlot] && positions[dragSlot].bead.id !== dragBead.id) {
         const target = positions[dragSlot];
         paint.save();
@@ -722,13 +1008,13 @@
     } else {
       paint.textAlign = 'center';
       paint.fillStyle = colors.ink;
-      paint.font = `400 ${width * .035}px "Noto Serif SC", "Songti SC", serif`;
+      paint.font = `400 ${width * .035}px "Huiwen-mincho", "Songti SC", serif`;
       paint.fillText(state.name, centerX, height * .875, width * .85);
       paint.fillStyle = colors['ink-secondary'];
       paint.font = `${width * .013}px "DM Mono", "Microsoft YaHei", sans-serif`;
       paint.fillText(`${state.beads.length} 颗  /  内围约 ${totals().inner.toFixed(1)} cm`, centerX, height * .919);
       paint.fillStyle = colors.accent;
-      paint.font = `400 ${width * .015}px "Noto Serif SC", "Songti SC", serif`;
+      paint.font = `400 ${width * .015}px "Huiwen-mincho", "Songti SC", serif`;
       paint.fillText('串间', centerX, height * .964);
     }
   }
@@ -755,8 +1041,9 @@
     return hits.find((position) => Math.hypot(position.x - x, position.y - y) <= position.radius + 4);
   }
 
-  function showDialog(title, content, actions = []) {
+  function showDialog(title, content, actions = [], { wide = false } = {}) {
     dialogReturnFocus = document.activeElement;
+    $('studio-dialog').classList.toggle('is-wide', wide);
     $('dialog-title').textContent = title;
     $('dialog-content').innerHTML = content;
     $('dialog-actions').replaceChildren();
@@ -809,12 +1096,16 @@
   }
 
   function showInspiration() {
-    showDialog('选一份配色灵感', `<div class="inspiration-list">${Object.entries(presets).map(([key, preset]) => `<button data-dialog-preset="${key}"><span class="preset-swatch ${key}-swatch"></span><div><h3>${preset.name}</h3><p>${preset.description}</p></div></button>`).join('')}</div>`);
+    const rows = Object.entries(presets).map(([key, preset]) => {
+      const beads = [preset.main, preset.accent, preset.metal].map((id) => beadMarkup(byMaterial.get(id))).join('');
+      return `<button data-dialog-preset="${key}" aria-pressed="${state.preset === key}"><span class="preset-beads">${beads}</span><div><h3>${preset.name}</h3><p>${preset.description}</p></div><i class="ti ti-check" aria-hidden="true"></i></button>`;
+    }).join('');
+    showDialog('选一份配色灵感', `<div class="inspiration-list">${rows}</div>`);
   }
 
   function showReplacement() {
     if (!selectedBead()) return;
-    showDialog('替换这颗珠子', `<div class="material-list replacement-list">${materials.map((material) => `<button class="material-card" data-replacement="${material.id}">${beadMarkup(material)}<h3>${material.name}</h3></button>`).join('')}</div>`);
+    showDialog('替换这颗珠子', `<div class="material-list replacement-list">${materials.map((material) => `<button class="material-card" data-replacement="${material.id}"><span class="bead-stage">${beadMarkup(material)}</span><h3>${material.name}</h3></button>`).join('')}</div>`, [], { wide: true });
   }
 
   function safeFilename() { return state.name.replace(/[\\/:*?"<>|\x00-\x1f]/g, '').trim() || '串间手串'; }
@@ -832,7 +1123,7 @@
 
   function saveJSON() {
     finishSlider();
-    const data = { format: 'chuanjian', version: 1, name: state.name, wrist: state.wrist, ease: state.ease, cord: state.cord, beads: state.beads.map(({ material, diameter }) => ({ material, diameter })) };
+    const data = { format: 'chuanjian', version: 1, name: state.name, wrist: state.wrist, ease: state.ease, cord: state.cord, preset: state.preset, beads: state.beads.map(({ material, diameter }) => ({ material, diameter })) };
     download(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }), `${safeFilename()}.json`);
     $('edit-status').textContent = '方案已导出为文件';
     notify('方案已导出为 JSON 文件');
@@ -872,7 +1163,7 @@
         state.wrist = Math.round(data.wrist * 10) / 10;
         state.ease = data.ease;
         state.cord = data.cord;
-        state.preset = null;
+        state.preset = presets[data.preset] ? data.preset : null;
       }, '方案已导入');
       setMobilePanel('preview');
       notify('方案已导入，可撤销');
@@ -981,7 +1272,13 @@
     try { canvas.setPointerCapture(event.pointerId); } catch { /* 指针已释放时忽略 */ }
   });
   canvas.addEventListener('pointermove', (event) => {
-    if (!dragBead) { canvas.style.cursor = hitAt(event) ? 'pointer' : 'default'; return; }
+    if (!dragBead) {
+      const hover = hitAt(event);
+      canvas.style.cursor = hover ? 'pointer' : 'default';
+      const nextHover = hover ? hover.bead.id : null;
+      if (nextHover !== hoveredId) { hoveredId = nextHover; queueDraw(); }
+      return;
+    }
     const point = pointerPoint(event);
     if (!dragMoved && Math.hypot(point.x - dragOrigin.x, point.y - dragOrigin.y) > 4) {
       dragMoved = true;
@@ -1017,6 +1314,14 @@
     }, '珠子位置已调整');
   });
   canvas.addEventListener('pointercancel', () => { dragBead = null; dragMoved = false; dragSlot = -1; queueDraw(); });
+  canvas.addEventListener('pointerleave', () => { if (hoveredId === null) return; hoveredId = null; canvas.style.cursor = 'default'; queueDraw(); });
+  /* 双击珠子：直接进入该珠的规格 */
+  canvas.addEventListener('dblclick', (event) => {
+    const hit = hitAt(event);
+    if (!hit) return;
+    selectBead(hit.bead.id);
+    openInspector($('toggle-inspector'), 'bead');
+  });
   canvas.addEventListener('wheel', (event) => {
     if (!state.beads.length) return;
     event.preventDefault();
@@ -1024,6 +1329,14 @@
   }, { passive: false });
   $('undo').addEventListener('click', undo);
   $('redo').addEventListener('click', redo);
+  $('design-name').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); $('design-name').blur(); return; }
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); $('design-name').value = state.name; $('design-name').blur(); }
+  });
+  $('wrist-size').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); $('wrist-size').blur(); return; }
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); $('wrist-size').value = state.wrist.toFixed(1); $('wrist-size').removeAttribute('aria-invalid'); $('wrist-error').hidden = true; $('wrist-size').blur(); }
+  });
   $('design-name').addEventListener('change', () => {
     const name = $('design-name').value.trim();
     if (!name) { $('design-name').value = state.name; return notify('给这条手串起个名字', true); }
@@ -1045,7 +1358,6 @@
   $('wrist-range').addEventListener('change', finishSlider);
   document.querySelectorAll('[data-ease]').forEach((button) => button.addEventListener('click', () => { const ease = Number(button.dataset.ease); if (state.ease !== ease) commit(() => { state.ease = ease; state.preset = null; }, '佩戴松量已调整'); }));
   document.querySelectorAll('[data-cord]').forEach((button) => button.addEventListener('click', () => { const cord = button.dataset.cord; if (state.cord !== cord) commit(() => { state.cord = cord; state.preset = null; }, '弹力线颜色已调整'); }));
-  document.querySelectorAll('.preset-button').forEach((button) => button.addEventListener('click', () => changePreset(button.dataset.preset)));
   document.querySelectorAll('[data-panel]').forEach((button) => button.addEventListener('click', () => setMobilePanel(button.dataset.panel)));
   document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
     if (view === button.dataset.view) return;
@@ -1055,12 +1367,12 @@
     queueDraw();
   }));
   function adjustZoom(amount) {
-    const next = Math.max(.65, Math.min(1.3, Math.round((zoom + amount) * 100) / 100));
+    const next = Math.max(.5, Math.min(2, Math.round((zoom + amount) * 100) / 100));
     if (next !== zoom) beginSceneMotion();
     zoom = next;
     $('zoom-reset').textContent = `${Math.round(zoom * 100)}%`;
-    $('zoom-out').disabled = zoom <= .65;
-    $('zoom-in').disabled = zoom >= 1.3;
+    $('zoom-out').disabled = zoom <= .5;
+    $('zoom-in').disabled = zoom >= 2;
     queueDraw();
   }
   $('zoom-in').addEventListener('click', () => adjustZoom(.1));
@@ -1074,7 +1386,10 @@
   $('import-file').addEventListener('change', importJSON);
   $('show-bill').addEventListener('click', showBill);
   $('inspiration-info').addEventListener('click', showInspiration);
-  $('keyboard-help').addEventListener('click', showHelp);
+  $('toggle-inspector').addEventListener('click', (event) => { if ($('inspector').hidden) openInspector(event.currentTarget); else closeInspector(); });
+  $('close-inspector').addEventListener('click', () => closeInspector());
+  $('edit-fit').addEventListener('click', (event) => openInspector(event.currentTarget));
+  $('edit-bead').addEventListener('click', (event) => openInspector(event.currentTarget, 'bead'));
   $('close-dialog').addEventListener('click', closeDialog);
   $('studio-dialog').addEventListener('click', (event) => { if (event.target === $('studio-dialog')) { const rect = $('studio-dialog').getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDialog(); } });
   $('studio-dialog').addEventListener('cancel', (event) => { event.preventDefault(); closeDialog(); });
@@ -1099,7 +1414,27 @@
     }
   });
   function closeFileMenu() { $('file-menu').hidden = true; $('file-menu-toggle').setAttribute('aria-expanded', 'false'); }
-  $('file-menu-toggle').addEventListener('click', () => { const open = $('file-menu').hidden; $('file-menu').hidden = !open; $('file-menu-toggle').setAttribute('aria-expanded', String(open)); });
+  $('file-menu-toggle').addEventListener('click', () => {
+    const open = $('file-menu').hidden;
+    $('file-menu').hidden = !open;
+    $('file-menu-toggle').setAttribute('aria-expanded', String(open));
+    if (open) $('file-menu').querySelector('button')?.focus({ preventScroll: true });
+  });
+  /* 菜单内方向键导航，Esc 关闭后焦点回到触发按钮 */
+  $('file-menu').addEventListener('keydown', (event) => {
+    const items = [...$('file-menu').querySelectorAll('button')];
+    const index = items.indexOf(document.activeElement);
+    if (index < 0) return;
+    let next = -1;
+    if (event.key === 'ArrowDown') next = (index + 1) % items.length;
+    else if (event.key === 'ArrowUp') next = (index - 1 + items.length) % items.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = items.length - 1;
+    if (next < 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    items[next].focus();
+  });
   document.addEventListener('click', (event) => { if (!event.target.closest('.menu-anchor')) closeFileMenu(); });
   $('file-menu').addEventListener('click', (event) => {
     const button = event.target.closest('[data-file]');
@@ -1134,6 +1469,8 @@
     const input = event.target instanceof HTMLElement && event.target.matches('input, textarea, [contenteditable="true"]');
     const mod = event.ctrlKey || event.metaKey;
     if ($('studio-dialog').open) return;
+    if (event.key === 'Escape' && !$('file-menu').hidden) { event.preventDefault(); closeFileMenu(); $('file-menu-toggle').focus(); return; }
+    if (event.key === 'Escape' && !$('inspector').hidden) { event.preventDefault(); closeInspector(); return; }
     if (mod && event.key.toLowerCase() === 's') { event.preventDefault(); if (event.target === $('design-name')) $('design-name').blur(); saveJSON(); return; }
     if (mod && event.key.toLowerCase() === 'o') { event.preventDefault(); $('import-file').click(); return; }
     if (input) return;
@@ -1146,9 +1483,14 @@
     else if (event.key === '/') { event.preventDefault(); setMobilePanel('materials'); $('material-search').focus(); }
     else if (event.key === 'Escape') { closeFileMenu(); $('file-menu-toggle').focus(); }
   });
+  mobileLayout.addEventListener('change', syncResponsiveActions);
   new ResizeObserver(queueDraw).observe($('canvas-stage'));
   window.addEventListener('resize', queueDraw);
   document.fonts.ready.then(queueDraw);
+  const draft = readDraft();
+  if (draft) restoreDraft(draft);
+  syncResponsiveActions();
   setMobilePanel('preview');
   render();
+  if (draft) setTimeout(() => notify('已恢复上次的编辑'), 700);
 })();

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f7f4ec">
+  <meta name="theme-color" content="#e7eef6">
   <meta name="description" content="串间手串设计工房，选珠、编序、量腕，实时预览你的手串。">
   <title>串间｜手串设计工房</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
@@ -20,152 +20,82 @@
         <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M6 3.5H34.5V36.5H5.5V6" stroke="currentColor" stroke-width="1.2"/><path d="M12.5 10.5H27V17.5H12.5V10.5ZM12.5 22.5H27V29.5H12.5V22.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M19.75 7.5V32.5M9.5 14H30M9.5 26H30" stroke="currentColor" stroke-width="1.2"/></svg>
         <span>串间</span>
       </a>
-      <div class="document-title">
-        <i class="ti ti-pencil" aria-hidden="true"></i>
-        <input id="design-name" aria-label="方案名称" value="素青" maxlength="30" autocomplete="off" spellcheck="false">
-      </div>
+      <div class="document-title"><input id="design-name" aria-label="方案名称" value="素青" maxlength="30" autocomplete="off" spellcheck="false"><i class="ti ti-pencil" aria-hidden="true"></i></div>
       <div class="header-actions">
-        <div class="history-actions">
-          <button class="icon-button" id="undo" aria-label="撤销 Ctrl+Z" title="撤销 Ctrl+Z" disabled><i class="ti ti-arrow-back-up" aria-hidden="true"></i></button>
-          <button class="icon-button" id="redo" aria-label="重做 Ctrl+Shift+Z" title="重做 Ctrl+Shift+Z" disabled><i class="ti ti-arrow-forward-up" aria-hidden="true"></i></button>
-        </div>
-        <span class="tool-divider"></span>
+        <div class="history-actions"><button class="icon-button" id="undo" aria-label="撤销 Ctrl+Z" title="撤销 Ctrl+Z" disabled><i class="ti ti-arrow-back-up" aria-hidden="true"></i></button><button class="icon-button" id="redo" aria-label="重做 Ctrl+Shift+Z" title="重做 Ctrl+Shift+Z" disabled><i class="ti ti-arrow-forward-up" aria-hidden="true"></i></button></div>
         <button class="icon-button" id="save-json" aria-label="保存 JSON 方案" title="保存方案 Ctrl+S"><i class="ti ti-device-floppy" aria-hidden="true"></i></button>
-        <button class="primary-button" id="export-image" aria-label="导出 PNG 成品图" title="导出成品图"><i class="ti ti-download" aria-hidden="true"></i><span>导出</span></button>
-        <div class="menu-anchor">
-          <button class="icon-button" id="file-menu-toggle" aria-label="文件操作" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots" aria-hidden="true"></i></button>
-          <div class="file-menu" id="file-menu" hidden>
-            <button data-file="new"><i class="ti ti-file-plus" aria-hidden="true"></i>新建手串</button>
-            <button data-file="import"><i class="ti ti-folder-open" aria-hidden="true"></i>导入方案<kbd>Ctrl O</kbd></button>
-            <button data-file="save"><i class="ti ti-device-floppy" aria-hidden="true"></i>保存方案<kbd>Ctrl S</kbd></button>
-            <button data-file="list"><i class="ti ti-list-details" aria-hidden="true"></i>材料清单</button>
-            <button data-file="reset"><i class="ti ti-restore" aria-hidden="true"></i>恢复初始设计</button>
-            <button data-file="help"><i class="ti ti-keyboard" aria-hidden="true"></i>快捷键</button>
-          </div>
-        </div>
+        <button class="primary-button" id="export-image" aria-label="导出 PNG 成品图"><i class="ti ti-download" aria-hidden="true"></i><span>导出</span></button>
+        <div class="menu-anchor"><button class="icon-button" id="file-menu-toggle" aria-label="文件操作" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots" aria-hidden="true"></i></button><div class="file-menu" id="file-menu" hidden>
+          <button data-file="new"><i class="ti ti-file-plus" aria-hidden="true"></i>新建手串</button>
+          <button data-file="import"><i class="ti ti-folder-open" aria-hidden="true"></i>导入方案<kbd>Ctrl O</kbd></button>
+          <button data-file="save"><i class="ti ti-device-floppy" aria-hidden="true"></i>保存方案<kbd>Ctrl S</kbd></button>
+          <button data-file="list"><i class="ti ti-list-details" aria-hidden="true"></i>材料清单</button>
+          <button data-file="reset"><i class="ti ti-restore" aria-hidden="true"></i>恢复初始设计</button>
+          <button data-file="help"><i class="ti ti-keyboard" aria-hidden="true"></i>快捷键</button>
+        </div></div>
       </div>
     </header>
 
     <div class="workspace" id="workspace">
       <aside class="material-panel" aria-label="珠材库">
-        <div class="panel-heading">
-          <h2><i class="ti ti-diamond" aria-hidden="true"></i>珠材</h2>
-          <span id="material-count" class="count-label">09</span>
-        </div>
-        <label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="material-search" type="search" placeholder="找一颗珠子" aria-label="搜索珠材" autocomplete="off"><kbd>/</kbd></label>
-        <div class="category-tabs" role="tablist" aria-label="材料分类">
-          <button class="active" data-category="stone" role="tab" aria-selected="true" title="石材与陶瓷"><i class="ti ti-diamond" aria-hidden="true"></i>石瓷</button>
-          <button data-category="wood" role="tab" aria-selected="false" title="木珠"><i class="ti ti-plant-2" aria-hidden="true"></i>木</button>
-          <button data-category="metal" role="tab" aria-selected="false" title="配饰"><i class="ti ti-circles" aria-hidden="true"></i>饰</button>
-        </div>
+        <div class="panel-heading"><h2>珠材</h2><span id="material-count" class="count-label">09</span></div>
+        <label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="material-search" type="search" placeholder="寻找珠材" aria-label="搜索珠材" autocomplete="off"><kbd>/</kbd></label>
+        <div class="category-tabs" role="tablist" aria-label="材料分类"><button class="active" data-category="stone" role="tab" aria-selected="true"><i class="ti ti-diamond" aria-hidden="true"></i>石瓷</button><button data-category="wood" role="tab" aria-selected="false"><i class="ti ti-plant-2" aria-hidden="true"></i>木珠</button><button data-category="metal" role="tab" aria-selected="false"><i class="ti ti-circles" aria-hidden="true"></i>配饰</button></div>
         <div class="material-list" id="material-list" aria-label="可选材料"></div>
-        <div class="material-picker">
-          <div class="picker-title"><span>珠径</span><span class="unit-label">mm</span></div>
-          <div class="size-options" id="library-sizes" aria-label="新增珠子的直径"></div>
-          <button class="add-button" id="add-bead"><i class="ti ti-plus" aria-hidden="true"></i>添珠</button>
-        </div>
+        <div class="material-picker"><div class="picker-title"><span>珠径</span><span class="unit-label">mm</span></div><div class="size-options" id="library-sizes" aria-label="新增珠子的直径"></div><button class="add-button" id="add-bead"><i class="ti ti-plus" aria-hidden="true"></i>添珠</button></div>
       </aside>
 
       <section class="design-area" aria-label="手串画布">
         <div class="canvas-topbar">
-          <div class="preview-heading"><h1>预览</h1></div>
-          <span class="view-options" role="group" aria-label="预览视角"><button data-view="flat" class="active" aria-pressed="true" title="平铺视图"><i class="ti ti-circle" aria-hidden="true"></i></button><button data-view="perspective" aria-pressed="false" title="透视视图"><i class="ti ti-circle-dot" aria-hidden="true"></i></button></span>
+          <div class="topbar-label"><h1>手串预览</h1><span class="topbar-status" id="edit-status" aria-live="polite">就绪</span></div>
+          <div class="canvas-top-actions"><button class="text-button" id="inspiration-info" aria-label="配色方案"><i class="ti ti-palette" aria-hidden="true"></i><span>配色</span><span class="preset-tag" id="preset-tag" hidden></span></button><button class="text-button" id="toggle-inspector" aria-controls="inspector" aria-expanded="false"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i><span>规格</span></button><span class="top-divider" aria-hidden="true"></span><div class="view-options" role="group" aria-label="预览视角"><button data-view="flat" class="active" aria-pressed="true" aria-label="平铺视图" title="平铺"><i class="ti ti-circle" aria-hidden="true"></i></button><button data-view="perspective" aria-pressed="false" aria-label="透视视图" title="透视"><i class="ti ti-perspective" aria-hidden="true"></i></button></div></div>
         </div>
         <div class="canvas-stage" id="canvas-stage">
           <canvas id="bracelet-canvas" aria-label="手串预览，点击珠子进行编辑；Shift 加选，滚轮缩放，拖动可调整位置" role="img"></canvas>
-          <span class="stage-seal" aria-hidden="true">串间</span>
-          <div class="empty-design" id="empty-design" hidden><i class="ti ti-circle-dashed" aria-hidden="true"></i><h2>从一颗开始</h2><button class="text-button" id="empty-add"><i class="ti ti-plus" aria-hidden="true"></i>添珠</button></div>
-          <div class="canvas-tools">
-            <button class="icon-button" id="rotate-left" aria-label="逆时针旋转预览" title="逆时针旋转"><i class="ti ti-rotate-2" aria-hidden="true"></i></button>
-            <button class="icon-button" id="rotate-right" aria-label="顺时针旋转预览" title="顺时针旋转"><i class="ti ti-rotate-clockwise-2" aria-hidden="true"></i></button>
-            <span class="tool-divider"></span>
-            <button class="icon-button" id="zoom-out" aria-label="缩小预览" title="缩小"><i class="ti ti-minus" aria-hidden="true"></i></button>
-            <button class="zoom-label" id="zoom-reset" aria-label="恢复预览缩放">100%</button>
-            <button class="icon-button" id="zoom-in" aria-label="放大预览" title="放大"><i class="ti ti-plus" aria-hidden="true"></i></button>
-            <span class="tool-divider"></span>
-            <button class="icon-button" id="toggle-ruler" aria-label="显示尺寸参考" aria-pressed="false" title="尺寸参考"><i class="ti ti-ruler-2" aria-hidden="true"></i></button>
+          <div class="empty-design" id="empty-design" hidden>
+            <svg class="empty-ring" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <defs><radialGradient id="empty-bead" cx=".36" cy=".3" r=".78"><stop offset="0" stop-color="#fbfdff"/><stop offset=".46" stop-color="#dbe8f8"/><stop offset="1" stop-color="#9fb8d8"/></radialGradient></defs>
+              <ellipse cx="80" cy="80" rx="56" ry="50" stroke="#c9d9ed" stroke-width="1" stroke-dasharray="2 7" stroke-linecap="round"/>
+              <circle cx="80" cy="30" r="12.5" fill="url(#empty-bead)" stroke="#c3d5e9" stroke-width=".9"/>
+              <circle cx="128.5" cy="55" r="7.5" stroke="#c9d9ed" stroke-width="1.1"/>
+              <circle cx="108" cy="123" r="6.5" stroke="#c9d9ed" stroke-width="1.1"/>
+              <circle cx="31.5" cy="105" r="7.5" stroke="#c9d9ed" stroke-width="1.1"/>
+            </svg>
+            <h2>从一颗开始</h2>
+            <p>挑一颗珠材开始，或按 <kbd>/</kbd> 搜索</p>
+            <button class="text-button" id="empty-add"><i class="ti ti-plus" aria-hidden="true"></i>添珠</button>
           </div>
+          <div class="canvas-tools"><button class="icon-button" id="rotate-left" aria-label="逆时针旋转预览" title="逆时针旋转"><i class="ti ti-rotate-2" aria-hidden="true"></i></button><button class="icon-button" id="rotate-right" aria-label="顺时针旋转预览" title="顺时针旋转"><i class="ti ti-rotate-clockwise-2" aria-hidden="true"></i></button><span class="tool-divider"></span><button class="icon-button" id="zoom-out" aria-label="缩小预览" title="缩小"><i class="ti ti-minus" aria-hidden="true"></i></button><button class="zoom-label" id="zoom-reset" aria-label="恢复预览缩放">100%</button><button class="icon-button" id="zoom-in" aria-label="放大预览" title="放大"><i class="ti ti-plus" aria-hidden="true"></i></button><span class="tool-divider"></span><button class="icon-button" id="toggle-ruler" aria-label="显示尺寸参考" aria-pressed="false" title="尺寸参考"><i class="ti ti-ruler-2" aria-hidden="true"></i></button></div>
         </div>
-        <div class="sequence-panel">
+
+        <section class="sequence-panel" aria-label="选珠与珠序">
           <div class="sequence-heading">
-            <h2><i class="ti ti-grip-horizontal" aria-hidden="true"></i>珠序<span id="sequence-count" class="data">24</span></h2>
+            <h2>珠序</h2>
+            <div class="selected-material" id="selected-material"><div class="selected-bead" id="selected-bead-preview"></div><h3 id="selected-name">青花瓷</h3><button class="size-trigger" id="edit-bead" aria-label="编辑单珠规格" aria-controls="inspector" title="编辑珠径"><span id="selected-size-label" class="data">8 mm</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><span id="selected-position" class="data">#01</span><div id="dock-actions-slot"><div class="selected-buttons"><button class="icon-button" id="replace-bead" aria-label="替换珠材" title="替换珠材"><i class="ti ti-arrows-exchange" aria-hidden="true"></i></button><button class="icon-button" id="duplicate-bead" aria-label="复制珠子" title="复制珠子"><i class="ti ti-copy" aria-hidden="true"></i></button><button class="icon-button" id="move-left" aria-label="前移一颗" title="前移一颗"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="icon-button" id="move-right" aria-label="后移一颗" title="后移一颗"><i class="ti ti-chevron-right" aria-hidden="true"></i></button><button class="icon-button" id="delete-bead" aria-label="删除选中珠子" title="删除 Delete"><i class="ti ti-trash" aria-hidden="true"></i></button></div></div></div>
+            <span class="selected-empty" id="selected-empty" hidden>点选一颗珠子</span>
             <button class="icon-button" id="reverse-sequence" aria-label="反转珠序" title="反转珠序"><i class="ti ti-switch-horizontal" aria-hidden="true"></i></button>
           </div>
           <div class="bead-sequence" id="bead-sequence" aria-label="按顺序排列的珠子"></div>
-        </div>
-        <div class="inspiration-bar">
-          <i class="ti ti-palette" aria-hidden="true"></i>
-          <div class="preset-options">
-            <button class="preset-button active" data-preset="porcelain"><span class="preset-swatch porcelain-swatch"></span>素青</button>
-            <button class="preset-button" data-preset="jade"><span class="preset-swatch jade-swatch"></span>翠玉</button>
-            <button class="preset-button" data-preset="wood"><span class="preset-swatch wood-swatch"></span>见山</button>
-          </div>
-          <button class="icon-button" id="inspiration-info" aria-label="所有配色方案" title="配色方案"><i class="ti ti-dots" aria-hidden="true"></i></button>
-        </div>
+        </section>
+
+        <footer class="design-summary">
+          <button class="summary-size" id="edit-fit" aria-label="编辑佩戴尺寸" aria-controls="inspector"><i class="ti ti-ruler-measure" aria-hidden="true"></i><span id="wrist-summary">15.5 cm 腕围</span></button>
+          <div class="fit-feedback" id="fit-feedback"><i class="ti ti-circle-check" aria-hidden="true"></i><span class="summary-label">内围</span><span id="inner-length" class="data">16.3 cm</span><span id="fit-label">合适</span></div>
+          <div class="estimate-panel"><span id="sequence-count" class="data">24 颗</span><div class="estimate-price"><span>¥</span><strong id="total-price">167.90</strong></div><button class="icon-button" id="show-bill" aria-label="查看材料估价明细，不含工时" title="材料估价，不含工时"><i class="ti ti-list-details" aria-hidden="true"></i></button></div>
+        </footer>
       </section>
 
-      <aside class="property-panel" aria-label="手串规格与珠子属性">
+      <aside class="property-panel" id="inspector" aria-labelledby="inspector-title" hidden inert>
+        <div class="inspector-heading"><h2 id="inspector-title">规格</h2><button class="icon-button" id="close-inspector" aria-label="收起规格"><i class="ti ti-x" aria-hidden="true"></i></button></div>
         <div class="properties-scroll">
-          <section class="size-section">
-            <div class="panel-heading"><h2><i class="ti ti-ruler-measure" aria-hidden="true"></i>尺寸</h2></div>
-            <div class="wrist-field"><label for="wrist-size">腕围</label><div><input id="wrist-size" type="text" inputmode="decimal" value="15.5" aria-describedby="wrist-error"><span>cm</span></div></div>
-            <input id="wrist-range" class="wrist-range" type="range" min="12" max="22" step="0.1" value="15.5" aria-label="手腕围度">
-            <div class="range-labels"><span class="data">12</span><span class="data">22</span></div>
-            <p class="field-error" id="wrist-error" hidden>请输入 12 至 22 cm 的围度</p>
-            <div class="fit-heading"><span>松量</span><span id="ease-value" class="data">+0.5</span></div>
-            <div class="ease-options" role="group" aria-label="佩戴松量"><button data-ease="0.3">贴合</button><button class="active" data-ease="0.5" aria-pressed="true">舒适</button><button data-ease="1">宽松</button></div>
-            <div class="fit-feedback" id="fit-feedback"><i class="ti ti-circle-check" aria-hidden="true"></i><span id="fit-label">合适</span><span id="inner-length" class="data">16.3 cm</span></div>
-          </section>
-
-          <section class="selected-section">
-            <div class="section-heading"><h2><i class="ti ti-circle-dot" aria-hidden="true"></i>单珠</h2><span id="selected-position" class="data">#01</span></div>
-            <div class="selected-material" id="selected-material">
-              <div class="selected-bead" id="selected-bead-preview"></div>
-              <div class="selected-text"><h3 id="selected-name">青金石</h3><p id="selected-description">天然方钠石</p></div>
-              <button class="icon-button" id="locate-material" aria-label="在珠材库中查看" title="在珠材库中查看"><i class="ti ti-list-search" aria-hidden="true"></i></button>
-            </div>
-            <div class="selected-empty" id="selected-empty" hidden>选中一颗珠子</div>
-            <div id="selected-controls">
-              <div class="picker-title"><span>珠径</span><span class="unit-label">mm</span></div>
-              <div class="size-options" id="selected-sizes" aria-label="选中珠子的直径"></div>
-              <div class="selected-buttons">
-                <button class="icon-button" id="replace-bead" aria-label="替换珠材" title="替换珠材"><i class="ti ti-arrows-exchange" aria-hidden="true"></i></button>
-                <button class="icon-button" id="duplicate-bead" aria-label="复制珠子" title="复制珠子"><i class="ti ti-copy" aria-hidden="true"></i></button>
-                <button class="icon-button" id="move-left" aria-label="前移一颗" title="前移一颗"><i class="ti ti-chevron-left" aria-hidden="true"></i></button>
-                <button class="icon-button" id="move-right" aria-label="后移一颗" title="后移一颗"><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
-                <span class="tool-divider"></span>
-                <button class="icon-button" id="delete-bead" aria-label="删除选中珠子" title="删除 Delete"><i class="ti ti-trash" aria-hidden="true"></i></button>
-              </div>
-            </div>
-          </section>
-
-          <section class="cord-section">
-            <div class="section-heading"><h2><i class="ti ti-wave-sine" aria-hidden="true"></i>线</h2><span id="cord-label">瓷白</span></div>
-            <div class="cord-options" role="group" aria-label="弹力线颜色">
-              <button class="cord-option active" data-cord="ivory" aria-label="瓷白弹力线" aria-pressed="true"><span style="--cord-color:#dfe6f0"></span></button>
-              <button class="cord-option" data-cord="green" aria-label="松绿弹力线" aria-pressed="false"><span style="--cord-color:#77938a"></span></button>
-              <button class="cord-option" data-cord="pink" aria-label="藕荷弹力线" aria-pressed="false"><span style="--cord-color:#c9a3ad"></span></button>
-              <button class="cord-option" data-cord="dark" aria-label="墨灰弹力线" aria-pressed="false"><span style="--cord-color:#4e5554"></span></button>
-            </div>
-          </section>
-        </div>
-        <div class="estimate-panel">
-          <div class="estimate-top"><span>材料</span><button class="icon-button" id="show-bill" aria-label="查看材料估价明细" title="估价明细"><i class="ti ti-list-details" aria-hidden="true"></i></button></div>
-          <div class="estimate-price"><span>¥</span><strong id="total-price">167.90</strong></div>
-          <div class="estimate-bottom"><span id="total-beads" class="data">24 颗</span><span class="estimate-note">不含工时</span></div>
+          <section class="size-section"><div class="panel-heading"><h3>佩戴尺寸</h3></div><div class="wrist-field"><label for="wrist-size">腕围</label><div><input id="wrist-size" type="text" inputmode="decimal" value="15.5" aria-describedby="wrist-error"><span>cm</span></div></div><input id="wrist-range" class="wrist-range" type="range" min="12" max="22" step="0.1" value="15.5" aria-label="手腕围度"><div class="range-labels"><span>12 cm</span><span>22 cm</span></div><p class="field-error" id="wrist-error" hidden>请输入 12 至 22 cm 的围度</p><div class="fit-heading"><span>松量</span><span id="ease-value" class="data">+0.5 cm</span></div><div class="ease-options" role="group" aria-label="佩戴松量"><button data-ease="0.3">贴合</button><button class="active" data-ease="0.5" aria-pressed="true">舒适</button><button data-ease="1">宽松</button></div></section>
+          <section class="cord-section"><div class="section-heading"><h3>弹力线</h3><span id="cord-label">瓷白</span></div><div class="cord-options" role="group" aria-label="弹力线颜色"><button class="cord-option active" data-cord="ivory" aria-label="瓷白弹力线" aria-pressed="true"><span style="--cord-color:#dfe6f0"></span></button><button class="cord-option" data-cord="green" aria-label="松绿弹力线" aria-pressed="false"><span style="--cord-color:#77938a"></span></button><button class="cord-option" data-cord="pink" aria-label="浅粉弹力线" aria-pressed="false"><span style="--cord-color:#cda6a4"></span></button><button class="cord-option" data-cord="dark" aria-label="岩灰弹力线" aria-pressed="false"><span style="--cord-color:#4e5554"></span></button><button class="cord-option" data-cord="indigo" aria-label="靛青弹力线" aria-pressed="false"><span style="--cord-color:#45608a"></span></button><button class="cord-option" data-cord="ink" aria-label="墨黑弹力线" aria-pressed="false"><span style="--cord-color:#2f3438"></span></button></div></section>
+          <section id="selected-controls" class="inspector-bead"><div class="section-heading"><h3>单珠珠径</h3><button class="icon-button" id="locate-material" aria-label="在珠材库中查看" title="在珠材库中查看"><i class="ti ti-list-search" aria-hidden="true"></i></button></div><div class="picker-title"><span>直径</span><span class="unit-label">mm</span></div><div class="size-options" id="selected-sizes" aria-label="选中珠子的直径"></div><div id="mobile-selected-actions" class="mobile-selected-actions"></div></section>
         </div>
       </aside>
     </div>
 
-    <nav class="mobile-navigation" aria-label="工作区面板">
-      <button data-panel="materials"><i class="ti ti-diamond" aria-hidden="true"></i>珠材</button>
-      <button data-panel="preview" class="active"><i class="ti ti-circle" aria-hidden="true"></i>预览</button>
-      <button data-panel="properties"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i>尺寸</button>
-    </nav>
-    <footer class="status-bar">
-      <div><span class="status-dot" aria-hidden="true"></span><span id="edit-status" aria-live="polite">就绪</span></div>
-      <button id="keyboard-help" aria-label="查看快捷键" title="快捷键"><i class="ti ti-command" aria-hidden="true"></i></button>
-    </footer>
+    <nav class="mobile-navigation" aria-label="工作区面板"><button data-panel="materials"><i class="ti ti-diamond" aria-hidden="true"></i>珠材</button><button data-panel="preview" class="active"><i class="ti ti-circle" aria-hidden="true"></i>预览</button><button data-panel="properties"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i>规格</button></nav>
     <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
   </main>
   <input id="import-file" type="file" accept=".json,application/json" hidden>
