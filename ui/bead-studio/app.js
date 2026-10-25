@@ -978,7 +978,7 @@
     dragBead = hit.bead;
     dragMoved = false;
     dragOrigin = pointerPoint(event);
-    canvas.setPointerCapture(event.pointerId);
+    try { canvas.setPointerCapture(event.pointerId); } catch { /* 指针已释放时忽略 */ }
   });
   canvas.addEventListener('pointermove', (event) => {
     if (!dragBead) { canvas.style.cursor = hitAt(event) ? 'pointer' : 'default'; return; }
