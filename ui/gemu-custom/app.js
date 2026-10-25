@@ -46,12 +46,15 @@
       return '<a href="#' + n.id + '">' + esc(n.text) + '</a>';
     }).join('');
     $('#drawer-meta').textContent = D.brand.line + ' / 设计热线 ' + D.brand.hotline;
+    $('#foot-word').textContent = D.footer.word;
   }
 
   /* ---------- 首屏 ---------- */
   function renderHero() {
     var h = D.hero;
     $('#hero-kicker').textContent = h.kicker;
+    $('#hero-outline').textContent = h.outline;
+    $('#hero-latin').textContent = h.latin;
     $('#hero-title').innerHTML = h.lines.map(function (l, i) {
       return '<span class="ht-ln' + (l.accent ? ' ht-accent' : '') + '"><i style="--i:' + i + '">' +
         esc(l.text) + '</i></span>';
@@ -71,10 +74,11 @@
   function renderWorks() {
     var w = D.works;
     $('#w-label').textContent = w.label;
+    $('#w-latin').textContent = w.latin;
+    $('#w-count').textContent = w.count;
     $('#w-hint').innerHTML = esc(w.hint) + icon('arrow-right');
     $('#w-track').innerHTML = w.items.map(function (c) {
       return '<a class="w-card" href="#book" data-cursor="view">' +
-        '<span class="w-ghost" aria-hidden="true">' + esc(c.no) + '</span>' +
         '<span class="w-media imgz"><img src="' + photo(c.img, 900, 1125) + '" alt="' + esc(c.alt) + '" loading="lazy"></span>' +
         '<span class="w-no">' + esc(c.no) + ' / ' + esc(c.type) + '</span>' +
         '<span class="w-name">' + esc(c.name) + '</span>' +
@@ -87,6 +91,8 @@
   /* ---------- 服务：四行清单 ---------- */
   function renderServices() {
     $('#s-label').textContent = D.services.label;
+    $('#s-latin').textContent = D.services.latin;
+    $('#s-index').textContent = D.services.index;
     $('#s-list').innerHTML = D.services.items.map(function (s) {
       return '<a class="srow" href="#book" data-cursor="talk" data-img="' + esc(s.img) + '">' +
         '<span class="s-no">' + esc(s.no) + '</span>' +
@@ -101,6 +107,7 @@
   /* ---------- 流程 ---------- */
   function renderFlow() {
     $('#f-label').textContent = D.flow.label;
+    $('#f-latin').textContent = D.flow.latin;
     $('#f-steps').innerHTML = D.flow.items.map(function (s, i) {
       return '<li class="fstep" style="--d:' + i * 110 + 'ms">' +
         '<p class="f-no">' + esc(s.no) + '</p>' +
@@ -120,6 +127,7 @@
   function renderBook() {
     var b = D.book;
     $('#b-kicker').textContent = b.kicker;
+    $('#b-rsvp').textContent = b.rsvp;
     $('#b-title').innerHTML = esc(b.lead) + '<span class="b-accent">' + esc(b.accent) + '</span>';
     $('#b-sub').textContent = b.sub;
     $('#b-phone-label').textContent = b.phoneLabel;

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -25,12 +25,7 @@
   <symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l10-10"/><path d="M9 7h8v8"/></symbol>
   <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M6.5 13.5L12 19l5.5-5.5"/></symbol>
   <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6.5 10.5L12 5l5.5 5.5"/></symbol>
-  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 4h3.2l1.5 4-2 1.5a12 12 0 0 0 6.3 6.3l1.5-2 4 1.5v3.2a2 2 0 0 1-2.2 2A17 17 0 0 1 3.5 6.2 2 2 0 0 1 5.5 4z"/></symbol>
   <symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 6.5c-2.6 1.5-4 3.9-4 7.1V18h5.5V11h-3.3c.1-2.1 1-3.7 2.6-4.7z"/><path d="M19.2 6.5c-2.6 1.5-4 3.9-4 7.1V18h5.5V11h-3.3c.1-2.1 1-3.7 2.6-4.7z"/></symbol>
-  <symbol id="i-wardrobe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18"/><path d="M12 3v18"/><path d="M4 7.5h16"/><circle cx="9.8" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="14.2" cy="12" r=".9" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></symbol>
-  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 10 12 4.5 20 4.5c0 8.5-5.5 14.5-15 14.5z"/><path d="M5 19c3-6.5 7-9.5 11-11"/></symbol>
-  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="3.6"/><path d="M11.6 12H21"/><path d="M17.5 12v3.2"/><path d="M14.5 12v2.4"/></symbol>
 </svg>
 
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
@@ -61,10 +56,12 @@
 </header>
 
 <main>
-  <!-- ============ 首屏：一件主张 + 一张出血大图 ============ -->
+  <!-- ============ 首屏：错位大标题 + 裁切描边字 ============ -->
   <section class="hero" id="top">
     <p class="hero-kicker" id="hero-kicker"></p>
     <p class="hero-side" id="hero-side" aria-hidden="true"></p>
+    <span class="hero-outline" id="hero-outline" aria-hidden="true"></span>
+    <p class="hero-latin" id="hero-latin"></p>
     <h1 class="hero-title" id="hero-title"></h1>
     <p class="hero-sub" id="hero-sub"></p>
     <div class="hero-foot">
@@ -81,7 +78,11 @@
   <section class="works" id="works">
     <div class="w-stage" id="w-stage">
       <header class="w-head">
-        <p class="w-label" id="w-label"></p>
+        <div class="w-intro">
+          <p class="w-label" id="w-label"></p>
+          <p class="w-latin" id="w-latin"></p>
+        </div>
+        <p class="w-count" id="w-count" aria-hidden="true"></p>
         <p class="w-hint" id="w-hint"></p>
       </header>
       <div class="w-track" id="w-track"></div>
@@ -89,25 +90,33 @@
     </div>
   </section>
 
-  <!-- ============ 服务：四行反色清单 ============ -->
+  <!-- ============ 服务：整幅酒红色块 ============ -->
   <section class="services" id="services">
-    <p class="s-label rv" id="s-label"></p>
+    <div class="s-head">
+      <p class="s-label" id="s-label"></p>
+      <p class="s-latin" id="s-latin"></p>
+      <p class="s-index" id="s-index"></p>
+    </div>
     <div class="s-list" id="s-list"></div>
   </section>
 
-  <!-- ============ 流程：三步错位缩进 ============ -->
+  <!-- ============ 流程：三步阶梯缩进 ============ -->
   <section class="flow" id="flow">
     <div class="wrap">
-      <p class="f-label rv" id="f-label"></p>
+      <div class="f-head rv">
+        <p class="f-label" id="f-label"></p>
+        <p class="f-latin" id="f-latin"></p>
+      </div>
       <ol class="fsteps rv" id="f-steps"></ol>
       <figure class="fquote rv" id="f-quote"></figure>
     </div>
   </section>
 
-  <!-- ============ 预约：一个手机号 ============ -->
+  <!-- ============ 预约：整幅墨黑 ============ -->
   <section class="book" id="book">
     <div class="wrap book-in">
       <p class="b-kicker" id="b-kicker"></p>
+      <p class="b-rsvp" id="b-rsvp" aria-hidden="true"></p>
       <h2 class="b-title" id="b-title"></h2>
       <p class="b-sub" id="b-sub"></p>
       <div class="b-act">
@@ -132,8 +141,9 @@
   </section>
 </main>
 
-<!-- ============ 页脚：一行 ============ -->
+<!-- ============ 页脚：裁切描边字 + 一行 ============ -->
 <footer class="foot">
+  <span class="foot-word" id="foot-word" aria-hidden="true"></span>
   <div class="wrap foot-in">
     <a class="foot-brand" href="#top">格木 GEMU</a>
     <nav class="foot-links" id="foot-links" aria-label="页脚导航"></nav>
