@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e5f334">
+  <meta name="description" content="Meet Wild Card by OFFSUIT. A very unordinary deck of playing cards, made for good hands and better company.">
+  <title>Wild Card Playing Cards / OFFSUIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#deck">Skip to the deck</a>
+
+  <!-- Original print artwork. The same plates are used on the product and its previews. -->
+  <svg class="art-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="checker" width="28" height="28" patternUnits="userSpaceOnUse">
+        <rect width="28" height="28" fill="var(--paper)"/>
+        <path d="M0 0h14v14H0zM14 14h14v14H14z" fill="var(--ink)"/>
+      </pattern>
+      <pattern id="back-checker" width="32" height="32" patternUnits="userSpaceOnUse">
+        <rect width="32" height="32" fill="var(--edition)"/>
+        <path d="M0 0h16v16H0zM16 16h16v16H16z" fill="var(--ink)"/>
+      </pattern>
+      <symbol id="spade-eye" viewBox="0 0 200 220">
+        <path d="M100 8C80 43 19 69 14 112C9 158 57 177 87 149L73 201H127L113 149C145 178 191 157 186 112C181 69 120 43 100 8Z" fill="var(--ink)"/>
+        <path d="M48 112Q100 59 152 112Q100 154 48 112Z" fill="var(--acid)"/>
+        <ellipse cx="100" cy="109" rx="19" ry="27" fill="var(--ink)"/>
+        <circle cx="106" cy="100" r="5" fill="var(--acid)"/>
+      </symbol>
+      <symbol id="deck-art" viewBox="0 0 300 430">
+        <rect width="300" height="430" fill="var(--edition)"/>
+        <rect x="13" y="13" width="274" height="404" rx="2" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M13 49h274M13 375h274" stroke="var(--ink)" stroke-width="2"/>
+        <text x="150" y="37" text-anchor="middle" class="art-small">A VERY UNORDINARY DECK</text>
+        <text x="150" y="113" text-anchor="middle" class="art-brand">OFFSUIT</text>
+        <use href="#spade-eye" x="53" y="123" width="194" height="213"/>
+        <path d="M39 166l15 5m-9-27 13 10M246 171l15-5m-19-12 13-10M51 284l12-7m174 0 12 7" stroke="var(--ink)" stroke-width="3"/>
+        <text x="150" y="355" text-anchor="middle" class="art-medium">WILD CARD</text>
+        <text x="150" y="401" text-anchor="middle" class="art-small">54 CARDS. ALL PERSONALITY.</text>
+      </symbol>
+      <symbol id="back-art" viewBox="0 0 280 400">
+        <rect width="280" height="400" rx="13" fill="var(--paper)"/>
+        <rect x="11" y="11" width="258" height="378" rx="8" fill="var(--ink)"/>
+        <rect x="20" y="20" width="240" height="360" rx="4" fill="url(#back-checker)"/>
+        <path d="M140 33C66 70 33 125 33 200s33 130 107 167c74-37 107-92 107-167S214 70 140 33Z" fill="var(--ink)" stroke="var(--edition)" stroke-width="3"/>
+        <g fill="none" stroke="var(--edition)" stroke-width="2.5">
+          <ellipse cx="140" cy="200" rx="91" ry="153"/>
+          <ellipse cx="140" cy="200" rx="76" ry="131"/>
+          <ellipse cx="140" cy="200" rx="61" ry="108"/>
+          <ellipse cx="140" cy="200" rx="46" ry="85"/>
+        </g>
+        <path d="M73 200q67-78 134 0q-67 78-134 0Z" fill="var(--edition)"/>
+        <ellipse cx="140" cy="200" rx="26" ry="36" fill="var(--ink)"/>
+        <circle cx="148" cy="189" r="7" fill="var(--edition)"/>
+        <path d="M140 49v31m0 240v31" stroke="var(--edition)" stroke-width="3"/>
+      </symbol>
+      <symbol id="ace-art" viewBox="0 0 280 400">
+        <rect width="280" height="400" rx="13" fill="var(--paper)"/>
+        <text x="22" y="45" class="art-rank">A</text>
+        <path d="M34 53c-4 7-15 13-15 22 0 8 9 11 14 5l-3 11h9l-3-11c6 6 14 3 14-5 0-9-12-15-16-22Z" fill="var(--ink)"/>
+        <g transform="translate(280 400) rotate(180)">
+          <text x="22" y="45" class="art-rank">A</text>
+          <path d="M34 53c-4 7-15 13-15 22 0 8 9 11 14 5l-3 11h9l-3-11c6 6 14 3 14-5 0-9-12-15-16-22Z" fill="var(--ink)"/>
+        </g>
+        <use href="#spade-eye" x="40" y="87" width="200" height="220"/>
+        <text x="140" y="337" text-anchor="middle" class="art-small">TRUST YOUR HAND.</text>
+      </symbol>
+      <symbol id="joker-art" viewBox="0 0 280 400">
+        <rect width="280" height="400" rx="13" fill="var(--paper)"/>
+        <text x="20" y="39" class="art-small">JOKER</text>
+        <text x="260" y="380" text-anchor="end" class="art-small">JOKER</text>
+        <path d="M69 114l-17-54 52 33 36-49 36 49 52-33-17 54Z" fill="var(--edition)" stroke="var(--ink)" stroke-width="3"/>
+        <circle cx="140" cy="187" r="88" fill="var(--acid)" stroke="var(--ink)" stroke-width="3"/>
+        <path d="M83 169l16-13 16 13m49 0 16-13 16 13" fill="none" stroke="var(--ink)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M87 202q53 91 106 0Z" fill="var(--ink)"/>
+        <path d="M112 239q28-23 56 0" fill="var(--edition)"/>
+        <path d="M72 283q68-48 136 0l-30 30-38-18-38 18Z" fill="var(--edition)" stroke="var(--ink)" stroke-width="3"/>
+        <text x="140" y="348" text-anchor="middle" class="art-small">SERIOUSLY UN SERIOUS.</text>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <a class="wordmark" href="#" aria-label="OFFSUIT home">offsuit<span>®</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button type="button" class="nav-current" id="reset-view">The deck</button>
+      <button type="button" data-open="details-dialog" aria-haspopup="dialog">The good stuff</button>
+      <button type="button" data-open="play-dialog" aria-haspopup="dialog">Play a little <i class="ti ti-cards" aria-hidden="true"></i></button>
+    </nav>
+    <button class="bag-toggle" type="button" id="open-bag" aria-haspopup="dialog">
+      <span>Bag <span id="bag-count">(0)</span></span>
+      <i class="ti ti-shopping-bag" aria-hidden="true"></i>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero" id="deck" aria-labelledby="hero-title">
+      <div class="poster-canvas">
+      <div class="hero-topline"><span>Not your average playing cards.</span><span>For the beautifully unpredictable.</span></div>
+      <h1 id="hero-title">WILD CARD.</h1>
+
+      <div class="product-stage" id="product-stage" data-pose="classic">
+        <div class="product-shadow" aria-hidden="true"></div>
+        <div class="product-float">
+        <div class="product-ensemble" id="product-ensemble">
+          <button type="button" class="hero-card hero-card-back" aria-label="Flip the patterned card" aria-pressed="false"><span class="card-flipper"><span class="card-side"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></span><span class="card-side card-side-reverse"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#joker-art"/></svg></span></span></button>
+          <button type="button" class="hero-card hero-card-ace" aria-label="Flip the ace of spades" aria-pressed="false"><span class="card-flipper"><span class="card-side"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#ace-art"/></svg></span><span class="card-side card-side-reverse"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></span></span></button>
+          <button class="deck-object" id="flip-deck" type="button" aria-label="Turn the box around" aria-pressed="false">
+            <span class="tuck-box">
+              <span class="box-face box-front"><svg viewBox="0 0 300 430" role="img" aria-label="OFFSUIT Wild Card playing card box in electric pink"><use href="#deck-art"/></svg></span>
+              <span class="box-face box-reverse"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></span>
+              <span class="box-side box-side-right"><span>GOOD HANDS. BAD INFLUENCE.</span></span>
+              <span class="box-side box-side-left"><span>OFFSUIT / WILD CARD</span></span>
+              <span class="box-top">OPEN FOR A GOOD TIME</span>
+              <span class="box-bottom"></span>
+            </span>
+          </button>
+        </div>
+        </div>
+      </div>
+
+      <button type="button" class="hero-stamp" data-open="play-dialog" aria-label="Feeling lucky? Draw a card" aria-haspopup="dialog">
+        <svg viewBox="0 0 130 130" aria-hidden="true"><path d="M65 2 76 15 92 8 97 26 116 27 115 46 129 57 118 72 124 90 105 96 100 115 81 111 65 128 51 112 31 117 26 98 7 91 13 72 1 57 16 46 14 27 34 26 39 8 54 15Z"/></svg>
+        <span>100%<small>GOOD<br>TIMES</small></span>
+      </button>
+      </div>
+
+      <div class="hero-bottom">
+        <div class="product-intro">
+          <h2>Good hands.<br> Bad influence.</h2>
+          <p>A little luck. A lot of personality.<br>Your game night just got interesting.</p>
+          <button class="text-link" type="button" data-open="details-dialog" aria-haspopup="dialog">Meet your new deck <i class="ti ti-plus" aria-hidden="true"></i></button>
+        </div>
+        <div class="stage-controls" aria-label="Product view">
+          <button type="button" id="shuffle-hero"><i class="ti ti-arrows-shuffle" aria-hidden="true"></i> Mix it up</button>
+          <span>54 cards. Zero boring ones.</span>
+        </div>
+        <div class="buy-panel">
+          <div class="price-line"><span>Wild Card deck</span><strong>$18<span>.00</span></strong></div>
+          <fieldset class="editions">
+            <legend>Color <span id="edition-name">Electric pink</span></legend>
+            <label class="color-option" title="Electric pink"><input type="radio" name="edition" value="pink" checked><span class="color-dot color-pink"></span><span class="sr-only">Electric pink</span></label>
+            <label class="color-option" title="After hours"><input type="radio" name="edition" value="blue"><span class="color-dot color-blue"></span><span class="sr-only">After hours</span></label>
+          </fieldset>
+          <div class="purchase-actions">
+            <div class="quantity-picker" aria-label="Deck quantity">
+              <button id="decrease-quantity" type="button" aria-label="Decrease quantity" disabled><i class="ti ti-minus" aria-hidden="true"></i></button>
+              <output id="quantity" aria-live="polite">1</output>
+              <button id="increase-quantity" type="button" aria-label="Increase quantity"><i class="ti ti-plus" aria-hidden="true"></i></button>
+            </div>
+            <button class="primary-button" id="add-to-bag" type="button">Add to bag <i class="ti ti-shopping-bag" aria-hidden="true"></i></button>
+          </div>
+          <span class="shipping-note"><i class="ti ti-package" aria-hidden="true"></i> Ships in 2–3 business days</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="game-strip" aria-hidden="true"><div class="strip-track"><span>BAD AT BORING.</span><i class="ti ti-clubs"></i><span>GOOD AT PLAYING.</span><i class="ti ti-spade"></i><span>BAD AT BORING.</span><i class="ti ti-hearts"></i><span>GOOD AT PLAYING.</span><i class="ti ti-diamonds"></i></div></div>
+
+    <section class="details-section" id="details" aria-labelledby="details-title">
+      <div class="detail-copy">
+        <h2 id="details-title">ALL DECK.<br>NO DULL.</h2>
+        <p>Looks like trouble. Feels like quality.<br>Made to be played, not kept in the box.</p>
+        <dl class="specifications">
+          <div><dt>The full set</dt><dd>52 cards + 2 jokers</dd></div>
+          <div><dt>The feel</dt><dd>310 gsm, linen finish</dd></div>
+          <div><dt>The fit</dt><dd>63 × 88 mm, poker size</dd></div>
+          <div><dt>The little extra</dt><dd>Custom art on every card</dd></div>
+        </dl>
+        <a class="text-link" href="#play">Find your lucky card <i class="ti ti-arrow-down-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="fan-display" id="fan-display">
+        <div class="fan-cards" aria-label="Explore the card designs">
+          <button type="button" class="fan-card fan-left" aria-label="Flip the patterned card" aria-pressed="false"><span class="card-flipper"><span class="card-side"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></span><span class="card-side card-side-reverse"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#ace-art"/></svg></span></span></button>
+          <button type="button" class="fan-card fan-middle" aria-label="Flip the ace of spades" aria-pressed="false"><span class="card-flipper"><span class="card-side"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#ace-art"/></svg></span><span class="card-side card-side-reverse"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></span></span></button>
+          <button type="button" class="fan-card fan-right" aria-label="Flip the joker" aria-pressed="false"><span class="card-flipper"><span class="card-side"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#joker-art"/></svg></span><span class="card-side card-side-reverse"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></span></span></button>
+        </div>
+        <span class="fan-caption"><i class="ti ti-flip-horizontal" aria-hidden="true"></i> Two sides to every good story. Tap to flip.</span>
+      </div>
+    </section>
+
+    <section class="play-section" id="play" aria-labelledby="play-title">
+      <div class="play-copy"><h2 id="play-title">FEELING<br>LUCKY?</h2><p>No wrong answers. Just a little fate.</p><button class="primary-button" type="button" id="draw-card">Deal me in <i class="ti ti-cards" aria-hidden="true"></i></button></div>
+      <div class="draw-area">
+        <div class="draw-card" id="lucky-card"><div class="draw-inner"><div class="card-side"><svg viewBox="0 0 280 400" aria-hidden="true"><use href="#back-art"/></svg></div><div class="card-side card-side-reverse lucky-face"><span class="lucky-corner"><b class="lucky-rank">A</b><i class="ti ti-spade lucky-suit" aria-hidden="true"></i></span><i class="ti ti-spade lucky-suit lucky-center" aria-hidden="true"></i><span class="lucky-corner lucky-corner-bottom"><b class="lucky-rank">A</b><i class="ti ti-spade lucky-suit" aria-hidden="true"></i></span></div></div></div>
+        <p id="lucky-result" role="status">Your next good hand is waiting.</p>
+      </div>
+      <span class="play-footnote">Leave the doomscroll.<br>Bring the card shuffle.</span>
+    </section>
+
+    <section class="faq-section" id="questions" aria-labelledby="faq-title">
+      <h2 id="faq-title">A FEW<br> HOUSE RULES.</h2>
+      <div class="faq-list">
+        <details><summary>Where do you ship? <i class="ti ti-plus" aria-hidden="true"></i></summary><p>US standard shipping is $5, or free on orders of $50 or more. Decks leave the studio in 2–3 business days. International rates are calculated at checkout.</p></details>
+        <details><summary>Can I return my deck? <i class="ti ti-plus" aria-hidden="true"></i></summary><p>Unopened decks can be returned within 30 days of delivery. Keep your order number and original packaging. Return postage is not included.</p></details>
+        <details><summary>Are these for playing or collecting? <i class="ti ti-plus" aria-hidden="true"></i></summary><p>Both. Standard poker dimensions and a linen finish make them easy to shuffle, fan and deal. We just think they deserve a life outside the box.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="#" aria-label="Back to OFFSUIT home">offsuit<span>®</span></a>
+    <span>Good company. Great cards.</span>
+    <div class="footer-actions"><button id="copy-deck" type="button">Copy deck details <i class="ti ti-copy" aria-hidden="true"></i></button><button id="motion-toggle" type="button" aria-pressed="false">Pause motion <i class="ti ti-player-pause" aria-hidden="true"></i></button><small>© 2026 OFFSUIT</small></div>
+  </footer>
+
+  <dialog class="bag-dialog" id="bag-dialog" aria-labelledby="bag-title">
+    <header class="dialog-header"><h2 id="bag-title">YOUR BAG.</h2><button class="icon-button" type="button" id="close-bag" aria-label="Close bag"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+    <div class="dialog-body"><div id="bag-items"></div><div class="checkout-message" id="checkout-message" role="status" hidden><h3>Hold that hand.</h3><p>Checkout needs a connected store. No payment has been taken. You can save your bag as a text file instead.</p><button class="text-link" type="button" id="save-bag">Save bag summary <i class="ti ti-download" aria-hidden="true"></i></button></div></div>
+    <footer class="dialog-footer" id="bag-footer"><div class="total-row"><span>Subtotal</span><span id="bag-subtotal">$0.00</span></div><div class="total-row shipping-total"><span>US standard shipping</span><span id="bag-shipping">$5.00</span></div><div class="total-row grand-total"><strong>Estimated total</strong><strong id="bag-total">$0.00</strong></div><button class="primary-button checkout-button" type="button" id="checkout">Continue to checkout <i class="ti ti-lock" aria-hidden="true"></i></button><span class="cart-note">USD. Taxes calculated at checkout.</span></footer>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
