@@ -9,7 +9,7 @@
   "history": [
     {
       "prompt": "一个国外扑克牌产品详情单页面，产品居中的超大特写构图，配色大胆高饱和、风格鲜明活跃、潮流好玩、对比强烈；英文艺术字体、震撼的视觉冲突效果；花哨的动画和交互，精简且与众不同的排版设计。",
-      "model": "claude-opus-5[1m]",
+      "model": "gpt-6.1-sol",
       "skills": ["mono-ui-prototype", "frontend-design", "animate", "oil-frontend", "vibehub"],
       "duration_seconds": 654
     }
