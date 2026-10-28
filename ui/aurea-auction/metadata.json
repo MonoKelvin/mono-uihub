@@ -1,0 +1,39 @@
+{
+  "name": "AUREA 顶级艺术拍卖行",
+  "slug": "aurea-auction",
+  "page_type": "website",
+  "palette": ["#f4f1ea", "#171511", "#2743a0"],
+  "tags": ["艺术品拍卖", "高端收藏", "现代画廊"],
+  "created_at": "2026-10-28 18:35:00",
+  "updated_at": "2026-10-28 20:15:00",
+  "history": [
+    {
+      "prompt": "一个高级奢侈的国外艺术品拍卖交易网站，图片请使用真实图片和真实的抠图图片",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "重构：现代主义白墙画廊方向，Syne/Space Grotesk/Noto Sans SC 全无衬线艺术几何字体，纸白底+墨黑+群青+橙红点睛，3D画框倾斜+阻尼弹簧+滚动驱动动效，几何插画系统",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "修复布局滚动错误（HTML嵌套损坏）+ 首屏打磨：metrics数据条改文档流不再遮挡、加大标题两行错位、背景装饰、新增横向滚动marquee条带、Hero纵向/装饰横向滚动驱动scrub视差",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": null,
+      "image_generation": []
+    },
+    {
+      "prompt": "打磨轮：中文描边字笔画重叠改为纯色错位（禁渐变色）、几何色块插画、数据条色块+日历日期竖线+品类大号描边罗马数字+缩略图角标+服务圆角方块图标、CTA订阅文案单行、毛玻璃（header/hp-plaque/lot-watch/a-status/hd-ring）、动画并行编排（hero分行对撞+眉标副标题CTA并行）、marquee滚动变速、章节大编号scrub位移、CTA圆缩放、footer错峰入场、首屏右侧挂画放大靠左不挤左列、清理过时padding补丁",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": null,
+      "image_generation": []
+    }
+  ]
+}
