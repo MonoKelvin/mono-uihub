@@ -1,0 +1,23 @@
+{
+  "name": "波玩公社",
+  "slug": "pow-wave-community",
+  "page_type": "website",
+  "palette": ["#fff9ef", "#edff4a", "#141210"],
+  "tags": ["社区", "潮流", "涂鸦贴纸"],
+  "created_at": "2026-10-28 12:00:00",
+  "updated_at": "2026-10-28 21:30:00",
+  "history": [
+    {
+      "prompt": "潮流嗨玩社区网站，多种大胆配色重装组合，风格迥异古怪好玩，大量几何图形，丰富花哨交互和滚动动画，超多真实图片，社区交流讨论，分享有趣生活，简约高级组件，丰富功能操作界面",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": null
+    },
+    {
+      "prompt": "修复：图标缺失（移除 filled webfont 冲突、更换 3 个无效图标名）、滚动跟手（Lenis 参数优化、移除 scroll-behavior smooth）、中文标题改用 ZCOOL 黄油体+快乐体震撼字体、补充英文点缀、区块非对称错位排版、修复 hero 贴纸遮挡",
+      "model": "claude-sonnet-4-6",
+      "skills": ["mono-ui-prototype", "animate"],
+      "duration_seconds": null
+    }
+  ]
+}
