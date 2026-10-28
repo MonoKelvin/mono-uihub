@@ -22,14 +22,14 @@
   --line: rgba(20, 18, 16, 0.9);
 
   /* 字体 */
-  --font-display: 'Unbounded', 'Smiley Sans Oblique', 'PingFang SC', system-ui, sans-serif;
+  --font-display: 'Unbounded', 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  --font-marker: 'Permanent Marker', 'Caveat', cursive;   /* 马克笔涂鸦：英文贴纸 / 装饰 */
-  --font-hand: 'Caveat', 'Segoe Script', cursive;          /* 连笔手写：英文便签 */
-  --font-art: 'Bungee', 'Unbounded', sans-serif;            /* 艺术英文字体：品牌 / 口号 */
-  --font-cn: 'ZCOOL QingKe HuangYou', 'Smiley Sans Oblique', 'PingFang SC', 'Microsoft YaHei', sans-serif;  /* 中文海报标题：站酷庆科黄油体（震撼） */
-  --font-cn-alt: 'ZCOOL KuaiLe', 'Smiley Sans Oblique', 'PingFang SC', sans-serif;  /* 中文活泼圆体：站酷快乐体 */
-  --font-cn-script: 'Smiley Sans Oblique', 'PingFang SC', sans-serif;  /* 中文斜体展示：得意黑 */
+  --font-marker: 'Permanent Marker', cursive;   /* 马克笔涂鸦：英文贴纸 / 装饰 */
+  --font-hand: 'Permanent Marker', cursive;      /* 连笔手写：英文便签 */
+  --font-art: 'Bungee', 'Unbounded', sans-serif;  /* 艺术英文字体：品牌 / 口号 */
+  --font-cn: 'ZCOOL QingKe HuangYou', 'PingFang SC', 'Microsoft YaHei', sans-serif;  /* 中文海报标题：站酷庆科黄油体 */
+  --font-cn-alt: 'ZCOOL KuaiLe', 'PingFang SC', sans-serif;  /* 中文活泼圆体：站酷快乐体 */
+  --font-cn-script: 'ZCOOL QingKe HuangYou', 'PingFang SC', sans-serif;  /* 中文斜体展示：同标题字族 */
 
   /* 空间 */
   --radius: 18px;
