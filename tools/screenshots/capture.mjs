@@ -56,6 +56,13 @@ export async function capture(options, { uiRoot = UI_ROOT } = {}) {
         const response = await page.goto(host.url + '/' + encodeURIComponent(item.slug) + '/index.html', { waitUntil: 'load', timeout: 45000 });
         if (!response?.ok()) throw new Error('Prototype returned HTTP ' + response?.status());
         await page.evaluate(() => Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 5000))]));
+        // 中文字体（如 Google Fonts ZCOOL / ZeoSeven）按 unicode-range 分片加载，
+        // document.fonts.ready 可能只在首屏用到的分片就绪时提前 resolve，导致截图标题字体缺失。
+        // 这里显式遍历所有已注册的 FontFace 并 load()，确保全部字重/分片真正下载完成。
+        await page.evaluate(() => Promise.race([
+          Promise.all([...document.fonts].map((f) => f.load().catch(() => {}))).then(() => document.fonts.ready),
+          new Promise((resolve) => setTimeout(resolve, 8000)),
+        ]));
         // Wait for network quiet (fonts / hot-linked images), every <img> decoded, then two frames for rAF-drawn charts.
         await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
         await page.evaluate(() => Promise.race([Promise.all([...document.images].map((img) => img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))), new Promise((r) => setTimeout(r, 8000))]));
