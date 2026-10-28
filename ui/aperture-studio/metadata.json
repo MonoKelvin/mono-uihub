@@ -1,0 +1,65 @@
+{
+  "name": "Aperture Studio",
+  "slug": "aperture-studio",
+  "page_type": "website",
+  "palette": [
+    "#0e0e10",
+    "#141416",
+    "#1c1d23",
+    "#24262e",
+    "#f0eee9",
+    "#e0b36a"
+  ],
+  "tags": [
+    "3D",
+    "渲染",
+    "视图",
+    "工作室",
+    "ThreeJs",
+    "WebGL"
+  ],
+  "created_at": "2026-10-27T11:15:00+08:00",
+  "updated_at": "2026-10-28T11:52:00+08:00",
+  "history": [
+    {
+      "prompt": "一个web真实渲染引擎软件，支持高性能的模型渲染，pbr材质。示例的模型和材质请从网上搜索下载免费资源（比如高精度模型、pbr高清材质）。可以单独将渲染引擎分文件设计，不必都写到一个文件中，界面提供简单的交互即可，用于居中的产品展示渲染成果。目标：真实感渲染。",
+      "model": "unknown",
+      "skills": [
+        "mono-ui-prototype",
+        "ui-metadata"
+      ],
+      "duration_seconds": 1500,
+      "image_generation": []
+    },
+    {
+      "prompt": "重构为网页单页面（不需要滚动），调整配色和字体，设计简约高级；优化site渲染引擎，增加更多高级功能或者完善真实感渲染效果，UI里面增加更多可以控制的参数调整渲染参数",
+      "model": "unknown",
+      "skills": [
+        "mono-ui-prototype",
+        "ui-metadata"
+      ],
+      "duration_seconds": 3600,
+      "image_generation": []
+    },
+    {
+      "prompt": "后面几种模型都加载失败了换一些可以正常加载的，有复杂的高精度模型最好（比如机械、超跑、怪物等），继续完善渲染引擎（目前阴影效果太差了，辉光、屏幕空间反射等不连续光滑，各种参数调节等尽量完善，达到真实级别渲染效果，多参考一些开源算法）。本轮：修理 drei 风格 depth+blur 接触阴影（清晰轮廓、连续衰减），新增接触阴影强度参数，平面镜面反射 (Reflector) 连续性修复，雨穹顶及全部参数控件接入。",
+      "model": "unknown",
+      "skills": [
+        "mono-ui-prototype",
+        "ui-metadata"
+      ],
+      "duration_seconds": 5400,
+      "image_generation": []
+    },
+    {
+      "prompt": "渲染太暗请优化并继续完善引擎；重构 UI 为单网页展示（非软件式）；修复切换模型后参数失效问题（实时联动）；默认不旋转；全中文界面（专业名称为 中文（英文缩写））。本轮：提亮曝光/灯光/IBL 并修环境光；去除 applyPreset 对参数的重置；新增 frameModel 保留用户视图；目录汉化；单页版式重构。",
+      "model": "unknown",
+      "skills": [
+        "mono-ui-prototype",
+        "ui-metadata"
+      ],
+      "duration_seconds": 2400,
+      "image_generation": []
+    }
+  ]
+}

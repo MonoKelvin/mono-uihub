@@ -24,7 +24,7 @@ export class ApertureEngine {
     this.renderer = new Renderer(canvas);
     this.camera   = new CameraRig(canvas);
     this.scene    = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x0d0f12);
+    this.scene.background = new THREE.Color(0x17191d);
     this.environment = new Environment(this.scene, this.renderer);
     this.ground = new Ground(this.scene, this.renderer);
     this.ground.addTo(this.scene);
@@ -41,15 +41,22 @@ export class ApertureEngine {
     this.spinSpeed = this.currentPreset ? this.currentPreset.spin : 0;
     this.shadowEnabled = true;
     this.floorVisible = true;
-    this.exposure = 1.0;
-    this._userExpFactor = 1;   // user multiplier, preserved across HDRI switches
-    this._hdriExp = 1;         // current HDRI's calibration exposure
-    this._envIntensity = 1.0;
+    // Brighter default: a product studio render should read "lit", not dim.
+    // Exposure is the user factor × the HDRI's calibration. _userExpFactor
+    // is the user's relative brightness choice, preserved across HDRI switches.
+    this.exposure = 1.25;
+    this._userExpFactor = 1.25;
+    this._hdriExp = 1.0;         // current HDRI's calibration exposure
+    this._envIntensity = 1.3;    // environment IBL strength (envMapIntensity)
 
     this.lastModelWasFallback = false;
     this.lastModelFallbackReason = null;
     this.lastHdriWasFallback = false;
     this.lastHdriFallbackReason = null;
+
+    // Frame the camera to the default preset once, so the first model load
+    // does NOT have to re-apply a preset (which would clobber user state).
+    if (this.currentPreset) this.applyPreset(this.currentPreset.id);
 
     this.onTick = null;
     this._raf = null;
@@ -65,7 +72,7 @@ export class ApertureEngine {
   _buildLights() {
     // Key: warm, hard-ish studio key with a soft shadow. Radius blurs the
     // PCFSoft map for believable penumbra instead of a hard terminator.
-    const key = new THREE.DirectionalLight(0xfff2e2, 1.6);
+    const key = new THREE.DirectionalLight(0xfff2e2, 2.2);
     key.position.set(4, 6, 3);
     key.castShadow = true;
     key.shadow.mapSize.set(2048, 2048);
@@ -82,15 +89,15 @@ export class ApertureEngine {
 
     // Soft ambient: a hemisphere light lifts shadow floors out of pure black,
     // which is what makes a studio render read as "lit" rather than "contrasty".
-    const hemi = new THREE.HemisphereLight(0xffffff, 0x22201c, 0.35);
+    const hemi = new THREE.HemisphereLight(0xffffff, 0x2a2723, 0.55);
     hemi.position.set(0, 4, 0);
     this.scene.add(hemi);
 
-    const fill = new THREE.DirectionalLight(0xbcd4ff, 0.45);
+    const fill = new THREE.DirectionalLight(0xbcd4ff, 0.7);
     fill.position.set(-3, 2, -1);
     this.scene.add(fill);
 
-    const rim = new THREE.DirectionalLight(0xffd9a8, 0.6);
+    const rim = new THREE.DirectionalLight(0xffd9a8, 0.9);
     rim.position.set(-2, 3, -4);
     this.scene.add(rim);
 
@@ -118,7 +125,15 @@ export class ApertureEngine {
         this.currentModel = group;
         this.currentModelId = id;
         this.scene.add(group);
-        this.applyPreset(this.currentPreset ? this.currentPreset.id : null);
+        // PRESERVE user state on model switch. Do NOT re-apply the preset:
+        // that would reset spinSpeed, floor/backdrop visibility and the
+        // camera to the preset's defaults, silently undoing user tweaks.
+        // Re-frame the camera to the current geometry instead.
+        this.camera.frameModel(group);
+        // Re-apply the user's IBL strength to the NEW model's materials
+        // (envMapIntensity is a per-material property, the fresh material
+        // starts at its authored value).
+        this._applyEnvIntensity();
         this._requestShadowRebuild();
         this.lastModelWasFallback = object.userData?.__renderFallback === true;
         this.lastModelFallbackReason = object.userData?.__renderFallbackReason || null;
@@ -139,7 +154,8 @@ export class ApertureEngine {
         this.currentModel = group;
         this.currentModelId = null;
         this.scene.add(group);
-        this.applyPreset(this.currentPreset ? this.currentPreset.id : null);
+        this.camera.frameModel(group);
+        this._applyEnvIntensity();
         this._requestShadowRebuild();
         this.lastModelWasFallback = object.userData?.__renderFallback === true;
         this.lastModelFallbackReason = object.userData?.__renderFallbackReason || null;
@@ -158,7 +174,8 @@ export class ApertureEngine {
       this.currentModel = group;
       this.currentModelId = null;
       this.scene.add(group);
-      this.applyPreset(this.currentPreset ? this.currentPreset.id : null);
+      this.camera.frameModel(group);
+      this._applyEnvIntensity();
       this._requestShadowRebuild();
       this.lastModelWasFallback = false;
       this.lastModelFallbackReason = null;
@@ -197,7 +214,8 @@ export class ApertureEngine {
     this.currentModel = group;
     this.currentModelId = null;
     this.scene.add(group);
-    this.applyPreset(this.currentPreset ? this.currentPreset.id : null);
+    this.camera.frameModel(group);
+    this._applyEnvIntensity();
     this._requestShadowRebuild();
     this.lastModelWasFallback = true;
     this.lastModelFallbackReason = 'file load failed';
@@ -260,7 +278,6 @@ export class ApertureEngine {
     this.floorVisible = preset.showFloor;
     this.environment.setSkybox(preset.bg === 'env');
   }
-
   /**
    * Set the applied exposure directly (what the UI slider shows).
    * Derives the user factor relative to the current HDRI so a later HDRI
@@ -316,16 +333,20 @@ export class ApertureEngine {
   setEnvironmentIntensity(v) {
     // Environment IBL strength: scale envMapIntensity across all PBR mats.
     this._envIntensity = v;
-    if (this.currentModel) {
-      this.currentModel.traverse((o) => {
-        if (o.isMesh && o.material) {
-          const mats = Array.isArray(o.material) ? o.material : [o.material];
-          for (const m of mats) {
-            if (m.envMapIntensity !== undefined) m.envMapIntensity = v;
-          }
+    this._applyEnvIntensity();
+  }
+
+  /** Re-apply the user's IBL strength to the current model's materials. */
+  _applyEnvIntensity() {
+    if (!this.currentModel) return;
+    this.currentModel.traverse((o) => {
+      if (o.isMesh && o.material) {
+        const mats = Array.isArray(o.material) ? o.material : [o.material];
+        for (const m of mats) {
+          if (m.envMapIntensity !== undefined) m.envMapIntensity = this._envIntensity;
         }
-      });
-    }
+      }
+    });
   }
 
   getEnvironmentIntensity() { return this._envIntensity ?? 1.0; }
@@ -346,6 +367,14 @@ export class ApertureEngine {
 
   setContactShadowBlur(v) {
     this.ground.setContactShadowBlur(v);
+  }
+
+  setContactShadowIntensity(v) {
+    this.ground.setContactShadowIntensity(v);
+  }
+
+  getContactShadowIntensity() {
+    return this.ground.getContactShadowIntensity();
   }
 
   /** Toggle the continuous planar mirror reflection (Reflector). */

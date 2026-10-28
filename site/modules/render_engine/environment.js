@@ -123,7 +123,7 @@ export class Environment {
       this.scene.background = this._current;
       this.scene.backgroundIntensity = 1;
     } else {
-      this.scene.background = new THREE.Color(0x0d0f12);
+      this.scene.background = new THREE.Color(0x17191d);
       this.scene.backgroundIntensity = 1;
     }
   }

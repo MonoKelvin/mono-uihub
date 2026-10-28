@@ -91,6 +91,14 @@ export class ContactShadows {
     this._renderCount = 0;
     this.needsUpdate = true;
 
+    // drei maps shadow alpha to (1 - fragCoordZ), i.e. how HIGH above the
+    // floor the object's surface is, normalised by the shadow camera's far
+    // plane. With the default far=12 that yields only a few percent alpha in
+    // the model's height band — a black spec on a bright floor is invisible.
+    // We expose an intensity multiplier on the alpha so the shadow reads as a
+    // real occlusion (default 4 ≈ 0.8 max alpha at the model's visible range).
+    this._intensity = 4;
+
     const w = size, h = size;
 
     this.renderTarget = new THREE.WebGLRenderTarget(resolution, resolution);
@@ -107,33 +115,66 @@ export class ContactShadows {
     this.far = far;
 
     // Depth material: encode (1 - fragCoordZ) into alpha, tint by color.
+    // THREE.BasicDepthPacking is REQUIRED: it makes the fragment shader
+    // output `vec4( vec3( 1.0 - fragCoordZ ), opacity );` — exactly the
+    // string onBeforeCompile replaces. The default RGBADepthPacking (3201)
+    // compiles to `packDepthToRGBA(fragCoordZ)`, whose packed RGB renders
+    // as a solid/black plane, which is why an earlier iteration composited
+    // opaque black over the floor.
     // The color uniform is a LIVE object so setColor() works without a
     // recompile — onBeforeCompile binds it by reference.
     this._colorUni = { value: new THREE.Color(color) };
-    const depthMaterial = new THREE.MeshDepthMaterial();
-    depthMaterial.depthTest = false;
-    depthMaterial.depthWrite = false;
+    const depthMaterial = new THREE.MeshDepthMaterial({
+      depthPacking: THREE.BasicDepthPacking,
+    });
+    this._depthSrc = 'vec4( vec3( 1.0 - fragCoordZ ), opacity );';
+    this._intensityUni = { value: this._intensity };
     depthMaterial.onBeforeCompile = (shader) => {
       shader.uniforms.ucolor = this._colorUni;
+      shader.uniforms.uintensity = this._intensityUni;
       shader.fragmentShader = shader.fragmentShader.replace(
         'void main() {',
         `uniform vec3 ucolor;
+         uniform float uintensity;
          void main() {`,
       );
+      // Robust replace: match regardless of the exact whitespace three emits
+      // (it has changed across minor versions). Fail LOUDLY so a silent
+      // regressions never produces an opaque plane again.
+      const re = /\s*vec4\s*\(\s*vec3\s*\(\s*1\.0\s*-\s*fragCoordZ\s*\)\s*,\s*opacity\s*\)\s*;/;
+      const hit = re.test(shader.fragmentShader);
+      if (!hit) {
+        console.warn('[contact-shadows] depth fragment encode pattern not found;',
+          'shadow colours will be wrong. (three.js depth shader changed?)');
+      }
       shader.fragmentShader = shader.fragmentShader.replace(
-        'vec4( vec3( 1.0 - fragCoordZ ), opacity );',
-        'vec4( ucolor * fragCoordZ * 2.0, ( 1.0 - fragCoordZ ) * 1.0 );',
+        re,
+        'vec4( ucolor * fragCoordZ * 2.0, ( 1.0 - fragCoordZ ) * uintensity );',
       );
     };
     this.depthMaterial = depthMaterial;
 
-    // Blur quad + the two separable blur materials.
+    // Blur quad + the two separable blur materials. The quad is rendered
+    // through a DEDICATED camera whose frustum exactly matches the 2×2 quad
+    // (−1..1), NOT through the shadow ortho camera: that frustum spans
+    // ±size/2 and its far plane sits exactly at the quad's y=0 at distance
+    // `far`, so the quad gets depth-clipped and the blur writes nothing
+    // (the RT then composites garbage). A dedicated ortho looking down −Z
+    // with the quad mid-frustum can never clip.
     const blurGeo = new THREE.PlaneGeometry(2, 2);
     this.blurPlane = new THREE.Mesh(blurGeo);
-    this.blurPlane.visible = false;
+    // MUST stay visible: we render it standalone via gl.render(object, camera)
+    // (it is never added to a scene), and three's projectObject skips
+    // invisible objects → the blur passes would write nothing.
+    this.blurPlane.visible = true;
+    this.blurCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.001, 2);
+    this.blurCamera.position.set(0, 0, 0.5);
+    this.blurCamera.lookAt(0, 0, 0);
+    this.blurCamera.updateMatrixWorld();
     this.hBlur = new THREE.ShaderMaterial(HORIZONTAL_BLUR);
     this.vBlur = new THREE.ShaderMaterial(VERTICAL_BLUR);
     this.hBlur.depthTest = this.vBlur.depthTest = false;
+    this.hBlur.depthWrite = this.vBlur.depthWrite = false;
 
     // Composite plane: the literally-visible shadow, laid flat on the floor.
     const planeGeo = new THREE.PlaneGeometry(w, h).rotateX(-Math.PI / 2);
@@ -164,6 +205,7 @@ export class ContactShadows {
 
     // Hide everything that must not participate in the depth pass:
     //  - our own composite plane (would occlude / z-fight)
+    //  - the floor / ground mesh (it would fill the whole RT with near depth)
     //  - planar Reflector (its onBeforeRender re-renders the scene → recursion)
     //  - SSR / metalness helper meshes (they re-render too)
     const hidden = [];
@@ -172,7 +214,8 @@ export class ContactShadows {
     };
     hide(this.plane);
     scene.traverse((o) => {
-      if (o.userData && (o.userData.__isReflector || o.userData.__isReflectorForSSR)) hide(o);
+      if (o.userData && (o.userData.__isReflector || o.userData.__isReflectorForSSR ||
+          o.userData.__isGroundMesh)) hide(o);
     });
 
     this._blurPass(scene, this._blur);
@@ -187,24 +230,49 @@ export class ContactShadows {
     const gl = this.gl;
     scene.overrideMaterial = this.depthMaterial;
 
+    // three fills the render target:
+    //   (a) with scene.background (opaque studio colour) OR, when background
+    //       is null, with the renderer's own clearColour/clearAlpha — and our
+    //       Renderer sets clearAlpha = 1 to paint the opaque studio backdrop
+    //       every frame. Either way the RT clears OPAQUE, so any region the
+    //       model doesn't cover composites solid dark.
+    //   (b) We must clear TRANSPARENT (alpha 0) so the blur only writes the
+    //       model's silhouette + falloff.
+    // I both null background/environment AND temporarily set the renderer's
+    // clear alpha to 0 for the duration of the depth pass.
+    const savedBg = scene.background;
+    const savedEnv = scene.environment;
+    scene.background = null;
+    scene.environment = null;
+    const savedClearColor = new THREE.Color();
+    gl.getClearColor(savedClearColor);
+    const savedClearAlpha = gl.getClearAlpha();
+    gl.setClearColor(0x000000, 0);
+
     gl.setRenderTarget(this.renderTarget);
     gl.render(scene, this.shadowCamera);
 
+    gl.setClearColor(savedClearColor, savedClearAlpha);
+    scene.background = savedBg;
+    scene.environment = savedEnv;
     scene.overrideMaterial = null;
 
     // Horizontal blur: read RT → write RT_Blur.
     this.hBlur.uniforms.tDiffuse.value = this.renderTarget.texture;
     this.hBlur.uniforms.h.value = blur * (1 / 256);
     this.blurPlane.material = this.hBlur;
+    gl.setClearColor(0x000000, 0);
     gl.setRenderTarget(this.renderTargetBlur);
-    gl.render(this.blurPlane, this.shadowCamera);
+    gl.clear();
+    gl.render(this.blurPlane, this.blurCamera);
 
     // Vertical blur: read RT_Blur → write RT. Produces the final shadow.
     this.vBlur.uniforms.tDiffuse.value = this.renderTargetBlur.texture;
     this.vBlur.uniforms.v.value = blur * (1 / 256);
     this.blurPlane.material = this.vBlur;
     gl.setRenderTarget(this.renderTarget);
-    gl.render(this.blurPlane, this.shadowCamera);
+    gl.clear();
+    gl.render(this.blurPlane, this.blurCamera);
 
     gl.setRenderTarget(null);
   }
@@ -222,6 +290,11 @@ export class ContactShadows {
       this._colorUni.value.set(hex);
     }
   }
+  setIntensity(v) {
+    this._intensity = v;
+    if (this._intensityUni) this._intensityUni.value = v;
+  }
+  getIntensity() { return this._intensity; }
   setVisible(v) {
     this._visible = v;
     this.plane.visible = v;

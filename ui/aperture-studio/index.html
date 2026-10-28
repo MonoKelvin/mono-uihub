@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aperture Studio · 真实感渲染工作台</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.21.0/dist/tabler-icons.min.css">
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Three.js import map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://esm.sh/three@0.168.0"
+      }
+    }
+  </script>
+</head>
+<body>
+
+<!-- Bootstrap guard: detects file:// (where ES module imports are blocked by
+     CORS) and swaps the loading overlay for instructions. Runs as a plain
+     <script> so it executes even if app.js never loads. -->
+<script>
+(function () {
+  var IS_FILE = location.protocol === 'file:';
+  var SERVER_MSG =
+    '<div style="background:#1c1d23;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 16px;font-family:var(--font-mono);font-size:11.5px;color:#f0eee9;text-align:left;line-height:1.7;">' +
+      '<div style="color:#8a857c;font-size:10px;letter-spacing:0.06em;margin-bottom:8px;">在仓库根目录运行任一命令</div>' +
+      '<div style="color:#e0b36a;margin-bottom:4px;">python -m http.server 8000</div>' +
+      '<div style="color:#e0b36a;margin-bottom:8px;">npx serve .</div>' +
+      '<div style="color:#8a857c;font-size:10px;letter-spacing:0.06em;margin-bottom:6px;">或</div>' +
+      '<div style="color:#e0b36a;">npx live-server</div>' +
+    '</div>' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:#5e5a53;margin-top:14px;">然后用浏览器打开打印出的 http:// 地址</div>';
+
+  function showError(title, detail, extra) {
+    var wrap = document.getElementById('stage-loading');
+    if (!wrap) return;
+    wrap.innerHTML =
+      '<div style="max-width:560px;text-align:center;padding:0 24px;">' +
+        '<div style="font-family:var(--font-display);font-size:20px;font-weight:500;color:#f0eee9;margin-bottom:10px;">' + title + '</div>' +
+        (detail ? '<div style="font-family:var(--font-mono);font-size:11.5px;color:#a29d94;line-height:1.6;margin-bottom:16px;">' + detail + '</div>' : '') +
+        (extra || '') +
+      '</div>';
+  }
+
+  function showRuntimeError(name, message, err) {
+    var code = '';
+    if (err && err.stack) {
+      code = '<div style="max-height:180px;overflow:auto;text-align:left;background:#1c1d23;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;font-family:var(--font-mono);font-size:11px;color:#ffb3b3;line-height:1.55;white-space:pre-wrap;word-break:break-word;margin-bottom:12px;">' +
+        String(err.stack).replace(/</g,'&lt;') + '</div>';
+    } else if (message) {
+      code = '<div style="text-align:left;background:#1c1d23;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;font-family:var(--font-mono);font-size:11px;color:#ffb3b3;line-height:1.55;white-space:pre-wrap;word-break:break-word;margin-bottom:12px;">' +
+        String(message).replace(/</g,'&lt;') + '</div>';
+    }
+    showError(
+      '引擎错误：' + (name || '未知'),
+      '引擎启动失败。详见下方堆栈，及浏览器开发者工具控制台（F12）。',
+      code
+    );
+  }
+
+  window.addEventListener('error', function (e) {
+    if (!e || e.target || e.message === 'Script error.') return;
+    showRuntimeError(e.filename ? e.filename.split('/').pop() : '运行时',
+                     e.message, e.error || null);
+  }, true);
+
+  window.addEventListener('unhandledrejection', function (e) {
+    var reason = e.reason;
+    showRuntimeError('未处理的 Promise 拒绝',
+                     reason && reason.message ? reason.message : String(reason),
+                     reason && reason.stack ? { stack: reason.stack } : reason);
+  });
+
+  if (IS_FILE) {
+    showError(
+      '需要本地服务器',
+      '以 file:// 方式打开会因 CORS 阻止 ES 模块导入（three.js、app.js），Chrome / Edge 无法从文件系统运行该引擎。',
+      SERVER_MSG
+    );
+  }
+
+  setTimeout(function () {
+    var wrap = document.getElementById('stage-loading');
+    if (!wrap || wrap.classList.contains('is-hidden')) return;
+    var t = document.getElementById('stage-loading-text');
+    if (t && t.textContent === '正在启动引擎') {
+      showError(
+        '引擎 15 秒内未启动',
+        '加载遮罩一直没有消失。打开开发者工具控制台（F12）查看具体错误。若处于 file://，请改用本地服务器。',
+        (IS_FILE ? SERVER_MSG : '<div style="font-family:var(--font-mono);font-size:11px;color:#a29d94;line-height:1.6;">检查：开发者工具控制台、Network 面板被拦截的请求（esm.sh、GLB、HDR）、GPU / WebGL 可用性（chrome://gpu）。</div>')
+      );
+    }
+  }, 15000);
+})();
+</script>
+
+<!-- ── TOP BAR ─────────────────────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__name">Aperture</span>
+    <span class="brand__sub">真实感渲染工作台</span>
+  </div>
+
+  <div class="topbar__center">
+    <span class="hud__model-title" id="hud-model-title">概念跑车</span>
+    <span class="hud__divider" aria-hidden="true"></span>
+    <span class="hud__sub" id="hud-model-sub">跑车（Car Concept）·clearcoat 清漆</span>
+  </div>
+
+  <div class="hud__stats" role="status" aria-live="polite">
+    <div><span class="k">fps</span><span class="v" id="hud-fps">·</span></div>
+    <div><span class="k">tris</span><span class="v" id="hud-tris">·</span></div>
+    <div><span class="k">draws</span><span class="v" id="hud-calls">·</span></div>
+    <div><span class="k">fx</span><span class="v" id="hud-fx">·</span></div>
+  </div>
+</header>
+
+<!-- ── BODY GRID ───────────────────────────────────────────────────────── -->
+<div class="body">
+
+  <!-- Left · model rail -->
+  <aside class="rail">
+    <div class="rail__header">
+      <span class="rail__title">模型库</span>
+      <span class="rail__hint">09 个 · CC0</span>
+    </div>
+    <div class="model-grid" id="model-grid"></div>
+    <input type="file" id="file-input" accept=".glb,.gltf,.obj,.fbx,.stl" style="display:none;" />
+
+    <div class="rail__foot">
+      <span class="rail__foot-label">拖入文件即可加载</span>
+      <span class="rail__foot-hint">glb · obj · fbx · stl</span>
+    </div>
+  </aside>
+
+  <!-- Center · stage -->
+  <main class="stage">
+    <div class="stage__canvas-wrap">
+      <canvas id="stage-canvas"></canvas>
+    </div>
+    <div class="stage__vignette" aria-hidden="true"></div>
+
+    <div class="stage__presets" id="preset-list" role="tablist"></div>
+
+    <div class="stage__overlay">
+      <div class="stage__name" id="model-name">概念跑车</div>
+      <div class="stage__sub" id="model-sub">跑车（Car Concept）·clearcoat 清漆</div>
+    </div>
+
+    <div class="stage__hint">
+      <span class="dot" aria-hidden="true"></span>
+      <span>实时 · PBR · ACES · 拖入模型到任意位置</span>
+    </div>
+
+    <div class="stage__controls">
+      <div class="stage__controls__row">
+        <button type="button" class="ctrl-btn" id="btn-snapshot-fast" title="截图 1920 × 1080">
+          <i class="ti ti-camera" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="ctrl-btn" id="btn-reset-fast" title="重置视图">
+          <i class="ti ti-rotate-clockwise" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="ctrl-btn" id="btn-spin-fast" title="切换转台">
+          <i class="ti ti-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="stage__loading" id="stage-loading">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="stage__loading__text" id="stage-loading-text">正在启动引擎</div>
+    </div>
+
+    <div class="toast-host" id="toast-host" aria-live="polite"></div>
+  </main>
+
+  <!-- Right · parameter panel (tabbed, no scroll) -->
+  <aside class="panel">
+    <div class="panel__tabs" role="tablist">
+      <button type="button" class="tab is-active" data-tab="render" role="tab" aria-selected="true">渲染</button>
+      <button type="button" class="tab" data-tab="light" role="tab" aria-selected="false">灯光</button>
+      <button type="button" class="tab" data-tab="fx" role="tab" aria-selected="false">后期</button>
+    </div>
+
+    <!-- ── 渲染 tab ────────────────────────────────────────────────── -->
+    <div class="tabpane is-active" data-pane="render">
+      <div class="section">
+        <span class="section__label">环境光（HDR）</span>
+        <div class="hdri-list" id="hdri-list"></div>
+      </div>
+
+      <div class="section">
+        <span class="section__label">相机预设</span>
+        <div class="preset-grid" id="preset-grid"></div>
+      </div>
+
+      <div class="section">
+        <span class="section__label">色调</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">曝光</span>
+            <span class="slider__value" id="exposure-value">1.25</span>
+          </div>
+          <input type="range" id="exposure" min="0.2" max="2.6" step="0.05" value="1.25" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">转台速度</span>
+            <span class="slider__value" id="spin-value">0.00</span>
+          </div>
+          <input type="range" id="spin" min="0" max="1.2" step="0.05" value="0.0" />
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="toggle-row">
+          <button type="button" class="toggle is-on" id="toggle-floor" aria-pressed="true">
+            <span class="toggle__label">地面</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="toggle is-on" id="toggle-skybox" aria-pressed="true">
+            <span class="toggle__label">背景板</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="toggle-row">
+          <button type="button" class="toggle is-on" id="toggle-contact" aria-pressed="true">
+            <span class="toggle__label">接触阴影</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="toggle" id="toggle-reflection" aria-pressed="false">
+            <span class="toggle__label">反射</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="slider" id="contact-blur-wrap">
+          <div class="slider__head">
+            <span class="slider__name">阴影模糊</span>
+            <span class="slider__value" id="contact-blur-value">2.60</span>
+          </div>
+          <input type="range" id="contact-blur" min="0.5" max="6" step="0.05" value="2.6" />
+        </div>
+        <div class="slider" id="contact-intensity-wrap">
+          <div class="slider__head">
+            <span class="slider__name">阴影深度</span>
+            <span class="slider__value" id="contact-intensity-value">4.00</span>
+          </div>
+          <input type="range" id="contact-intensity" min="1" max="8" step="0.25" value="4.0" />
+        </div>
+        <div class="slider" id="reflection-strength-wrap" style="display:none;">
+          <div class="slider__head">
+            <span class="slider__name">反射强度</span>
+            <span class="slider__value" id="reflection-strength-value">0.75</span>
+          </div>
+          <input type="range" id="reflection-strength" min="0.15" max="1" step="0.05" value="0.75" />
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section__label">地面材质</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">粗糙度</span>
+            <span class="slider__value" id="floor-rough-value">0.72</span>
+          </div>
+          <input type="range" id="floor-rough" min="0.05" max="1" step="0.01" value="0.72" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">色调</span>
+            <span class="slider__value" id="floor-color-value">#9ea0a3</span>
+          </div>
+          <input type="color" id="floor-color" value="#9ea0a3" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 灯光 tab ────────────────────────────────────────────────── -->
+    <div class="tabpane" data-pane="light">
+      <div class="section">
+        <span class="section__label">IBL 强度</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">环境光</span>
+            <span class="slider__value" id="envint-value">1.30</span>
+          </div>
+          <input type="range" id="envint" min="0" max="2.5" step="0.05" value="1.3" />
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section__label">三点布光</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">主光</span>
+            <span class="slider__value" id="key-value">2.20</span>
+          </div>
+          <input type="range" id="key" min="0" max="4" step="0.05" value="2.2" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">补光</span>
+            <span class="slider__value" id="fill-value">0.70</span>
+          </div>
+          <input type="range" id="fill" min="0" max="2" step="0.05" value="0.7" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">轮廓光</span>
+            <span class="slider__value" id="rim-value">0.90</span>
+          </div>
+          <input type="range" id="rim" min="0" max="2" step="0.05" value="0.9" />
+        </div>
+      </div>
+
+      <div class="section">
+        <button type="button" class="toggle is-on" id="toggle-shadows" aria-pressed="true" style="width:100%;">
+          <span class="toggle__label">阴影</span>
+          <span class="toggle__switch" aria-hidden="true"></span>
+        </button>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">阴影柔度</span>
+            <span class="slider__value" id="shadow-softness-value">7.0</span>
+          </div>
+          <input type="range" id="shadow-softness" min="1" max="16" step="0.5" value="7.0" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 后期 tab ────────────────────────────────────────────────── -->
+    <div class="tabpane" data-pane="fx">
+      <div class="section">
+        <span class="section__label">后处理管线</span>
+        <div class="toggle-row">
+          <button type="button" class="toggle" id="toggle-bloom" aria-pressed="false">
+            <span class="toggle__label">辉光</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="toggle" id="toggle-ssao" aria-pressed="false">
+            <span class="toggle__label">SSAO</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="toggle" id="toggle-dof" aria-pressed="false">
+            <span class="toggle__label">景深</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="toggle is-on" id="toggle-fxaa" aria-pressed="true">
+            <span class="toggle__label">FXAA</span>
+            <span class="toggle__switch" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="section" id="bloom-section" style="display:none;">
+        <span class="section__label">辉光（Bloom）</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">强度</span>
+            <span class="slider__value" id="bloom-intensity-value">0.55</span>
+          </div>
+          <input type="range" id="bloom-intensity" min="0" max="2" step="0.05" value="0.55" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">阈值</span>
+            <span class="slider__value" id="bloom-threshold-value">0.85</span>
+          </div>
+          <input type="range" id="bloom-threshold" min="0" max="1" step="0.01" value="0.85" />
+        </div>
+      </div>
+
+      <div class="section" id="ssao-section" style="display:none;">
+        <span class="section__label">SSAO</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">半径</span>
+            <span class="slider__value" id="ssao-radius-value">8.0</span>
+          </div>
+          <input type="range" id="ssao-radius" min="1" max="24" step="0.5" value="8.0" />
+        </div>
+      </div>
+
+      <div class="section" id="dof-section" style="display:none;">
+        <span class="section__label">景深（DOF）</span>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">焦点</span>
+            <span class="slider__value" id="dof-focus-value">3.0</span>
+          </div>
+          <input type="range" id="dof-focus" min="0.5" max="8" step="0.1" value="3.0" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">光圈</span>
+            <span class="slider__value" id="dof-aperture-value">0.025</span>
+          </div>
+          <input type="range" id="dof-aperture" min="0.001" max="0.1" step="0.001" value="0.025" />
+        </div>
+        <div class="slider">
+          <div class="slider__head">
+            <span class="slider__name">最大模糊</span>
+            <span class="slider__value" id="dof-blur-value">0.008</span>
+          </div>
+          <input type="range" id="dof-blur" min="0" max="0.05" step="0.001" value="0.008" />
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section__label">输出</span>
+        <button type="button" class="btn btn--primary" id="btn-snapshot">
+          <i class="ti ti-camera" aria-hidden="true"></i>
+          <span>渲染 1920 × 1080</span>
+        </button>
+        <button type="button" class="btn" id="btn-reset">
+          <i class="ti ti-rotate-clockwise" aria-hidden="true"></i>
+          <span>重置视图</span>
+        </button>
+        <button type="button" class="btn btn--ghost" id="btn-keys">
+          <i class="ti ti-keyboard" aria-hidden="true"></i>
+          <span>快捷键</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ── STATUS BAR ──────────────────────────────────────────────────────── -->
+<footer class="status">
+  <div class="status__left">
+    <span class="status__dot" aria-hidden="true"></span>
+    <span id="status-msg">引擎就绪 · WebGL2</span>
+  </div>
+  <div class="status__right">
+    <span class="status__tag">three.js 0.168</span>
+    <span class="status__tag">PBR · ACES</span>
+    <span class="status__tag">glb · obj · fbx · stl</span>
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

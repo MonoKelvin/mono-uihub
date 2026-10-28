@@ -73,6 +73,7 @@ export class Ground {
     this.mesh.position.y = 0;
     this.mesh.receiveShadow = true;
     this.mesh.castShadow = false;
+    this.mesh.userData.__isGroundMesh = true;
   }
 
   _buildContactShadow() {
@@ -128,6 +129,14 @@ export class Ground {
 
   setContactShadowOpacity(v) {
     if (this.contact) this.contact.setOpacity(v);
+  }
+
+  setContactShadowIntensity(v) {
+    if (this.contact) this.contact.setIntensity(v);
+  }
+
+  getContactShadowIntensity() {
+    return this.contact ? this.contact.getIntensity() : null;
   }
 
   setContactShadowBlur(v) {

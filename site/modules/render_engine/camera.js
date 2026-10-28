@@ -41,6 +41,7 @@ export class CameraRig {
   }
 
   applyPreset(preset) {
+    this._lastPreset = preset;
     this.camera.fov = preset.fov;
     this.camera.updateProjectionMatrix();
     const target = this.controls.target.clone();
@@ -49,6 +50,27 @@ export class CameraRig {
     const hz = r * Math.cos(preset.tilt);
     this.camera.position.set(0, y, hz);
     this.controls.target.copy(target);
+    this.controls.update();
+  }
+
+  /**
+   * Re-frame the camera to the current (normalised) model without resetting
+   * user look/tilt state. Called on model switch so a new asset fills the
+   * same neutral angle — but crucially it does NOT touch spin, floor or
+   * backdrop visibility, which belong to the preset only when the user
+   * explicitly applies one.
+   */
+  frameModel() {
+    const preset = this._lastPreset;
+    const fov = preset ? preset.fov : 42;
+    this.camera.fov = fov;
+    this.camera.updateProjectionMatrix();
+    const dist = preset ? preset.dist : 3.2;
+    const tilt = preset ? preset.tilt : 0.28;
+    const y = dist * Math.sin(tilt);
+    const hz = dist * Math.cos(tilt);
+    this.camera.position.set(0, y, hz);
+    this.controls.target.set(0, 0.05, 0);
     this.controls.update();
   }
 

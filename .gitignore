@@ -37,5 +37,6 @@ site/node_modules/
 site/dist/
 site/.astro/
 site/public/prototypes/
+site/public/site/modules/
 site/.vercel/
 
