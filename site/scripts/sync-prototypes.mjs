@@ -6,7 +6,7 @@ import { UI_ROOT, loadCatalog } from '../lib/catalog.mjs';
 export const PUBLIC_ROOT = fileURLToPath(new URL('../public/prototypes/', import.meta.url));
 // Deliberate allowlist: never publish JSON metadata, environment files, source maps,
 // credentials, archives, or arbitrary repository documents.
-export const SAFE_EXTENSIONS = new Set(['.html', '.css', '.js', '.mjs', '.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.otf', '.mp4', '.webm', '.mp3', '.ogg', '.wav']);
+export const SAFE_EXTENSIONS = new Set(['.html', '.css', '.js', '.mjs', '.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.otf', '.mp4', '.webm', '.mp3', '.ogg', '.wav', '.glb', '.gltf', '.hdr', '.fbx', '.obj', '.mtl', '.stl']);
 export function isSafePublicPath(relativePath) {
   const parts = relativePath.split(/[\\/]/);
   return parts.every((part) => part && !part.startsWith('.') && !/secret|credential|token|password|private[-_]?key|metadata|history/i.test(part))
@@ -19,6 +19,7 @@ function copySafe(source, destination, prefix = '') {
     const src = path.join(source, entry.name);
     const dest = path.join(destination, entry.name);
     if (entry.isDirectory()) {
+      mkdirSync(dest, { recursive: true });
       copySafe(src, dest, relative);
     } else if (entry.isFile() && isSafePublicPath(relative)) {
       mkdirSync(destination, { recursive: true });
@@ -38,6 +39,22 @@ export function syncPrototypes({ uiRoot = UI_ROOT, publicRoot = PUBLIC_ROOT } = 
   if (existsSync(destination)) rmSync(destination, { recursive: true, force: true });
   mkdirSync(destination, { recursive: true });
   for (const item of catalog) copySafe(path.join(source, item.slug), path.join(destination, item.slug));
+
+  // Mirror site/modules/ into public/site/modules/ so prototypes can import the
+  // shared engine code via the same URL-relative path they use in ui/<page>/:
+  // `../../../site/modules/render_engine/...`. Under static deployment the page
+  // lives at /prototypes/<slug>/app.js, so ../../../site/modules resolves to
+  // /site/modules (clamping at the server root). Astro copies public/ verbatim
+  // into dist/, so the mirror must sit at public/site/modules/ — NOT under
+  // public/prototypes/site/modules/, which the import path can never reach.
+  const modulesSource = path.resolve(path.dirname(source), 'site', 'modules');
+  if (existsSync(modulesSource)) {
+    // destination = public/prototypes → dirname = public/ → public/site/modules
+    const modulesDest = path.join(path.dirname(destination), 'site', 'modules');
+    mkdirSync(modulesDest, { recursive: true });
+    copySafe(modulesSource, modulesDest);
+  }
+
   return catalog.length;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
