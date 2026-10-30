@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f5f8" />
+  <meta name="description" content="夜枝花店，一束鲜花里的日常。浏览花材、寻找送礼灵感，挑选心仪的花。" />
+  <title>夜枝 · 有花的日常</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fontsapi.zeoseven.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-frame">
+    <div class="status-bar" aria-hidden="true">
+      <span class="status-time">9:41</span>
+      <span class="status-icons"><i class="ti ti-antenna-bars-5"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span>
+    </div>
+
+    <div class="app-content" id="app-content">
+      <section class="screen screen--home active" id="screen-home" aria-label="首页">
+        <div class="scroll-area">
+          <header class="home-header">
+            <div class="brand">
+              <h1 class="home-header__title">夜枝<span>YEZHI</span></h1>
+            </div>
+            <div class="header-actions">
+              <button class="icon-btn" data-search-jump aria-label="搜索鲜花"><i class="ti ti-search" aria-hidden="true"></i></button>
+              <button class="icon-btn" data-panel="notifications" aria-label="花店消息，2 条未读" id="notification-btn"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot" id="notification-dot"></span></button>
+            </div>
+          </header>
+
+          <article class="hero">
+            <div class="hero__content">
+              <p class="hero__eyebrow">本周花事</p>
+              <h2 class="hero__heading">花开，<br /><em>刚刚好。</em></h2>
+            </div>
+            <div class="hero__visual" aria-hidden="true"><div class="hero__halo"></div><img class="hero__img" id="featured-image" src="assets/lilac-vase.webp" alt="" fetchpriority="high" /></div>
+            <div class="hero__selection" aria-label="本周精选鲜花"><div class="hero__dots"><button class="active" data-featured="0" aria-label="初夏紫丁香" aria-pressed="true"><span></span></button><button data-featured="1" aria-label="春日郁金香" aria-pressed="false"><span></span></button><button data-featured="2" aria-label="阳光向日葵" aria-pressed="false"><span></span></button></div></div>
+            <button class="hero__next icon-btn" data-featured-next aria-label="下一款精选鲜花"><i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button>
+            <div class="hero__caption"><strong id="featured-price">¥218</strong></div>
+          </article>
+
+          <div class="home-note"><span><i class="ti ti-plant-2" aria-hidden="true"></i>鲜切</span><span><i class="ti ti-pencil" aria-hidden="true"></i>手作</span><span><i class="ti ti-truck-delivery" aria-hidden="true"></i>¥199 免运</span></div>
+          <div class="category-scroll" aria-label="按花材筛选">
+            <button class="category-chip active" data-cat="all" aria-pressed="true"><span class="category-visual category-visual--all"><i class="ti ti-layout-grid" aria-hidden="true"></i></span><span>全部</span></button>
+            <button class="category-chip" data-cat="lilac" aria-pressed="false"><span class="category-visual tone-lilac"><img src="assets/lilac-sprig.webp" alt="" /></span><span>丁香</span></button>
+            <button class="category-chip" data-cat="tulip" aria-pressed="false"><span class="category-visual tone-tulip"><img src="assets/tulip.webp" alt="" /></span><span>郁金香</span></button>
+            <button class="category-chip" data-cat="sunflower" aria-pressed="false"><span class="category-visual tone-sunflower"><img src="assets/sunflower.webp" alt="" /></span><span>向日葵</span></button>
+            <button class="category-chip" data-cat="orchid" aria-pressed="false"><span class="category-visual tone-orchid"><img src="assets/orchid.webp" alt="" /></span><span>兰花</span></button>
+            <button class="category-chip" data-cat="carnation" aria-pressed="false"><span class="category-visual tone-carnation"><img src="assets/carnation.webp" alt="" /></span><span>康乃馨</span></button>
+            <button class="category-chip" data-cat="lily" aria-pressed="false"><span class="category-visual tone-lily"><img src="assets/lily-basket.webp" alt="" /></span><span>百合</span></button>
+          </div>
+          <div class="section-head"><h3 class="section-title" id="home-list-title">今日花选</h3><button class="icon-btn section-more" data-browse-all aria-label="查看所有鲜花" title="所有鲜花"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+          <div class="product-grid" id="product-grid"></div>
+          <div class="empty-state" id="grid-empty" hidden><p>这类花材暂未上架</p><button class="text-btn" data-reset-home>查看全部花材</button></div>
+
+          <article class="seasonal">
+            <button class="seasonal__open" data-open="8">
+              <div class="seasonal__body"><p class="seasonal__eyebrow">送一份惦念</p><h3 class="seasonal__name">不必盛大，<br />心意就好。</h3><span class="seasonal__desc">温馨百合花篮 <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></div>
+              <img src="assets/lily-basket.webp" alt="百合与绿叶花篮" class="seasonal__img" loading="lazy" />
+            </button>
+          </article>
+          <p class="page-end">夜枝 · 把花带进生活</p>
+        </div>
+      </section>
+
+      <section class="screen screen--explore" id="screen-explore" aria-label="探索" hidden>
+        <div class="scroll-area">
+          <header class="page-header"><h2 class="page-title">选一束心意</h2></header>
+          <div class="search-bar"><i class="ti ti-search" aria-hidden="true"></i><input type="search" id="flower-search" placeholder="搜索鲜花" aria-label="搜索花材、花束或心意" autocomplete="off" /><button class="search-clear" id="search-clear" aria-label="清空搜索" hidden><i class="ti ti-x" aria-hidden="true"></i></button></div>
+          <div class="explore-tags" aria-label="按场景筛选">
+            <button class="tag-pill active" data-scene="all" aria-pressed="true"><i class="ti ti-layout-grid" aria-hidden="true"></i><span>全部</span></button>
+            <button class="tag-pill" data-scene="birthday" aria-pressed="false"><i class="ti ti-cake" aria-hidden="true"></i><span>生日</span></button>
+            <button class="tag-pill" data-scene="love" aria-pressed="false"><i class="ti ti-heart" aria-hidden="true"></i><span>爱意</span></button>
+            <button class="tag-pill" data-scene="home" aria-pressed="false"><i class="ti ti-armchair" aria-hidden="true"></i><span>日常</span></button>
+            <button class="tag-pill" data-scene="visit" aria-pressed="false"><i class="ti ti-heart-handshake" aria-hidden="true"></i><span>探望</span></button>
+            <button class="tag-pill" data-scene="graduate" aria-pressed="false"><i class="ti ti-school" aria-hidden="true"></i><span>毕业</span></button>
+            <button class="tag-pill" data-scene="wedding" aria-pressed="false"><i class="ti ti-rings" aria-hidden="true"></i><span>婚礼</span></button>
+            <button class="tag-pill" data-scene="favorites" aria-pressed="false"><i class="ti ti-heart" aria-hidden="true"></i><span>收藏</span></button>
+          </div>
+          <div class="section-head"><h3 class="section-title" id="explore-title">所有花选</h3><span class="result-count" id="explore-count" aria-live="polite"></span></div>
+          <div class="product-grid explore-grid" id="explore-grid"></div>
+          <div class="empty-state" id="explore-empty" hidden><i class="ti ti-flower" aria-hidden="true"></i><h3 id="explore-empty-title">暂时没有找到</h3><p id="explore-empty-desc">换一个关键词，或看看其他场景。</p><button class="btn btn--primary btn--sm" data-reset-explore>浏览所有鲜花</button></div>
+        </div>
+      </section>
+
+      <section class="screen screen--cart" id="screen-cart" aria-label="购物车" hidden>
+        <div class="scroll-area">
+          <header class="page-header"><div class="page-title-row"><h2 class="page-title">你的花篮</h2><span class="result-count" id="cart-item-count">0 件</span></div></header>
+          <div class="cart-empty empty-state" id="cart-empty"><div class="empty-flower"><img src="assets/lilac-sprig.webp" alt="一枝紫丁香" loading="lazy" /></div><h3>花篮里，还留着位置。</h3><p>去挑一束，让日常多一点颜色。</p><button class="btn btn--primary" data-tab-jump="home">挑选鲜花 <i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button></div>
+          <p class="shipping-note" id="shipping-note" hidden></p>
+          <div class="cart-list" id="cart-list"></div>
+          <div class="cart-summary" id="cart-summary" hidden><div><span>商品金额</span><span id="cart-subtotal">¥0</span></div><div><span>配送费</span><span id="cart-shipping">¥0</span></div><p>花束均附花语卡，可在结算时填写祝福。</p></div>
+        </div>
+        <div class="cart-footer" id="cart-footer" hidden><div class="cart-footer__total"><span class="cart-footer__label">合计</span><span class="price price--lg" id="cart-total">¥0</span></div><button class="btn btn--primary" id="checkout-btn">去结算 <i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button></div>
+      </section>
+
+      <section class="screen screen--profile" id="screen-profile" aria-label="我的" hidden>
+        <div class="scroll-area">
+          <header class="profile-top"><span class="page-eyebrow">我的夜枝</span><button class="icon-btn" data-panel="settings" aria-label="设置"><i class="ti ti-settings" aria-hidden="true"></i></button></header>
+          <div class="profile-header"><div class="avatar" aria-hidden="true"><i class="ti ti-flower"></i></div><div><h2 class="profile-name">花间客</h2><p class="profile-level">铂金花友</p></div></div>
+          <div class="member-strip"><div class="member-emblem" aria-hidden="true"><i class="ti ti-plant-2"></i></div><div><p>花瓣积分</p></div><button data-panel="points" aria-label="查看花瓣积分明细"><strong>328</strong><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+          <div class="section-head profile-section-head"><h3 class="section-title">我的订单</h3><button class="icon-btn section-more" data-order="all" aria-label="查看全部订单" title="全部订单"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+          <div class="profile-orders">
+            <button class="order-btn" data-order="processing"><i class="ti ti-package" aria-hidden="true"></i><span>待发货</span><em data-order-count="processing">1</em></button>
+            <button class="order-btn" data-order="delivery"><i class="ti ti-truck-delivery" aria-hidden="true"></i><span>运输中</span><em data-order-count="delivery">2</em></button>
+            <button class="order-btn" data-order="review"><i class="ti ti-message-star" aria-hidden="true"></i><span>待评价</span><em data-order-count="review" hidden>0</em></button>
+            <button class="order-btn" data-order="return"><i class="ti ti-refresh" aria-hidden="true"></i><span>退换货</span><em data-order-count="return" hidden>0</em></button>
+          </div>
+          <ul class="profile-menu">
+            <li><button data-panel="address"><i class="ti ti-map-pin" aria-hidden="true"></i><span>收货地址</span><span class="menu-value" id="address-status">未添加</span><i class="ti ti-chevron-right chev" aria-hidden="true"></i></button></li>
+            <li><button data-panel="coupons"><i class="ti ti-ticket" aria-hidden="true"></i><span>优惠券</span><span class="menu-value">3 张</span><i class="ti ti-chevron-right chev" aria-hidden="true"></i></button></li>
+            <li><button data-favorites-jump><i class="ti ti-heart" aria-hidden="true"></i><span>我的收藏</span><span class="menu-value" id="fav-count">0 束</span><i class="ti ti-chevron-right chev" aria-hidden="true"></i></button></li>
+            <li><button data-order="all"><i class="ti ti-history" aria-hidden="true"></i><span>订单历史</span><i class="ti ti-chevron-right chev" aria-hidden="true"></i></button></li>
+          </ul>
+          <div class="profile-signature"><span>夜枝</span><p>花会替你说。</p></div>
+        </div>
+      </section>
+    </div>
+
+    <nav class="tab-bar" aria-label="主导航">
+      <span class="tab-indicator" id="tab-indicator" aria-hidden="true"></span>
+      <button class="tab-bar__item active" data-tab="home" aria-current="page"><span class="tab-icon"><i class="ti ti-home" aria-hidden="true"></i><svg class="tab-icon-filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" /></svg></span><span>首页</span></button>
+      <button class="tab-bar__item" data-tab="explore"><span class="tab-icon"><i class="ti ti-compass" aria-hidden="true"></i><svg class="tab-icon-filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336zm-5 14.66a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m3.684 -10.949l-6 2a1 1 0 0 0 -.633 .633l-2.007 6.026l-.023 .086l-.017 .113l-.004 .068v.044l.009 .111l.012 .07l.04 .144l.045 .1l.054 .095l.064 .09l.069 .075l.084 .074l.098 .07l.1 .054l.078 .033l.105 .033l.109 .02l.043 .005l.068 .004h.044l.111 -.009l.07 -.012l.02 -.006l.019 -.002l.074 -.022l6 -2a1 1 0 0 0 .633 -.633l2 -6a1 1 0 0 0 -1.265 -1.265zm-1.265 2.529l-1.21 3.629l-3.629 1.21l1.21 -3.629l3.629 -1.21zm-9.419 1.42a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m-7 -7a1 1 0 1 0 0 2a1 1 0 0 0 0 -2" /></svg></span><span>探索</span></button>
+      <button class="tab-bar__item" data-tab="cart"><span class="tab-icon"><i class="ti ti-shopping-cart" aria-hidden="true"></i><svg class="tab-icon-filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2a1 1 0 0 1 .993 .883l.007 .117v1.068l13.071 .935a1 1 0 0 1 .929 1.024l-.01 .114l-1 7a1 1 0 0 1 -.877 .853l-.113 .006h-12v2h10a3 3 0 1 1 -2.995 3.176l-.005 -.176l.005 -.176c.017 -.288 .074 -.564 .166 -.824h-5.342a3 3 0 1 1 -5.824 1.176l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-12.17h-1a1 1 0 0 1 -.993 -.883l-.007 -.117a1 1 0 0 1 .883 -.993l.117 -.007h2zm0 16a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m11 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2" /></svg><em class="tab-badge" id="cart-badge" hidden>0</em></span><span>花篮</span></button>
+      <button class="tab-bar__item" data-tab="profile"><span class="tab-icon"><i class="ti ti-user" aria-hidden="true"></i><svg class="tab-icon-filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783zM14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg></span><span>我的</span></button>
+    </nav>
+    <div class="home-indicator" aria-hidden="true"><span></span></div>
+
+    <div class="sheet-overlay" id="sheet-overlay" aria-hidden="true"></div>
+    <section class="sheet product-sheet" id="product-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-name" tabindex="-1" inert>
+      <header class="sheet__header"><span>花束详情</span><button class="icon-btn" data-close-sheet aria-label="关闭花束详情"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+      <div class="sheet__scroll">
+        <div class="sheet__stage" id="sheet-stage"><img class="sheet__img" id="sheet-img" alt="" /><button class="sheet__fav-btn" id="sheet-fav" aria-label="收藏花束" aria-pressed="false"><i class="ti ti-heart" aria-hidden="true"></i></button><button class="sheet__zoom icon-btn" id="sheet-zoom" aria-label="放大花束" aria-pressed="false"><i class="ti ti-zoom-in" aria-hidden="true"></i></button></div>
+        <div class="sheet__body"><p class="sheet__eyebrow" id="sheet-sub"></p><h2 class="sheet__name" id="sheet-name"></h2><p class="sheet__desc" id="sheet-desc"></p><div class="sheet__details"><span><i class="ti ti-pencil" aria-hidden="true"></i> 花语卡</span><span><i class="ti ti-truck-delivery" aria-hidden="true"></i> ¥199 免运</span></div><div class="care-tools" id="care-tools" aria-label="鲜花养护"></div><p class="care-tip" id="care-tip" aria-live="polite" hidden></p><p class="sheet__sold" id="sheet-sold"></p></div>
+      </div>
+      <footer class="sheet__footer"><span class="price price--lg" id="sheet-price"></span><button class="btn btn--primary" id="sheet-add-cart"><span class="add-feedback" aria-hidden="true"><i class="ti ti-plus add-icon"></i><i class="ti ti-check added-icon"></i></span> 加入花篮</button></footer>
+    </section>
+
+    <section class="sheet info-sheet" id="info-sheet" role="dialog" aria-modal="true" aria-labelledby="info-title" tabindex="-1" inert>
+      <header class="sheet__header"><h2 id="info-title"></h2><button class="icon-btn" data-close-sheet aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+      <div class="sheet__scroll info-sheet__body" id="info-body"></div>
+      <footer class="sheet__footer" id="info-footer" hidden></footer>
+    </section>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

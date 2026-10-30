@@ -1,0 +1,22 @@
+{
+  "name": "夜枝花店",
+  "slug": "yezhi-flower-app",
+  "page_type": "app",
+  "tags": ["鲜花", "购物", "送礼"],
+  "palette": ["#f7f5f8", "#735a80", "#362a40"],
+  "updated_at": "2026-10-30 15:11:32",
+  "history": [
+    {
+      "prompt": "重构 yezhi-flower-app UI",
+      "model": "claude-opus-5",
+      "skills": ["mono-ui-prototype", "oil-frontend", "redesign-existing-projects", "vibehub"],
+      "duration_seconds": 1412
+    },
+    {
+      "prompt": "优化：尽量多使用图标、图形等少使用文字；多设计一些动画和交互效果；多使用一些毛玻璃；很多小字太小了请合理调整；继续打磨整个UI设计\n有关“演示”字样的内容都删除",
+      "model": "claude-opus-5",
+      "skills": ["mono-ui-prototype", "oil-frontend", "animate", "vibehub"],
+      "duration_seconds": 1300
+    }
+  ]
+}
