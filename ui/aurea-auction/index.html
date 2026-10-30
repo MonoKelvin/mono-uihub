@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUREA · 顶级艺术品拍卖行</title>
+  <meta name="description" content="AUREA 顶级艺术拍卖行 —— 汇聚世界级大师绘画、雕塑与当代艺术，为藏家提供鉴定、委托与竞拍服务。">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ 顶部导航 ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#top" class="header-logo"><span class="logo-mark"></span>AUREA</a>
+        <nav class="header-nav">
+          <a href="#featured" class="header-link">本季拍品</a>
+          <a href="#calendar" class="header-link">拍卖日历</a>
+          <a href="#collections" class="header-link">品类</a>
+          <a href="#artist" class="header-link">艺术家</a>
+          <a href="#results" class="header-link">成交记录</a>
+        </nav>
+        <div class="header-actions">
+          <a href="#cta" class="header-btn">委托送拍</a>
+          <button class="header-burger" id="burger" aria-label="打开菜单">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 移动端菜单 -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#featured" class="mm-link"><span class="mm-num">01</span>本季拍品</a>
+    <a href="#calendar" class="mm-link"><span class="mm-num">02</span>拍卖日历</a>
+    <a href="#collections" class="mm-link"><span class="mm-num">03</span>品类</a>
+    <a href="#artist" class="mm-link"><span class="mm-num">04</span>艺术家</a>
+    <a href="#results" class="mm-link"><span class="mm-num">05</span>成交记录</a>
+  </div>
+
+  <!-- ============ Hero 首屏 · 现代画廊 ============ -->
+  <section class="hero" id="top">
+    <!-- 背景装饰：描边大字 / 圆环 / 点阵 / 十字 / 色块 -->
+    <div class="hero-deco" aria-hidden="true">
+      <span class="hd-word">AUREA</span>
+      <span class="hd-ring"></span>
+      <span class="hd-dots"></span>
+      <span class="hd-cross"></span>
+      <span class="hd-block"></span>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">Autumn Sale · 2026</span>
+        <h1 class="hero-title" id="heroTitle">
+          <span class="hero-line-1">艺术与收藏的</span>
+          <span class="hero-line-2">至高殿堂</span>
+        </h1>
+        <p class="hero-sub">
+          AUREA 汇聚六个世纪的<strong>大师绘画</strong>、古典雕塑与当代先锋作品。
+          我们为全球藏家提供从鉴定估价到委托竞拍的完整服务，
+          让每一次举槌都成为艺术的加冕。
+        </p>
+        <div class="hero-cta-row">
+          <a href="#featured" class="hero-cta-primary">
+            <i class="ti ti-gavel"></i> 浏览本季拍品
+          </a>
+          <a href="#calendar" class="hero-cta-ghost">
+            <i class="ti ti-calendar-event"></i> 拍卖日历
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stage reveal-scale">
+        <div class="tilt-wrap">
+          <div class="hero-painting tilt-target" data-tilt>
+            <img src="./assets/lot-goddess.jpg" alt="希腊化时代女神头像大理石雕像" loading="eager">
+            <span class="gloss"></span>
+            <div class="hp-plaque">
+              <div class="p-name">APHRODITE</div>
+              <div class="p-year">Lot 001 · 估价 $2.0–3.0M</div>
+            </div>
+          </div>
+        </div>
+        <span class="hs-caption">AUREA 1927</span>
+        <span class="hs-badge">Est. 1927</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll">Scroll</div>
+
+    <div class="hero-metrics">
+      <div class="hero-metrics-inner">
+        <div class="hm-item">
+          <div class="hm-value" data-count="2.4" data-suffix="亿" data-prefix="$">0</div>
+          <div class="hm-label">年度成交额（美元）</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-value" data-count="6800" data-suffix="+">0</div>
+          <div class="hm-label">在库精品</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-value" data-count="96" data-suffix="%">0</div>
+          <div class="hm-label">成交率</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-value" data-count="40" data-suffix="+">0</div>
+          <div class="hm-label">服务国家与地区</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 横向滚动条带 · 拍卖行宣言 ============ -->
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="mq-item">AUREA</span><span class="mq-dot">●</span>
+      <span class="mq-item">EST. 1927</span><span class="mq-dot">●</span>
+      <span class="mq-item">LONDON</span><span class="mq-dot">●</span>
+      <span class="mq-item">PARIS</span><span class="mq-dot">●</span>
+      <span class="mq-item">NEW YORK</span><span class="mq-dot">●</span>
+      <span class="mq-item">HONG KONG</span><span class="mq-dot">●</span>
+      <span class="mq-item">AUREA</span><span class="mq-dot">●</span>
+      <span class="mq-item">EST. 1927</span><span class="mq-dot">●</span>
+      <span class="mq-item">LONDON</span><span class="mq-dot">●</span>
+      <span class="mq-item">PARIS</span><span class="mq-dot">●</span>
+      <span class="mq-item">NEW YORK</span><span class="mq-dot">●</span>
+      <span class="mq-item">HONG KONG</span><span class="mq-dot">●</span>
+    </div>
+  </div>
+
+  <!-- ============ 本季重点拍品 · 错落画廊墙 ============ -->
+  <section class="section featured" id="featured">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="sh-left"><span class="section-index">01</span><div class="sh-copy">
+          <span class="section-eyebrow">Featured Lots · 本季焦点</span>
+          <h2 class="section-title">本季重点<span class="accent">拍品</span></h2>
+          <p class="section-desc">每一件都经过专家团队层层甄选，附来源证明、学术研究与真伪担保。以下是本季最受瞩目的六件艺术珍品。</p>
+        </div></div>
+        <a href="#calendar" class="section-link">查看全部拍品 <i class="ti ti-arrow-right"></i></a>
+      </div>
+
+      <div class="lot-wall">
+        <!-- 1 女神雕像 -->
+        <article class="lot-piece tall">
+          <div class="lot-frame tilt-target" data-tilt>
+            <div class="lot-media">
+              <span class="lot-tag">重点拍品</span>
+              <img src="./assets/lot-goddess.jpg" alt="希腊化时代女神头像大理石雕像" loading="lazy">
+              <button class="lot-watch" aria-label="查看拍品详情"><i class="ti ti-arrow-up-right"></i></button>
+              <span class="gloss"></span>
+            </div>
+          </div>
+          <div class="lot-plate">
+            <div class="lot-num">001</div>
+            <div class="lot-info">
+              <h3 class="lot-name">希腊化女神头像</h3>
+              <div class="lot-artist">古希腊 · 约公元前 2 世纪 · 大理石</div>
+              <div class="lot-price-row">
+                <span class="lot-price">$2,400,000</span>
+                <span class="lot-est">估价 $2.0–3.0M</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 古典油画 -->
+        <article class="lot-piece wide">
+          <div class="lot-frame tilt-target" data-tilt>
+            <div class="lot-media">
+              <span class="lot-tag">古典大师</span>
+              <img src="./assets/lot-master.jpg" alt="十七世纪古典油画作品" loading="lazy">
+              <button class="lot-watch" aria-label="查看拍品详情"><i class="ti ti-arrow-up-right"></i></button>
+              <span class="gloss"></span>
+            </div>
+          </div>
+          <div class="lot-plate">
+            <div class="lot-num">002</div>
+            <div class="lot-info">
+              <h3 class="lot-name">静物与银器</h3>
+              <div class="lot-artist">荷兰画派 · 约 1640 年 · 布面油画</div>
+              <div class="lot-price-row">
+                <span class="lot-price">$1,150,000</span>
+                <span class="lot-est">估价 $1.0–1.5M</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 威尼斯风景 -->
+        <article class="lot-piece">
+          <div class="lot-frame tilt-target" data-tilt>
+            <div class="lot-media">
+              <span class="lot-tag">风景画</span>
+              <img src="./assets/lot-venice.jpg" alt="威尼斯运河风景油画" loading="lazy">
+              <button class="lot-watch" aria-label="查看拍品详情"><i class="ti ti-arrow-up-right"></i></button>
+              <span class="gloss"></span>
+            </div>
+          </div>
+          <div class="lot-plate">
+            <div class="lot-num">003</div>
+            <div class="lot-info">
+              <h3 class="lot-name">威尼斯运河即景</h3>
+              <div class="lot-artist">十九世纪 · 布面油画</div>
+              <div class="lot-price-row">
+                <span class="lot-price">$780,000</span>
+                <span class="lot-est">估价 $700–900K</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 花瓶抠图 -->
+        <article class="lot-piece square">
+          <div class="lot-frame tilt-target" data-tilt>
+            <div class="lot-media">
+              <span class="lot-tag poppy">装饰艺术</span>
+              <img src="./assets/cutout-vase.png" alt="古董青瓷花瓶透明底抠图" class="cutout" loading="lazy">
+              <button class="lot-watch" aria-label="查看拍品详情"><i class="ti ti-arrow-up-right"></i></button>
+              <span class="gloss"></span>
+            </div>
+          </div>
+          <div class="lot-plate">
+            <div class="lot-num">004</div>
+            <div class="lot-info">
+              <h3 class="lot-name">天青釉长颈瓶</h3>
+              <div class="lot-artist">十八世纪 · 瓷器</div>
+              <div class="lot-price-row">
+                <span class="lot-price">$420,000</span>
+                <span class="lot-est">估价 $380–520K</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 雕像抠图 -->
+        <article class="lot-piece wide">
+          <div class="lot-frame tilt-target" data-tilt>
+            <div class="lot-media">
+              <span class="lot-tag">博物馆旧藏</span>
+              <img src="./assets/cutout-1.png" alt="古典大理石雕像透明底抠图" class="cutout" loading="lazy">
+              <button class="lot-watch" aria-label="查看拍品详情"><i class="ti ti-arrow-up-right"></i></button>
+              <span class="gloss"></span>
+            </div>
+          </div>
+          <div class="lot-plate">
+            <div class="lot-num">005</div>
+            <div class="lot-info">
+              <h3 class="lot-name">戴花冠的缪斯</h3>
+              <div class="lot-artist">罗马时期 · 大理石 · 博物馆旧藏</div>
+              <div class="lot-price-row">
+                <span class="lot-price">$1,680,000</span>
+                <span class="lot-est">估价 $1.4–1.9M</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 秋景油画 -->
+        <article class="lot-piece">
+          <div class="lot-frame tilt-target" data-tilt>
+            <div class="lot-media">
+              <span class="lot-tag">印象派</span>
+              <img src="./assets/lot-autumn.jpg" alt="秋日风景油画" loading="lazy">
+              <button class="lot-watch" aria-label="查看拍品详情"><i class="ti ti-arrow-up-right"></i></button>
+              <span class="gloss"></span>
+            </div>
+          </div>
+          <div class="lot-plate">
+            <div class="lot-num">006</div>
+            <div class="lot-info">
+              <h3 class="lot-name">秋日山谷</h3>
+              <div class="lot-artist">印象派 · 布面油画</div>
+              <div class="lot-price-row">
+                <span class="lot-price">$950,000</span>
+                <span class="lot-est">估价 $850–1.1M</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 拍卖日历 ============ -->
+  <section class="section auction-cal" id="calendar">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="sh-left"><span class="section-index">02</span><div class="sh-copy">
+          <span class="section-eyebrow">Upcoming Auctions · 即将举槌</span>
+          <h2 class="section-title">拍卖<span class="accent">日历</span></h2>
+          <p class="section-desc">全球巡回预展即将开启。现场举槌、电话委托与线上竞拍同步进行，欢迎预约观展。</p>
+        </div></div>
+        <a href="#cta" class="section-link">预约观展 <i class="ti ti-arrow-right"></i></a>
+      </div>
+
+      <div class="auction-list reveal">
+        <div class="auction-row">
+          <div class="a-date">11.08<small>周六</small></div>
+          <div class="a-title">古典大师绘画专场<span>伦敦 · 新邦德街</span></div>
+          <div class="a-lots">128 件拍品</div>
+          <div class="a-status live">接受委托</div>
+          <i class="ti ti-arrow-right a-arrow"></i>
+        </div>
+        <div class="auction-row">
+          <div class="a-date">11.15<small>周六</small></div>
+          <div class="a-title">当代与战后艺术<span>纽约 · 洛克菲勒中心</span></div>
+          <div class="a-lots">96 件拍品</div>
+          <div class="a-status">预展中</div>
+          <i class="ti ti-arrow-right a-arrow"></i>
+        </div>
+        <div class="auction-row">
+          <div class="a-date">11.22<small>周六</small></div>
+          <div class="a-title">雕塑与装饰艺术<span>巴黎 · 香榭丽舍</span></div>
+          <div class="a-lots">74 件拍品</div>
+          <div class="a-status">预展中</div>
+          <i class="ti ti-arrow-right a-arrow"></i>
+        </div>
+        <div class="auction-row">
+          <div class="a-date">12.06<small>周六</small></div>
+          <div class="a-title">亚洲艺术与瓷器<span>香港 · 中环</span></div>
+          <div class="a-lots">152 件拍品</div>
+          <div class="a-status">筹备中</div>
+          <i class="ti ti-arrow-right a-arrow"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 品类 · 编辑式目录 ============ -->
+  <section class="section collections" id="collections">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="sh-left"><span class="section-index">03</span><div class="sh-copy">
+          <span class="section-eyebrow">Collections · 精选品类</span>
+          <h2 class="section-title">按<span class="accent">品类</span>探索</h2>
+          <p class="section-desc">从古典绘画到当代摄影，四大核心板块涵盖艺术市场最受追捧的收藏领域。</p>
+        </div></div>
+      </div>
+
+      <div class="cat-catalog reveal">
+        <div class="cat-entry">
+          <div class="cat-thumb"><img src="./assets/lot-bust.jpg" alt="古典雕塑头像" loading="lazy"></div>
+          <div class="cat-main">
+            <span class="cat-index">I</span>
+            <span class="cat-name">绘画</span>
+            <span class="cat-sub">Paintings</span>
+          </div>
+          <span class="cat-count">2,300+ 件</span>
+          <i class="ti ti-arrow-right cat-arrow"></i>
+        </div>
+        <div class="cat-entry">
+          <div class="cat-thumb"><img src="./assets/cutout-camera.png" alt="复古相机摄影作品" loading="lazy"></div>
+          <div class="cat-main">
+            <span class="cat-index">II</span>
+            <span class="cat-name">摄影</span>
+            <span class="cat-sub">Photography</span>
+          </div>
+          <span class="cat-count">1,120+ 件</span>
+          <i class="ti ti-arrow-right cat-arrow"></i>
+        </div>
+        <div class="cat-entry">
+          <div class="cat-thumb"><img src="./assets/cutout-2.png" alt="古典大理石雕像" loading="lazy"></div>
+          <div class="cat-main">
+            <span class="cat-index">III</span>
+            <span class="cat-name">雕塑</span>
+            <span class="cat-sub">Sculpture</span>
+          </div>
+          <span class="cat-count">860+ 件</span>
+          <i class="ti ti-arrow-right cat-arrow"></i>
+        </div>
+        <div class="cat-entry">
+          <div class="cat-thumb"><img src="./assets/lot-studio.jpg" alt="艺术家工作室场景" loading="lazy"></div>
+          <div class="cat-main">
+            <span class="cat-index">IV</span>
+            <span class="cat-name">当代</span>
+            <span class="cat-sub">Contemporary</span>
+          </div>
+          <span class="cat-count">1,540+ 件</span>
+          <i class="ti ti-arrow-right cat-arrow"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 艺术家聚焦 ============ -->
+  <section class="section artist-focus" id="artist">
+    <div class="container">
+      <div class="artist-wrap">
+        <div class="artist-media reveal-l">
+          <img src="./assets/gallery-2.jpg" alt="藏家在画廊中欣赏艺术作品" loading="lazy">
+          <div class="artist-plate">
+            <div class="ap-name">L. Moreau</div>
+            <div class="ap-years">1948 — 2025</div>
+          </div>
+        </div>
+        <div class="artist-copy reveal-r">
+          <span class="a-index">05</span>
+          <span class="section-eyebrow">Artist Spotlight · 艺术家聚焦</span>
+          <h2 class="section-title">Lucien <span class="accent">Moreau</span></h2>
+          <blockquote class="a-quote">光不是被看见的，而是被感受到的。每一层颜料，都是时间的一次呼吸。</blockquote>
+          <p class="a-bio">
+            这位法国战后艺术巨匠以光影与色层著称，其作品被巴黎蓬皮杜、纽约现代艺术博物馆等世界顶级机构收藏。本季我们荣幸呈现他的晚年力作系列。
+          </p>
+          <div class="artist-stats">
+            <div class="as-item">
+              <div class="as-value">$38.6M</div>
+              <div class="as-label">作品最高成交</div>
+            </div>
+            <div class="as-item">
+              <div class="as-value">27</div>
+              <div class="as-label">全球馆藏</div>
+            </div>
+          </div>
+          <a href="#results" class="artist-btn">
+            <i class="ti ti-arrow-right"></i> 了解更多
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 成交亮点 ============ -->
+  <section class="section results" id="results">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="sh-left"><span class="section-index">04</span><div class="sh-copy">
+          <span class="section-eyebrow">Recent Results · 成交亮点</span>
+          <h2 class="section-title">近期<span class="accent">成交记录</span></h2>
+          <p class="section-desc">本季度 AUREA 在全球三大拍场屡创纪录，以下为近期部分高价成交。</p>
+        </div></div>
+      </div>
+      <div class="results-grid">
+        <a href="#featured" class="result-card reveal tilt-target" data-tilt>
+          <img src="./assets/goddess.jpg" alt="古典女神头像成交" loading="lazy">
+          <span class="rc-rank">TOP 1</span>
+          <div class="rc-overlay">
+            <div class="rc-name">古典女神头像</div>
+            <div class="rc-artist">大理石 · 公元前 2 世纪</div>
+            <div class="rc-price">$3,120,000 成交</div>
+          </div>
+        </a>
+        <a href="#featured" class="result-card reveal tilt-target" data-tilt>
+          <img src="./assets/lot-master.jpg" alt="古典油画成交" loading="lazy">
+          <span class="rc-rank">TOP 2</span>
+          <div class="rc-overlay">
+            <div class="rc-name">静物与银器</div>
+            <div class="rc-artist">荷兰画派 · 1640</div>
+            <div class="rc-price">$1,480,000 成交</div>
+          </div>
+        </a>
+        <a href="#featured" class="result-card reveal tilt-target" data-tilt>
+          <img src="./assets/cutout-3.png" alt="大理石雕像成交" loading="lazy">
+          <span class="rc-rank">TOP 3</span>
+          <div class="rc-overlay">
+            <div class="rc-name">罗马大理石坐像</div>
+            <div class="rc-artist">罗马时期 · 博物馆旧藏</div>
+            <div class="rc-price">$2,240,000 成交</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 拍卖现场横幅 ============ -->
+  <section class="auction-stage">
+    <img src="./assets/auction-gavel.jpg" alt="拍卖师落槌瞬间" class="auction-stage-bg" loading="lazy">
+    <div class="auction-stage-overlay"></div>
+    <div class="container">
+      <div class="auction-stage-inner reveal">
+        <span class="section-eyebrow">The Auction Moment · 落槌时刻</span>
+        <h2 class="section-title">每一次举槌，<span class="accent">皆是历史</span></h2>
+        <p class="section-desc">
+          从伦敦到香港，AUREA 的拍卖师见证着艺术市场的脉搏。
+          无论您身在何处，均可通过现场、电话或线上同步竞拍。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 服务承诺 ============ -->
+  <section class="section services">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="sh-left"><span class="section-index">05</span><div class="sh-copy">
+          <span class="section-eyebrow">Our Services · 服务承诺</span>
+          <h2 class="section-title">值得信赖的<span class="accent">收藏伙伴</span></h2>
+        </div></div>
+      </div>
+      <div class="services-grid">
+        <div class="svc-item reveal">
+          <i class="ti ti-certificate svc-icon"></i>
+          <div class="svc-title">真伪鉴定</div>
+          <p class="svc-desc">联合国际权威实验室，为每件拍品出具来源证明与学术鉴定报告。</p>
+        </div>
+        <div class="svc-item reveal">
+          <i class="ti ti-shield-check svc-icon"></i>
+          <div class="svc-title">全球保险</div>
+          <p class="svc-desc">从委托到交付全程投保，覆盖运输、保管与展览的每一环节。</p>
+        </div>
+        <div class="svc-item reveal">
+          <i class="ti ti-headset svc-icon"></i>
+          <div class="svc-title">专家顾问</div>
+          <p class="svc-desc">专属收藏顾问团队提供估值建议、市场趋势与资产配置支持。</p>
+        </div>
+        <div class="svc-item reveal">
+          <i class="ti ti-truck svc-icon"></i>
+          <div class="svc-title">门到门交付</div>
+          <p class="svc-desc">温控专运与专业安装团队，让作品安全抵达您的收藏空间。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA 订阅 ============ -->
+  <section class="cta-band" id="cta">
+    <div class="container">
+      <h2 class="cta-title reveal">订阅拍卖<span class="accent">图录</span></h2>
+      <p class="cta-sub reveal">抢先获取每季精选拍品预览、专家深度解读与专属预展邀请。</p>
+      <form class="cta-form reveal" id="subscribeForm">
+        <input type="email" placeholder="输入您的邮箱地址" required aria-label="邮箱地址">
+        <button type="submit">立即订阅</button>
+      </form>
+      <p class="cta-note reveal" id="ctaNote">我们尊重您的隐私，绝不出售信息。</p>
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo"><span class="logo-mark"></span>AUREA</div>
+          <p>顶级艺术品拍卖行。自 1927 年起，我们以专业与热忱见证艺术史的每一次重要时刻。</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+            <a href="#" aria-label="X"><i class="ti ti-brand-x"></i></a>
+            <a href="#" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+            <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>拍卖</h4>
+          <ul>
+            <li><a href="#featured">本季拍品</a></li>
+            <li><a href="#calendar">拍卖日历</a></li>
+            <li><a href="#collections">品类</a></li>
+            <li><a href="#results">成交记录</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>服务</h4>
+          <ul>
+            <li><a href="#cta">委托送拍</a></li>
+            <li><a href="#artist">专家鉴定</a></li>
+            <li><a href="#cta">私人洽购</a></li>
+            <li><a href="#cta">订阅图录</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>联系我们</h4>
+          <ul>
+            <li><a href="#">伦敦 · 巴黎 · 纽约</a></li>
+            <li><a href="#">香港 · 上海</a></li>
+            <li><a href="mailto:info@aurea.art">info@aurea.art</a></li>
+            <li><a href="tel:+441234567890">+44 123 456 7890</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 AUREA Auction House. 保留所有权利。</p>
+        <div class="fb-links">
+          <a href="#">隐私政策</a>
+          <a href="#">服务条款</a>
+          <a href="#">法律声明</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

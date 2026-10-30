@@ -1,0 +1,47 @@
+{
+  "name": "波玩公社",
+  "slug": "pow-wave-community",
+  "page_type": "website",
+  "palette": ["#fff9ef", "#edff4a", "#141210"],
+  "tags": ["社区", "潮流", "涂鸦贴纸"],
+  "created_at": "2026-10-28 12:00:00",
+  "updated_at": "2026-10-28 22:51:00",
+  "history": [
+    {
+      "prompt": "潮流嗨玩社区网站，多种大胆配色重装组合，风格迥异古怪好玩，大量几何图形，丰富花哨交互和滚动动画，超多真实图片，社区交流讨论，分享有趣生活，简约高级组件，丰富功能操作界面",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": null
+    },
+    {
+      "prompt": "修复：图标缺失（移除 filled webfont 冲突、更换 3 个无效图标名）、滚动跟手（Lenis 参数优化、移除 scroll-behavior smooth）、中文标题改用 ZCOOL 黄油体+快乐体震撼字体、补充英文点缀、区块非对称错位排版、修复 hero 贴纸遮挡",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype", "animate"],
+      "duration_seconds": null
+    },
+    {
+      "prompt": "字体本地化：Google Fonts 在运行环境不可达（ERR_CONNECTION_CLOSED），改为下载得意黑（ZeoSeven 26 片 woff2）与 Bungee/Permanent Marker/Space Grotesk/Unbounded（fontsource latin 子集）到 assets/fonts/，@font-face 本地引用，彻底摆脱远程字体依赖；中文标题统一得意黑",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": null
+    },
+    {
+      "prompt": "还原中文标题字体：用户反馈得意黑不如原站酷黄油体，改从 fontsource（jsdelivr）本地化 ZCOOL QingKe HuangYou（92 片）+ ZCOOL KuaiLe（93 片）到 assets/fonts/，--font-cn 回 ZCOOL 黄油体、--font-cn-alt 回 ZCOOL 快乐体，得意黑保留为回退",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": null
+    },
+    {
+      "prompt": "清理冗余字体：删除已无使用点的得意黑（smiley.css + 26 片 woff2），从 index.html 移除 smiley.css 引用，styles.css 字体变量去掉 'Smiley Sans Oblique' 回退，--font-cn-script 改为同标题字族",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": null
+    },
+    {
+      "prompt": "字体子集化合并：用 fontTools 把 ZCOOL 黄油体 92 片 + 快乐体 93 片合并为各 1 个 woff2，Bungee/Permanent Marker/Space Grotesk(4 字重)/Unbounded(4 字重) 子集化到页面字符集，共 195 分片+6 css（约 4MB）精简为 12 woff2+6 css（298KB），@font-face 改单文件引用、去除 unicode-range",
+      "model": "SensenNova-v6.8-Flash-Lite",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": null
+    }
+  ]
+}
