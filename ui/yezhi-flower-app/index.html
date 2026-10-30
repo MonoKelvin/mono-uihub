@@ -12,6 +12,44 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css" />
   <link rel="stylesheet" href="styles.css" />
+  <script>(function() {
+    var base = 'https://fontsapi.zeoseven.com/880/main/';
+    var fontBase = base;
+    fetch(base + 'result.css', { referrerPolicy: 'no-referrer' }).then(function(r) { return r.text(); }).then(function(css) {
+      css = css.replace(/url\("\.\//g, 'url("' + fontBase);
+      var style = document.createElement('style');
+      style.textContent = css;
+      document.head.appendChild(style);
+      // The CSS @font-face rules reference font files with relative URLs.
+      // When injected as a <style>, the browser loads them with the page referer.
+      // The zeoseven CDN returns 204 for local-server referers, so we manually
+      // fetch each font file with no-referrer and register via FontFace API.
+      var rules = Array.from(style.sheet.cssRules || []);
+      rules.forEach(function(rule) {
+        if (rule.type !== window.CSSRule.FONT_FACE_RULE) return;
+        var ff = rule.style;
+        var fontFamily = ff.getPropertyValue('font-family').replace(/["']/g, '');
+        var urlMatch = ff.getPropertyValue('src').match(/url\("([^"]+)"\)/);
+        if (!urlMatch) return;
+        var url = urlMatch[1];
+        var descriptor = { display: 'swap' };
+        ['font-style', 'font-weight', 'font-display', 'unicode-range', 'font-stretch'].forEach(function(prop) {
+          var val = ff.getPropertyValue(prop);
+          if (val) descriptor[prop.replace(/-([a-z])/g, function(_, c) { return c.toUpperCase(); })] = val;
+        });
+        fetch(url, { referrerPolicy: 'no-referrer' })
+          .then(function(r) { return r.arrayBuffer(); })
+          .then(function(buf) {
+            var blob = new Blob([buf], { type: 'font/woff2' });
+            var f = new FontFace(fontFamily, blob, descriptor);
+            f.load().then(function() {
+              document.fonts.add(f);
+            }).catch(function() {});
+          })
+          .catch(function() {});
+      });
+    }).catch(function() {});
+  })();</script>
 </head>
 <body>
   <div class="app-frame">
