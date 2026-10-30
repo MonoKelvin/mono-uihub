@@ -79,6 +79,8 @@ def saved_line(saved: Saved) -> None:
         bits.append("alpha")
     if saved.stripped_bg:
         bits.append("已去底")
+    if saved.savings > 0:
+        bits.append(f"-{saved.savings * 100:.0f}%")
     print(green("✓ ") + saved.path)
     print("  " + dim(" · ".join(bits) + f" · {saved.bytes // 1024}KB"))
 

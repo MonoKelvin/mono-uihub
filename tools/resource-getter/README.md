@@ -160,7 +160,28 @@ python tools/resource-getter/get.py test --limit 3 --out temp/rg-test
 - 缺凭据的来源（如 Pixiv 未配置 token）标记 `skipped`，不算失败；随机词无结果时 unDraw / Storyset / pngimg 会回退到已知可用词，手动 `--query` **不**回退，失败如实报告。
 - 退出码：存在 `failed` 时为 `1`，否则 `0`；`--json` 输出结构化结果。
 
-### `list` / `doctor`
+### `convert`
+
+批量将目录下的 JPG/PNG/GIF 转为 WebP，遵循单副本策略（同主名其它格式会被删除）：
+
+```bash
+python tools/resource-getter/get.py convert ui/my-page/assets
+python tools/resource-getter/get.py convert ui/my-page/assets --force-webp       # 强制全部转
+python tools/resource-getter/get.py convert ui/my-page/assets --threshold 80     # ≤80KB 原图保留
+python tools/resource-getter/get.py convert ui/my-page/assets --quality 90
+python tools/resource-getter/get.py convert ui/my-page/assets --dry-run --json
+```
+
+- **依赖**：Pillow 是可选的。未安装时 `convert` 会跳过转换并保留原格式，`get` 下载链路的 `--webp` 也会静默降级。
+- **阈值**：`--threshold KB` 控制「很小的图片保留原格式」；GIF 动画默认保留原样（WebP 静态丢失动画帧）。
+- **环境变量**：`RG_WEBP_THRESHOLD` 可覆盖默认阈值（默认 64KB）。
+- **单副本**：转换后同主名的 `.jpg/.jpeg/.png/.gif` 会被删除，只留 `.webp`。
+
+也可以在下载时直接转 WebP：
+
+```bash
+python tools/resource-getter/get.py get pixabay "fox" --page my-page --webp
+```
 
 ```bash
 python tools/resource-getter/get.py list
@@ -236,7 +257,8 @@ def from_url(url) -> Asset: ...
 | `lib/http.py` | 统一 UA、gzip、重试、超时、按 host 限速、代理（读 `HTTPS_PROXY`） |
 | `lib/robots.py` | robots.txt 解析 / 缓存 / 合规检查 |
 | `lib/probe.py` | TTFB 与读取耗时，热链/下载判定 |
-| `lib/download.py` | 原子写入、命名去重、SVG 后处理 |
+| `lib/download.py` | 原子写入、命名去重、SVG 后处理、WebP 转换（可选 Pillow） |
+| `lib/webp.py` | JPG/PNG/GIF → WebP 转换，单副本维护，Pillow 可选 |
 | `lib/svg.py` | 满幅背景移除、换色、脚本清理、主色统计 |
 | `lib/raster.py` | PNG/JPEG/WebP/GIF/SVG 头部解析（尺寸、alpha） |
 | `lib/mcp.py` | 最小 Streamable HTTP MCP 客户端（SSE + JSON-RPC） |

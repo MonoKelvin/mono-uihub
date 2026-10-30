@@ -49,6 +49,7 @@ class Saved:
     stripped_bg: bool = False
     source_url: str = ""
     license: str = ""
+    savings: float = 0.0  # WebP 转换压缩比 (0..1)，0 表示未转换
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

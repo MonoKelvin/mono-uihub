@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from lib import download, env, http, probe, registry, selftest, ui, vendor
+from lib import download, env, http, probe, registry, selftest, ui, vendor, webp
 from lib.models import Asset
 from lib.paths import REPO_ROOT, TOOL_ROOT, page_assets
 
@@ -42,6 +42,7 @@ examples:
   python tools/resource-getter/get.py test --pool "cat,anime,room,work" --seed 7
   python tools/resource-getter/get.py pixiv-login --fetch-only
   python tools/resource-getter/get.py pixiv-login
+  python tools/resource-getter/get.py convert ui/my-page/assets --webp
 """
 
 
@@ -79,6 +80,11 @@ def add_output_opts(parser: argparse.ArgumentParser) -> None:
                         help="保留 SVG 原背景")
     parser.add_argument("--recolor", help="SVG 换色，例如 #c8a24a")
     parser.add_argument("--from-color", help="配合 --recolor 指定被替换的颜色")
+    parser.add_argument("--webp", action="store_true",
+                        help="下载时转为 WebP（如 Pillow 缺失则跳过，保留原格式）")
+    parser.add_argument("--no-webp", dest="webp", action="store_false",
+                        help="关闭 WebP 转换")
+    parser.set_defaults(webp=False)
 
 
 def add_mode_opts(parser: argparse.ArgumentParser) -> None:
@@ -210,6 +216,7 @@ def _emit_asset(asset: Asset, args: argparse.Namespace, source: Any) -> dict[str
             strip_bg=_strip_bg(asset, args),
             recolor=recolor,
             force=args.force,
+            webp_force=args.webp,
             referer=asset.meta.get("referer"),
             license_text=asset.license,
         )
@@ -221,6 +228,7 @@ def _emit_asset(asset: Asset, args: argparse.Namespace, source: Any) -> dict[str
             strip_bg=_strip_bg(asset, args),
             recolor=recolor,
             force=args.force,
+            webp_force=args.webp,
             referer=asset.meta.get("referer"),
         )
     result["saved"] = saved.to_dict()
@@ -499,6 +507,106 @@ def cmd_doctor(args: argparse.Namespace) -> int:
 
 
 # ---------------------------------------------------------------------------
+# commands: convert
+# ---------------------------------------------------------------------------
+def cmd_convert(args: argparse.Namespace) -> int:
+    """批量转换目录下的 JPG/PNG/GIF → WebP，单副本维护。"""
+    path = Path(args.path).expanduser()
+    if not path.exists():
+        ui.error(f"路径不存在：{path}")
+        return 1
+
+    files = []
+    if path.is_file():
+        files = [path]
+    else:
+        for root, _, names in os.walk(path):
+            for name in names:
+                if name.split(".")[-1].lower() in webp.SOURCE_EXT:
+                    files.append(Path(root) / name)
+    if not files:
+        ui.warn("没有找到 jpg/png/gif 文件。")
+        return 0
+
+    threshold_kb = args.threshold
+    force_webp = args.force_webp
+    dry_run = args.dry_run
+    total_before = 0
+    total_after = 0
+    webp_count = 0
+    keep_count = 0
+    skip_count = 0
+    skipped_due_to_pillow = False
+
+    if not webp.has_pillow():
+        skipped_due_to_pillow = True
+        ui.warn("未检测到 Pillow：跳过所有转换（已按原格式保留）。")
+        ui.info("安装 Pillow 后可用 `pip install Pillow` 启用 WebP 转换。")
+
+    for file in sorted(files):
+        data = file.read_bytes()
+        size_before = len(data)
+        total_before += size_before
+        result = webp.convert_bytes(
+            data,
+            out=None,
+            quality=args.quality,
+            threshold_kb=threshold_kb,
+            force_webp=force_webp,
+        )
+
+        if result.action == "keep":
+            keep_count += 1
+            total_after += size_before
+            if not args.json:
+                print(f"  {ui.dim('KEEP')} {file}")
+        elif result.action == "skip":
+            skip_count += 1
+            total_after += size_before
+            if not args.json:
+                print(f"  {ui.dim('SKIP')} {file}  ({ui.dim('格式不支持或 Pillow 缺失')})")
+        else:  # convert
+            if result.data is None:
+                skip_count += 1
+                total_after += size_before
+                continue
+            webp_count += 1
+            total_after += len(result.data)
+            dst = file.with_suffix(".webp")
+            if not dry_run:
+                file.parent.mkdir(parents=True, exist_ok=True)
+                dst.write_bytes(result.data)
+                webp._cleanup_siblings(dst, target="webp")
+            if not args.json:
+                saved_pct = f" -{result.savings * 100:.0f}%"
+                size_kb = len(result.data) // 1024
+                print(
+                    f"  {ui.green('OK')} {dst}  ({ui.dim(f'{size_kb}KB')}{saved_pct})"
+                )
+
+    if not args.json:
+        print("")
+        print(
+            f"处理 {len(files)} 张："
+            f"{ui.green(f'{webp_count} → webp')}，"
+            f"{ui.dim(f'{keep_count} 保留原格式')}，"
+            f"{ui.dim(f'{skip_count} 跳过')}"
+        )
+        if total_before > 0:
+            mb_before = total_before / 1024 / 1024
+            mb_after = total_after / 1024 / 1024
+            pct = (1 - total_after / total_before) * 100
+            print(
+                f"  原图合计 {mb_before:.1f}MB → 优化后 {mb_after:.1f}MB"
+                f" ({ui.green(f'-{pct:.0f}%')})"
+            )
+        if skipped_due_to_pillow:
+            print(f"  {ui.yellow('提示：安装 Pillow 可启用 WebP 转换: pip install Pillow')}")
+
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # parser
 # ---------------------------------------------------------------------------
 def build_parser() -> argparse.ArgumentParser:
@@ -588,6 +696,18 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--net", action="store_true", help="实际探测各来源入口")
     add_json(p)
     p.set_defaults(func=cmd_doctor)
+
+    p = sub.add_parser("convert", help="将目录下的 JPG/PNG/GIF 批量转为 WebP（单副本）")
+    p.add_argument("path", help="图片文件或目录（目录递归搜索）")
+    p.add_argument("--quality", type=int, default=webp.DEFAULT_QUALITY,
+                   help=f"WebP 质量 1-100，默认 {webp.DEFAULT_QUALITY}")
+    p.add_argument("--threshold", type=int, default=webp.DEFAULT_THRESHOLD_KB,
+                   help=f"自动模式下「很小」的阈值 KB，默认 {webp.DEFAULT_THRESHOLD_KB}")
+    p.add_argument("--force-webp", action="store_true",
+                   help="忽略体积/透明判断，强制全部转 WebP")
+    p.add_argument("--dry-run", action="store_true", help="只预览，不写入或删除文件")
+    add_json(p)
+    p.set_defaults(func=cmd_convert)
 
     return parser
 

@@ -185,6 +185,7 @@ def _test_source(
                 name=stem,
                 strip_bg=_strip_bg(asset),
                 force=True,
+                webp_force=False,
                 timeout=timeout,
                 referer=asset.meta.get("referer"),
             )

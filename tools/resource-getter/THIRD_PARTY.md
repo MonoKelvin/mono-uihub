@@ -11,6 +11,11 @@ The only third-party checkout is `vendor/pixiv-mcp-server/`, created on demand b
 `get.py pixiv-login` for the one-time OAuth flow. It is gitignored and not
 redistributed; see **Vendored by reference** below.
 
+**Optional WebP conversion** (`lib/webp.py`, `convert` subcommand, `--webp` flag):
+needs [Pillow](https://python-pillow.org/) (`pip install Pillow`). When Pillow
+is absent the conversion steps are skipped and images are kept in their original
+format — all other features continue to work with zero dependencies.
+
 ## External services / protocols
 
 | What | Where | License / terms | How it is used |
