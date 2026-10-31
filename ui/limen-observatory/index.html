@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0e0d0b">
+  <title>异物 · 异常观测室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- 数据层：挂载于 window.LIMEN，须先于核心模块载入 -->
+  <script src="data/config.js" defer></script>
+  <script src="data/sectors.js" defer></script>
+  <script src="data/org.js" defer></script>
+  <script src="data/story.js" defer></script>
+  <script src="data/objects.js" defer></script>
+  <script src="data/dossiers.js" defer></script>
+  <script src="sound.js" defer></script>
+
+  <!-- 核心模块（经典脚本 + window.App 命名空间，兼容 file://） -->
+  <script src="src/core/namespace.js" defer></script>
+  <script src="src/core/util.js" defer></script>
+  <script src="src/core/state.js" defer></script>
+  <script src="src/core/ui.js" defer></script>
+  <script src="src/core/settings.js" defer></script>
+  <script src="src/core/router.js" defer></script>
+
+  <!-- 视图模块 -->
+  <script src="src/views/observatory.js" defer></script>
+  <script src="src/views/records.js" defer></script>
+  <script src="src/views/matrix.js" defer></script>
+  <script src="src/views/story.js" defer></script>
+  <script src="src/views/operator.js" defer></script>
+
+  <!-- 启动引导 -->
+  <script src="src/app.js" defer></script>
+</head>
+<body>
+  <main class="software-shell" aria-label="异物异常观测室">
+    <header class="window-bar">
+      <a class="brand" href="#/observatory" aria-label="异物，重置演示">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <strong>异物</strong><span class="brand-divider"></span><span class="brand-caption">异常观测室</span>
+      </a>
+      <div class="window-session"><span class="status-dot"></span><span>本地演示</span><span class="session-number">室 04</span></div>
+      <div class="window-actions">
+        <button class="operator" id="operator-button" aria-label="观察员主页" data-tooltip="观察员">
+          <img class="operator-avatar-img" src="assets/operator_avatar.png" alt="观察员 M">
+        </button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <nav class="navigation-rail" aria-label="工作区导航">
+        <div class="rail-primary">
+          <button class="rail-button is-active" data-route="/observatory" aria-label="观测室" aria-pressed="true" data-tooltip="观测室"><i class="ti ti-aperture" aria-hidden="true"></i></button>
+          <button class="rail-button" data-route="/records" aria-label="全部观测记录" data-tooltip="观测记录"><i class="ti ti-notebook" aria-hidden="true"></i></button>
+          <button class="rail-button" data-route="/matrix" aria-label="档案矩阵总览" data-tooltip="档案矩阵"><i class="ti ti-grid-dots" aria-hidden="true"></i></button>
+          <button class="rail-button" data-route="/story" aria-label="档案文献" data-tooltip="档案文献"><i class="ti ti-book-2" aria-hidden="true"></i></button>
+        </div>
+        <div class="rail-secondary">
+          <button class="rail-button" id="export-all-button" aria-label="导出全部档案" data-tooltip="导出档案"><i class="ti ti-download" aria-hidden="true"></i></button>
+          <span class="rail-separator"></span>
+          <span class="rail-label">04</span>
+        </div>
+      </nav>
+
+      <!-- 观测室主视图：集合 / 舞台 / 详情，随路由显示或隐藏 -->
+      <div id="observatory-view" class="observatory-view">
+        <aside class="collection-panel" aria-label="异物档案">
+          <div class="collection-heading"><h1 id="collection-title">观测对象</h1><span id="collection-count" class="count-label">28</span></div>
+          <label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="search" type="search" placeholder="寻找异物 / 编号 / 扇区" aria-label="按名称、编号、扇区、类型或来源寻找异物" autocomplete="off"><kbd>/</kbd></label>
+          <div class="collection-list" id="collection-list"></div>
+          <div class="collection-bottom">
+            <div class="small-orbit" aria-hidden="true"><span></span></div>
+            <div><span class="collection-bottom-title">一切都在视线之内</span><span class="collection-bottom-note">至少，现在是。</span></div>
+          </div>
+        </aside>
+
+        <section class="observation-panel" aria-label="异物观测画布">
+          <div class="observation-heading">
+            <div class="object-heading"><span class="object-meta-row"><i class="ti ti-eye object-glyph" id="object-glyph" aria-hidden="true"></i><span class="object-id" id="object-id">LJ-117</span></span><h2 id="object-title">无主之眼</h2></div>
+            <button class="text-button" id="copy-id-button" aria-label="复制当前异物编号" data-tooltip="复制编号"><i class="ti ti-copy" aria-hidden="true"></i></button>
+          </div>
+          <div class="stage" id="stage" data-view="material">
+            <div class="stage-topline"><span class="live-tag"><span class="status-dot"></span><span id="view-status">正在观测</span></span><span class="camera-label" id="camera-label">视角 A / 04</span></div>
+            <div class="stage-corner top-left" aria-hidden="true"></div><div class="stage-corner top-right" aria-hidden="true"></div>
+            <div class="stage-corner bottom-left" aria-hidden="true"></div><div class="stage-corner bottom-right" aria-hidden="true"></div>
+            <div class="stage-art" id="stage-art"></div>
+            <svg class="stage-graphics" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <g class="sg-faint">
+                <circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="60"/><circle cx="100" cy="100" r="40"/>
+                <line x1="100" y1="12" x2="100" y2="188"/><line x1="12" y1="100" x2="188" y2="100"/>
+              </g>
+              <g class="sg-ticks">
+                <line x1="100" y1="4" x2="100" y2="15"/><line x1="100" y1="185" x2="100" y2="196"/>
+                <line x1="4" y1="100" x2="15" y2="100"/><line x1="185" y1="100" x2="196" y2="100"/>
+              </g>
+              <g class="scan-ring"><path d="M100 20 A80 80 0 0 1 180 100"/></g>
+            </svg>
+            <div class="scan-overlay" aria-hidden="true"><span class="scan-line"></span><span class="scan-target"></span></div>
+            <div class="stage-grid-overlay" id="stage-grid-overlay" aria-hidden="true" hidden></div>
+            <div class="stage-empty" id="stage-empty" hidden><i class="ti ti-cube-off" aria-hidden="true"></i><p>这里暂时没有异物</p><button class="small-button" id="return-active-button">返回观测室</button></div>
+            <div class="stage-caption"><span class="caption-line"></span><p id="object-whisper">它比你先眨眼。</p></div>
+            <div class="stage-bottomline"><span class="dimension-tag" id="dimension-tag">Ø 240 mm</span><span class="orientation" aria-hidden="true"><span class="axis-y">y</span><span class="axis-x">x</span><span class="axis-z">z</span></span></div>
+            <div class="stage-toolbar">
+              <div class="segmented-control" role="group" aria-label="显示方式">
+                <button class="is-active" data-view="material" aria-label="材质视图" aria-pressed="true" data-tooltip="材质"><i class="ti ti-cube" aria-hidden="true"></i></button>
+                <button data-view="outline" aria-label="轮廓视图" aria-pressed="false" data-tooltip="轮廓"><i class="ti ti-box-model-2" aria-hidden="true"></i></button>
+                <button data-view="negative" aria-label="反相视图" aria-pressed="false" data-tooltip="反相"><i class="ti ti-contrast-2" aria-hidden="true"></i></button>
+              </div>
+              <span class="toolbar-divider"></span>
+              <button class="icon-button" id="zoom-out" aria-label="缩小异物" data-tooltip="缩小"><i class="ti ti-minus" aria-hidden="true"></i></button>
+              <button class="zoom-value" id="reset-view" aria-label="重置视角与缩放" data-tooltip="重置视角">100%</button>
+              <button class="icon-button" id="zoom-in" aria-label="放大异物" data-tooltip="放大"><i class="ti ti-plus" aria-hidden="true"></i></button>
+              <span class="toolbar-divider"></span>
+              <button class="icon-button" id="rotate-button" aria-label="切换观察角度" data-tooltip="转动视角"><i class="ti ti-rotate-3d" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="readout-strip" id="readout-strip" aria-hidden="true"></div>
+          <div class="stage-gallery" id="stage-gallery" aria-label="异物多视图"></div>
+          <div class="observation-footer">
+            <span class="safety-note"><i class="ti ti-shield-check" aria-hidden="true"></i><span id="safety-text">保持观察，不要接触。</span></span>
+            <button class="scan-button" id="scan-button"><i class="ti ti-scan" aria-hidden="true"></i><span>探测异物</span><kbd>空格</kbd></button>
+          </div>
+        </section>
+
+        <aside class="inspector-panel" aria-label="异物详情与观测记录">
+          <div class="inspector-tabs" role="tablist" aria-label="详情面板">
+            <button class="is-active" role="tab" id="details-tab" aria-controls="details-panel" aria-selected="true"><i class="ti ti-focus-2" aria-hidden="true"></i><span>特征</span></button>
+            <button role="tab" id="records-tab" aria-controls="records-panel" aria-selected="false" tabindex="-1"><i class="ti ti-list-details" aria-hidden="true"></i><span>记录</span><span class="tab-count" id="record-count">3</span></button>
+            <button role="tab" id="dossier-tab" aria-controls="dossier-panel" aria-selected="false" tabindex="-1"><i class="ti ti-file-text" aria-hidden="true"></i><span>档案</span></button>
+          </div>
+          <div class="inspector-scroll">
+            <section id="details-panel" role="tabpanel" aria-labelledby="details-tab">
+              <div class="classification"><span id="classification-icon" class="classification-icon"><i class="ti ti-eye" aria-hidden="true"></i></span><div><span class="subtle-label">异常类型</span><strong id="classification-name">知觉干涉</strong></div><span class="risk-badge" id="risk-badge"><i class="ti ti-alert-triangle" aria-hidden="true"></i><span>警戒</span></span></div>
+              <p class="classification-hint" id="classification-hint"></p>
+              <div class="trait-grid" id="trait-grid"></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>观察守则</h3><i class="ti ti-shield" aria-hidden="true"></i></div>
+              <div class="protocol-list" id="protocol-list"></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>收容信息</h3><i class="ti ti-lock" aria-hidden="true"></i></div>
+              <div class="meta-list" id="containment-list"></div>
+              <div class="observation-note"><i class="ti ti-eye-off" aria-hidden="true"></i><p id="object-note">闭上眼睛后，仍能感觉到它。</p></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>表面采样</h3><i class="ti ti-microscope" aria-hidden="true"></i></div>
+              <div class="detail-gallery" id="detail-gallery"></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>测量参数</h3><i class="ti ti-ruler" aria-hidden="true"></i></div>
+              <div class="param-grid" id="parameters-grid"></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>信号波形</h3><i class="ti ti-activity" aria-hidden="true"></i></div>
+              <div class="signal-graph" id="signal-graph"></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>编目考据</h3><i class="ti ti-bookmark" aria-hidden="true"></i></div>
+              <div class="registry-block">
+                <span class="registry-code" id="registry-code"></span>
+                <p class="registry-origin" id="registry-origin"></p>
+              </div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>观测日志</h3><i class="ti ti-scroll" aria-hidden="true"></i></div>
+              <div class="log-list" id="logs-list"></div>
+              <div class="detail-rule"></div>
+              <div class="detail-section-heading"><h3>最近记录</h3><button class="icon-button compact" id="show-records-button" aria-label="查看全部记录" data-tooltip="全部记录"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+              <div class="recent-records" id="recent-records"></div>
+            </section>
+            <section id="records-panel" role="tabpanel" aria-labelledby="records-tab" hidden><div class="record-list" id="record-list"></div></section>
+            <section id="dossier-panel" role="tabpanel" aria-labelledby="dossier-tab" hidden></section>
+          </div>
+          <div class="inspector-actions">
+            <button class="note-button" id="note-button"><i class="ti ti-pencil-plus" aria-hidden="true"></i><span>添加观察</span></button>
+            <button class="icon-button framed" id="archive-button" aria-label="封存当前异物" data-tooltip="封存"><i class="ti ti-archive" aria-hidden="true"></i></button>
+            <button class="icon-button framed" id="export-button" aria-label="导出当前档案" data-tooltip="导出"><i class="ti ti-file-download" aria-hidden="true"></i></button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- 独立页面出口：records / matrix / story / operator 渲染于此 -->
+      <div id="page-outlet" class="page-outlet" hidden></div>
+    </div>
+
+    <footer class="status-bar"><span><span class="tiny-dot"></span><span id="status-text">观测室稳定</span></span><span class="status-center">异常不等于危险。已知不等于安全。</span><span class="status-right"><i class="ti ti-lock" aria-hidden="true"></i>离线档案<span class="status-divider"></span><span id="session-clock">03:33:00</span></span></footer>
+  </main>
+
+  <!-- 保留的对话框：宽屏 + 浅色装饰背景 -->
+  <dialog id="note-dialog" class="dialog note-dialog dialog--wide dialog--light">
+    <form id="note-form">
+      <div class="dialog-heading"><span class="dialog-symbol"><i class="ti ti-pencil-plus" aria-hidden="true"></i></span><button type="button" class="icon-button" data-close aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+      <h2>你看见了什么？</h2><p class="dialog-description">观察记录仅保留在本次演示中。</p>
+      <label class="note-label" for="note-text">观察内容</label><textarea id="note-text" required maxlength="280" placeholder="描述刚才出现的异常…" rows="4"></textarea>
+      <div class="note-meta"><span id="note-error" role="alert"></span><span id="note-length">0 / 280</span></div>
+      <div class="note-types" role="group" aria-label="记录类型"><button type="button" class="is-active" data-note-type="observation" aria-pressed="true"><i class="ti ti-eye" aria-hidden="true"></i>观察</button><button type="button" data-note-type="anomaly" aria-pressed="false"><i class="ti ti-alert-triangle" aria-hidden="true"></i>异常</button></div>
+      <button class="primary-button" type="submit"><i class="ti ti-check" aria-hidden="true"></i>加入记录</button>
+    </form>
+  </dialog>
+
+  <dialog id="media-dialog" class="dialog media-dialog dialog--wide dialog--light">
+    <div class="dialog-heading"><span class="dialog-symbol"><i class="ti ti-microscope" aria-hidden="true"></i></span><button type="button" class="icon-button" data-close aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+    <h2 id="media-title">表面采样</h2>
+    <div class="media-frame" id="media-frame"></div>
+    <p class="dialog-description" id="media-caption"></p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-circle-check" aria-hidden="true"></i><span></span></div>
+  <div class="sr-only" id="scan-announcement" role="status" aria-live="polite"></div>
+</body>
+</html>

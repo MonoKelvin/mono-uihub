@@ -1,0 +1,76 @@
+{
+  "name": "异物 · 异常观测室",
+  "slug": "limen-observatory",
+  "page_type": "software",
+  "palette": ["#0e0d0b", "#c2a25e", "#e9e3d4"],
+  "tags": ["异常档案", "观测工具", "虚构交互", "标本馆", "影像档案", "逆向设计", "矩阵总览", "表面采样", "粒子氛围", "数据驱动", "编目体系", "档案文献"],
+  "created_at": "2026-10-30 20:32:00",
+  "updated_at": "2026-10-31 00:40:00",
+  "history": [
+    {
+      "prompt": "重构 limen-observatory 原型：补齐缺失的 app.js，实现集合列表/导航/搜索、舞台三视图（材质/轮廓/反相）+ 缩放 + 旋转 + 目光跟随 + 探测扫描、详情与记录面板、笔记/封存/恢复/导出/设置弹层，数据驱动、纯内联 SVG 插画、无死控件。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "UI 太丑、一股廉价感，重构 UI 设计：从浅色 SaaS 模板改为深色「标本观测终端 (Specimen Observation Terminal)」方向——近黑底 + 暖铜色 #c9a25e 主调、暖白正文 #ece8df、发丝描边、柔光晕；标题/低语用 Fraunces serif，正文 IBM Plex Sans，数字 Space Grotesk；移除四角括号 HUD；SVG 插画改用 CSS token 主题感知（--art-*），并拆为 solid-body / wire-body 两组使轮廓视图真正生效；入场动画尊重 reduce-motion 与「减少动态」设置。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "AI 味太重，再次重构：丢弃上一版「近黑 + 暖铜金 + Fraunces 衬线 + 柔光晕 + 错峰淡入」的 AI 套路组合（视觉版「无缝、直观、强大」），改走「勘测手稿 / 仪器读数」方向——暖石墨底 #14130f + 纸张暖白字 #e9e3d4 + 单一铁锈信号色 #c2563a（去金去蓝、去奢侈感）；IBM Plex 同族三切（衬线标题 / 无衬线 UI / 等宽读数，数据全程等宽）；工程纸规整网格 + 印刷套准十字标替代发光四角与光晕；扁平无光晕、无毛玻璃；入场改为单一平静淡入、扫描线改为仪器扫描（去大光晕）。依据 unclecheng-reduce-ai-perception 去 AI 味原则。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "unclecheng-reduce-ai-perception-v2"]
+    },
+    {
+      "prompt": "仍然显丑、AI 味重，且手绘 SVG 形态错误。改为「世界上最好看 / 高级感」方向：全网逆向分析获奖网页（Awwwards / 博物馆档案 / 奢华品牌设计系统 / 氛围画廊），提取可迁移的 premium 去 AI 设计 DNA（影像主导、衬线标题作奢华信号、发丝线、整屏颗粒去数码感、60-30-10、慢而克制的动效）。用生图替代手绘 SVG：4 张 1024 标本影像（眼/立方/手/门），CSS clip-path 切除右下角水印、object-fit:cover 适配；标题改 Cormorant Garamond，配色改暖近黑 #0e0d0b + 骨白 #e9e3d4 + 克制黄铜 #c2a25e。保留全部交互机制（三视图/缩放/旋转/目光跟随/探测/笔记/封存/弹层）。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "UI 还是太丑、太空，要求大量加功能与图片：更多异物、更多装饰图；建议生成矩阵图裁剪得到抠图；大量细节/局部图、装饰图、图标与图形，把界面堆丰富。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "布局微调：居中显示的标本图默认居中缩放适配到显示区域（object-fit: contain 不裁切、已满足）；右侧 inspector 面板加宽、中间 stage 区域收窄——.workspace 四列网格第 4 列 286/300/236px 分别 → 384/398/320px，中间 minmax(0,1fr) 自动收缩；960/640 堆叠重排不动。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "新增 Web Audio 合成音效系统：独立 sound.js（实时合成、零外部文件），暴露 play/playSpecimen/setEnabled；app.js 接入点击/交互/操作音效（click/tick/hover/toggle/open/close/select/zoomIn/zoomOut/rotate/scan/archive/restore/export）与部分异物声学签名（sound:true 触发）；settings 加「音效反馈」开关并持久化；index.html 引入 sound.js 与设置行。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "重设计编号体系 [扇区]-[亚种]-[序号]（LJ 临界交界 / XT 星外回填 / YH 渊海 / NB 内禀 / WX 无线 / SK 私库），8 异物改用天马行空编号（如 LJ-117、XT-B2-204、YH-339、NB-001、WX-056、SK-288、XT-Y0-345、LJ-429）；每个加 origin 来源考究文字；详情面板新增「编目考据」段（decodeId 解析扇区/亚种/序号），帮助弹层加「编号规则」图例与站点志。手/唇改为非人体抽象异物（无名之挛、镜中喑）。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "重生成图片：手/唇/眼改为不可名状非人体抽象异物（存档同名 eye/hand/lips.png）；两张九宫格矩阵图重生成（干净 3×3、无人体、水印仅在右下格）；矩阵裁格放大至 345% 并用居中公式定位（cellPos: -46.94/0/+46.94%）修正 AI 裁剪边界。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "数据抽离为 data/ 五个文件（config/sectors/org/story/objects，挂载 window.LIMEN），app.js 全量重写以消费它；新增收容信息/测量参数/观测日志三段面板、组织档案弹层、设置（音量/辅助网格/扫描时长）、舞台多视图切换条、分类装饰图标裁格；normTs 把相对分钟时间戳归一化。补全 13 张素材图（8 主角 + 3 替身 + 印章 + 4×4 图标表）。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "审查已有内容并消除死数据：story.js（站点志/文献/术语）接入「档案文献」弹层；config.ui.statusBusy 接入探测状态；config.iconGrid 由硬编码 400% 改为从 cols/rows 派生（原 zoom 420% 为错误值）；档案矩阵从固定九宫格接触印样改为数据驱动缩略图网格（点击跳转观测）；detail-cell/matrix-cell 的背景图路径从 CSS 硬编码移入 JS（单一数据源）。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "大批量内容扩充：story.js 扩为 12 篇文献 + 12 条大事年表 + 6 条现场手记 + 17 条术语（renderStory 改四分区渲染）；异物 16 → 28 件（新增 WX-121 逆唱/YH-640 渊环/SK-410 不涸之砚/LJ-506 折层/XT-D3-088 空匣/NB-014 常明壳/YH-733 沉谱/WX-155 静噪/SK-477 匿章/XT-E0-061 负霜/LJ-618 错层窗/NB-027 无针钟）；生成 17 张配套图（12 主角 + 5 张图生图替身）。修复第 17 件起装饰图标裁格越界（改对 cols*rows 取模）与单张切换条。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    },
+    {
+      "prompt": "28 件规模下的优化：激活沉睡的 o.icon 字段（标题区加专属字形标记 #object-glyph）；搜索范围从 name/id 扩为 name/id/扇区解码/classification/risk/whisper/origin（凡界面可见字段都应可搜）；档案矩阵区分封存态（虚线 + 去色 + 「·封存」角标）；探测文案池移入 config 并扩充；作者名从硬编码「观察员 M」改为读 config.ui.operator；新增 ↑↓/←→ 快捷键切换异物；首屏占位文案与真实数据对齐。",
+      "model": "unknown",
+      "skills": ["mono-ui-prototype", "ui-designer"]
+    }
+  ]
+}
