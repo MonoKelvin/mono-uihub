@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#eae7f2">
+  <meta name="description" content="爪爪日常，记录宠物的饮食、散步、健康与每一个值得记住的小日常。">
+  <title>爪爪日常 pawday — 和它的每一天</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&family=Sora:wght@400;500;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+  <div class="app-window">
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="#today" aria-label="爪爪日常，回到今日概览">
+        <span class="brand-mark"><i class="ti ti-paw" aria-hidden="true"></i></span>
+        <span><strong>pawday<span class="brand-dot">.</span></strong><small>爪爪日常</small></span>
+      </a>
+      <div class="sidebar-scroll">
+      <nav class="primary-nav">
+        <button class="nav-item active" data-action="nav" data-view="today" aria-current="page"><i class="ti ti-layout-dashboard" aria-hidden="true"></i><span>今日概览</span><span class="nav-dot"></span></button>
+        <button class="nav-item" data-action="nav" data-view="health"><i class="ti ti-heart-rate-monitor" aria-hidden="true"></i><span>健康档案</span></button>
+        <button class="nav-item" data-action="nav" data-view="records"><i class="ti ti-notebook" aria-hidden="true"></i><span>生活记录</span></button>
+        <button class="nav-item" data-action="nav" data-view="schedule"><i class="ti ti-calendar-event" aria-hidden="true"></i><span>日程安排</span></button>
+        <button class="nav-item" data-action="nav" data-view="expenses"><i class="ti ti-wallet" aria-hidden="true"></i><span>花销记账</span></button>
+      </nav>
+      <div class="pet-nav-header"><span>我的小伙伴</span><span id="pet-count" class="pet-count">2</span></div>
+      <div id="sidebar-pets" class="sidebar-pets"></div>
+      <button class="add-pet" data-action="add-pet"><i class="ti ti-plus" aria-hidden="true"></i><span>添加宠物</span></button>
+      <div class="sidebar-bottom">
+        <div class="companion-note"><img class="companion-illustration" src="./assets/walking-together.svg" alt="陪伴小狗的主题插画" loading="lazy"><p>日子慢慢过，陪它好好长大。</p><i class="ti ti-heart" aria-hidden="true"></i></div>
+        <button class="nav-item settings" data-action="settings"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i><span>偏好设置</span></button>
+        <button class="about-trigger" data-action="about">关于爪爪日常<i class="ti ti-info-circle" aria-hidden="true"></i></button>
+      </div>
+      </div>
+    </aside>
+    <div class="main-window">
+      <header class="toolbar">
+        <div class="breadcrumb"><span>我的宠物</span><i class="ti ti-chevron-right" aria-hidden="true"></i><strong id="breadcrumb-current">今日概览</strong></div>
+        <div class="toolbar-actions">
+          <button class="search-trigger" data-action="search"><i class="ti ti-search" aria-hidden="true"></i><span>搜索记录</span><kbd>Ctrl K</kbd></button>
+          <span class="toolbar-divider"></span>
+          <button class="icon-button notification-button" data-action="notifications" aria-label="查看照护提醒"><i class="ti ti-bell" aria-hidden="true"></i><span id="notification-dot" class="notification-dot"></span></button>
+          <button class="user-avatar" data-action="settings" aria-label="个人偏好设置">宁</button>
+        </div>
+      </header>
+      <main id="workspace" class="workspace" tabindex="-1"></main>
+    </div>
+    <div id="modal-layer" class="modal-layer" hidden>
+      <button class="modal-scrim" data-action="close-modal" tabindex="-1" aria-label="关闭弹窗"></button>
+      <dialog id="modal" class="modal" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+        <div class="modal-heading"><div><span id="modal-kicker" class="modal-kicker"></span><h2 id="modal-title"></h2></div><button class="icon-button" data-action="close-modal" aria-label="关闭弹窗"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+        <div id="modal-body" class="modal-body"></div>
+        <footer id="modal-footer" class="modal-footer" hidden></footer>
+        <p id="modal-status" class="modal-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      </dialog>
+    </div>
+    <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple hidden>
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"><i class="ti ti-circle-check" aria-hidden="true"></i><span></span></div>
+  </div>
+  </div>
+</body>
+</html>

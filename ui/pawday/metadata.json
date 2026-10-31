@@ -1,0 +1,28 @@
+{
+  "name": "爪爪日常 · 个人宠物生活管理",
+  "slug": "pawday",
+  "page_type": "software",
+  "tags": ["宠物", "生活管理", "照片墙"],
+  "palette": ["#f8f7fc", "#ffb994", "#29233b"],
+  "created_at": "2026-10-31 13:47:38",
+  "updated_at": "2026-10-31 18:25:17",
+  "history": [
+    {
+      "prompt": "一个个人宠物生活管理软件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "dataviz"]
+    },
+    {
+      "prompt": "统一滚动条与固定侧栏 logo，软件宽度约 85%、高度不超过 90%，辅助字号调大，使用可爱艺术字体和更多图标、插画、图片；照片墙归入生活记录，完善交互与动效；通知及其他弹窗采用软件内横向布局；健康小档案移到左侧，优化图表、医疗记录和对齐，使用工具截图后提交推送。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "dataviz", "animate", "run"],
+      "duration_seconds": 9627
+    },
+    {
+      "prompt": "同步最新容器边界规范，浮层、遮罩和提示条迁入软件画布并使用容器尺寸；移除界面中的原型说明。重构关于爪爪日常为小尺寸品牌卡，个人偏好调整为紧凑横向面板，固定弹窗头部和操作栏，完成焦点与表单联动，使用现有截图工具重新生成八个界面展示并提交推送。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "run"],
+      "duration_seconds": 4813
+    }
+  ]
+}

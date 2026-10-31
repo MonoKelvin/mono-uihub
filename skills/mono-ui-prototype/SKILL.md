@@ -15,7 +15,7 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 - **风格由产品决定**：允许克制、精致、活泼、先锋、华丽或富有实验性，不把“高级简约”当成唯一答案。
 - **大胆自主设计**：不要等待用户提供颜色、字体、布局和动画参数。理解需求后主动探索更好的方案。
 - **拒绝模板感**：不默认使用常见 SaaS 布局、固定配色、统一卡片和千篇一律的组件组合。
-- **独立推导**：不要机械复用上一轮的视觉方案；相同品类也应根据内容与定位形成自己的表达。
+- **独立推导**：相同品类也应根据内容与定位形成自己的表达，不机械复用上一轮的视觉方案。
 
 ### 设计原则参考
 
@@ -27,19 +27,14 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 - 字体性格、字形质量、阅读场景和字体组合。
 - 动效的连续性、自然加减速、空间关系和交互反馈。
 
-参考资料：
-- [Nielsen Norman Group：Visual Design Principles](https://www.nngroup.com/articles/principles-visual-design/)
-- [Figma：UI Design Principles](https://www.figma.com/resource-library/ui-design-principles/)
-- [IBM Design Language](https://www.ibm.com/design/language/)
-- [Apple Human Interface Guidelines：Motion](https://developer.apple.com/design/human-interface-guidelines/motion)
+参考：[NNGroup 视觉设计原则](https://www.nngroup.com/articles/principles-visual-design/) · [Figma UI 设计原则](https://www.figma.com/resource-library/ui-design-principles/) · [IBM Design Language](https://www.ibm.com/design/language/) · [Apple HIG Motion](https://developer.apple.com/design/human-interface-guidelines/motion)
 
 ### 不复用已有页面
 
 - 新页面不读取、不截图、不分析 `ui/` 下已有页面，不复制其 HTML / CSS / JS 作为起点。
-- 不复用上一轮的颜色、字体、布局骨架、组件组合和动效参数。
+- 不复用上一轮的颜色、字体、布局骨架、组件组合和动效参数。设计差异不能只靠换色、换文案或换图片，应重新思考信息结构和视觉表达。
 - 只允许读取本技能、`skills/ui-metadata/SKILL.md`、`tools/` 用法说明及用户当次提供的参考。
 - 用户明确要求修改已有页面时，只读取对应页面。
-- 设计差异不能只靠换色、换文案或换图片；应重新思考信息结构和视觉表达。
 
 ## 二、先理解产品，再决定设计
 
@@ -58,12 +53,12 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 
 ### 交付容器
 
-| 类型 | 判断依据 | 外框与滚动 |
-| --- | --- | --- |
-| A 软件 | 后台、工具、仪表盘 | 完整窗口展示；长列表和长文局部滚动 |
-| B 网页 | 品牌、落地、内容站、作品集 | 自然文档流；整页垂直滚动 |
-| C App | 移动优先、点名 App / 手机 / 小程序 | 手机比例外框；只在框内滚动 |
-| D 组件 | 播放器、灯箱、上传框等单一控件 | 按内容自然尺寸展示；内部局部滚动 |
+| 类型 | 判断依据 | 外框与滚动 | 画布边界 |
+| --- | --- | --- | --- |
+| A 软件 | 后台、工具、仪表盘 | 完整窗口展示；长列表和长文局部滚动 | 窗口内锁死，浮层不越界 |
+| B 网页 | 品牌、落地、内容站、作品集 | 自然文档流；整页垂直滚动 | 视口即画布，无边界限制 |
+| C App | 移动优先、点名 App / 手机 / 小程序 | 手机比例外框；只在框内滚动 | 手机框内锁死 |
+| D 组件 | 播放器、灯箱、上传框等单一控件 | 按内容自然尺寸展示；内部局部滚动 | 组件框内锁死 |
 
 用户点明就按用户要求，没点明按功能推断。容器只决定展示方式，不限制视觉风格。
 
@@ -74,6 +69,7 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 - 优先让主要信息和常用操作自然共存；复杂内容通过合理分区和局部滚动承载。
 - 先做好空间分配和响应式布局，再决定滚动区域；不靠裁切、隐藏滚动条或整体缩放掩盖布局问题。
 - 窄屏优先重排、分组和调整信息呈现，不得让核心功能消失。
+- 软件宽度不超过整个窗口的 85%，高度不超过 90%，四周留出间距居中显示。
 
 **B 网页**
 - 根据内容选择长页叙事、模块化浏览、沉浸式首屏或其他合适结构。
@@ -82,14 +78,97 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 
 **C App**
 - 采用符合移动设备习惯的导航、单列或适合场景的布局和易操作控件。
-- 弹层、Toast、下拉、日期选择器等覆盖层必须限制在 App 展示容器内，不得逃逸到视口。
 - 对原生控件进行必要的视觉定制，但不得损害可访问性和操作体验。
 - 触控区域、底部导航和内容滚动应符合真实移动端使用习惯。
+- 建议采用 iPhone 手机尺寸设计（可不创建灵动岛、前置摄像头组件）。
 
 **D 组件**
 - 按组件用途和内容自然成形，不套用完整软件外壳。
-- 重点设计空闲、悬停、聚焦、加载、完成、出错等状态。
-- 所有状态变化应清楚、连贯且可理解。
+- 重点设计空闲、悬停、聚焦、加载、完成、出错等状态，所有状态变化应清楚、连贯且可理解。
+
+以上四类的浮层边界统一见下一节。
+
+### 容器边界：把界面锁在画布里（软件 / App / 组件强制）
+
+**这是硬约束，不是风格偏好。** 网页的边界是浏览器视口，软件、App、组件有自己的边界。画布之外只有「舞台」（看台背景），一旦对话框、抽屉、遮罩、高斯模糊跑到画布外，界面就从「一个软件」退化成「一张网页截图」——这是这类原型最常见的破绽。
+
+#### 三层结构
+
+产品本体放在 `canvas` 里，`stage` 只负责居中与背景，任何产品语义都不放在 `stage` 上。
+
+```
+body > .stage          舞台：居中 + 背景，不承载产品内容
+       └ .canvas      画布：产品的界面边界
+          ├ 产品内容（标题栏 / 主区 / 侧栏…）
+          └ .layer     浮层组：对话框、抽屉、下拉、Toast
+              ├ .scrim  遮罩：变暗 + 模糊
+              └ .dialog 对话框本体
+```
+
+关键属性（伪代码）：
+
+```css
+.canvas {
+  position: relative;    /* 浮层定位基准 */
+  contain: paint;        /* 裁剪 + 让 fixed 后代锚定到画布，不可省 */
+  overflow: hidden;      /* 越界内容一律剪掉 */
+  isolation: isolate;    /* 层叠与背景采样隔离在画布内 */
+  container-type: size;  /* 可选：内部可用 cqw/cqh 定尺寸 */
+  width: min(1440px, 100%);
+  height: min(900px, calc(100svh - 2 * var(--stage-pad))); /* 用了 container-type 就必须给显式宽高 */
+}
+
+.layer  { position: absolute; inset: 0; }              /* 参照画布，绝不用 fixed */
+.scrim  { position: absolute; inset: 0;               /* 尺寸即画布尺寸 → 模糊范围严格等于画布 */
+          background: rgb(8 10 14 / .45); backdrop-filter: blur(10px); }
+.dialog { position: relative; width: min(720px, 78cqw); max-height: 82cqh;
+          display: flex; flex-direction: column; }
+.dialog-body { flex: 1; min-height: 0; overflow: auto; }  /* 只让内容区滚动 */
+```
+
+#### 为什么必须显式写 `contain: paint`
+
+实测（Edge，1400×1200）：只有 `overflow: hidden` 时，画布内的 `position: fixed` 元素依然相对**浏览器视口**定位并逃逸；只有加上 `contain: paint`（或 `transform` / `filter` / `will-change: transform` / `contain: layout`）后，fixed 才会锚定到画布并被裁剪。`container-type: size` **单独不生效**，必须与 `contain: paint` 并存。不需要 `cqw/cqh` 时可去掉 `container-type`。
+
+#### 禁止
+
+- 画布内用 `position: fixed` 定位浮层——参照系是视口，天生越界。
+- 用 `vw` / `vh` / `dvh` 给画布内元素定尺寸——视口单位必然撑破画布。
+- 把遮罩、模糊、阴影施加在 `body`、`.stage` 或画布之外的元素上。
+- 用 `transform: scale()` 整体缩放画布来「塞进」屏幕——文字、模糊、阴影会一起糊掉。正确做法是 `min()` 定尺寸 + 内部自适应。
+- 让画布外的舞台出现产品语义内容（说明文字、按钮、装饰图形都不行）。
+
+### 对话框尺寸规范（软件类强制）
+
+**默认横向：宽 > 高。** 软件对话框应优先采用宽屏设计。
+
+| 内容量 | 比例取向 | 建议尺寸（相对画布） | 说明 |
+| --- | --- | --- | --- |
+| 多（表格、图表、长表单、编辑器） | 宽 > 高，取 16:9 或 4:3 | 宽 60%–80% 画布宽，高不超过 75% 画布高 | 内容多时优先 16:9，其次 4:3；需要并排才不浪费横向空间 |
+| 中（设置面板、多字段表单） | 宽 > 高 | 宽 480–640px，高 320–420px | 保持横向，但不铺满 |
+| 少（确认、单字段、提示） | 可接近方形 | 宽 320–420px，高 220–320px | 纵向也合理，别为了比例硬撑宽 |
+| 纵向列表（长列表、树、选择器） | 高 > 宽 | 宽 320–400px，高 60%–80% 画布高 | **纵向是允许的例外**：单一列表天然竖排 |
+| 工作区（日程、看板、编辑全屏） | 接近画布全尺寸 | 画布内留 16–24px 边距 | 仍然不是 fixed，仍在画布内 |
+
+判定顺序：先问「内容是否需要并排」。需要并排、或有横向可读性要求的（表格、图表、代码、时间轴）→ 横向；单一列表 / 树形结构 / 分步表单 → 可以纵向。
+
+落地写法：`aspect-ratio` 定比例、`max-height` 兜底、宽度用 `cqw`、高度用 `cqh`。
+
+```css
+.dialog--wide   { width: min(72cqw, 860px); aspect-ratio: 16 / 9; max-height: 78cqh; }  /* 内容多 */
+.dialog--panel  { width: min(56cqw, 680px); aspect-ratio: 4 / 3;  max-height: 78cqh; }  /* 内容多·紧凑 */
+.dialog--compact{ width: min(32cqw, 380px); aspect-ratio: 5 / 4; }                        /* 内容少 */
+.dialog--tall   { width: min(30cqw, 360px); height: min(72cqh, 620px); }                   /* 单一纵向列表 */
+```
+
+内容超高时 `max-height` 生效、比例允许被打破——这是有意的：宁可比例略变，也不要内容溢出画布。
+
+其他约束：
+
+- 对话框在画布内**居中**，四周留白不小于 24px；不贴边、不跨出画布。
+- 内容超出时只让 `.dialog-body` 滚动，头部和底部固定。
+- 变暗遮罩取 `rgb(0 0 0 / .35)` ~ `rgb(0 0 0 / .5)`，模糊 8–16px；作用范围严格等于画布。
+- 同一软件里的对话框成组出现时尺寸成体系（同一类用同一尺寸），不要一个 16:9 一个窄高条。
 
 ## 三、设计流程
 
@@ -143,6 +222,8 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 ### 4.3 文案与信息表达
 
 - 界面不是说明书。能简洁表达就不要写长段解释，但不能为了少字损失必要信息。
+- **界面里不得出现任何与「演示 / 原型 / 模拟」有关的文字或图形**：不写「演示模式」「示例数据」「Mock 数据」「测试账号」「这是原型」；不画气泡标注、箭头提示、序号标记、教学高亮框；不用「示意图」「占位图」「Lorem ipsum」「待补充」。界面里的每个字、每个图标，都必须是产品真实会有的内容。
+- 把原型当成**正式上线的产品界面**设计：文案像真实业务数据，图表有可信数值关系，空状态写产品自己的引导语，错误提示写用户真正会遇到的情况。实现不了的部分（服务端接口）在交付说明里讲，不写进界面。
 - 英文品牌或国际化页面可使用精简词语、短标签、大字号文字和视觉化符号。
 - 潮流、创意页面可以更多使用图标、符号、图形和视觉化数字；专业工具则优先保证信息清晰。
 - 中文表达自然准确，不为装饰而硬塞英文或无意义缩写。
@@ -151,24 +232,21 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 
 ### 4.4 字体设计（重点）
 
-**字体是视觉设计的重要组成部分，不要把默认系统字体当成所有页面的最终方案。**
+**字体是视觉设计的重要组成部分，不要把默认系统字体当成所有页面的最终方案。** 除长篇正文、密集信息、阅读优先场景外，都应主动为页面挑选合适的字体。
 
-- 当用户提出高级感、设计感、品牌感、艺术感、潮流感等要求时，应主动寻找并尝试合适的艺术字体、展示字体或高品质字体组合，优先考虑可通过 CDN 引入的字体。
-- 其他页面也应根据产品气质主动选择合适字体；只有长篇正文、密集信息或阅读优先场景，才优先使用稳定易读的常规字体。
-- 标题、品牌字标、关键数字、正文和辅助信息可以采用不同字体性格，但组合必须协调，避免字体数量和风格失控。
+- 用户提出高级感、设计感、品牌感、艺术感、潮流感等要求时，应主动寻找艺术字体、展示字体或高品质字体组合，优先 CDN 引入。
+- 标题、品牌字标、关键数字、正文和辅助信息可用不同字体性格，但组合必须协调，避免字体数量和风格失控。
 - 英文可探索几何无衬线、人文无衬线、Grotesk、衬线、窄体、宽体、Display、手写或实验字体；根据品牌性格选择，不要默认 Inter。
 - 中文可探索现代黑体、宋体、衬线、圆体、书写体和特色展示字体；展示字体适合标题与短文本，长正文仍应优先阅读体验。
-- 数字字体要特别谨慎：追求精致、现代和协调，同时保证数字基线、字面高度、宽度、对齐和可读性。避免过度艺术化、上下错位明显或数字形态不统一的字体。
+- 数字字体要特别谨慎：保证基线、字面高度、宽度、对齐和可读性统一，避免过度艺术化、宽窄不一。
 - 可以利用字重、字宽、字距、大小写、斜体、连字和断行形成设计感，不要只靠更换字体名称。
-- 使用前检查字形覆盖、数字表现、加载速度、授权和 CDN 可用性，并设置可靠回退，避免字体加载失败导致布局错乱。
-- 优先从 Google Fonts、Fontsource、ZeoSeven 等可靠字体资源中寻找合适字体。按需通过 CDN 引入，不要盲目加载大量字重和字符集。
-- 设置合理的字体回退栈；字体未加载时也应保持布局稳定。
+- 使用前检查字形覆盖、数字表现、加载速度、授权和 CDN 可用性；设置可靠回退栈，未加载时布局也要稳定。
+- 优先从 Google Fonts、Fontsource、ZeoSeven 引入。按需通过 CDN 引入，不要盲目加载大量字重和字符集。
+- 最小字号不小于 12px；排版尽量不主动断行，通过给合适的显示宽度自适应换行。
 
 参考：
 - [Google Design：Choosing Web Fonts](https://design.google/library/choosing-web-fonts-beginners-guide)
-- [Google Fonts](https://fonts.google.com/)
-- [Fontsource](https://fontsource.org/)
-- [ZeoSeven](https://fonts.zeoseven.com/)
+- [Google Fonts](https://fonts.google.com/) · [Fontsource](https://fontsource.org/) · [ZeoSeven](https://fonts.zeoseven.com/)
 
 ### 4.5 配色设计
 
@@ -199,6 +277,50 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 - 页面不能只有首屏精致，滚动区域、弹层、菜单、空状态和错误状态也要完整设计。
 - 不要为了“像设计稿”牺牲真实使用时的可读性、可操作性和响应速度。
 
+### 4.8 边框不能被裁掉（裁剪容器必读）
+
+**带边框的组件放进会裁剪内容的父容器时，父容器内边距必须 ≥ 组件所有状态的最大边框宽度。** 否则边框被切掉一截，边界缺失会直接读作「渲染坏了」。
+
+#### 机制
+
+`overflow: hidden` 裁的是容器的 **padding box**（内容盒 + 内边距）：
+
+- 容器内边距**能**吸收子元素向外溢出 → 留够内边距即可露出边框；
+- 但 `box-shadow` 外扩与 `outline` 画在**边框盒之外**，内边距救不回来。
+
+#### 解法（按优先级）
+
+**1. 全局 `box-sizing: border-box`（首选）** —— 从根上消除溢出：
+
+```css
+*, *::before, *::after { box-sizing: border-box; }
+```
+
+**2. 父容器留出边框余量** —— `padding ≥ 边框宽 + 1px`。实测：边框 4px 时，`padding ≤ 6px` 右边框被裁，`≥ 7px` 完整；**恰等于边框宽 4px 仍会被裁**，务必留余量。
+
+**3. 用 inset 阴影替代边框** —— 不占空间、永不被裁：
+
+```css
+.card { border: 0; box-shadow: inset 0 0 0 1px var(--line); }
+```
+
+#### 禁止
+
+- 外扩 `box-shadow` / `outline` 当常驻边框（画在边框盒外，一裁就没）；
+- 负 margin 合并相邻边框（有裁剪时必被切）。
+
+#### hover 才出现边框时
+
+最高频场景：默认态正常，一 hover 边框就少一截。用透明边框占位、只切颜色，切换不跳动也不溢出：
+
+```css
+.item { border: 1px solid transparent; transition: border-color .18s; }
+.item:hover { border-color: var(--line); }
+```
+
+逐组件核对见第九节自检第 13 条。
+
+
 ## 五、动画设计与实现
 
 动画是 UI 设计的一部分，不只是给按钮添加 hover 效果。应根据产品气质和用户需求，主动判断动画在界面中的角色。
@@ -228,75 +350,43 @@ description: 生成高品质、有审美辨识度的高保真 UI 原型。根据
 - 使用 GSAP Timeline 管理一组相关动画，利用标签、重叠、嵌套和回调组织节奏，不要靠大量互不关联的 delay 拼接。
 - 需要滚动驱动时使用 ScrollTrigger；需要平滑滚动、逐字逐行、路径运动或翻转过渡时，再按需选择相应插件。
 - 简单状态反馈仍可使用 CSS transition / keyframes；不要为了使用库而引入库。
-- 按需通过 CDN 引入，并遵循第八节的技术约定。
+- 按需通过 CDN 引入（如 `<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>`），并遵循第八节的技术约定。
 - 动画应模块化管理，便于播放、暂停、反向、重置和清理。
 
 ### 5.4 连续操作、打断与恢复
 
 **交互动画必须考虑用户连续操作。不要因为新操作到来就粗暴终止所有动画，也不要让动画状态与真实 UI 状态脱节。**
 
-- 用户在动画过程中再次点击、切换、拖动或触发其他动作时，界面应从当前视觉状态自然衔接到新的目标状态，不闪烁、不跳回初始位置。
-- 同一元素不同属性的动画尽量互不干扰；只处理真正冲突的属性，不要无差别清除整个目标的所有动画。
-- 对展开 / 收起、打开 / 关闭等可逆状态，优先复用同一 Timeline，通过 `reverse()`、`play()` 或进度控制实现自然反向，而不是重新从初始状态播放。
-- 对用户不断改变目标值的交互，使用可更新目标的动画方式，让运动跟随最新输入。
-- 多个动画序列需要衔接时，使用 Timeline、嵌套 Timeline、回调或状态机管理；不要在多个事件中创建互相争夺同一属性的独立动画。
-- 明确区分“继续当前序列”“反向播放”“从当前状态转向新目标”和“并行执行其他属性动画”。根据交互语义选择，不能简单地一律追加或一律终止。
-- 不要随意调用 `killTweensOf()`、`kill()` 或使用全局 `overwrite: true` 清除动画。GSAP 的 `overwrite: "auto"` 可以处理同一目标上发生冲突的属性，同时保留不冲突的动画；仍需合理规划动画归属。
+- 用户在动画过程中再次操作时，界面应从当前视觉状态自然衔接到新目标状态，不闪烁、不跳回初始位置。
+- 展开 / 收起、打开 / 关闭等可逆状态，复用同一 Timeline 并用 `reverse()` / `play()` 自然反向，不要重新创建动画。
+- 目标值不断变化时（如拖拽、跟随），用可更新目标的动画方式（`gsap.quickTo()`）让运动跟随最新输入，不要每次都创建新的补间。
+- 多个动画序列需要衔接时，用 Timeline、嵌套 Timeline、回调或状态机统一管理，不要创建互相争夺同一属性的独立动画。
+- 明确区分「继续当前序列」「反向播放」「从当前状态转向新目标」「并行执行其他属性动画」，按交互语义选择，不要一律追加或一律终止。
+- 只处理真正冲突的属性，不要无差别清除整个目标的所有动画；GSAP 用 `overwrite: "auto"` 即可，不要随意 `kill()` 或全局 `overwrite: true`。
 
 ### 5.5 GSAP 交互示例
 
-以下示例说明可逆面板如何在动画尚未结束时响应下一次点击。反向播放会从当前进度自然返回，不必重新创建动画。
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-```
+可逆面板在动画尚未结束时再次点击，应从当前进度自然返回，而不是重新创建动画：
 
 ```js
-const panel = document.querySelector(".panel");
-const toggle = document.querySelector(".toggle");
+// 初始视觉状态，保证首次展开有明确起点
+gsap.set(panel, { autoAlpha: 0, y: "1em", scale: 0.98, transformOrigin: "center top" });
 
-// 设置面板初始视觉状态，确保首次展开时有明确的起点
-gsap.set(panel, {
-  autoAlpha: 0,
-  y: "1em",
-  scale: 0.98,
-  transformOrigin: "center top"
-});
-
-const panelMotion = gsap.timeline({
-  paused: true,
-  defaults: { ease: "power3.out" }
-});
-
-panelMotion
-  .to(panel, {
-    autoAlpha: 1,
-    y: 0,
-    scale: 1,
-    duration: 0.65
-  });
+const panelMotion = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
+  .to(panel, { autoAlpha: 1, y: 0, scale: 1, duration: 0.65 });
 
 let isOpen = false;
-
 toggle.addEventListener("click", () => {
   isOpen = !isOpen;
-
-  // 动画进行中再次操作，从当前进度自然反向或继续
-  panelMotion.reversed(!isOpen).paused(false);
+  panelMotion.reversed(!isOpen).paused(false);  // 反向播放会从当前进度自然返回
 });
 ```
 
-对连续变化的目标值，可以使用 `gsap.quickTo()`，避免每次输入都创建大量互相竞争的动画：
+对连续变化的目标值，用 `gsap.quickTo()` 避免每次输入都创建大量互相竞争的动画：
 
 ```js
-const moveToX = gsap.quickTo(".cursor", "x", {
-  duration: 0.7,
-  ease: "power3.out"
-});
-
-window.addEventListener("pointermove", (event) => {
-  moveToX(event.clientX);
-});
+const moveToX = gsap.quickTo(".cursor", "x", { duration: 0.7, ease: "power3.out" });
+window.addEventListener("pointermove", (e) => moveToX(e.clientX));
 ```
 
 对需要多个阶段的动画，应优先维护一个明确的 Timeline；新操作改变目标时，更新或反向现有序列。只有确实发生属性冲突时，才覆盖冲突部分。
@@ -399,11 +489,11 @@ python tools/resource-getter/get.py probe <url>
 
 **2. 实心（filled，激活 / 选中 / "开"态）**
 
-线性图标在激活态经常"看不出变化"——**收藏、书签、星标、tab 选中、开关打开、已读**这类必须有可见状态差异的，一律用实心，否则状态不可见（这是最常见的"激活态不显示"根因）。三种取法按场景选：
+线性图标在激活态经常"看不出变化"——**收藏、书签、星标、tab 选中、开关打开、已读**这类必须有可见状态差异的，一律用实心，否则状态不可见（这是最常见的"激活态不显示"根因）。本仓库是零构建原生页面，**最稳的做法是直接内联 SVG**：在 tabler.io 切到 *Filled* 标签页取该图标 SVG，激活态 `fill="currentColor"`（实心），非激活态 `fill="none" stroke="currentColor" stroke-width="1.5"`（线框）。同一图标两态各留一份，按状态切 class。
 
-- **React / Vue / 组件项目**：导入实心组件，命名为「同名 + `Filled`」后缀，例如 `IconHeart` → `IconHeartFilled`、`IconKey` → `IconKeyFilled`；线宽用 `stroke={1.5}`（或 `strokeWidth`）单独调。
-- **纯 HTML 原型**：webfont 的实心是另一套字体（`tabler-icons-filled.min.css`），与线框共用 `ti ti-<name>` 类名但字形码不同，同一页混排易冲突。**最稳的做法是直接内联 SVG**——在 tabler.io 切到 *Filled* 标签页取该图标 SVG：激活态 `<svg … fill="currentColor">`（实心），非激活态 `<svg … fill="none" stroke="currentColor" stroke-width="1.5">`（线框）。同一图标两态各留一份 SVG，按状态切 class。
-- **成对设计**：凡是带"开 / 关"语义的图标（heart / star / bookmark / bell / check / eye / lock 等），都准备 outline + filled 两份，激活时切 filled；实心**只**出现在激活 / 选中态，不滥用。
+> webfont 的实心是另一套字体（`tabler-icons-filled.min.css`），与线框共用 `ti ti-<name>` 类名但字形码不同，同一页混排易冲突，不要混用。
+
+凡是带"开 / 关"语义的图标（heart / star / bookmark / bell / check / eye / lock 等），都准备 outline + filled 两份；实心**只**出现在激活 / 选中态，不滥用。
 
 **3. 统一原则**
 
@@ -453,6 +543,7 @@ python tools/image-forge/generate.py --style lineicon \
 - 加与产品无关的功能来凑数（记账 App 里的天气、文档编辑器里的股票行情）。这是"功能多"的唯一反例。
 - 不伪造业务成功：不要弹出假的"支付成功""已上传至服务器"。
 - 不把业务数据写进 localStorage / sessionStorage / IndexedDB——刷新即回到初始演示状态。只有 UI 偏好（主题、动效开关）可缓存。
+- **不要让界面暴露「这是模拟的」**：本地数据、假延迟都可以用，但界面文案不能出现"演示""示例""Mock"等字样，也不能画出教学标注（详见 4.3）。
 
 **复杂逻辑怎么办**
 
@@ -472,11 +563,13 @@ python tools/image-forge/generate.py --style lineicon \
 ## 八、技术约定
 
 - HTML / CSS / JS 实现。内容多时拆为 `index.html` + `styles.css` + `app.js`。
+- **第一行 CSS 写全局 `box-sizing: border-box`**：`* , *::before, *::after { box-sizing: border-box; }`。带边框的组件在裁剪容器里溢出、被裁掉边框，多半是漏了这条；内边距余量规则见 4.8。
 - **第三方库只走 CDN、零构建**：GSAP 全家桶、Lenis、Alpine.js。按需引，能不引就不引；**禁 React / Vue / Tailwind / Next**，也不下载到本地。
 - 颜色、字号、间距、圆角、阴影先定义成 CSS 变量，之后一律引用变量。
 - 语义化标签；可见焦点态；必要的 `aria-*`；对比度达标。
 - 桌面与窄屏两档响应式，窄屏重排而非横向滚动。
 - 页面输出到 `ui/<page-name>/`，英文 kebab-case，不超过 4 个单词；`metadata.json` 按 `skills/ui-metadata/SKILL.md` 归档。
+- 软件 / App / 组件类型必须用「舞台 + 画布」两层结构，浮层一律 `position: absolute` 挂在画布内，禁止 `position: fixed`，禁止 `vw/vh` 给画布内元素定尺寸（详见「容器边界」）。
 
 ## 九、视觉质量检查
 
@@ -493,7 +586,8 @@ python tools/image-forge/generate.py --style lineicon \
 - 所有动画都使用线性运动、统一淡入，或使用大量互相冲突的独立动画。
 - 动画过程中重复操作导致跳帧、闪烁、回到初始位置或状态错乱。
 - 为追求视觉效果牺牲可读性、可访问性、性能和真实操作体验。
-- 使用假数据、空洞营销词、重复文案和无响应的装饰性控件。
+- 使用空洞营销词、重复文案和无响应的装饰性控件。
+- 在界面里出现「演示 / 原型 / 模拟 / 示例 / Mock / 占位」等字样，或画出教学标注、序号箭头、说明气泡——界面必须像正式产品。（数据可以是本地模拟的，但界面上不得暴露「这是模拟的」。）
 
 ### 交付前自检
 
@@ -506,6 +600,10 @@ python tools/image-forge/generate.py --style lineicon \
 7. **细节**：图标、边界、层级、对齐、状态和素材是否精致统一？
 8. **适配**：不同视口、缩放和输入方式下是否仍然清晰可用？
 9. **无障碍与性能**：减少动态效果时是否仍然完整？是否存在明显掉帧或操作阻塞？
+10. **画布边界**（软件 / App / 组件）：逐个打开对话框、抽屉、下拉、Toast——是否全部停在画布内？画布外的舞台是否保持干净、无遮罩与模糊？浮层是否用了 `position: absolute` 而非 `fixed`？
+11. **对话框比例**（软件）：内容多的是否为 16:9 / 4:3 的横向对话框？单一列表才允许纵向？是否在画布内居中并留出 24px 以上边距？
+12. **正式感**：通读界面全部文字——有没有「演示」「示例」「Mock」「占位」「原型」这类字样？有没有教学标注、序号箭头、说明气泡？文案与数据是否都像真实业务内容？
+13. **边框完整性**：逐个切换带边框组件的 hover / 激活态——边框有没有被父容器裁掉一截？父容器有 `overflow` 裁剪时，内边距是否覆盖了所有状态的最大边框宽度？页面是否有全局 `box-sizing: border-box`？边框出现时布局有没有跳动？
 
 最后整体审视：去掉无意义装饰和重复表达，保留必要功能与信息。若画面仍显普通，应重新推敲构图、字体和视觉语言，而不是继续堆卡片、渐变或阴影。
 
