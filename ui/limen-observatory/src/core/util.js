@@ -14,10 +14,7 @@
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
     );
 
-  /* 表面采样裁格：matrix_details.png 为干净 3×3 等格接触印样图。
-     background-size = 300%（图片放大 3 倍），第 k 格（0/1/2）居中定位 = k*50%，严丝合缝不偏不漏。 */
-  const CELL_ZOOM = "300% 300%";
-  const cellPos = (k) => (k * 50).toFixed(2);
-
-  App.util = { $, $$, pad2, escapeHtml, CELL_ZOOM, cellPos };
+  /* 注：九宫格已拆为独立瓦片（assets/detail_00..08 等），
+     运行时不再需要 background-size / background-position 裁格计算。 */
+  App.util = { $, $$, pad2, escapeHtml };
 })(window.App);

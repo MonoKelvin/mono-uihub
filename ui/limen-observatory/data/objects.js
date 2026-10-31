@@ -14,7 +14,7 @@
 window.LIMEN = window.LIMEN || {};
 window.LIMEN.objects = [
   {
-    id: "LJ-117", name: "无主之眼", art: "eye", img: "assets/eye_ws.png",
+    id: "LJ-117", name: "无主之眼", art: "eye", img: "assets/eye_ws.webp",
     classification: "知觉干涉", icon: "ti-eye", risk: "警戒",
     whisper: "它比你先眨眼。",
     note: "闭上眼睛后，仍能感觉到它。",
@@ -46,12 +46,12 @@ window.LIMEN.objects = [
       { ts: "收录 1979-03-11", author: "清扫队", text: "于 03 号室后墙夹缝拾得，墙体无破损。" },
       { ts: "事件 1996-08-02", author: "观察员 M", text: "连续三日，瞳仁中映出的房间比本室多出一扇门。" },
     ],
-    gallery: ["assets/eye_ws.png", "assets/eye_alt_ws.png"],
+    gallery: ["assets/eye_ws.webp", "assets/eye_alt_ws.webp"],
     sound: true,
     origin: "于 03 号观测室后墙的夹缝中被发现，墙体本身并无破损。它像是被夹在两个房间之间，而非来自任何一端；移交时表面裹着一层来历不明的潮气。",
   },
   {
-    id: "XT-B2-204", name: "回响立方", art: "cube", img: "assets/cube_ws.png",
+    id: "XT-B2-204", name: "回响立方", art: "cube", img: "assets/cube_ws.webp",
     classification: "空间褶皱", icon: "ti-box", risk: "安全",
     whisper: "敲一下，它会晚一点还给你。",
     note: "声音从背面传来，但背面是光滑的。",
@@ -82,12 +82,12 @@ window.LIMEN.objects = [
       { ts: "收录 2004-06-19", author: "送检流程", text: "随陨石残片送检，成分与已知天体不符。" },
       { ts: "事件 2013-11-30", author: "技术员 周", text: "一次重击后，回响持续 41 分钟未衰减，后自行终止。" },
     ],
-    gallery: ["assets/cube_ws.png", "assets/cube_alt_ws.png"],
+    gallery: ["assets/cube_ws.webp", "assets/cube_alt_ws.webp"],
     sound: true,
     origin: "随一批陨石残片送检流程进入本室，但成分与任何已知天体都不吻合。亚种代号 B2 指其呈二阶对称，与同批 A 系立方明显不同。",
   },
   {
-    id: "YH-339", name: "无名之挛", art: "hand", img: "assets/hand_ws.png",
+    id: "YH-339", name: "无名之挛", art: "hand", img: "assets/hand_ws.webp",
     classification: "接触污染", icon: "ti-vector", risk: "警戒",
     whisper: "别数它的触须。",
     note: "触碰后，你会忘记一段对话。",
@@ -123,7 +123,7 @@ window.LIMEN.objects = [
     origin: "自地下蓄水层检修井打捞而起，出水时几乎没有重量感。井壁留有与其轮廓吻合的凹痕，仿佛它本就嵌在那里，而非坠入。",
   },
   {
-    id: "NB-001", name: "悬门", art: "door", img: "assets/door_ws.png",
+    id: "NB-001", name: "悬门", art: "door", img: "assets/door_ws.webp",
     classification: "通道异常", icon: "ti-door", risk: "警戒",
     whisper: "门后是你今天没去的地方。",
     note: "它只朝一个方向开。",
@@ -159,7 +159,7 @@ window.LIMEN.objects = [
     origin: "本室建成前已存在于该位置，施工档案里找不到它的来处。作为 001 号，它是整座编目体系的起点。",
   },
   {
-    id: "WX-056", name: "回声之铃", art: "bell", img: "assets/bell_ws.png",
+    id: "WX-056", name: "回声之铃", art: "bell", img: "assets/bell_ws.webp",
     classification: "声学残响", icon: "ti-bell", risk: "安全",
     whisper: "无人敲它，它却在数数。",
     note: "余音里夹着一句听不清的名字。",
@@ -190,12 +190,12 @@ window.LIMEN.objects = [
       { ts: "收录 1998-04-15", author: "长波监听", text: "由一段本不该存在的余音反向定位得到。" },
       { ts: "事件 2014-02-09", author: "技术员 周", text: "铃身在无触碰时微震 3 次，间隔恰好等于观察者心率。" },
     ],
-    gallery: ["assets/bell_ws.png", "assets/bell_alt_ws.png"],
+    gallery: ["assets/bell_ws.webp", "assets/bell_alt_ws.webp"],
     sound: true,
     origin: "在一次长波监听任务中，由一段本不该存在的余音反向定位得到。它从不主动发声，却总在记录仪关闭之后响起。",
   },
   {
-    id: "SK-288", name: "盐之书", art: "book", img: "assets/book_ws.png",
+    id: "SK-288", name: "盐之书", art: "book", img: "assets/book_ws.webp",
     classification: "记忆结晶", icon: "ti-book", risk: "警戒",
     whisper: "翻到哪一页，就忘记哪一天。",
     note: "书页由盐粒长成，触之即融。",
@@ -231,7 +231,7 @@ window.LIMEN.objects = [
     origin: "由一位匿名收藏家连同防潮箱一并移交，箱内盐晶至今仍在缓慢生长。编号 288 为原藏家目录序号，本室予以保留。",
   },
   {
-    id: "XT-Y0-345", name: "无色之焰", art: "flame", img: "assets/flame_ws.png",
+    id: "XT-Y0-345", name: "无色之焰", art: "flame", img: "assets/flame_ws.webp",
     classification: "热力学悖论", icon: "ti-flame", risk: "安全",
     whisper: "它烧的不是东西，是安静。",
     note: "火焰透明如玻璃，触之微凉。",
@@ -267,7 +267,7 @@ window.LIMEN.objects = [
     origin: "与 XT 系星外物同源，亚种代号 Y0 标记其「不可见燃烧」特征。345 为当年同批次第 45 件送检品，其余 44 件均未能留存。",
   },
   {
-    id: "LJ-429", name: "镜中喑", art: "lips", img: "assets/lips_ws.png",
+    id: "LJ-429", name: "镜中喑", art: "lips", img: "assets/lips_ws.webp",
     classification: "反射投射", icon: "ti-message", risk: "警戒",
     whisper: "你闭嘴，它才开口。",
     note: "石隙只对沉默者低语。",
@@ -305,7 +305,7 @@ window.LIMEN.objects = [
 
   /* ---------------- 新增异物（同目录追加配置即可） ---------------- */
   {
-    id: "NB-002", name: "回环之阶", art: "stair", img: "assets/stair_ws.png",
+    id: "NB-002", name: "回环之阶", art: "stair", img: "assets/stair_ws.webp",
     classification: "空间递归", icon: "ti-stairs", risk: "警戒",
     whisper: "上楼，是为了回到原地。",
     note: "每一级都比上一级矮一点，却永远走不到顶。",
@@ -341,7 +341,7 @@ window.LIMEN.objects = [
     origin: "本室扩建时从地基中露出，施工记录未载其来处；与 NB-001 同属内禀，但出现得更晚。",
   },
   {
-    id: "LJ-208", name: "虚镜", art: "mirror", img: "assets/mirror_ws.png",
+    id: "LJ-208", name: "虚镜", art: "mirror", img: "assets/mirror_ws.webp",
     classification: "反射异常", icon: "ti-polygon", risk: "警戒",
     whisper: "镜子里的人，比你还认识你。",
     note: "它只映出你从未来过的房间。",
@@ -377,7 +377,7 @@ window.LIMEN.objects = [
     origin: "与 LJ-117 同一次临界交界清扫中，于相邻夹墙后拾得；表面映出的房间，本室从未建造。",
   },
   {
-    id: "XT-C1-117", name: "坠核", art: "core", img: "assets/core_ws.png",
+    id: "XT-C1-117", name: "坠核", art: "core", img: "assets/core_ws.webp",
     classification: "天体残片", icon: "ti-hexagon", risk: "安全",
     whisper: "它落地之前，已经在下落了很久。",
     note: "核心持续散发冷光，不发热。",
@@ -413,7 +413,7 @@ window.LIMEN.objects = [
     origin: "与 XT 系星外物同批，亚种代号 C1 指其高密度冷光特征；117 为同批第 17 件。",
   },
   {
-    id: "YH-512", name: "渊吟", art: "well", img: "assets/well_ws.png",
+    id: "YH-512", name: "渊吟", art: "well", img: "assets/well_ws.webp",
     classification: "声学深源", icon: "ti-wave-sine", risk: "警戒",
     whisper: "井底有人在替你叹气。",
     note: "贴近井口，会听见自己的叹息被提前发出。",
@@ -449,7 +449,7 @@ window.LIMEN.objects = [
     origin: "自地下蓄水层检修井旁的第二口井录得，与 YH-339 同源水系，但更深、更安静。",
   },
   {
-    id: "WX-090", name: "静频", art: "receiver", img: "assets/receiver_ws.png",
+    id: "WX-090", name: "静频", art: "receiver", img: "assets/receiver_ws.webp",
     classification: "信号残响", icon: "ti-broadcast", risk: "安全",
     whisper: "它在等一句你还没说出口的话。",
     note: "旋钮永远停在 0，却一直在收。",
@@ -485,7 +485,7 @@ window.LIMEN.objects = [
     origin: "在一次长波监听任务中，由一段本不该存在的静默反向定位得到；旋钮停在 0，却一直在收。",
   },
   {
-    id: "SK-301", name: "环册", art: "tome", img: "assets/tome_ws.png",
+    id: "SK-301", name: "环册", art: "tome", img: "assets/tome_ws.webp",
     classification: "记忆环", icon: "ti-bookmark", risk: "警戒",
     whisper: "合上它，你就忘记翻开的顺序。",
     note: "书页首尾相连，没有第一页。",
@@ -521,7 +521,7 @@ window.LIMEN.objects = [
     origin: "由匿名收藏家连同防潮箱一并移交，编号 301 为原藏家目录序号；书页首尾相连，没有第一页。",
   },
   {
-    id: "LJ-330", name: "织影", art: "web", img: "assets/web_ws.png",
+    id: "LJ-330", name: "织影", art: "web", img: "assets/web_ws.webp",
     classification: "投影编织", icon: "ti-aperture", risk: "危险",
     whisper: "别盯着结点，结点会盯着你。",
     note: "丝线上结着不属于任何光源的影子。",
@@ -557,7 +557,7 @@ window.LIMEN.objects = [
     origin: "第三处临界交界清扫所得，与 LJ-117、LJ-208 同批但不同位点；丝线上结着不属于任何光源的影子。",
   },
   {
-    id: "XT-Y0-402", name: "逆影之木", art: "tree", img: "assets/tree_ws.png",
+    id: "XT-Y0-402", name: "逆影之木", art: "tree", img: "assets/tree_ws.webp",
     classification: "拓扑倒置", icon: "ti-tree", risk: "安全",
     whisper: "它的影子，比它先长好。",
     note: "树影是一棵完整的树，本体却只剩枯枝。",
@@ -595,7 +595,7 @@ window.LIMEN.objects = [
 
   /* ---------------- 第九轮扩充（12 件，16 → 28） ---------------- */
   {
-    id: "WX-121", name: "逆唱", art: "horn", img: "assets/horn_ws.png",
+    id: "WX-121", name: "逆唱", art: "horn", img: "assets/horn_ws.webp",
     classification: "声学倒置", icon: "ti-volume", risk: "安全",
     whisper: "它只收，不唱。",
     note: "对着它说话，声音不会回来。",
@@ -626,12 +626,12 @@ window.LIMEN.objects = [
       { ts: "收录 1998-04-15", author: "长波监听", text: "与 WX 系同一次监听任务所得，来源不明。" },
       { ts: "事件 2016-05-08", author: "技术员 周", text: "舱内本底降至负值后，当日录音文件全部不可读。" },
     ],
-    gallery: ["assets/horn_ws.png", "assets/horn_alt_ws.png"],
+    gallery: ["assets/horn_ws.webp", "assets/horn_alt_ws.webp"],
     sound: false,
     origin: "与 WX-056 同一次长波监听任务中获得。它从不发出声音，却会把附近的声音全部收走。",
   },
   {
-    id: "YH-640", name: "渊环", art: "ring", img: "assets/ring_ws.png",
+    id: "YH-640", name: "渊环", art: "ring", img: "assets/ring_ws.webp",
     classification: "潮汐残响", icon: "ti-droplet", risk: "警戒",
     whisper: "环里没有水，却有潮声。",
     note: "贴近环心，能听见一次涨潮的全过程。",
@@ -662,12 +662,12 @@ window.LIMEN.objects = [
       { ts: "收录 1969-09-04", author: "检修队", text: "自 YH-339 邻井旁的第三口井捞得。" },
       { ts: "事件 2003-02-14", author: "观察员 K", text: "以布覆盖后，潮声仍从舱外听得见。" },
     ],
-    gallery: ["assets/ring_ws.png", "assets/ring_alt_ws.png"],
+    gallery: ["assets/ring_ws.webp", "assets/ring_alt_ws.webp"],
     sound: true,
     origin: "自 YH-339 邻井旁的第三口井打捞而起。环中不含一滴水，却完整保留了那段涨潮的声音。",
   },
   {
-    id: "SK-410", name: "不涸之砚", art: "inkstone", img: "assets/inkstone_ws.png",
+    id: "SK-410", name: "不涸之砚", art: "inkstone", img: "assets/inkstone_ws.webp",
     classification: "液体悖论", icon: "ti-fingerprint", risk: "安全",
     whisper: "墨从不干，也从不减少。",
     note: "往里添水，水位不会上升。",
@@ -698,12 +698,12 @@ window.LIMEN.objects = [
       { ts: "收录 1985-10-30", author: "匿名移交", text: "与 SK 系同批移交，藏家未留姓名。" },
       { ts: "事件 2012-07-08", author: "审核员 林", text: "以该砚写下的三份草案，字迹三日后退至全无。" },
     ],
-    gallery: ["assets/inkstone_ws.png", "assets/inkstone_alt_ws.png"],
+    gallery: ["assets/inkstone_ws.webp", "assets/inkstone_alt_ws.webp"],
     sound: false,
     origin: "与 SK-288、SK-301 同一次匿名移交进入本室。藏家未曾留下姓名，只在清单上写了「勿涸」。",
   },
   {
-    id: "LJ-506", name: "折层", art: "fold", img: "assets/fold_ws.png",
+    id: "LJ-506", name: "折层", art: "fold", img: "assets/fold_ws.webp",
     classification: "空间褶皱", icon: "ti-box-model-2", risk: "警戒",
     whisper: "展开之后，比合上时更小。",
     note: "每一次折叠，都会多出一个面。",
@@ -739,7 +739,7 @@ window.LIMEN.objects = [
     origin: "第四处临界交界清扫所得，被发现时夹在两层楼板之间——那里本不该有任何空隙。",
   },
   {
-    id: "XT-D3-088", name: "空匣", art: "casket", img: "assets/casket_ws.png",
+    id: "XT-D3-088", name: "空匣", art: "casket", img: "assets/casket_ws.webp",
     classification: "容积异常", icon: "ti-archive", risk: "安全",
     whisper: "打不开，也不需要打开。",
     note: "内部容积经测定为零。",
@@ -775,7 +775,7 @@ window.LIMEN.objects = [
     origin: "与 XT 系星外物同批，亚种代号 D3 标记其「零容积」特征；088 为同批第 88 件，也是唯一留存的一件。",
   },
   {
-    id: "NB-014", name: "常明壳", art: "lamp", img: "assets/lamp_ws.png",
+    id: "NB-014", name: "常明壳", art: "lamp", img: "assets/lamp_ws.webp",
     classification: "自持光", icon: "ti-bulb", risk: "安全",
     whisper: "这里从未通过电。",
     note: "灯泡是空的，却一直亮着。",
@@ -806,12 +806,12 @@ window.LIMEN.objects = [
       { ts: "收录 1971-01-01", author: "建室记录", text: "本室动工时已在 B1 走廊，从未接线。" },
       { ts: "登记 1985-06-02", author: "观察员 K", text: "迟至今日才正式登记为 014 号。" },
     ],
-    gallery: ["assets/lamp_ws.png", "assets/lamp_alt_ws.png"],
+    gallery: ["assets/lamp_ws.webp", "assets/lamp_alt_ws.webp"],
     sound: false,
     origin: "本室动工时已存在于 B1 走廊，从未接入任何线路，也从未熄灭。它比 NB-001 晚了十四年才被正式登记。",
   },
   {
-    id: "YH-733", name: "沉谱", art: "score", img: "assets/score_ws.png",
+    id: "YH-733", name: "沉谱", art: "score", img: "assets/score_ws.webp",
     classification: "共振石语", icon: "ti-activity", risk: "警戒",
     whisper: "石上的槽，是会唱歌的。",
     note: "以湿布擦过刻槽，它会发出一声低鸣。",
@@ -847,7 +847,7 @@ window.LIMEN.objects = [
     origin: "在 YH-512 邻井的井壁上被检修时露出。十九道深浅不一的刻槽，至今无人能读出它记的是哪一支曲子。",
   },
   {
-    id: "WX-155", name: "静噪", art: "antenna", img: "assets/antenna_ws.png",
+    id: "WX-155", name: "静噪", art: "antenna", img: "assets/antenna_ws.webp",
     classification: "信号真空", icon: "ti-scan", risk: "安全",
     whisper: "它接收，但从不输出。",
     note: "接收到的信号，全部消失。",
@@ -883,7 +883,7 @@ window.LIMEN.objects = [
     origin: "与 WX 系同一次长波监听任务中架设的测向天线；任务结束后它拆不下来，也没人再测得出它能接收什么。",
   },
   {
-    id: "SK-477", name: "匿章", art: "stamp", img: "assets/stamp_ws.png",
+    id: "SK-477", name: "匿章", art: "stamp", img: "assets/stamp_ws.webp",
     classification: "印痕抹除", icon: "ti-eye-off", risk: "警戒",
     whisper: "盖下去，纸还是白的。",
     note: "被它盖过的文件，从此不再被任何人提起。",
@@ -919,7 +919,7 @@ window.LIMEN.objects = [
     origin: "与 SK 系同一次匿名移交进入本室，附言只有两个字：「慎盖」。编号 477 沿用原藏家目录序号。",
   },
   {
-    id: "XT-E0-061", name: "负霜", art: "frost", img: "assets/frost_ws.png",
+    id: "XT-E0-061", name: "负霜", art: "frost", img: "assets/frost_ws.webp",
     classification: "热学负常", icon: "ti-temperature", risk: "安全",
     whisper: "握着它，手会发热。",
     note: "周围的物件在结霜，它自己不会。",
@@ -955,7 +955,7 @@ window.LIMEN.objects = [
     origin: "与 XT 系星外物同源，亚种代号 E0 标记其「反向热辐射」特征；061 为同批第 61 件，抵达时包装箱内已结满霜。",
   },
   {
-    id: "LJ-618", name: "错层窗", art: "window", img: "assets/window_ws.png",
+    id: "LJ-618", name: "错层窗", art: "window", img: "assets/window_ws.webp",
     classification: "拓扑错位", icon: "ti-arrows-exchange", risk: "警戒",
     whisper: "窗外不属于这栋楼。",
     note: "打开窗，会看见一个不在本楼的房间。",
@@ -991,7 +991,7 @@ window.LIMEN.objects = [
     origin: "第五处临界交界清扫所得，与 LJ-330 同批但不同位点。它嵌在一段本不该出现窗的墙上。",
   },
   {
-    id: "NB-027", name: "无针钟", art: "clock", img: "assets/clock_ws.png",
+    id: "NB-027", name: "无针钟", art: "clock", img: "assets/clock_ws.webp",
     classification: "时间剥离", icon: "ti-clock", risk: "警戒",
     whisper: "没有指针，它照样在走。",
     note: "盯着盘面久了，会丢掉一小段时间。",
@@ -1022,7 +1022,7 @@ window.LIMEN.objects = [
       { ts: "收录 1973-04-02", author: "施工队", text: "扩建时在值班室旧墙夹层中发现。" },
       { ts: "事件 1997-08-16", author: "观察员 M", text: "盯视 47 秒后丢失约 12 分钟，期间行踪无法回忆。" },
     ],
-    gallery: ["assets/clock_ws.png", "assets/clock_alt_ws.png"],
+    gallery: ["assets/clock_ws.webp", "assets/clock_alt_ws.webp"],
     sound: false,
     origin: "本室扩建时在值班室旧墙夹层中发现，看上去被刻意砌进去。它没有指针，却始终走得比标准时间还准。",
   },

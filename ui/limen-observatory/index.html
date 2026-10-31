@@ -18,6 +18,10 @@
   <script src="data/story.js" defer></script>
   <script src="data/objects.js" defer></script>
   <script src="data/dossiers.js" defer></script>
+  <script src="data/dossiers.a.js" defer></script>
+  <script src="data/dossiers.b.js" defer></script>
+  <script src="data/dossiers.c.js" defer></script>
+  <script src="data/dossiers.d.js" defer></script>
   <script src="sound.js" defer></script>
 
   <!-- 核心模块（经典脚本 + window.App 命名空间，兼容 file://） -->
@@ -27,6 +31,7 @@
   <script src="src/core/ui.js" defer></script>
   <script src="src/core/settings.js" defer></script>
   <script src="src/core/router.js" defer></script>
+  <script src="src/core/mk.js" defer></script>
 
   <!-- 视图模块 -->
   <script src="src/views/observatory.js" defer></script>
@@ -41,14 +46,37 @@
 <body>
   <main class="software-shell" aria-label="异物异常观测室">
     <header class="window-bar">
-      <a class="brand" href="#/observatory" aria-label="异物，重置演示">
+      <a class="brand" href="#/observatory" aria-label="异物，返回观测室">
         <span class="brand-mark" aria-hidden="true"><span></span></span>
         <strong>异物</strong><span class="brand-divider"></span><span class="brand-caption">异常观测室</span>
       </a>
-      <div class="window-session"><span class="status-dot"></span><span>本地演示</span><span class="session-number">室 04</span></div>
+      <div class="window-session" aria-label="站点信息">
+        <span class="hb-item">
+          <i class="ti ti-building-arch" aria-hidden="true"></i>
+          <span class="hb-main" id="hb-org">观测司</span>
+          <span class="hb-sub" id="hb-site">第九封存处</span>
+        </span>
+        <span class="hb-rule" aria-hidden="true"></span>
+        <span class="hb-item">
+          <i class="ti ti-radar-2" aria-hidden="true"></i>
+          <span class="hb-main" id="hb-room">室 04</span>
+          <span class="hb-sub" id="hb-sector">B 区 · 地下三层</span>
+        </span>
+        <span class="hb-rule" aria-hidden="true"></span>
+        <span class="hb-item hb-live">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="hb-main" id="hb-status">观测室稳定</span>
+        </span>
+        <span class="hb-code" id="hb-code">LN-04 / 2026</span>
+      </div>
       <div class="window-actions">
+        <span class="operator-meta">
+          <strong id="operator-name">观察员 M</strong>
+          <em id="operator-org">封存委员会 · 二级</em>
+          <span class="operator-state"><span class="status-dot" aria-hidden="true"></span><span id="operator-state">在岗</span></span>
+        </span>
         <button class="operator" id="operator-button" aria-label="观察员主页" data-tooltip="观察员">
-          <img class="operator-avatar-img" src="assets/operator_avatar.png" alt="观察员 M">
+          <img class="operator-avatar-img" src="assets/operator_avatar.webp" alt="观察员 M">
         </button>
       </div>
     </header>
@@ -105,7 +133,8 @@
             <div class="stage-grid-overlay" id="stage-grid-overlay" aria-hidden="true" hidden></div>
             <div class="stage-empty" id="stage-empty" hidden><i class="ti ti-cube-off" aria-hidden="true"></i><p>这里暂时没有异物</p><button class="small-button" id="return-active-button">返回观测室</button></div>
             <div class="stage-caption"><span class="caption-line"></span><p id="object-whisper">它比你先眨眼。</p></div>
-            <div class="stage-bottomline"><span class="dimension-tag" id="dimension-tag">Ø 240 mm</span><span class="orientation" aria-hidden="true"><span class="axis-y">y</span><span class="axis-x">x</span><span class="axis-z">z</span></span></div>
+            <div class="stage-bottomline"><span class="dimension-tag" id="dimension-tag">Ø 240 mm</span></div>
+            <span class="stage-emblem" aria-hidden="true"></span>
             <div class="stage-toolbar">
               <div class="segmented-control" role="group" aria-label="显示方式">
                 <button class="is-active" data-view="material" aria-label="材质视图" aria-pressed="true" data-tooltip="材质"><i class="ti ti-cube" aria-hidden="true"></i></button>
@@ -190,7 +219,7 @@
   <dialog id="note-dialog" class="dialog note-dialog dialog--wide dialog--light">
     <form id="note-form">
       <div class="dialog-heading"><span class="dialog-symbol"><i class="ti ti-pencil-plus" aria-hidden="true"></i></span><button type="button" class="icon-button" data-close aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></div>
-      <h2>你看见了什么？</h2><p class="dialog-description">观察记录仅保留在本次演示中。</p>
+      <h2>你看见了什么？</h2><p class="dialog-description">观察记录仅保存在本地观测档案中。</p>
       <label class="note-label" for="note-text">观察内容</label><textarea id="note-text" required maxlength="280" placeholder="描述刚才出现的异常…" rows="4"></textarea>
       <div class="note-meta"><span id="note-error" role="alert"></span><span id="note-length">0 / 280</span></div>
       <div class="note-types" role="group" aria-label="记录类型"><button type="button" class="is-active" data-note-type="observation" aria-pressed="true"><i class="ti ti-eye" aria-hidden="true"></i>观察</button><button type="button" data-note-type="anomaly" aria-pressed="false"><i class="ti ti-alert-triangle" aria-hidden="true"></i>异常</button></div>

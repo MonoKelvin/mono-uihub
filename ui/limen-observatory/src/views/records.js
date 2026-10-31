@@ -1,5 +1,5 @@
 /* 异物 · 异常观测室 — 全部观测记录（独立页面 #/records）
- * 汇聚所有异物的本次演示记录，按时间升序排列，可按类型筛选。
+ * 汇聚所有异物的本地观测记录，按时间升序排列，可按类型筛选。
  */
 (function (App) {
   "use strict";
@@ -41,7 +41,7 @@
         ${App.router.breadcrumb([{ label: "观测记录" }])}
         <header class="page-head">
           <h1 class="page-title">全部观测记录</h1>
-          <p class="page-sub">所有异物的本次演示记录 · 共 ${counts.all} 条（观察 ${counts.observation} · 异常 ${counts.anomaly}）</p>
+          <p class="page-sub">所有异物的本地观测记录 · 共 ${counts.all} 条（观察 ${counts.observation} · 异常 ${counts.anomaly}）</p>
           <div class="page-filters" role="group" aria-label="记录筛选">
             <button class="chip is-active" data-filter="all">全部</button>
             <button class="chip" data-filter="observation">观察</button>

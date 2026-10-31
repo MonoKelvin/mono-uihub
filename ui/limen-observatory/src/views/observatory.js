@@ -6,7 +6,7 @@
 (function (App) {
   "use strict";
 
-  const { $, $$, pad2, escapeHtml, CELL_ZOOM, cellPos } = App.util;
+  const { $, $$, pad2, escapeHtml } = App.util;
   const LIMEN = window.LIMEN || {};
   const S = App.state;
 
@@ -135,14 +135,15 @@
       .join("");
   }
 
-  /* ---------- 渲染：表面采样画廊（细节矩阵图裁格） ---------- */
+  /* ---------- 渲染：表面采样画廊（独立微距瓦片） ---------- */
   function renderDetailGallery(o) {
     const wrap = $("detail-gallery");
     if (!o.detailCells || !o.detailCells.length) { wrap.innerHTML = ""; return; }
     wrap.innerHTML = o.detailCells
       .map((cell, i) => {
         const [c, r] = cell;
-        return `<button class="detail-cell" data-kind="details" data-col="${c}" data-row="${r}" data-label="${o.name}" style="background-image:url('${S.MEDIA.details}');background-size:${CELL_ZOOM};background-position:${cellPos(c)}% ${cellPos(r)}%"><span class="detail-cell-tag">采样 ${pad2(i + 1)}</span></button>`;
+        const src = S.DETAILS[(r * 3 + c) % S.DETAILS.length];
+        return `<button class="detail-cell" data-kind="details" data-src="${src}" data-label="${escapeHtml(o.name)}" style="background-image:url('${src}');background-size:cover;background-position:center"><span class="detail-cell-tag">采样 ${pad2(i + 1)}</span></button>`;
       })
       .join("");
   }
@@ -168,24 +169,19 @@
       `<path class="sig-line" d="${line}"/></svg>`;
   }
 
-  /* ---------- 分类图标（装饰图标表裁格，每异物唯一） ---------- */
+  /* ---------- 分类徽记（九枚语义瓦片，按分类映射） ---------- */
   function renderClassificationIcon(o) {
     const el = $("classification-icon");
     if (!el) return;
-    const total = S.ICON_GRID.cols * S.ICON_GRID.rows;
-    const idx = Math.max(0, S.OBJECTS.indexOf(o)) % total;
-    if (S.ICON_SHEET) {
-      const col = idx % S.ICON_GRID.cols, row = Math.floor(idx / S.ICON_GRID.cols);
-      el.classList.add("is-decor");
-      el.style.backgroundImage = `url("${S.ICON_SHEET}")`;
-      el.style.backgroundSize = S.ICON_ZOOM;
-      el.style.backgroundPosition = `${(col * S.ICON_STEP_X).toFixed(3)}% ${(row * S.ICON_STEP_Y).toFixed(3)}%`;
-      el.textContent = "";
-    } else {
-      el.classList.remove("is-decor");
-      el.style.backgroundImage = "";
-      el.innerHTML = `<i class="ti ${o.icon || "ti-help"}"></i>`;
-    }
+    const mapped = S.ICON_MAP[o.classification];
+    const idx = Number.isInteger(mapped)
+      ? mapped % S.ICONS.length
+      : Math.max(0, S.OBJECTS.indexOf(o)) % S.ICONS.length;
+    el.classList.add("is-decor");
+    el.style.backgroundImage = `url("${S.ICONS[idx]}")`;
+    el.style.backgroundSize = "contain";
+    el.style.backgroundPosition = "center";
+    el.innerHTML = "";
   }
 
   /* ---------- 收容信息 / 测量参数 / 观测日志 ---------- */
@@ -225,19 +221,25 @@
       wrap.innerHTML = '<p class="records-empty"><i class="ti ti-file-unknown"></i>该异物暂无完整档案记录。</p>';
       return;
     }
-    const body = o.dossier
-      .split(/\n\n+/)
-      .map((p) => p.trim())
-      .filter(Boolean)
-      .map((p) => `<p>${escapeHtml(p)}</p>`)
-      .join("");
+    const body = App.mk
+      ? App.mk.parse(o.dossier, { specimens: S.SPECIMENS })
+      : `<p>${escapeHtml(o.dossier)}</p>`;
 
-    // 存图：原始标本影像 + 补充视角（非 _ws 的方形 / 矩形版本），作为档案参考影像
-    const base = (o.img || "").replace(/_ws\.png$/i, ".png").replace(/\.png$/i, "");
+    // 标本剪影（抠底瓦片，按异物序号轮转）+ 图版底纹（边框盘瓦片）
+    const idx = Math.max(0, S.OBJECTS.indexOf(o));
+    const specimen = S.SPECIMENS[idx % S.SPECIMENS.length];
+    const plateSrc = S.PLATES[idx % S.PLATES.length];
+    const leadHTML = `<figure class="dossier-specimen" style="--plate:url('${plateSrc}')">
+        <img src="${specimen}" alt="${escapeHtml(o.name)} 标本剪影" loading="lazy" onerror="this.closest('.dossier-specimen').remove()">
+        <figcaption><i class="ti ti-ripple" aria-hidden="true"></i><span>标本剪影 · ${escapeHtml(o.name)}</span><span class="specimen-index">FIG. ${pad2(idx + 1)}</span></figcaption>
+      </figure>`;
+
+    // 存图：原始标本影像 + 补充视角（去掉 _ws / 扩展名后拼 .webp）
+    const base = (o.img || "").replace(/_ws\.(png|webp)$/i, "").replace(/\.(png|webp)$/i, "");
     const plates = base
       ? [
-          { src: base + ".png", label: "原始标本影像" },
-          { src: base + "_alt.png", label: "补充视角" },
+          { src: base + ".webp", label: "原始标本影像" },
+          { src: base + "_alt.webp", label: "补充视角" },
         ]
       : [];
     const platesHTML = plates.length
@@ -254,7 +256,7 @@
          </div>`
       : "";
 
-    wrap.innerHTML = body + platesHTML;
+    wrap.innerHTML = leadHTML + body + platesHTML;
   }
 
   function renderInspector() {
@@ -321,11 +323,22 @@
     renderInspector();
   }
 
+  /* 切换异物时检查器整体复位：所有滚动容器归零、录音播放态清除。
+     否则新异物会沿用上一件的阅读位置（档案尤其明显，直接停在半截）。 */
+  function resetInspector() {
+    $$(".inspector-scroll, #detail-gallery, #dossier-panel, #records-panel").forEach((el) => {
+      el.scrollTop = 0;
+      el.scrollLeft = 0;
+    });
+    $$(".mk-audio.is-playing").forEach((el) => el.classList.remove("is-playing"));
+  }
+
   /* ---------- 选择 / 切换 ---------- */
   function selectObject(id) {
     S.state.activeId = id;
     S.state.galleryIdx = 0;
     renderAll();
+    resetInspector();
   }
 
   /* 按方向在当前可见列表内切换异物（循环） */
@@ -352,12 +365,12 @@
   function resetView() { S.state.zoomIdx = 0; S.state.rotIdx = 0; applyZoom(); applyRotation(); }
   function rotate() { S.state.rotIdx = (S.state.rotIdx + 1) % S.CAM.length; applyRotation(); }
 
-  /* ---------- 媒体灯箱（放大裁格影像，宽屏 + 浅色装饰背景） ---------- */
-  function openMedia(kind, c, r, title, caption) {
+  /* ---------- 媒体灯箱（放大微距瓦片，宽屏 + 浅色装饰背景） ---------- */
+  function openMedia(src, title, caption) {
     const frame = $("media-frame");
-    frame.style.backgroundImage = `url("${S.MEDIA.details}")`;
-    frame.style.backgroundSize = CELL_ZOOM;
-    frame.style.backgroundPosition = `${cellPos(c)}% ${cellPos(r)}%`;
+    frame.style.backgroundImage = `url("${src}")`;
+    frame.style.backgroundSize = "cover";
+    frame.style.backgroundPosition = "center";
     $("media-title").textContent = title;
     $("media-caption").textContent = caption;
     App.ui.openDialog("media-dialog");
@@ -400,6 +413,8 @@
       if (t) { t.classList.toggle("is-active", on); t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; }
       if (p) p.hidden = !on;
     });
+    /* 每个页签都从顶部开始读，不继承上一个页签的滚动位置 */
+    resetInspector();
   }
 
   /* ---------- 封存 / 恢复（内联，不再有独立模块 / 对话框） ---------- */
@@ -570,8 +585,32 @@
       if (!cell) return;
       App.ui.sfx("click");
       const o = S.current();
-      openMedia("details", +cell.dataset.col, +cell.dataset.row, `${o ? o.name : ""} · 表面采样`, "材质微距扫描 · 局部放大影像");
+      openMedia(cell.dataset.src, `${o ? o.name : ""} · 表面采样`, "材质微距扫描 · 局部放大影像");
     });
+
+    /* 档案内锚点（目录）与录音条目：均不写 location.hash，避免污染哈希路由 */
+    const dossierPanel = $("dossier-panel");
+    if (dossierPanel) {
+      dossierPanel.addEventListener("click", (e) => {
+        const toc = e.target.closest(".mk-toc a[data-mk]");
+        if (toc) {
+          e.preventDefault();
+          App.ui.sfx("tick");
+          const target = document.getElementById(toc.dataset.mk);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+        const btn = e.target.closest(".mk-audio");
+        if (!btn) return;
+        App.ui.sfx("click");
+        const Sound = App.ui.Sound;
+        // playRecord 返回该条的实际时长（6–14s，由条目名派生），用它控制高亮与进度
+        const dur = Sound && Sound.playRecord ? Sound.playRecord(btn.dataset.record) : 0;
+        btn.style.setProperty("--rec-dur", `${dur || 2}s`);
+        btn.classList.add("is-playing");
+        setTimeout(() => btn.classList.remove("is-playing"), dur ? dur * 1000 : 1700);
+      });
+    }
 
     /* 悬停音效（精选控件，避免全局过密） */
     $$(".rail-button, .window-actions .icon-button, .segmented-control button, .stage-toolbar .icon-button, .inspector-tabs button, .note-types button")
@@ -585,6 +624,7 @@
   }
   /* 路由进入观测室：确保显示主视图，必要时选中首个异物 */
   function show(params) {
+    const prev = S.state.activeId;
     if (params && params.id) {
       const o = S.OBJECTS.find((x) => x.id === params.id);
       if (o) S.state.activeId = o.id;
@@ -595,6 +635,7 @@
     }
     setView(S.state.view);
     renderAll();
+    if (S.state.activeId !== prev) resetInspector();
   }
 
   App.views = App.views || {};

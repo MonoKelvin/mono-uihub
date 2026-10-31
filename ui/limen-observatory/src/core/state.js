@@ -30,17 +30,22 @@
   OBJECTS.forEach((o) => { if (!o.dossier && DOSSIERS[o.id]) o.dossier = DOSSIERS[o.id]; });
 
   const SECTORS = LIMEN.sectors || { map: {}, decode: (id) => String(id || "") };
-  const MEDIA = (LIMEN.config && LIMEN.config.media) || { details: "assets/matrix_details.png" };
-  const ICON_SHEET = (LIMEN.config && LIMEN.config.media && LIMEN.config.media.icons) || null;
-  const SEAL_IMG = (LIMEN.config && LIMEN.config.media && LIMEN.config.media.seal) || null;
+
+  /* 素材：九宫格已拆为独立瓦片，运行时不再做背景定位裁格。
+     前缀 + 数量 → 路径数组，全部由 config.media 单点驱动。 */
+  const MEDIA = (LIMEN.config && LIMEN.config.media) || {};
+  const tileSeq = (base, n) =>
+    Array.from({ length: n }, (_, i) => `${base || "assets/tile_"}${String(i).padStart(2, "0")}.webp`);
+  const COUNTS = MEDIA.counts || {};
+  const DETAILS = tileSeq(MEDIA.detail, COUNTS.detail || 9);
+  const ICONS = tileSeq(MEDIA.icon, COUNTS.icon || 9);
+  const PLATES = tileSeq(MEDIA.plate, COUNTS.plate || 9);
+  const SPECIMENS = tileSeq(MEDIA.specimen, COUNTS.specimen || 9);
+  const ICON_MAP = (LIMEN.config && LIMEN.config.iconMap) || {};
+  const SEAL_IMG = MEDIA.seal || null;
+  const PARTICLE_IMG = MEDIA.particle || null;
   const RISK_LEVELS = (LIMEN.config && LIMEN.config.riskLevels) || ["安全", "警戒", "危险", "绝密"];
   const OPERATOR = ((LIMEN.config && LIMEN.config.ui) || {}).operator || "观察员 M";
-
-  /* 装饰图标表（N×N）裁格：缩放 = cols*100%，每格步进 = 100/(cols-1)%，由 config.iconGrid 派生 */
-  const ICON_GRID = (LIMEN.config && LIMEN.config.iconGrid) || { cols: 4, rows: 4 };
-  const ICON_ZOOM = `${ICON_GRID.cols * 100}% ${ICON_GRID.rows * 100}%`;
-  const ICON_STEP_X = 100 / (ICON_GRID.cols - 1);
-  const ICON_STEP_Y = 100 / (ICON_GRID.rows - 1);
 
   const CAM = ["A", "B", "C", "D"];
   /* 缩放：默认 100%（填满舞台、最小尺寸），禁止继续缩小，最大可放大至 300% */
@@ -76,8 +81,9 @@
   function currentIndex() { return OBJECTS.findIndex((o) => o.id === state.activeId); }
 
   App.state = {
-    OBJECTS, DOSSIERS, SECTORS, MEDIA, ICON_SHEET, SEAL_IMG, RISK_LEVELS, OPERATOR,
-    ICON_GRID, ICON_ZOOM, ICON_STEP_X, ICON_STEP_Y, CAM, ZOOMS, SETTINGS_KEY, DEFAULT_SETTINGS,
+    OBJECTS, DOSSIERS, SECTORS, MEDIA, SEAL_IMG, PARTICLE_IMG, RISK_LEVELS, OPERATOR,
+    DETAILS, ICONS, PLATES, SPECIMENS, ICON_MAP,
+    CAM, ZOOMS, SETTINGS_KEY, DEFAULT_SETTINGS,
     state, current, matches, allObjects, currentIndex, NOW,
   };
 })(window.App);

@@ -19,10 +19,22 @@
       if (strong) strong.textContent = parts[0] || "异物";
       if (cap) cap.textContent = parts.slice(1).join(" · ") || "异常观测室";
     }
-    const sn = document.querySelector(".session-number");
-    if (sn && ui.room) sn.textContent = ui.room;
     const st = $("status-text");
     if (st && ui.statusIdle) st.textContent = ui.statusIdle;
+
+    /* 顶栏信息簇 + 观察员信息：统一由此处填充 */
+    const setText = (sel, v) => { const el = document.querySelector(sel); if (el && v) el.textContent = v; };
+    setText("#hb-org", ui.org);
+    setText("#hb-site", ui.site);
+    setText("#hb-room", ui.room);
+    setText("#hb-sector", ui.sector);
+    setText("#hb-status", ui.statusIdle);
+    setText("#hb-code", ui.code);
+    setText("#operator-name", ui.operatorName || ui.operator);
+    setText("#operator-org", ui.operatorOrg);
+    setText("#operator-state", ui.operatorState);
+    const avatar = document.querySelector(".operator-avatar-img");
+    if (avatar && (ui.operatorName || ui.operator)) avatar.alt = ui.operatorName || ui.operator;
   }
 
   /* ---------- 音效（Web Audio 合成，见 sound.js） ---------- */

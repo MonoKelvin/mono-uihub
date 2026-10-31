@@ -12,7 +12,7 @@
 
   const TABS = ["overview", "help", "settings", "org"];
   const TAB_LABELS = { overview: "概览", help: "操作说明", settings: "设置", org: "组织档案" };
-  const AVATAR = "assets/operator_avatar.png";
+  const AVATAR = "assets/operator_avatar.webp";
 
   function stats() {
     const total = S.OBJECTS.length;
