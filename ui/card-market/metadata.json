@@ -9,7 +9,7 @@
   "history": [
     {
       "prompt": "一个在线卡牌交易平台，高饱和的黑+紫+荧光配色",
-      "model": "claude-opus-5[1m]",
+      "model": "claude-opus-5",
       "skills": ["mono-ui-prototype", "oil-frontend", "oil-ui", "vibehub"],
       "duration_seconds": 770
     },
