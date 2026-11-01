@@ -1,0 +1,29 @@
+{
+  "name": "拾知 · 轻学习 App",
+  "slug": "shizhi-learn",
+  "page_type": "app",
+  "tags": ["学习", "知识卡片", "碎片化学习"],
+  "palette": ["#f8faf4", "#e8ee9a", "#254536"],
+  "created_at": "2026-11-01 14:51:54",
+  "updated_at": "2026-11-01 15:15:32",
+  "history": [
+    {
+      "prompt": "一个学习app",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "mobile-native"],
+      "duration_seconds": 528
+    },
+    {
+      "prompt": "APP尺寸有问题，目前显示的尺寸不对，在这台电脑上宽度太大了，请设计成比例缩放，",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"],
+      "duration_seconds": 96
+    },
+    {
+      "prompt": "继续优化",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "redesign-existing-projects"],
+      "duration_seconds": 381
+    }
+  ]
+}
