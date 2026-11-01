@@ -320,6 +320,17 @@ body > .stage          舞台：居中 + 背景，不承载产品内容
 
 逐组件核对见第九节自检第 13 条。
 
+### 4.9 原生控件统一风格
+
+浏览器原生控件（滚动条、`select` 下拉、`input` / `textarea` 聚焦态、`checkbox` / `radio` / `range` 强调色、日期选择器等）由系统渲染，外观与自绘 UI 脱节，是最容易被忽略、也最破坏整体感的破绽。凡是页面里出现的原生控件，都要收敛进产品视觉语言，不保留系统默认外观。
+
+- **滚动条**：WebKit 用 `::-webkit-scrollbar*` 系列、Firefox 用 `scrollbar-width` / `scrollbar-color` 统一轨道与滑块的颜色、圆角和悬停态；只挂在局部滚动区，宽度克制（约 8–10px），不全局加粗。
+- **输入框**：`input` / `textarea` / `select` 用 `appearance: none` 自绘边框、圆角与 `focus-visible` 聚焦态，不沿用浏览器默认边框和内阴影。
+- **`select` 下拉**：原生 `option` 面板无法深度定制；用 `appearance: none` + 自绘展开箭头，并用 `--control-*` 变量与按钮、输入框保持一致。需要搜索、分组、自定义高亮时，用自绘下拉替代原生 `select`。
+- **强调色**：`checkbox` / `radio` / `range` / `progress` 用 `accent-color: var(--brand)`，不保留系统蓝。
+- **复合输入**：颜色、日期、时间等面板无法定制，重要产品用自绘或限定输入格式替代。
+
+要点：所有原生控件的内边距、字号、圆角、聚焦态都纳入设计变量（如 `--control-bg` / `--control-border` / `--control-radius` / `--control-focus`），与卡片、按钮保持同一套视觉，杜绝「两套语言」。
 
 ## 五、动画设计与实现
 
@@ -343,55 +354,27 @@ body > .stage          舞台：居中 + 背景，不承载产品内容
 - **动画应响应内容和操作**：避免无意义的永久循环、持续漂浮和抢夺注意力的背景动画。
 - **性能优先**：优先使用 transform、opacity 等适合合成的属性；复杂滤镜、模糊和大面积实时效果需谨慎，避免掉帧。
 
-### 5.3 复杂动画优先考虑 GSAP
+### 5.3 优先用 gsap-skills 与 GSAP
 
-当页面需要复杂入场、滚动叙事、时间轴编排、连续转场、交互驱动、拖拽跟随或多元素协同时，优先考虑 GSAP。
+做 GSAP 动画前先判定：**若当前系统 / agent 已安装 `gsap-skills` 技能，动画设计尽量调用它获取最新 API 与写法；若未安装，主动向用户发起确认，推荐其执行 `npx skills add https://github.com/greensock/gsap-skills` 安装（由用户决定是否安装），安装后再用于动画设计。** 不要凭记忆手写过时的 GSAP 用法。
 
-- 使用 GSAP Timeline 管理一组相关动画，利用标签、重叠、嵌套和回调组织节奏，不要靠大量互不关联的 delay 拼接。
-- 需要滚动驱动时使用 ScrollTrigger；需要平滑滚动、逐字逐行、路径运动或翻转过渡时，再按需选择相应插件。
-- 简单状态反馈仍可使用 CSS transition / keyframes；不要为了使用库而引入库。
-- 按需通过 CDN 引入（如 `<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>`），并遵循第八节的技术约定。
-- 动画应模块化管理，便于播放、暂停、反向、重置和清理。
+复杂动画（入场叙事、滚动驱动、时间轴编排、交互拖拽、多元素协同）优先用 GSAP：
+
+- 用 Timeline 统一编排一组动画（标签、重叠、嵌套、回调），不靠一堆互不关联的 delay。
+- 滚动驱动用 ScrollTrigger；平滑滚动、逐字、路径、翻转等按需引插件。
+- 简单状态反馈用 CSS transition / keyframes 即可，不为用库而引库。
+- 通过 CDN 引入（如 `gsap@3`），遵循第八节技术约定；动画模块化管理，便于播放 / 暂停 / 反向 / 重置 / 清理。
 
 ### 5.4 连续操作、打断与恢复
 
-**交互动画必须考虑用户连续操作。不要因为新操作到来就粗暴终止所有动画，也不要让动画状态与真实 UI 状态脱节。**
+**交互动画必须考虑用户连续操作：新操作到来时从当前视觉状态自然衔接，不闪烁、不跳回初始位置，不让动画状态与真实 UI 脱节。**
 
-- 用户在动画过程中再次操作时，界面应从当前视觉状态自然衔接到新目标状态，不闪烁、不跳回初始位置。
-- 展开 / 收起、打开 / 关闭等可逆状态，复用同一 Timeline 并用 `reverse()` / `play()` 自然反向，不要重新创建动画。
-- 目标值不断变化时（如拖拽、跟随），用可更新目标的动画方式（`gsap.quickTo()`）让运动跟随最新输入，不要每次都创建新的补间。
-- 多个动画序列需要衔接时，用 Timeline、嵌套 Timeline、回调或状态机统一管理，不要创建互相争夺同一属性的独立动画。
-- 明确区分「继续当前序列」「反向播放」「从当前状态转向新目标」「并行执行其他属性动画」，按交互语义选择，不要一律追加或一律终止。
-- 只处理真正冲突的属性，不要无差别清除整个目标的所有动画；GSAP 用 `overwrite: "auto"` 即可，不要随意 `kill()` 或全局 `overwrite: true`。
+- 可逆状态（展开/收起、开/关）：复用同一 Timeline，`reverse()` / `play()` 自然反向，不重新创建。
+- 连续变化目标值（拖拽、光标跟随）：用 `gsap.quickTo()` 让运动始终跟随最新输入，不每次新建补间。
+- 多序列衔接：用 Timeline / 嵌套 Timeline / 回调 / 状态机统一管理，不创建互相争夺同一属性的独立动画。
+- 按交互语义区分「继续序列 / 反向播放 / 转向新目标 / 并行其他属性」，不要一律追加或一律终止；只覆盖真正冲突的属性（GSAP 用 `overwrite: "auto"`，不随意 `kill()` 或全局 `overwrite: true`）。
 
-### 5.5 GSAP 交互示例
-
-可逆面板在动画尚未结束时再次点击，应从当前进度自然返回，而不是重新创建动画：
-
-```js
-// 初始视觉状态，保证首次展开有明确起点
-gsap.set(panel, { autoAlpha: 0, y: "1em", scale: 0.98, transformOrigin: "center top" });
-
-const panelMotion = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
-  .to(panel, { autoAlpha: 1, y: 0, scale: 1, duration: 0.65 });
-
-let isOpen = false;
-toggle.addEventListener("click", () => {
-  isOpen = !isOpen;
-  panelMotion.reversed(!isOpen).paused(false);  // 反向播放会从当前进度自然返回
-});
-```
-
-对连续变化的目标值，用 `gsap.quickTo()` 避免每次输入都创建大量互相竞争的动画：
-
-```js
-const moveToX = gsap.quickTo(".cursor", "x", { duration: 0.7, ease: "power3.out" });
-window.addEventListener("pointermove", (e) => moveToX(e.clientX));
-```
-
-对需要多个阶段的动画，应优先维护一个明确的 Timeline；新操作改变目标时，更新或反向现有序列。只有确实发生属性冲突时，才覆盖冲突部分。
-
-### 5.6 无障碍与性能
+### 5.5 无障碍与性能
 
 - 尊重 `prefers-reduced-motion: reduce`，为用户提供减少动态效果的方案；减少动画时，信息和功能仍必须完整。
 - 不用动画隐藏关键内容或延迟用户必须立即获得的信息。
@@ -604,6 +587,7 @@ python tools/image-forge/generate.py --style lineicon \
 11. **对话框比例**（软件）：内容多的是否为 16:9 / 4:3 的横向对话框？单一列表才允许纵向？是否在画布内居中并留出 24px 以上边距？
 12. **正式感**：通读界面全部文字——有没有「演示」「示例」「Mock」「占位」「原型」这类字样？有没有教学标注、序号箭头、说明气泡？文案与数据是否都像真实业务内容？
 13. **边框完整性**：逐个切换带边框组件的 hover / 激活态——边框有没有被父容器裁掉一截？父容器有 `overflow` 裁剪时，内边距是否覆盖了所有状态的最大边框宽度？页面是否有全局 `box-sizing: border-box`？边框出现时布局有没有跳动？
+14. **原生控件风格**：滚动条、`select` 下拉、`input` / `textarea` 聚焦态、`checkbox` / `radio` / `range` 强调色是否都收敛进产品视觉语言？有没有系统默认外观（粗滚动条、系统蓝勾、默认边框）破坏整体感？
 
 最后整体审视：去掉无意义装饰和重复表达，保留必要功能与信息。若画面仍显普通，应重新推敲构图、字体和视觉语言，而不是继续堆卡片、渐变或阴影。
 
