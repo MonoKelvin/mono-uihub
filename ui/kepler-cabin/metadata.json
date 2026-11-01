@@ -1,0 +1,121 @@
+{
+  "name": "KEPLER 太空舱控制台",
+  "slug": "kepler-cabin",
+  "page_type": "software",
+  "tags": [
+    "太空",
+    "控制台",
+    "HUD",
+    "全息地图",
+    "战术"
+  ],
+  "palette": [
+    "#101a1e",
+    "#a6c0c5",
+    "#cabd9f",
+    "#9cb9a8"
+  ],
+  "created_at": "2026-11-01 08:45:52",
+  "updated_at": "2026-11-01 13:29:13",
+  "history": [
+    {
+      "prompt": "一个太空舱控制台：全屏深色背景，散布着发光的旋钮、拨动开关和环形进度条，通过拖拽物理旋钮来调节参数，感受机械阻尼感。",
+      "model": "gpt-6.1-sol",
+      "skills": [
+        "mono-ui-prototype",
+        "animate",
+        "dataviz",
+        "gsap-core",
+        "gsap-plugins",
+        "gsap-timeline"
+      ],
+      "tags": [
+        "太空",
+        "控制台",
+        "HUD",
+        "全息地图",
+        "战术"
+      ],
+      "page_type": "software"
+    },
+    {
+      "prompt": "UI设计要扁平风格，尽量减少渐变色，单页面自动调整布局，不要出现浏览器的滚动；减少卡片式的布局，采用HUD高科技配色和排版，适当世界一些终端控制台风格或者字体等",
+      "model": "gpt-6.1-sol",
+      "skills": [
+        "mono-ui-prototype",
+        "frontend-design",
+        "dataviz",
+        "animate",
+        "gsap-core",
+        "gsap-plugins",
+        "gsap-timeline"
+      ]
+    },
+    {
+      "prompt": "尽量整合到一个页面里面，减少tab切换，多加一些自动的HUD科技动画，配色饱和度要高级且浅一点的，继续重构UI设计",
+      "model": "gpt-6.1-sol",
+      "skills": [
+        "mono-ui-prototype",
+        "frontend-design",
+        "animate",
+        "dataviz",
+        "gsap-timeline"
+      ]
+    },
+    {
+      "prompt": "大概是这样的设计，但是请继续补充各种HUD科幻以元素，比如点、十字、矩阵块、背景线条、背景景深模糊的3D纵深感，类似FUI、Sci-Fi UI（可以参考 https://www.hudsandguis.com https://territorystudio.com/project-category/screen-graphics/、 、 这些网站，里面介绍了很多科幻电影的HUD屏幕设计，有图片和文章），常见的就是加一些全息效果（可能涉及到webgl的shader）、晶格动画、点阵、辉光、景深、3D、投影等各种高大上的内容设计\n尽量都使用英文字体\n代码也不一定全部写到一个文件中，比如涉及到模型和shader可以单独写，涉及到HUD几何、图形、元素单独写也行",
+      "model": "gpt-6.1-sol",
+      "skills": [
+        "mono-ui-prototype",
+        "frontend-design",
+        "animate",
+        "animation-performance"
+      ]
+    },
+    {
+      "prompt": "很多旋钮内的字体有点太大超过了圆圈位置，请调整尺寸；可以使用 assets 目录下我提供的两个模型文件（只使用其中一个）加载到界面中，使用全息线框效果，缓慢旋转，设计一个全息线框 shader 的样式",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "科技FUI的效果感觉还是差点意思，请优化打磨，参考科幻电影设定：辉光、全息、晶格、阵列、标注、追踪、投影、扫描、局部故障闪屏、自动运行数据、科幻水柱图表；配色背景降低饱和度。旋钮太多不应作为主体，让居中的导航地图成为主体（全息晶格化shader滤镜、真实地图区域、缩放平移旋转与打击标注、追踪游标）",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "1) 地图打击抖动不要，定位圆圈加矩形科技感定位标记，动画更平滑；2) 背景景深改为原组件偏移Z后模糊变浅（厚玻璃反射感），删除纵深远近动画线条；3) 继续细化UI与动效",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "有部分内容重叠，请调整尺寸（111.4kW 区域、右下方 ION POWER 区域）；整体继续优化，配色太单一了",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "全息线条模型调大一点，开关组件调小一点；多加点 FUI 科幻元素，目前感觉还不够科幻 UI 效果",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "继续优化，不要出现大段的空白区域，适当调整组件尺寸，全息模型要稍大一点最好，多加一些动画",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "继续优化",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "继续优化：负载历史曲线加填充与读数、电池阵列动态充能、ECLSS 六格数据、姿态角读数提亮、地图方位罗盘与打击点标记、事件日志去重、地图噪点清洗",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    },
+    {
+      "prompt": "全息模型被遮挡了，请给一个区域展示出来",
+      "model": "deepseek-v4.1-flash",
+      "skills": []
+    }
+  ]
+}

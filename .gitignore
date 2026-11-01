@@ -40,3 +40,6 @@ site/public/prototypes/
 site/public/site/modules/
 site/.vercel/
 
+
+# Agent runtime skills（本地缓存，与 .claude/ 同类）
+agent/

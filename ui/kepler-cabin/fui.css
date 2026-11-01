@@ -1,0 +1,100 @@
+:root {
+  --fui-glow: rgb(166 192 197 / .16);
+  --fui-faint: rgb(166 192 197 / .12);
+}
+
+body { font-weight: 500; }
+.command-header, .workspace, .console-footer { position: relative; z-index: 2; }
+.brand-caption { letter-spacing: .2px; }
+.bay-heading h2, .trim-label h3, .switch-description h3 { font-weight: 600; }
+.bay-heading::before { content: ""; position: absolute; left: 0; bottom: -1px; width: 30px; height: 1px; background: var(--accent, var(--cyan)); opacity: .6; }
+.dial-readout { text-shadow: 0 0 12px var(--fui-glow); }
+.knob-marker { box-shadow: 0 0 8px var(--fui-glow); }
+.map-canvas { filter: drop-shadow(0 0 22px rgb(166 192 197 / .05)); }
+.nav-stage::after { content: ""; position: absolute; inset: 0; z-index: 9; pointer-events: none; box-shadow: inset 0 0 70px rgb(8 14 17 / .75); }
+
+/* ---------- 背景层（景深线已移除，仅留定位标记与点阵） ---------- */
+/* ---------- 定位标记层 ---------- */
+.fui-registration { display: block; inset: 0; width: 100%; height: 100%; opacity: .3; overflow: visible; }
+.fui-registration pattern { fill: var(--cyan); }
+.fui-cross-field { fill: var(--cyan); stroke: var(--cyan); stroke-width: .8; opacity: .6; }
+.fui-traces { stroke: var(--cyan); stroke-width: .6; opacity: .3; }
+.fui-traces circle { fill: var(--cyan); }
+
+/* ---------- 全息船体（环境舱内独立展示舱） ---------- */
+.holo-stage { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 6px; min-width: 0; min-height: 0; flex: 1 1 auto; margin-top: 8px; padding: 9px 10px 8px; border: 1px solid var(--line-soft); isolation: isolate;
+  background: linear-gradient(180deg, rgb(166 192 197 / .045), transparent 46%); }
+.holo-stage::before { content: ""; position: absolute; z-index: 0; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(90deg, rgb(166 192 197 / .05) 0 1px, transparent 1px 24px),
+              repeating-linear-gradient(180deg, rgb(166 192 197 / .05) 0 1px, transparent 1px 24px);
+  mask-image: radial-gradient(72% 62% at 50% 52%, #000 0%, transparent 78%); }
+.holo-head, .holo-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font: 400 10px/1 var(--font-instrument); letter-spacing: 1.4px; color: var(--text-muted); }
+.holo-status { display: inline-flex; align-items: center; gap: 5px; color: var(--cyan); }
+.holo-foot { color: var(--metal-light); }
+.holo-model { letter-spacing: .8px; }
+.holo-spin { color: var(--text-secondary); font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+.holo-view { position: relative; height: auto; min-height: 90px; container-type: size; overflow: hidden; }
+.holo-view::before { content: ""; position: absolute; z-index: 0; inset: 0; pointer-events: none; background: radial-gradient(62% 52% at 50% 50%, rgb(166 192 197 / .07), transparent 76%); }
+/* 投影基座：给悬浮的船体一个落点，避免模型“浮在半空” */
+.holo-view::after { content: ""; position: absolute; z-index: 1; left: 28%; right: 28%; bottom: 9%; height: 11%; pointer-events: none; border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgb(166 192 197 / .15), transparent 70%); }
+.holo-canvas { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .9s var(--ease-out); }
+.holo-stage.is-live .holo-canvas { opacity: 1; }
+.holo-stage.is-standby .holo-status { color: var(--amber); }
+.holo-stage.is-offline .holo-status { color: var(--danger); }
+.holo-stage .holo-lattice { transition: opacity .9s var(--ease-out); }
+.holo-stage.is-live .holo-lattice { opacity: 0; }
+.holo-corner { position: absolute; z-index: 3; width: 7px; height: 7px; border: 0 solid var(--fui-faint); pointer-events: none; }
+.holo-corner--tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
+.holo-corner--tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+.holo-corner--bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+.holo-corner--br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+.holo-lattice { --lattice-size: min(46cqw, 46cqh); position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; perspective: 950px; pointer-events: none; }
+.lattice-definition { position: absolute; width: 0; height: 0; overflow: hidden; }
+.lattice-rig { position: relative; width: var(--lattice-size); height: var(--lattice-size); transform-style: preserve-3d; transform: rotateX(-18deg) rotateY(18deg) rotateZ(6deg); animation: lattice-rotation 44s linear infinite; opacity: .4; }
+.lattice-face { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--cyan); stroke-width: .5; overflow: visible; backface-visibility: visible; }
+.lattice-front { transform: translateZ(calc(var(--lattice-size) / 2)); }
+.lattice-back { transform: rotateY(180deg) translateZ(calc(var(--lattice-size) / 2)); }
+.lattice-left { transform: rotateY(-90deg) translateZ(calc(var(--lattice-size) / 2)); }
+.lattice-right { transform: rotateY(90deg) translateZ(calc(var(--lattice-size) / 2)); }
+.lattice-top { transform: rotateX(90deg) translateZ(calc(var(--lattice-size) / 2)); }
+.lattice-bottom { transform: rotateX(-90deg) translateZ(calc(var(--lattice-size) / 2)); }
+.projection-base { position: absolute; bottom: 4%; left: 26%; width: 48%; height: 8%; border: 1px solid var(--fui-faint); border-radius: 50%; transform: rotateX(58deg); }
+.projection-beams { position: absolute; bottom: 6%; left: 22%; width: 56%; height: 20%; fill: none; stroke: var(--cyan); stroke-width: .6; opacity: .12; }
+
+@keyframes lattice-rotation {
+  from { transform: rotateX(-18deg) rotateY(18deg) rotateZ(6deg); }
+  to { transform: rotateX(-18deg) rotateY(378deg) rotateZ(6deg); }
+}
+
+@media (max-width: 1250px) {
+  .heading-copy { gap: 12px; }
+  .page-heading { gap: 20px; }
+  .system-overview { min-width: 172px; }
+}
+@media (max-width: 980px) {
+  .fui-registration { opacity: .18; }
+  .holo-lattice { --lattice-size: min(52cqw, 52cqh); }
+}
+@media (max-width: 620px) {
+  .fui-registration { opacity: .14; }
+  .system-overview { min-width: 0; }
+  .mode-button { min-width: 49px; padding-inline: 8px; }
+  .holo-view { min-height: 84px; }
+}
+@media (max-height: 940px) {
+  /* 矮屏把内边距还给画布，船体不至于被压成一条 */
+  .holo-stage { padding: 6px 8px 5px; gap: 4px; }
+}
+@media (max-height: 820px) {
+  .holo-view { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lattice-rig { animation: none; }
+}
+@media (forced-colors: active) {
+  .holo-lattice, .fui-registration, .canvas-ghost { display: none; }
+  .dial-readout { text-shadow: none; }
+  .knob-marker { box-shadow: none; }
+}
