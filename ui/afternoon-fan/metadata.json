@@ -1,0 +1,34 @@
+{
+  "name": "午后 Air 01",
+  "slug": "afternoon-fan",
+  "page_type": "component",
+  "tags": ["模拟器", "电风扇", "3D"],
+  "palette": ["#24252b", "#bcb8d2", "#ebe9e6"],
+  "created_at": "2026-11-03 22:18:52",
+  "updated_at": "2026-11-03 23:44:39",
+  "history": [
+    {
+      "prompt": "一个电风扇模拟器",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate"],
+      "duration_seconds": 467
+    },
+    {
+      "prompt": "重构UI设计配色和模型，使用3D模型最好了能转头，使用简约高级的电风扇设计，UI要极简风格，高级配色",
+      "model": "gpt-6.1-sol",
+      "skills": ["frontend-design"],
+      "duration_seconds": 547
+    },
+    {
+      "prompt": "改成深色配色",
+      "model": "gpt-6.1-sol",
+      "skills": ["frontend-design"],
+      "duration_seconds": 222
+    },
+    {
+      "prompt": "模型有问题穿模了，请调整;风速太慢了，每个挡位都要提升一点\n设置面板的UI中恢复按钮使用圆角背景\n阴影也有问题：中间的线框的盖子和扇片没有，请优化尽量让所有模型部件实时显示阴影",
+      "model": "gpt-6.1-sol",
+      "duration_seconds": 747
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  color-scheme: dark;
+  --stage: #191a1f;
+  --surface: #24252b;
+  --ink: #ebe9e6;
+  --muted: #a0a1ad;
+  --accent: #bcb8d2;
+  --accent-soft: #373640;
+  --line: #3c3d46;
+  --white: #f4f2f0;
+  --control: #2d2e36;
+  --panel: #2b2c34;
+  --selected: #464650;
+  --toggle-off: #484952;
+  --on-accent: #24232b;
+  --font: "Manrope", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --text-small: 12px;
+  --text-body: 14px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --radius-canvas: 16px;
+  --radius-control: 10px;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --duration: 200ms;
+  --stage-pad: clamp(12px, 3vw, 32px);
+}
+
+html { min-width: 320px; background: var(--stage); }
+body { margin: 0; color: var(--ink); font: 400 var(--text-body)/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }
+button, summary, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button { color: inherit; cursor: pointer; user-select: none; }
+button:disabled { cursor: wait; opacity: .4; }
+button:focus-visible, summary:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+p, h1 { margin: 0; }
+i { font-size: 21px; }
+[hidden] { display: none !important; }
+.stage { min-height: 100svh; padding: var(--stage-pad); display: grid; place-items: center; }
+.canvas { position: relative; contain: paint; isolation: isolate; container-type: size; overflow: hidden; display: flex; flex-direction: column; width: min(1140px, 100%); height: min(840px, calc(100svh - 2 * var(--stage-pad))); background: var(--surface); border-radius: var(--radius-canvas); box-shadow: 0 18px 55px rgb(0 0 0 / .2); }
+.header { position: relative; z-index: 4; min-height: 92px; padding: 0 var(--space-lg); display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+.brand { display: inline-flex; align-items: baseline; gap: var(--space-sm); color: var(--ink); text-decoration: none; font-size: 23px; font-weight: 600; letter-spacing: -.8px; }
+.brand span { font-size: var(--text-small); letter-spacing: 0; font-weight: 400; color: var(--muted); }
+.header-actions { display: flex; align-items: center; gap: 5px; }
+.status { display: flex; align-items: center; gap: var(--space-xs); margin-right: 17px; color: var(--muted); font-size: var(--text-small); white-space: nowrap; }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: #6d6e79; transition: background var(--duration) ease; }
+.is-on .status-dot { background: var(--accent); }
+.is-on .status { color: var(--accent); }
+.icon-button { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; transition: color var(--duration) ease, background var(--duration) ease; }
+.icon-button[aria-pressed="true"], .settings[open] > summary { color: var(--ink); background: var(--accent-soft); }
+.settings { position: relative; }
+.settings > summary { list-style: none; }
+.settings > summary::-webkit-details-marker { display: none; }
+.settings-panel { position: absolute; right: 0; top: calc(100% + 14px); width: 300px; max-height: calc(100cqh - 120px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) var(--panel); padding: var(--space-md); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 12px 45px rgb(42 43 64 / .1); }
+.setting-heading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+.setting-heading output { color: var(--muted); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
+.timer-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: var(--space-sm); }
+.timer-options button { min-height: 38px; border: 1px solid transparent; border-radius: 7px; padding: 0 3px; background: transparent; color: var(--muted); font-size: var(--text-small); white-space: nowrap; }
+.timer-options button.is-selected { color: var(--ink); background: var(--selected); border-color: var(--line); }
+.direction-heading { margin-top: var(--space-md); }
+.settings-panel > .range { width: 100%; margin-top: var(--space-xs); }
+.reset-button { display: flex; align-items: center; justify-content: center; gap: var(--space-xs); width: 100%; min-height: 42px; margin-top: var(--space-sm); padding: 0 var(--space-sm); border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--control); color: var(--ink); font-size: var(--text-small); transition: background var(--duration) ease; }
+.reset-button i { font-size: 18px; }
+.viewer { flex: 1; min-height: 0; position: relative; }
+#model-canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; outline: 0; }
+#model-canvas:active { cursor: grabbing; }
+#model-canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.model-caption { position: absolute; z-index: 1; left: var(--space-lg); top: 6px; pointer-events: none; }
+.model-caption h1 { font-size: 42px; font-weight: 400; line-height: 1.2; letter-spacing: -2px; }
+.model-caption p { margin-top: 9px; color: var(--muted); font-size: var(--text-small); }
+.model-message { position: absolute; z-index: 2; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-sm); color: var(--muted); background: var(--surface); font-size: var(--text-small); }
+.loading-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+.model-message button { min-height: 40px; padding: 0 18px; border: 1px solid var(--line); border-radius: var(--radius-control); color: var(--ink); background: var(--panel); }
+.model-message.has-error .loading-dot { display: none; }
+.view-actions { position: absolute; bottom: 16px; left: calc(var(--space-lg) - 10px); }
+.view-actions .icon-button { opacity: .65; }
+.model-finish { position: absolute; bottom: 29px; right: var(--space-lg); color: var(--muted); font-size: var(--text-small); pointer-events: none; }
+.control-bar { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: var(--space-lg); min-height: 108px; margin: 0 var(--space-lg); border-top: 1px solid var(--line); }
+.power-button { flex: 0 0 48px; width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink); transition: background var(--duration) ease, color var(--duration) ease, border-color var(--duration) ease; }
+.power-button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.speed-control, .oscillation-control, .tilt-control { display: flex; align-items: center; gap: var(--space-sm); }
+.control-label { color: var(--muted); font-size: var(--text-small); white-space: nowrap; }
+.speed-options { display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: var(--radius-control); background: var(--control); }
+.speed-options button { width: 40px; height: 36px; padding: 0; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font-size: var(--text-body); transition: background var(--duration) ease, color var(--duration) ease; }
+.speed-options button.is-selected { background: var(--selected); color: var(--ink); box-shadow: 0 1px 3px rgb(0 0 0 / .15); }
+.toggle { position: relative; width: 40px; height: 24px; padding: 3px; border: 0; border-radius: 20px; background: var(--toggle-off); transition: background var(--duration) ease; }
+.toggle::before { content: ""; position: absolute; inset: -10px -2px; }
+.toggle span { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--white); box-shadow: 0 1px 2px rgb(42 43 60 / .12); transition: transform var(--duration) var(--ease-out); }
+.toggle[aria-checked="true"] { background: var(--accent); }
+.toggle[aria-checked="true"] span { transform: translateX(16px); background: var(--on-accent); }
+.range { appearance: none; -webkit-appearance: none; display: block; width: 112px; height: 32px; margin: 0; background: transparent; cursor: pointer; accent-color: var(--accent); }
+.range::-webkit-slider-runnable-track { height: 3px; background: var(--line); border-radius: 3px; }
+.range::-moz-range-track { height: 3px; background: var(--line); border-radius: 3px; }
+.range::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; margin-top: -5.5px; border: 0; border-radius: 50%; background: var(--accent); }
+.range::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--accent); }
+.tilt-control output { min-width: 30px; text-align: right; color: var(--muted); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
+.notice { position: absolute; z-index: 5; left: 50%; bottom: 124px; transform: translate(-50%, 4px); max-width: calc(100% - 32px); padding: 10px 18px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-control); font-size: var(--text-small); text-align: center; opacity: 0; pointer-events: none; transition: opacity var(--duration) ease, transform var(--duration) var(--ease-out); }
+.notice.is-visible { transform: translate(-50%, 0); opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .icon-button:hover, .reset-button:hover { background: var(--accent-soft); color: var(--ink); }
+  .speed-options button:not(.is-selected):hover, .timer-options button:not(.is-selected):hover { background: var(--surface); color: var(--ink); }
+  .power-button:not([aria-pressed="true"]):hover { border-color: var(--accent); color: var(--accent); }
+  .view-actions .icon-button:hover { opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .control-bar { gap: var(--space-md); }
+  .speed-control, .oscillation-control, .tilt-control { gap: var(--space-xs); }
+  .range { width: 88px; }
+}
+
+@media (max-width: 660px) {
+  :root { --stage-pad: 12px; --space-lg: 24px; --radius-canvas: 14px; }
+  .canvas { height: min(950px, calc(100svh - 24px)); }
+  .header { min-height: 74px; padding: 0 var(--space-md); gap: var(--space-sm); }
+  .brand { font-size: 20px; }
+  .brand span { display: none; }
+  .status { margin-right: 6px; }
+  .header-actions { gap: 0; }
+  .icon-button { width: 36px; height: 36px; }
+  .settings-panel { width: min(300px, calc(100cqw - 48px)); padding: 20px; }
+  .model-caption { top: 10px; }
+  .model-caption h1 { font-size: 32px; letter-spacing: -1.3px; }
+  .model-caption p { margin-top: 5px; }
+  .model-finish { bottom: 23px; }
+  .view-actions { bottom: 12px; left: 16px; }
+  .control-bar { display: grid; grid-template-columns: 48px 1fr auto; column-gap: 16px; row-gap: 10px; padding: 20px 0; min-height: 142px; }
+  .power-button { grid-column: 1; grid-row: 1; }
+  .speed-control { grid-column: 2; grid-row: 1; justify-content: center; }
+  .speed-control > .control-label { display: none; }
+  .speed-options { gap: 2px; padding: 3px; }
+  .speed-options button { width: 36px; height: 36px; }
+  .oscillation-control { grid-column: 3; grid-row: 1; flex-direction: column; gap: 6px; }
+  .tilt-control { grid-column: 1 / -1; grid-row: 2; gap: var(--space-sm); }
+  .tilt-control .range { width: auto; flex: 1; }
+  .tilt-control output { min-width: 32px; }
+  .notice { bottom: 166px; }
+}
+
+@media (max-height: 620px) and (min-width: 661px) {
+  .header { min-height: 68px; }
+  .control-bar { min-height: 86px; }
+  .model-caption h1 { font-size: 32px; }
+  .model-finish { bottom: 21px; }
+  .view-actions { bottom: 9px; }
+  .notice { bottom: 100px; }
+}
+
+@media (max-height: 510px) and (max-width: 660px) {
+  .header { min-height: 60px; }
+  .control-bar { min-height: 118px; padding: 12px 0; row-gap: 4px; }
+  .model-caption h1 { font-size: 26px; }
+  .model-caption p, .model-finish { display: none; }
+  .notice { bottom: 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle span { transition: none; }
+  .notice { transform: translateX(-50%); transition: opacity var(--duration) ease; }
+  .notice.is-visible { transform: translateX(-50%); }
+}

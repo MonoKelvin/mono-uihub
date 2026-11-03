@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#24252b">
+  <title>午后 · Air 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}
+  </script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <section class="canvas" aria-labelledby="product-name">
+      <header class="header">
+        <a class="brand" href="#" aria-label="午后，视角复位" id="brand-home">afternoon<span>午后</span></a>
+        <div class="header-actions">
+          <span class="status" role="status"><span class="status-dot" aria-hidden="true"></span><span id="power-label">已关闭</span></span>
+          <button class="icon-button" id="sound-button" type="button" aria-pressed="false" aria-label="开启风扇声音" title="开启风扇声音"><i class="ti ti-volume-off" aria-hidden="true"></i></button>
+          <details class="settings" id="settings">
+            <summary class="icon-button" aria-label="风扇设置" title="风扇设置"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></summary>
+            <div class="settings-panel">
+              <div class="setting-heading"><span>定时关闭</span><output id="timer-value" aria-live="off">未设定</output></div>
+              <div class="timer-options" role="group" aria-label="定时关闭">
+                <button type="button" data-minutes="0" class="is-selected" aria-pressed="true">取消</button>
+                <button type="button" data-minutes="30" aria-pressed="false">30 分</button>
+                <button type="button" data-minutes="60" aria-pressed="false">1 小时</button>
+                <button type="button" data-minutes="120" aria-pressed="false">2 小时</button>
+              </div>
+              <div class="setting-heading direction-heading"><label for="direction">机头朝向</label><output for="direction" id="direction-value">0°</output></div>
+              <input id="direction" class="range" type="range" min="-60" max="60" value="0" step="1" aria-valuetext="正前方，0度" data-model-control disabled>
+              <button class="reset-button" id="reset-button" type="button" data-model-control disabled><i class="ti ti-restore" aria-hidden="true"></i>恢复初始状态</button>
+            </div>
+          </details>
+        </div>
+      </header>
+
+      <div class="viewer" id="viewer">
+        <div class="model-caption"><h1 id="product-name">Air 01</h1><p>静音循环扇</p></div>
+        <canvas id="model-canvas" tabindex="0" role="img" aria-label="三维电风扇，可拖动查看；方向键调整视角，Home 键恢复视角"></canvas>
+        <div class="model-message" id="model-message" role="status"><span class="loading-dot" aria-hidden="true"></span><p id="model-message-text">正在加载风扇</p><button id="reload-button" type="button" hidden>重新加载</button></div>
+        <div class="view-actions"><button class="icon-button" id="view-reset" type="button" aria-label="视角复位" title="视角复位" data-model-control disabled><i class="ti ti-rotate-2" aria-hidden="true"></i></button></div>
+        <span class="model-finish">月白 / 钛银</span>
+      </div>
+
+      <footer class="control-bar" aria-label="风扇控制">
+        <button class="power-button" id="power-button" type="button" aria-pressed="false" aria-label="开启风扇" title="开启风扇" data-model-control disabled><i class="ti ti-power" aria-hidden="true"></i></button>
+        <div class="speed-control"><span class="control-label" id="speed-label">风速</span><div class="speed-options" role="group" aria-labelledby="speed-label"><button type="button" data-speed="1" class="is-selected" aria-pressed="true" aria-label="一档，轻风" data-model-control disabled>1</button><button type="button" data-speed="2" aria-pressed="false" aria-label="二档，适中" data-model-control disabled>2</button><button type="button" data-speed="3" aria-pressed="false" aria-label="三档，强风" data-model-control disabled>3</button></div></div>
+        <div class="oscillation-control"><span class="control-label" id="oscillation-label">摇头</span><button class="toggle" id="oscillation-toggle" type="button" role="switch" aria-checked="false" aria-labelledby="oscillation-label" data-model-control disabled><span aria-hidden="true"></span></button></div>
+        <div class="tilt-control"><label class="control-label" for="tilt">俯仰</label><input class="range" id="tilt" type="range" min="-10" max="25" value="0" step="1" aria-valuetext="水平，0度" data-model-control disabled><output id="tilt-value" for="tilt">0°</output></div>
+      </footer>
+      <div class="notice" id="notice" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+</body>
+</html>
