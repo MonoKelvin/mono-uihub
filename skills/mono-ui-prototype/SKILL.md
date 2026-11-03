@@ -426,7 +426,7 @@ python tools/resource-getter/get.py url dicebear --style shapes --seed mono --pa
 python tools/resource-getter/get.py probe <url>
 ```
 
-`--page` 自动建 `ui/<page>/assets/` 并打印 `<img src="./assets/...">`；`--mode hotlink` 只输出 URL，`--mode download` 强制落盘，`--force` 覆盖同名文件。
+`--page` 自动建 `ui/<page>/assets/` 并打印 `<img src="./assets/...">`；`--mode hotlink` 只输出 URL，`--mode download` 强制落盘，`--force` 覆盖同名文件。（`assets/` 默认平铺，子目录规则见第八节技术约定。）
 
 ### 透明底 / 不要方框
 
@@ -552,6 +552,7 @@ python tools/image-forge/generate.py --style lineicon \
 - 语义化标签；可见焦点态；必要的 `aria-*`；对比度达标。
 - 桌面与窄屏两档响应式，窄屏重排而非横向滚动。
 - 页面输出到 `ui/<page-name>/`，英文 kebab-case，不超过 4 个单词；`metadata.json` 按 `skills/ui-metadata/SKILL.md` 归档。
+- **`assets/` 默认平铺，尽量不建子目录**；只有分类明确、且该类文件明显偏多（约 10 张以上）时才分子目录（如 `icons/`、`photos/`）。文件名用英文 kebab-case、语义化，不用 `1.png` / `img2.jpg` 这类无序命名。
 - 软件 / App / 组件类型必须用「舞台 + 画布」两层结构，浮层一律 `position: absolute` 挂在画布内，禁止 `position: fixed`，禁止 `vw/vh` 给画布内元素定尺寸（详见「容器边界」）。
 
 ## 九、视觉质量检查

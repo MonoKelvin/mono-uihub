@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e7ebf5">
+  <title>轻报 · 把报销变轻一点</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" id="app">
+      <header class="app-header">
+        <a href="#home" class="brand" data-view="home" aria-label="轻报工作台"><span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="9" fill="currentColor"/><path d="M13 12h14v17l-3-2-4 2-4-2-3 2z" fill="none" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 17h6m-6 5h4" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></span><span>轻报<span class="brand-caption">把报销变轻一点</span></span></a>
+        <nav class="navigation" aria-label="主导航">
+          <button class="nav-item active" data-view="home" aria-current="page"><i class="ti ti-layout-dashboard" aria-hidden="true"></i><span>工作台</span></button>
+          <button class="nav-item" data-view="claims"><i class="ti ti-file-description" aria-hidden="true"></i><span>我的报销</span></button>
+          <button class="nav-item" data-view="invoices"><i class="ti ti-receipt" aria-hidden="true"></i><span>发票夹</span><span class="nav-dot" aria-label="有可用发票"></span></button>
+          <button class="nav-item" data-view="approvals"><i class="ti ti-stamp" aria-hidden="true"></i><span>待我审批</span><span class="nav-count" id="approval-count">2</span></button>
+          <button class="nav-item" data-view="guide"><i class="ti ti-book-2" aria-hidden="true"></i><span>报销指南</span></button>
+        </nav>
+        <button class="organization" data-action="organization"><i class="ti ti-building-community" aria-hidden="true"></i><span>木禾设计</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+      </header>
+      <div class="app-body">
+        <div class="topbar">
+          <div class="breadcrumb"><span>我的空间</span><i class="ti ti-chevron-right" aria-hidden="true"></i><strong id="breadcrumb-current">工作台</strong></div>
+          <div class="topbar-actions">
+            <button class="search-trigger" data-action="search"><i class="ti ti-search" aria-hidden="true"></i><span>搜索报销单、发票</span><kbd>Ctrl K</kbd></button>
+            <button class="help-trigger" data-action="help"><i class="ti ti-lifebuoy" aria-hidden="true"></i><span>问问财务</span></button>
+            <span class="topbar-divider"></span>
+            <button class="icon-button notification-button" data-action="notifications" aria-label="查看通知" aria-expanded="false"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot"></span></button>
+            <button class="mini-avatar" data-action="profile" aria-label="林予安的个人信息">予</button>
+          </div>
+        </div>
+        <main class="main-content" id="main-content" tabindex="-1"></main>
+        <footer class="app-footer"><span><i class="ti ti-lock" aria-hidden="true"></i>你的每一笔，都被认真对待</span><span>木禾设计 · 员工报销空间</span></footer>
+      </div>
+      <div class="popover" id="notification-popover" hidden>
+        <div class="popover-heading"><strong>消息与提醒</strong><button class="text-button" data-action="read-notifications">全部已读</button></div>
+        <button class="notification-item" data-action="detail" data-id="c3"><span class="item-icon amber"><i class="ti ti-file-alert" aria-hidden="true"></i></span><span><strong>一份报销需要补充信息</strong><small>补充费用说明后，就可以继续啦。</small><time>今天 09:24</time></span></button>
+        <button class="notification-item" data-action="detail" data-id="c6"><span class="item-icon green"><i class="ti ti-circle-check" aria-hidden="true"></i></span><span><strong>杭州客户拜访已完成报销</strong><small>这趟辛苦了，款项已记入报销记录。</small><time>昨天 16:08</time></span></button>
+        <p class="popover-note">不着急，我们会陪你把每一步走好。</p>
+      </div>
+      <div class="layer" id="modal-layer" hidden><div class="scrim" data-action="close-modal"></div><section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1"></section></div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden><span class="toast-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></span><span id="toast-message"></span><button class="icon-button" data-action="dismiss-toast" aria-label="关闭提示"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+    </div>
+  </div>
+</body>
+</html>

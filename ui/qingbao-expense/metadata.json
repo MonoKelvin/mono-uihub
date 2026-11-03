@@ -1,0 +1,21 @@
+{
+  "name": "轻报 · 报销事务台",
+  "slug": "qingbao-expense",
+  "page_type": "software",
+  "tags": ["财务", "报销", "工作流"],
+  "palette": ["#ffffff", "#3e5ed5", "#f9ec9f"],
+  "created_at": "2026-11-03 10:48:53",
+  "updated_at": "2026-11-03 11:13:53",
+  "history": [
+    {
+      "prompt": "一个财务报销系统软件，设计清新简约，丰富的图画或者图标，友好的提示和暖语",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz"]
+    },
+    {
+      "prompt": "重构UI设计和配色，和目前已有的项目太像了",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz"]
+    }
+  ]
+}
