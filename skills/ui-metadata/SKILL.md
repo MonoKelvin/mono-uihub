@@ -19,6 +19,7 @@ description: 为 UI 原型创建、整理和更新 metadata.json，记录页面�
 | `created_at` | 最初创建时间，`yyyy-MM-dd HH:mm:ss` |
 | `updated_at` | 最近更新时间，`yyyy-MM-dd HH:mm:ss` |
 | `history` | 生成与修改历史，每条含 `prompt` / `model` / `skills` / `duration_seconds` / `image_generation` |
+| `imageToUI` | **可选**。若该 UI 由「一张图片（含 AI 识图一比一还原）」生成，记录其来源：外链写完整 URL（如 `https://dribbble.com/shots/15820088-...`），本地来源写原型目录内的相对路径（如 `./assets/source-<slug>.png`）。留空或不写则卡片不显示该图标。取值规则见 `mono-ui-prototype` 技能「图片输入的来源声明」。 |
 
 ### tags 书写约定
 
@@ -60,6 +61,7 @@ description: 为 UI 原型创建、整理和更新 metadata.json，记录页面�
   "tags": [],
   "created_at": null,
   "updated_at": null,
+  "imageToUI": null,
   "history": [
     {
       "prompt": null,

@@ -6,6 +6,7 @@
   "tags": [],
   "created_at": null,
   "updated_at": null,
+  "imageToUI": null,
   "history": [
     {
       "prompt": null,

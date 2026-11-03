@@ -174,6 +174,23 @@ body > .stage          舞台：居中 + 背景，不承载产品内容
 
 动手前读取 `skills/ui-metadata/SKILL.md`，按其规范在页面目录写入 `metadata.json`。
 
+### 0. 图片输入的来源声明（imageToUI）
+
+当用户用「一张 / 多张图片」作为生成输入（即「看图做 UI」「以图还原」「AI 识图一比一复刻」）时，必须在 `metadata.json` 写入 `imageToUI` 字段，记录该图的来源，让画廊卡片能回溯原始参考图并点击查看。处理方式按输入类型区分：
+
+- **输入是图片 URL**（`http://`、`https://` 或 `//` 开头的链接）：直接把该链接原样写入 `imageToUI`，例如 `"imageToUI": "https://dribbble.com/shots/15820088-Furniture-Board-Desktop-concept"`。画廊会渲染一个图片图标，点击在新标签页打开该来源。
+- **输入是 base64 编码或本地图片路径**：AI **必须先询问用户二选一**，不得静默处理：
+  1. 提供该图的**源链接地址**（推荐用于有公开出处的参考图，如 Dribbble / Behance / 设计稿链接）；或
+  2. 允许 AI 把这张图**复制一份到 `ui/<slug>/assets/` 目录**作为来源存档（**强烈推荐**——保证来源可追溯、离线可看、随原型一起发布），随后把 `imageToUI` 写成相对路径，如 `"./assets/source-<slug>.png"`。
+
+  ⚠️ **禁止**把 base64 字符串或本地绝对路径原样写进 `imageToUI`：本地路径在画廊服务器上不可达、base64 无法被浏览器打开，卡片图标会失效。用户未明确选择前，不要写该字段。
+
+字段取值规则（画廊 `catalog.mjs` 据此解析，详见 `skills/ui-metadata/SKILL.md`）：
+
+- 以 `http://` / `https://` / `//` 开头 → 视为外链，点击跳转。
+- 其他（`./assets/...`、`assets/...`）→ 视为原型目录内的资源，解析为 `/prototypes/<slug>/...` 并在新标签页打开图片。
+- 留空 / 不写 → 卡片不显示该图标。
+
 ### 1. 明确设计任务
 
 确定产品定位、用户场景、核心任务、信息优先级和首屏重点。先准备真实文案与合理数据，再设计呈现方式，避免空洞占位内容。
@@ -242,7 +259,7 @@ body > .stage          舞台：居中 + 背景，不承载产品内容
 - 可以利用字重、字宽、字距、大小写、斜体、连字和断行形成设计感，不要只靠更换字体名称。
 - 使用前检查字形覆盖、数字表现、加载速度、授权和 CDN 可用性；设置可靠回退栈，未加载时布局也要稳定。
 - 优先从 Google Fonts、Fontsource、ZeoSeven 引入。按需通过 CDN 引入，不要盲目加载大量字重和字符集。
-- 最小字号不小于 12px；排版尽量不主动断行，通过给合适的显示宽度自适应换行。
+- 默认最小字号不小于 12px（一般推荐下限，非死规则）；若 App 整体尺寸偏小，或小 logo / 背景 / 图案等需在限定元素内嵌文字（文字不超出元素、与元素留内边距），可在保证美观前提下调小。排版尽量不主动断行，通过给合适的显示宽度自适应换行。
 
 参考：
 - [Google Design：Choosing Web Fonts](https://design.google/library/choosing-web-fonts-beginners-guide)
@@ -552,7 +569,7 @@ python tools/image-forge/generate.py --style lineicon \
 - 语义化标签；可见焦点态；必要的 `aria-*`；对比度达标。
 - 桌面与窄屏两档响应式，窄屏重排而非横向滚动。
 - 页面输出到 `ui/<page-name>/`，英文 kebab-case，不超过 4 个单词；`metadata.json` 按 `skills/ui-metadata/SKILL.md` 归档。
-- **`assets/` 默认平铺，尽量不建子目录**；只有分类明确、且该类文件明显偏多（约 10 张以上）时才分子目录（如 `icons/`、`photos/`）。文件名用英文 kebab-case、语义化，不用 `1.png` / `img2.jpg` 这类无序命名。
+- **`assets/` 默认平铺，尽量不建子目录**；只有当某个分类自身就有 5 张以上文件时，才单独建子目录（如 `icons/`、`photos/`）。分类文件不足 5 张时不建子目录，改为在文件名加分类前缀区分（如 `icon-*`、`photo-*`、`bg-*`）。文件名用英文 kebab-case、语义化，不用 `1.png` / `img2.jpg` 这类无序命名。
 - 软件 / App / 组件类型必须用「舞台 + 画布」两层结构，浮层一律 `position: absolute` 挂在画布内，禁止 `position: fixed`，禁止 `vw/vh` 给画布内元素定尺寸（详见「容器边界」）。
 
 ## 九、视觉质量检查

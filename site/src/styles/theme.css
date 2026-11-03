@@ -119,7 +119,7 @@ html[lang="en"] .hero-title h1{font-size:clamp(44px,6vw,96px)}
 /* ---- grid & cards: framed specimens ---- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,400px),1fr));gap:72px 44px;padding:40px 0 140px}
 .embedded .grid{padding:24px 0 48px}
-.card{display:flex;flex-direction:column;min-width:0}
+.card{display:flex;flex-direction:column;min-width:0;position:relative}
 .card[hidden]{display:none}
 .media{display:block;transition:transform .5s var(--ease)}
 .frame{position:relative;display:block;aspect-ratio:8/5;overflow:hidden;border:7px solid var(--card);box-shadow:inset 0 0 0 1px var(--line),var(--shadow-sm);background:var(--mat);transition:box-shadow .5s var(--ease)}
@@ -141,6 +141,22 @@ html[lang="en"] .hero-title h1{font-size:clamp(44px,6vw,96px)}
 .model{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .model.unknown{font-style:italic}
 .date{margin-left:auto;flex:none;font-variant-numeric:tabular-nums}
+
+/* ---- source-image badge: reveals on hover/focus, opens the origin image ---- */
+.src-link{
+  position:absolute;top:20px;right:20px;z-index:3;
+  display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
+  color:var(--paper);
+  background:rgba(22,21,18,.42);
+  -webkit-backdrop-filter:blur(10px) saturate(1.1);backdrop-filter:blur(10px) saturate(1.1);
+  box-shadow:inset 0 0 0 1px rgba(244,243,238,.32),inset 0 1px 0 rgba(244,243,238,.18);
+  opacity:0;transform:translateY(0) scale(.92);
+  transition:opacity .25s var(--ease),transform .3s var(--ease),background .2s var(--ease),color .2s var(--ease);
+}
+.card:hover .src-link,.card:focus-within .src-link{opacity:1;transform:translateY(-6px) scale(1)}
+.src-link:hover{background:rgba(18,17,15,.8);color:var(--paper)}
+.src-link:active{transform:translateY(-6px) scale(.9)}
+.src-link svg{width:17px;height:17px;display:block}
 
 /* ---- empty & footer ---- */
 .empty{display:none;padding:120px 0 150px;text-align:center;color:var(--ink-2)}
@@ -186,5 +202,6 @@ html[lang="en"] .hero-title h1{font-size:clamp(44px,6vw,96px)}
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms !important;animation:none !important}
   .card:hover .media{transform:none}
+  .card:hover .src-link,.card:focus-within .src-link{transform:none}
   .aura{display:none}
 }

@@ -8,6 +8,29 @@ const text = (value) => typeof value === 'string' ? value.trim() : '';
 const list = (value) => [...new Set((Array.isArray(value) ? value : typeof value === 'string' ? [value] : []).map(text).filter(Boolean))];
 const record = (value) => value && typeof value === 'object' && !Array.isArray(value) ? value : null;
 const fold = (value) => text(value).toLowerCase();
+
+/**
+ * Resolve the `imageToUI` source reference recorded in metadata.json into a URL the
+ * gallery card can open.
+ *  - Absolute http(s) / protocol-relative URLs are kept verbatim (open in a new tab).
+ *  - A relative path (e.g. "./assets/source.png" or "assets/source.png") is resolved
+ *    against the prototype's public root: /prototypes/<slug>/...
+ * Returns null when the reference is empty or escapes the slug directory.
+ */
+function resolveSourceRef(ref, slug) {
+  if (typeof ref !== 'string' || !ref.trim()) return null;
+  const value = ref.trim();
+  if (/^https?:\/\//i.test(value) || value.startsWith('//')) {
+    return { raw: value, href: value, external: true };
+  }
+  const normalized = path.posix.normalize(value.replace(/^\.?\//, '')).replace(/^\/+/, '');
+  if (!normalized || normalized === '.' || normalized.startsWith('..') || normalized.includes('..')) return null;
+  return {
+    raw: value,
+    href: '/prototypes/' + encodeURIComponent(slug) + '/' + normalized.split('/').map(encodeURIComponent).join('/'),
+    external: false,
+  };
+}
 const typePatterns = [
   ['component', /组件|\bcomponent\b/i],
   ['app', /手机|移动端|\bmobile\b|\bapp\b/i],
@@ -27,6 +50,7 @@ export function normalizeMetadata(metadata, slug = '') {
   const tags = initial?.tags != null ? list(initial.tags) : tagPatterns.filter((tag) => prompt.includes(tag));
   const palette = (Array.isArray(root?.palette) ? root.palette : []).map(normalizeHex).filter(Boolean);
   const colors = classifyPalette(palette);
+  const sourceImage = resolveSourceRef(root?.imageToUI, slug);
   return {
     slug,
     name: text(root?.name) || slug,
@@ -39,6 +63,7 @@ export function normalizeMetadata(metadata, slug = '') {
     updatedAt: text(root?.updated_at ?? root?.updatedAt) || null,
     screenshots: [],
     href: '/prototypes/' + encodeURIComponent(slug) + '/index.html',
+    sourceImage,
     hasMetadata: Boolean(root),
   };
 }

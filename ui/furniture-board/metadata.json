@@ -1,0 +1,39 @@
+{
+  "name": "Design · 家具展示",
+  "slug": "furniture-board",
+  "page_type": "component",
+  "imageToUI": "https://dribbble.com/shots/15820088-Furniture-Board-Desktop-concept",
+  "tags": ["家具", "购物", "图像还原"],
+  "palette": ["#f2f2f2", "#e2ddd7", "#262626"],
+  "created_at": "2026-11-03 14:33:26",
+  "updated_at": "2026-11-03 15:14:34",
+  "history": [
+    {
+      "prompt": "实现该图片的UI原型设计。参考为 Furniture - Board Desktop concept by Tomasz Mazurczak，包含大型棕色单椅、商品信息、侧边推荐和底部品牌。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "gsap-timeline"],
+      "duration_seconds": 1892,
+      "image_generation": [
+        {
+          "prompt": "A single contemporary barrel armchair in warm cognac caramel-orange saddle leather. A sculpted rounded one-piece bucket backrest wraps around into low integrated armrests, with smooth curved outer sides, a thick separate rounded seat cushion, fine cream edge stitching and subtle natural leather creases. Four slim splayed matte black steel legs with a narrow central support bar, no wooden frame. Three-quarter front view from slightly above, facing slightly toward the right; the entire chair and all four legs are visible. Soft diffuse studio product light. Isolated on transparent background, no floor, no other objects.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A single compact contemporary armchair with a low charcoal-grey upholstered bucket seat and rounded grey armrests, a slightly textured fabric surface, and one plain soft white square cushion standing against the backrest. Four slender tapered dark wooden legs splay diagonally outward beneath the seat, without a rocking base or wooden side frame. Entire chair including every leg visible, three-quarter front view facing a little to the left. Soft diffuse studio product light. Isolated on transparent background, no floor, no other objects.",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    },
+    {
+      "prompt": "继续。组件太大了，请根据窗口自动调整比例不要出现滚动界面，要将所有元素限制到组件页面内部",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "gsap-timeline"],
+      "duration_seconds": 466
+    },
+    {
+      "prompt": "Est. 1984 MOONLIGHT 字体超过 logo 标志区域，可以调小字体，不用管 skill 最小 12px 限制，合理排版。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design"]
+    }
+  ]
+}

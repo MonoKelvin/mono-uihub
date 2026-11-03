@@ -44,6 +44,29 @@ test('missing metadata stays unknown instead of fabricated', () => {
   assert.equal(it.hasMetadata, false);
 });
 
+test('imageToUI resolves external URLs, local asset paths, and rejects unsafe refs', () => {
+  const ext = normalizeMetadata({ imageToUI: 'https://dribbble.com/shots/15820088-Furniture-Board-Desktop-concept', history: [{ prompt: 'p', model: 'M' }] }, 'furniture-board');
+  assert.ok(ext.sourceImage);
+  assert.equal(ext.sourceImage.external, true);
+  assert.equal(ext.sourceImage.href, 'https://dribbble.com/shots/15820088-Furniture-Board-Desktop-concept');
+  assert.equal(ext.sourceImage.raw, 'https://dribbble.com/shots/15820088-Furniture-Board-Desktop-concept');
+
+  const local = normalizeMetadata({ imageToUI: './assets/source-furniture.png', history: [{ prompt: 'p', model: 'M' }] }, 'foo');
+  assert.ok(local.sourceImage);
+  assert.equal(local.sourceImage.external, false);
+  assert.equal(local.sourceImage.href, '/prototypes/foo/assets/source-furniture.png');
+
+  const bare = normalizeMetadata({ history: [{ prompt: 'p', model: 'M' }] }, 'foo');
+  assert.equal(bare.sourceImage, null);
+
+  const escape = normalizeMetadata({ imageToUI: '../secrets/x.png', history: [{ prompt: 'p', model: 'M' }] }, 'foo');
+  assert.equal(escape.sourceImage, null);
+
+  const protocolRelative = normalizeMetadata({ imageToUI: '//example.com/x.png', history: [{ prompt: 'p', model: 'M' }] }, 'foo');
+  assert.equal(protocolRelative.sourceImage.external, true);
+  assert.equal(protocolRelative.sourceImage.href, '//example.com/x.png');
+});
+
 test('screenshots are discovered and sorted numerically', () => {
   const root = mkdtempSync(path.join(tmpdir(), 'uihub-'));
   try {

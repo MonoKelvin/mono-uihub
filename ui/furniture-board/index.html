@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c8cccd">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A considered collection of armchairs and lighting for modern interiors.">
+  <title>Design — Armchair room design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script async src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" onload="window.dispatchEvent(new Event('gsap-ready'))"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="showroom" id="showroom">
+      <div class="stage-dots" aria-hidden="true"></div>
+      <div class="stage-circle stage-circle-left" aria-hidden="true"></div>
+      <div class="stage-circle stage-circle-right" aria-hidden="true"></div>
+      <div class="shop-base" id="shop-base">
+        <header class="topbar">
+          <button class="wordmark" data-action="home" aria-label="Design home">Design</button>
+          <nav class="navigation" aria-label="Main navigation">
+            <button class="nav-link is-active" data-action="home" aria-current="page">Start page</button>
+            <button class="nav-link" data-action="about">About us</button>
+            <button class="nav-link" data-action="pricing">Pricing</button>
+            <button class="nav-link products-link" data-action="products">Products <span class="catalog-count">3</span></button>
+            <button class="nav-link" data-action="contact">Contact</button>
+          </nav>
+          <div class="header-tools">
+            <button class="header-icon" data-action="account" aria-label="My saved items" title="Saved items"><i class="ti ti-user" aria-hidden="true"></i></button>
+            <button class="header-icon" data-action="search" aria-label="Search products" title="Search"><i class="ti ti-search" aria-hidden="true"></i></button>
+            <button class="header-icon menu-button" data-action="products" aria-label="Browse collection"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+          </div>
+        </header>
+        <main class="shop-grid" id="main-content">
+          <div class="product-visual" id="product-visual">
+            <span class="product-halo" id="product-halo" aria-hidden="true"></span>
+            <img class="hero-image" id="hero-image" src="./assets/chair-cognac.png" alt="Cognac leather armchair with black legs" draggable="false" fetchpriority="high" decoding="async">
+          </div>
+          <section class="product-info" aria-labelledby="product-title">
+            <button class="review-link" data-action="reviews" aria-label="Read product reviews"><span>Reviews</span><span class="stars hero-stars" aria-label="4.8 out of 5 stars"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9Z"/></svg><svg class="star-outline" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9Z"/></svg></span></button>
+            <div class="product-copy" id="product-copy"><h1 id="product-title">Armchair<br>room design</h1><p class="product-description" id="product-description">Stylish armchair that decorates<br class="desktop-break"> interior with designer elements.</p><p class="product-price" id="product-price">329 €</p></div>
+            <div class="buy-actions">
+              <button class="main-favorite" id="main-favorite" data-action="main-favorite" aria-label="Save armchair" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.1 4.5 12.7a4.9 4.9 0 0 1 7-7l.5.5.5-.5a4.9 4.9 0 0 1 7 7Z"/></svg></button>
+              <button class="add-to-cart" id="add-to-cart" data-action="add"><span>Add to cart</span><span class="cart-symbol"><i class="ti ti-shopping-cart-plus" aria-hidden="true"></i><span class="cart-badge" id="cart-badge" hidden>0</span></span></button>
+            </div>
+            <button class="view-cart-link" id="view-cart-link" data-action="cart" hidden>View your cart <span id="cart-total-inline"></span><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+          </section>
+          <aside class="recommendations" id="recommendations" aria-label="More from the collection"></aside>
+          <section class="partner-brands" aria-label="Design partners">
+            <div class="partner partner-clothing" aria-label="Clothing"><svg viewBox="0 0 35 35" aria-hidden="true" fill="none"><path d="M7 8c3-3 18-3 21 0 2 10-1 18-10.5 22C9 26 5 18 7 8Z" stroke="currentColor" stroke-width="1.8"/><path d="M22 13c-6-4-12 6-5 9m5-9-1 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>· CLOTHING ·</span><b></b></div>
+            <div class="partner partner-fluotish"><span>fluotish</span><small>modern furniture</small></div>
+            <div class="partner partner-moonlight"><span class="moonlight-ring"><small>Est. 1984</small><strong>MOONLIGHT</strong><b></b></span></div>
+            <div class="partner partner-british"><span>BRITISH<strong>GOLD</strong></span></div>
+          </section>
+        </main>
+      </div>
+      <div class="overlay" id="overlay" hidden>
+        <button class="scrim" id="scrim" data-action="close" aria-label="Close panel" tabindex="-1"></button>
+        <section class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" tabindex="-1">
+          <header class="panel-heading"><h2 id="panel-title"></h2><button class="close-button" data-action="close" aria-label="Close panel"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="panel-body" id="panel-body"></div>
+          <footer class="panel-footer" id="panel-footer" hidden></footer>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-check" aria-hidden="true"></i><span id="toast-message"></span></div>
+    </div>
+  </div>
+</body>
+</html>
