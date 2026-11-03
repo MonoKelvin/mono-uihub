@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#efedf6">
+  <meta name="description" content="Airform S1，直接掌控温度、风速与送风方向。">
+  <title>Airform S1 — 气序空调</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage"><div class="canvas" id="app">
+    <header class="titlebar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><b></b><b></b><b></b></span><span>airform<span class="brand-cn">气序</span></span></div>
+      <div class="header-actions">
+        <button class="utility-button" id="sound-button" aria-label="关闭按键声音" aria-pressed="true" title="按键声音"><i class="ti ti-volume" aria-hidden="true"></i><span>声音</span></button>
+        <button class="utility-button" id="display-button" aria-label="关闭空调显示屏" aria-pressed="true" title="空调显示屏"><i class="ti ti-bulb" aria-hidden="true"></i><span>显示</span></button>
+        <span class="header-divider"></span><button class="utility-button" id="reset-button" aria-label="重置空调" title="重置空调"><i class="ti ti-rotate-clockwise" aria-hidden="true"></i></button>
+      </div>
+    </header>
+    <main class="workspace">
+      <section class="unit-showcase" id="unit-showcase" data-view="0" aria-label="空调本体">
+        <div class="unit-heading"><div><span class="product-type">壁挂式空调</span><h1>Airform <span>S1</span></h1></div><div class="unit-tools"><span class="unit-status"><span class="status-light"></span><span id="unit-status-text">运行中</span></span><div class="view-selector" id="view-selector" data-view="0" role="group" aria-label="观察视角"><button class="view-button" data-view="0" aria-label="正视角" title="正视角" aria-pressed="true"><i class="ti ti-square" aria-hidden="true"></i></button><button class="view-button" data-view="1" aria-label="倾斜视角" title="倾斜视角" aria-pressed="false"><i class="ti ti-cube" aria-hidden="true"></i></button></div></div></div>
+        <div class="device-field" id="device-field">
+          <svg class="device-backdrop" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="airform-dot-pattern" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".85"/></pattern><radialGradient id="airform-pattern-fade"><stop offset="0" stop-color="white" stop-opacity=".9"/><stop offset=".75" stop-color="white" stop-opacity=".3"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient><mask id="airform-pattern-mask"><rect width="800" height="600" fill="url(#airform-pattern-fade)"/></mask></defs><rect class="backdrop-dots" width="800" height="600" fill="url(#airform-dot-pattern)" mask="url(#airform-pattern-mask)"/></svg>
+          <canvas id="scene-canvas" tabindex="0" aria-label="空调三维视图，可拖动叶片或使用方向键调整送风方向"></canvas><div class="graphics-status" id="graphics-status" role="status">正在载入空调</div>
+        </div>
+      </section>
+      <section class="remote" aria-label="空调控制面板">
+        <header class="remote-heading"><span>空调控制</span><span id="remote-signal" aria-hidden="true"><i class="ti ti-wifi" aria-hidden="true"></i></span></header>
+        <div class="remote-temperature"><div class="temperature-copy"><span id="target-label">设定温度</span><div class="temperature-value"><strong id="target-temperature">23</strong><span id="target-unit">°C</span></div></div><button class="power-button" id="power-button" aria-label="关闭空调" aria-pressed="true"><i class="ti ti-power" aria-hidden="true"></i></button></div>
+        <div class="temperature-stepper"><button id="temperature-down" aria-label="降低一度"><i class="ti ti-minus" aria-hidden="true"></i></button><input id="temperature-range" type="range" min="16" max="30" value="23" step="1" aria-label="设定温度"><button id="temperature-up" aria-label="升高一度"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+        <div class="mode-options" role="group" aria-label="运行模式"><button data-mode="cool" class="active" aria-pressed="true"><i class="ti ti-snowflake" aria-hidden="true"></i><span>制冷</span></button><button data-mode="heat" aria-pressed="false"><i class="ti ti-sun" aria-hidden="true"></i><span>制热</span></button><button data-mode="dry" aria-pressed="false"><i class="ti ti-droplet" aria-hidden="true"></i><span>除湿</span></button><button data-mode="fan" aria-pressed="false"><i class="ti ti-wind" aria-hidden="true"></i><span>送风</span></button><button data-mode="auto" aria-pressed="false"><i class="ti ti-refresh" aria-hidden="true"></i><span>自动</span></button></div>
+        <div class="remote-details">
+          <section class="fan-section"><div class="section-heading"><h2>风速</h2><span id="fan-auto-label">自动</span></div><button id="fan-button" class="fan-button" aria-label="切换风速，当前自动"><span class="fan-illustration" aria-hidden="true"><i class="ti ti-propeller" id="fan-propeller"></i></span><span class="fan-button-copy"><strong id="fan-name">自动风</strong><span class="fan-meter" id="fan-meter" aria-hidden="true"><b></b><b></b><b></b></span></span><i class="ti ti-chevron-right" aria-hidden="true"></i></button><button class="timer-button" id="timer-button" aria-label="设置定时关机，当前未设置"><span class="timer-symbol" id="timer-symbol" aria-hidden="true"><svg viewBox="0 0 36 36"><circle class="timer-ring-track" cx="18" cy="18" r="15"/><circle class="timer-ring-progress" id="timer-ring-progress" cx="18" cy="18" r="15" pathLength="100"/></svg><i class="ti ti-clock" aria-hidden="true"></i></span><span><span>定时关机</span><strong id="timer-value">未设置</strong></span><i class="ti ti-chevron-right" aria-hidden="true"></i></button></section>
+          <section class="direction-section"><div class="section-heading"><h2>导风叶片</h2><span class="grille-mark" aria-hidden="true"></span></div><div class="direction-axis"><div class="axis-heading"><label for="angle-range"><i class="ti ti-arrows-up-down" aria-hidden="true"></i><span>上下</span></label><output id="angle-output" for="angle-range">50°</output><button id="vertical-swing" class="axis-auto active" aria-pressed="true" aria-label="水平叶片自动摆风" title="水平叶片控制上下风向"><i class="ti ti-wave-sine" aria-hidden="true"></i></button></div><input id="angle-range" type="range" min="30" max="70" value="50" step="1" aria-label="水平叶片上下送风角度"></div><div class="direction-axis"><div class="axis-heading"><label for="horizontal-range"><i class="ti ti-arrows-left-right" aria-hidden="true"></i><span>左右</span></label><output id="horizontal-output" for="horizontal-range">0°</output><button id="horizontal-swing" class="axis-auto" aria-pressed="false" aria-label="垂直叶片自动摆风" title="垂直叶片控制左右风向"><i class="ti ti-wave-sine" aria-hidden="true"></i></button></div><input id="horizontal-range" type="range" min="-35" max="35" value="0" step="1" aria-label="垂直叶片左右送风角度"></div></section>
+        </div>
+      </section>
+    </main>
+    <span class="sr-only" id="operation-status" role="status" aria-live="polite"></span>
+  </div></div>
+</body>
+</html>

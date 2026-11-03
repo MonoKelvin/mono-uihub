@@ -1,0 +1,41 @@
+{
+  "name": "气序 Airform 空调",
+  "slug": "airform-climate",
+  "page_type": "software",
+  "tags": ["空调", "模拟器", "3D交互"],
+  "palette": ["#efedf6", "#c2b3df", "#faf9fd"],
+  "created_at": "2026-11-03 18:48:35",
+  "updated_at": "2026-11-03 21:55:07",
+  "history": [
+    {
+      "prompt": "一个高级简约的空调模拟器单页面的软件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "dataviz"],
+      "duration_seconds": 568
+    },
+    {
+      "prompt": "重构UI设计和配色，精简一点(不需要场景、是空调模拟器，单独操作空调即可)，尽量操作的时候可以操作空调那个图形的动画，比如显示屏、模拟吹风、拨片方向、滴滴声、开关机等等，尽量多加图形、动画、图标等设计",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "gsap-core", "gsap-timeline", "run"],
+      "duration_seconds": 946
+    },
+    {
+      "prompt": "右侧面板太紧凑了，间距、尺寸、图形和设计都有问题，请调整，尽量不要出现滚动条，显示屏的数字绘制的感觉有点粗糙，好像有毛刺，请修复；绘制的风的效果不是很好，都是线条形状，是否可以优化柔软的风、飘逸的效果（是否需要shader才能实现？svg可能比较难实现），空调的形状也有点问题，拨片方向错误、调整好像也无法调整拨片，尽量设计成3D的效果，继续优化美化设计",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "gsap-core", "gsap-timeline", "run"],
+      "duration_seconds": 690
+    },
+    {
+      "prompt": "摆风速度太快了，请减慢一点，摆风的度数也过大了，范围应该是30-70度左右，其他继续优化\n拨片有问题，应该是类似网格状的拨片，垂直的拨片控制左右风向；水平的拨片控制上下风向。目前右侧的风向控制图形组件太丑了请重构\n模型有点问题，出风口应该在模型斜下方位置，内嵌的，而不是凸出来的，请调整模型\n上下风向范围是30-70度\n室温\n25.4\n°C\n向下送风 下面这些文字内容都不需要",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "gsap-core", "gsap-timeline", "run"],
+      "duration_seconds": 3828
+    },
+    {
+      "prompt": "切换视角的功能：正视角，和另一个幅度稍微调大一点，视角更倾斜一点的视角；定时关机的设置项目背景使用圆角；其他继续优化美化（比如加一些背景装饰、图形图案、插画等、空调装饰等），尽量少使用文字，多加一些动画交互效果\n模型后面的线条图案就不要了\n倾斜视角的时候，模型整体向左移动一点，否则右侧会越界\n模型上的开关做成扁平的开关图标即可，不要突出的一个圆柱体（类似触摸屏的图标）",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "dataviz", "gsap-core", "run"],
+      "duration_seconds": 2470
+    }
+  ]
+}
