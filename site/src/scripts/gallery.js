@@ -2,6 +2,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { EMBED_PARENTS } from '../config.mjs';
 import { COLOR_BINS } from '../../lib/colors.mjs';
+import { initPrototypeDetail } from './prototype-detail.js';
+import { initTooltips } from './tooltip.js';
 
 const I18N = {
   zh: {
@@ -31,11 +33,16 @@ const PARENTS = new Set(EMBED_PARENTS);
 
 export function initGallery() {
   gsap.registerPlugin(ScrollTrigger);
+  initTooltips();
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const params = new URLSearchParams(location.search);
   const embedded = document.body.dataset.embedded === '1';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let detail = null, galleryPaused = false;
+  const stopCarousels = [];
+  let stopGlide = () => {};
+  let pauseAdvanced = () => {};
 
   /* Split hero title lines into per-word spans so they can stagger in.
      Chinese lines split per character, latin per word. */
@@ -74,6 +81,7 @@ export function initGallery() {
     $$('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
     if (!embedded) { try { localStorage.setItem('uihub-lang', lang); } catch {} }
     updateCount();
+    detail?.setLanguage();
   }
   $$('[data-lang]').forEach((b) => b.addEventListener('click', () => {
     if (b.dataset.lang !== lang) applyLang(b.dataset.lang);
@@ -125,11 +133,17 @@ export function initGallery() {
     postHeight();
   }
 
-  let qTimer;
+  let qTimer, pendingQuery = null;
+  function commitQuery() {
+    if (galleryPaused || pendingQuery === null) return;
+    state.q = pendingQuery;
+    pendingQuery = null;
+    render();
+  }
   $('[data-search-input]').addEventListener('input', (e) => {
     clearTimeout(qTimer);
-    const value = e.target.value.trim().toLowerCase();
-    qTimer = setTimeout(() => { state.q = value; render(); }, 160);
+    pendingQuery = e.target.value.trim().toLowerCase();
+    qTimer = setTimeout(commitQuery, 160);
   });
   /* ---------- dropdowns (type + sort): interruptible glass menus ---------- */
   const dropdowns = [];
@@ -209,6 +223,8 @@ export function initGallery() {
   chipGroup('color', state.colors);
 
   $('[data-reset]').addEventListener('click', () => {
+    clearTimeout(qTimer);
+    pendingQuery = null;
     state.q = ''; state.type = 'all'; state.models.clear(); state.tags.clear(); state.colors.clear();
     $('[data-search-input]').value = '';
     $$('.chip').forEach((b) => b.setAttribute('aria-pressed', 'false'));
@@ -237,6 +253,7 @@ export function initGallery() {
   if (more && adv) {
     const inner = adv.firstElementChild;
     let tween = null;
+    pauseAdvanced = (paused) => tween?.paused(paused);
     more.addEventListener('click', () => {
       advOpen = !advOpen;
       const open = advOpen;
@@ -278,10 +295,11 @@ export function initGallery() {
     const dots = $$('.dots span', card);
     let index = 0, timer;
     const show = (i) => { index = i; imgs.forEach((im, j) => im.classList.toggle('is-on', j === i)); dots.forEach((d, j) => d.classList.toggle('is-on', j === i)); };
+    stopCarousels.push(() => clearInterval(timer));
     card.addEventListener('pointerenter', () => {
-      if (imgs.length > 1) timer = setInterval(() => show((index + 1) % imgs.length), 1500);
+      if (!galleryPaused && imgs.length > 1) timer = setInterval(() => show((index + 1) % imgs.length), 1500);
     });
-    card.addEventListener('pointerleave', () => { clearInterval(timer); show(0); });
+    card.addEventListener('pointerleave', () => { clearInterval(timer); if (!galleryPaused) show(0); });
   });
 
   /* ---------- embed height reporting ---------- */
@@ -289,7 +307,7 @@ export function initGallery() {
   const target = embedded && window.parent !== window && parent && PARENTS.has(parent) ? parent : null;
   let lastHeight = 0;
   function postHeight() {
-    if (!target) return;
+    if (!target || galleryPaused) return;
     const h = Math.ceil(document.documentElement.scrollHeight);
     if (Math.abs(h - lastHeight) < 2) return;
     lastHeight = h;
@@ -299,15 +317,36 @@ export function initGallery() {
 
   applyLang(lang);
   render({ animate: false });
+  detail = initPrototypeDetail({
+    page: $('[data-gallery-page]'), cards, getLanguage: () => lang,
+    getSequence: () => $$('[data-card]', grid).filter(isVisible).map((card) => card.dataset.slug),
+    onBusyChange(busy) {
+      galleryPaused = busy;
+      pauseAdvanced(busy);
+      if (busy) {
+        clearTimeout(qTimer);
+        stopGlide();
+        gsap.killTweensOf(window);
+        gsap.killTweensOf(cards);
+        gsap.set(cards.filter(isVisible), { clearProps: 'opacity,visibility,transform' });
+        stopCarousels.forEach((stop) => stop());
+      } else {
+        if (pendingQuery !== null) qTimer = setTimeout(commitQuery, 160);
+        postHeight();
+      }
+    },
+  });
 
   /* First-visit reveal only; hero content never animates away on scroll. */
   if (!reduce) {
-    const words = $$('.hero-title .word');
-    if (words.length) {
-      gsap.from(words, { autoAlpha: 0, y: 34, rotate: 2, duration: 0.9, ease: 'power3.out', stagger: 0.07, clearProps: 'all' });
+    if (!galleryPaused) {
+      const words = $$('.hero-title .word');
+      if (words.length) {
+        gsap.from(words, { autoAlpha: 0, y: 34, rotate: 2, duration: 0.9, ease: 'power3.out', stagger: 0.07, clearProps: 'all' });
+      }
+      const first = cards.filter(isVisible);
+      gsap.from(first.slice(0, 16), { autoAlpha: 0, y: 18, duration: 0.55, ease: 'power2.out', stagger: { each: 0.04 }, clearProps: 'all' });
     }
-    const first = cards.filter(isVisible);
-    gsap.from(first.slice(0, 16), { autoAlpha: 0, y: 18, duration: 0.55, ease: 'power2.out', stagger: { each: 0.04 }, clearProps: 'all' });
 
     /* ---------- scroll: aura drift ---------- */
     const aura = $('.aura');
@@ -325,6 +364,12 @@ export function initGallery() {
         let dir = 0; // +1 gliding down, -1 gliding up, 0 idle
         let atSnap = false; // user is RESTING at the list-top snap point
         let idleT = 0;
+        stopGlide = () => {
+          anim?.kill();
+          anim = null;
+          dir = 0;
+          clearTimeout(idleT);
+        };
         // Snap point in DOCUMENT coordinates, measured with tools unpinned.
         // Once tools is sticky, rect.top is constant, so we must measure it
         // while at scrollY=0 (or derive it from the first pre-sticky layout).
@@ -350,6 +395,7 @@ export function initGallery() {
             onComplete: () => { anim = null; dir = 0; } });
         };
         addEventListener('wheel', (e) => {
+          if (galleryPaused) return;
           const down = e.deltaY > 0;
           if (e.deltaY === 0) return;
           if (scrollY <= 0) measure(); // refresh layout-derived snap point when at top

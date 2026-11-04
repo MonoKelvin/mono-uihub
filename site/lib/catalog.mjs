@@ -42,7 +42,8 @@ const tagPatterns = ['蜂箱', '蜂蜜', '咖啡', '烘焙', '品控', '库存',
 /** Only the first history entry is evidence for searchable/filterable fields. */
 export function normalizeMetadata(metadata, slug = '') {
   const root = record(metadata);
-  const initial = record(root?.history?.[0]) ?? record(root?.generation?.history?.[0]);
+  const history = Array.isArray(root?.history) ? root.history : Array.isArray(root?.generation?.history) ? root.generation.history : null;
+  const initial = record(history?.[0]);
   const prompt = text(initial?.prompt);
   const explicitType = fold(initial?.page_type ?? initial?.type ?? root?.page_type ?? root?.type);
   const typeAliases = { webpage: 'website', web: 'website', '网页': 'website', '软件': 'software', '组件': 'component', '应用': 'app' };
@@ -51,6 +52,26 @@ export function normalizeMetadata(metadata, slug = '') {
   const palette = (Array.isArray(root?.palette) ? root.palette : []).map(normalizeHex).filter(Boolean);
   const colors = classifyPalette(palette);
   const sourceImage = resolveSourceRef(root?.imageToUI, slug);
+  const createdAt = text(root?.created_at ?? root?.createdAt) || null;
+  const updatedAt = text(root?.updated_at ?? root?.updatedAt) || null;
+  const initialModel = text(initial?.model);
+  const duration = initial?.duration_seconds;
+  const images = (Array.isArray(initial?.image_generation) ? initial.image_generation : [])
+    .map((image) => ({ prompt: text(image?.prompt), model: text(image?.model) }))
+    .filter((image) => image.prompt || image.model)
+    .map((image) => ({ ...(image.prompt && { prompt: image.prompt }), ...(image.model && { model: image.model }) }));
+  // 详情只发布指定字段，后续生成记录仅计数，不输出内容。
+  const details = {
+    ...(createdAt && { createdAt }),
+    ...(updatedAt && { updatedAt }),
+    ...(initialModel && fold(initialModel) !== 'unknown' && { model: initialModel }),
+    ...(prompt && { prompt }),
+    ...(history?.length && { promptCount: history.length }),
+    ...(images.length && { images }),
+    ...(type !== 'unknown' && { type }),
+    ...(sourceImage && { source: sourceImage }),
+    ...(typeof duration === 'number' && Number.isFinite(duration) && duration >= 0 && { durationSeconds: duration }),
+  };
   return {
     slug,
     name: text(root?.name) || slug,
@@ -59,8 +80,9 @@ export function normalizeMetadata(metadata, slug = '') {
     type,
     tags,
     colors: [...new Set(colors)],
-    createdAt: text(root?.created_at ?? root?.createdAt) || null,
-    updatedAt: text(root?.updated_at ?? root?.updatedAt) || null,
+    createdAt,
+    updatedAt,
+    details,
     screenshots: [],
     href: '/prototypes/' + encodeURIComponent(slug) + '/index.html',
     sourceImage,
