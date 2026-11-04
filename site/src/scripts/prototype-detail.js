@@ -1,6 +1,7 @@
 import { coverRect, snapshotFrames, NO_BORDER } from './preview-motion.js';
 import { configureFrameViewport } from './embedded-viewport.js';
 import { loadPrototypeFrame } from './prototype-frame.js';
+import { createPrototypeBackdrop } from './prototype-backdrop.js';
 
 const TEXT = {
   zh: {
@@ -84,6 +85,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
   const items = new Map(JSON.parse(root.dataset.detailItems).map((item) => [item.slug, item]));
   const surface = $('[data-detail-surface]'), preview = $('[data-detail-preview]');
   const crop = $('[data-detail-snapshot-crop]'), snapshot = $('[data-detail-snapshot]'), host = $('[data-detail-host]');
+  const backdrop = createPrototypeBackdrop(root, $('[data-detail-background]'));
   const fields = $('[data-detail-fields]'), drawer = $('[data-detail-drawer]');
   const back = $('[data-detail-back]'), heading = $('[data-detail-heading]'), toolbar = $('[data-detail-toolbar]');
   const toolsAnchor = $('[data-detail-tools-anchor]'), restore = $('[data-detail-restore]');
@@ -270,7 +272,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     loadController?.abort();
     clearTimeout(loadTimer);
     currentFrame = null;
-    if (!keepFrames) host.replaceChildren();
+    if (!keepFrames) { backdrop.clear(); host.replaceChildren(); }
   }
   function loadPrototype() {
     stopLoad();
@@ -282,9 +284,12 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     const { signal } = loadController;
     const frame = loadPrototypeFrame(active, host, signal);
     currentFrame = frame.iframe;
-    frame.ready.then(() => {
+    frame.ready.then(async () => {
       if (version !== loadVersion || signal.aborted) return;
+      const background = await backdrop.prepare(frame.iframe, active.details.type, signal);
+      if (version !== loadVersion || signal.aborted || root.dataset.phase === 'leaving') { background.dispose(); return; }
       clearTimeout(loadTimer);
+      background.commit();
       frame.iframe.style.opacity = '1';
       frame.iframe.style.pointerEvents = '';
       frame.iframe.inert = false;
@@ -401,6 +406,9 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
 
   async function leave() {
     phase('leaving');
+    loadVersion++;
+    loadController?.abort();
+    clearTimeout(loadTimer);
     ++layoutVersion;
     restore.hidden = true;
     clearCopyTimers();
@@ -442,7 +450,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     switchController = controller;
     phase('switching');
     updateLabels();
-    let prepared = null, outgoing = null, adopted = false;
+    let prepared = null, background = null, outgoing = null, adopted = false;
     const timer = setTimeout(() => {
       if (switchController === controller) { switchState = 'switchSlow'; updateLabels(); }
     }, 12000);
@@ -450,6 +458,8 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
       // 原型就绪前保留旧 iframe 与参数，预加载层不接收鼠标事件。
       prepared = loadPrototypeFrame(item, host, controller.signal);
       await prepared.ready;
+      if (controller.signal.aborted || desired !== item.slug) return;
+      background = await backdrop.prepare(prepared.iframe, item.details.type, controller.signal);
       if (controller.signal.aborted || desired !== item.slug) return;
       ++layoutVersion;
       finishAnimations();
@@ -479,6 +489,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
       currentFrame.style.pointerEvents = '';
       currentFrame.inert = false;
       configureFrameViewport(currentFrame);
+      background.commit();
       setLoadState('ready');
       await Promise.all([
         ...(outgoing ? [animate(outgoing, [{ opacity: Number(outgoing.style.opacity) || 0 }, { opacity: 0 }], { duration: 180, easing: ease })] : []),
@@ -496,7 +507,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
       }
     } finally {
       clearTimeout(timer);
-      if (!adopted) { controller.abort(); prepared?.iframe.remove(); }
+      if (!adopted) { controller.abort(); background?.dispose(); prepared?.iframe.remove(); }
       else { outgoing?.remove(); makeSnapshot(null); currentFrame.inert = false; }
       if (switchController === controller) switchController = null;
       switchingTo = '';
@@ -575,6 +586,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     update();
     const to = preview.getBoundingClientRect();
     const toolsTo = toolsAnchor.getBoundingClientRect();
+    backdrop.resize();
     if (!reduce.matches) {
       await Promise.all([
         animate(preview, [{ transform: rectTransform(from, to) }, { transform: 'none' }], { duration: 280, easing: ease }),
@@ -655,6 +667,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
   addEventListener('resize', () => {
     if (!active) return;
     finishAnimations();
+    backdrop.resize();
     requestAnimationFrame(() => { if (root.dataset.phase === 'open') positionSnapshot(preview.getBoundingClientRect()); });
   }, { passive: true });
   root.addEventListener('keydown', (event) => {
@@ -667,6 +680,13 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     const frame = event.target;
     if (frame.tagName !== 'IFRAME') return;
     configureFrameViewport(frame);
+    if (frame === currentFrame && loadState === 'ready') {
+      const version = loadVersion, controller = loadController;
+      backdrop.prepare(frame, active.details.type, controller.signal).then((background) => {
+        if (version === loadVersion && !controller.signal.aborted && root.dataset.phase !== 'leaving') background.commit();
+        else background.dispose();
+      });
+    }
     try { frame.contentDocument?.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && !event.defaultPrevented && root.dataset.clean === 'true') setClean(false);
     }); } catch { /* 原型内部跳转至外部域名时不访问其文档。 */ }

@@ -4,7 +4,9 @@ interface Props { items: { slug: string; name: string; href: string; details: ob
 const { items } = Astro.props;
 ---
 <section class="prototype-detail" data-detail data-detail-items={JSON.stringify(items)} data-phase="idle" data-drawer="open" data-clean="false" data-chrome="off" data-revealed="false" aria-label="UI 原型详情" tabindex="-1" hidden>
-  <div class="detail-surface" data-detail-surface aria-hidden="true"></div>
+  <div class="detail-surface" data-detail-surface aria-hidden="true">
+    <div class="detail-background" data-detail-background></div>
+  </div>
   <div class="detail-workspace">
     <div class="detail-preview" data-detail-preview>
       <div class="detail-frame-host" data-detail-host></div>

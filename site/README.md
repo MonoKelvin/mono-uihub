@@ -10,7 +10,8 @@ npm ci
 npm run dev        # 同步原型 → 启动 Astro 开发服务
 npm run build      # 同步原型 → 输出 dist/
 npm run preview
-npm test           # 元数据规则、截图排序、发布白名单测试
+npm test           # 元数据、详情导航、背景配色与发布规则测试
+npm run test:background # 无截图的背景 DOM / 生命周期测试（需要本机浏览器）
 ```
 
 `scripts/sync-prototypes.mjs` 会把 `ui/<slug>/` 中的 html / css / js / 图片 / 字体 / 截图复制到 `public/prototypes/`（已 gitignore），**不发布 metadata.json** 和任何隐藏文件。
@@ -42,8 +43,15 @@ npm test           # 元数据规则、截图排序、发布白名单测试
 - 上下一个遵循当前筛选后的网格排序，首尾禁用，不循环。只在预览内部交叉淡化 UI、更新参数，不执行画廊退场再入场，外壳、面板开合和全屏状态保持不变。新原型就绪前保留当前 UI 与参数，失败保留原对象和链接并支持重试；加载判定共用 `src/scripts/prototype-frame.js`。不堆叠历史，返回仍一次回到原画廊并保留滚动、筛选和排序。
 - 详情按顺序展示：提示词、大模型、类型、参考源、生成耗时、对话总轮次、图片参数、创建/修改时间。提示词、模型、图片参数及耗时仍只取首次 UI 生成记录；后续记录仅计数。缺失项整项省略，提示词和图片提示词各有复制按钮，原始 metadata.json 不公开。
 - 入场截图保持卡片同样的 cover 裁剪、边框及 hover 放大，不拉伸像素；先展开至原型工作区，等页面就绪后再淡出。退出保持真实页面缩回，不切换成截图；未加载时保留当前加载画面。过渡期间锁定主页滚动并暂停会改变卡片位置的操作，动画不等待网络。超过 12 秒提示耗时较长，失败可重试。
+- 详情背景由 `prototype-background.js` 识别外层 `html / body / stage / canvas / desk / backdrop`，只分离明确的背景边界，窗口本体及内部伪元素保持原样。普通全出血网页、透明场景和无法安全区分的背景回退画廊默认背景；Canvas / WebGL / 视频装饰（含后代）不抽离。
+- `prototype-backdrop.js` 用不允许脚本的 `sandbox="allow-same-origin"` iframe 重放外层颜色、渐变、图片、伪元素和装饰 DOM。样式链接、根属性、CSS 变量和结构占位保留，脚本、事件、嵌套页、自动聚焦、表单提交及不必要的内容资源移除，并添加受限 CSP。资源 base 使用原型 URL，相对 CSS / SVG / 字体路径保持正确。
+- 只有背景重放就绪后才透明化前景的已确认外层背景。背景以原预览的逻辑视口进行统一 cover 放大、居中铺满详情；不把前景 iframe 扩成全屏，不修改原型的 margin / padding / position / 尺寸，展示区透明且无阴影。抽屉和全屏仍沿用现有工作区布局，视口变化时重新识别背景并计算 cover。
+- 背景和配色随当前原型一起提交；预加载保留旧背景、UI 和参数，失败保留原型本身的背景，返回/取消清理重放和监听，迟到结果不覆盖当前页面。根/背景容器的主题属性、样式和尺寸变化合并更新，不逐帧扫描或重建。
+- 详情配色优先取实际文字颜色与 `ink / text / muted / accent / surface / line` 语义变量，不使用元数据 palette 猜色。正文、辅助文字和强调色按 4.5:1 对比度选择；图片、复杂混合或跨度过大的渐变无法保证可读时使用协调的安全面板/控件表面。颜色仅写入详情根节点的局部变量，不修改主页或原型内颜色。
 - 动效使用原生 WAAPI 和 CSS，提供 reduced-motion 的短淡化版本。实现位于 `src/components/PrototypeDetail.astro`、`src/scripts/prototype-detail.js`、`src/styles/prototype-detail.css`。
 - `/embed/` 也使用同一详情，在嵌入画廊自身的视口内展示，不接管外部父站；详情期间暂停高度上报，返回后恢复。
+
+背景测试分两层：`npm test` 保留现有回归并验证边界判断、颜色和 cover 算法；`npm run test:background` 用现有 Playwright 在内存中提供合成 HTML/CSS/JS，验证真实 DOM 的重放安全、透明层恢复、主题变化和详情切换/重试/取消，不启动网站服务、不截图、不读取本地图片。Windows 默认使用本机 Edge，其它平台使用已安装的 Chromium，可用 `PLAYWRIGHT_CHANNEL` 指定浏览器；没有安装浏览器时需要先手动准备。合成 DOM 测试不等于实际原型的视觉验收或完整识别率验证。
 
 ## Tooltip 机制
 

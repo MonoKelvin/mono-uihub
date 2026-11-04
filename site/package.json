@@ -8,6 +8,7 @@
     "build": "node scripts/sync-prototypes.mjs && astro build",
     "preview": "astro preview",
     "test": "node --test tests/*.test.mjs",
+    "test:background": "node --test tests/*.dom.mjs",
     "screenshots": "node ../tools/screenshots/capture.mjs"
   },
   "engines": {

@@ -27,16 +27,17 @@ function cloneAt(element, originalRoot, cloneRoot) {
 const localFragments = (value) => value.replace(/url\((['"]?)#([^)'"\s]+)\1\)/g, 'url("about:srcdoc#$2")');
 
 export function sanitizeBackgroundTree(tree) {
-  tree.querySelectorAll('script, iframe, object, embed, audio, video, source, meta[http-equiv], base').forEach((node) => node.remove());
-  tree.querySelectorAll('*').forEach((node) => {
+  tree.querySelectorAll('script, iframe, object, embed, audio, video, source, meta, base').forEach((node) => node.remove());
+  [tree, ...tree.querySelectorAll('*')].forEach((node) => {
     [...node.attributes].forEach(({ name, value }) => {
-      if (/^on/i.test(name) || name === 'autofocus' || name === 'srcdoc') node.removeAttribute(name);
+      if (/^on/i.test(name) || ['autofocus', 'srcdoc', 'action', 'formaction', 'form', 'ping'].includes(name)) node.removeAttribute(name);
+      else if (['href', 'xlink:href', 'src'].includes(name) && /^\s*javascript:/i.test(value)) node.removeAttribute(name);
       else if ((name === 'href' || name === 'xlink:href') && value.startsWith('#')) node.setAttribute(name, 'about:srcdoc' + value);
       else if (value.includes('url(')) node.setAttribute(name, localFragments(value));
     });
     if (node.closest(`[${CONTENT}]`)) {
-      if (node.tagName === 'IMG') { node.removeAttribute('src'); node.removeAttribute('srcset'); }
-      if (node.tagName === 'IMAGE') { node.removeAttribute('href'); node.removeAttribute('xlink:href'); }
+      if (node.tagName === 'IMG' || node.tagName === 'INPUT') { node.removeAttribute('src'); node.removeAttribute('srcset'); }
+      if (node.tagName.toLowerCase() === 'image') { node.removeAttribute('href'); node.removeAttribute('xlink:href'); }
     }
   });
 }
@@ -53,7 +54,7 @@ export function buildBackgroundDocument(description) {
     for (const [kind, styles] of [['before', layer.before], ['after', layer.after]]) {
       const selector = `[${OWNER}="${index}"]::${kind}`;
       if (!styles) { rules.push(`${selector}{content:none!important}`); continue; }
-      const declarations = Object.entries(styles).map(([key, value]) => `${key}:${localFragments(value)}`).join(';');
+      const declarations = Object.entries(styles).map(([key, value]) => `${key}:${localFragments(value)}!important`).join(';');
       rules.push(`${selector}{content:"";${declarations}}`);
     }
   });
@@ -68,11 +69,16 @@ export function buildBackgroundDocument(description) {
   decorations.forEach((element) => cloneAt(element, doc.documentElement, tree)?.setAttribute(DECOR, ''));
   tree.querySelector(`#${STYLE_ID}`)?.remove();
   sanitizeBackgroundTree(tree);
+  tree.querySelectorAll('style').forEach((node) => { node.textContent = localFragments(node.textContent); });
   const head = tree.querySelector('head');
   head.querySelectorAll('link').forEach((link) => { if (!link.rel?.split(/\s+/).includes('stylesheet')) link.remove(); });
   const base = doc.createElement('base');
   base.href = doc.baseURI;
   head.prepend(base);
+  const policy = doc.createElement('meta');
+  policy.httpEquiv = 'Content-Security-Policy';
+  policy.content = "default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline' https: http:; img-src 'self' https: http: data: blob:; font-src 'self' https: http: data:; form-action 'none'; frame-src 'none'; object-src 'none'";
+  head.prepend(policy);
   const style = doc.createElement('style');
   style.textContent = `
 html{scrollbar-gutter:auto!important;scrollbar-width:none!important}
@@ -83,6 +89,54 @@ body{overflow:hidden!important;scrollbar-width:none!important}
 ${rules.join('\n')}`;
   head.append(style);
   return '<!doctype html>\n' + tree.outerHTML;
+}
+
+function stylesReady(doc, originalDoc) {
+  const originalLinks = originalDoc && [...originalDoc.querySelectorAll('link[rel~="stylesheet"]')];
+  return [...doc.querySelectorAll('link[rel~="stylesheet"]')].every((link) => {
+    if (link.disabled || link.media && !doc.defaultView.matchMedia(link.media).matches) return true;
+    if (!link.sheet) return false;
+    try {
+      const original = originalLinks?.find((node) => node.href === link.href);
+      // 部分浏览器在 CSS 请求失败后仍留下空 stylesheet。
+      return !original?.sheet?.cssRules.length || link.sheet.cssRules.length > 0;
+    } catch { return true; }
+  });
+}
+
+function loadBackgroundImages(description, signal, win) {
+  const urls = new Set();
+  const add = (value) => {
+    if (!value || value.startsWith('#') || value.startsWith('about:srcdoc#')) return;
+    const url = new URL(value, description.doc.baseURI);
+    if (url.hash && url.href.split('#')[0] === description.doc.URL.split('#')[0]) return;
+    urls.add(url.href);
+  };
+  for (const styles of description.layers.flatMap((layer) => [layer.styles, layer.before, layer.after]).concat(description.decorationStyles).filter(Boolean)) {
+    for (const key of ['background-image', 'mask-image']) {
+      for (const match of (styles[key] || '').matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)/gi)) add((match[1] ?? match[2] ?? match[3]).trim());
+    }
+  }
+  description.decorations.forEach((node) => {
+    [node, ...node.querySelectorAll('img, image')].forEach((image) => {
+      if (image.tagName === 'IMG') add(image.currentSrc || image.src);
+      else if (image.tagName.toLowerCase() === 'image') add(image.getAttribute('href') || image.getAttribute('xlink:href'));
+    });
+  });
+  return Promise.all([...urls].map((url) => new Promise((resolve, reject) => {
+    const image = new win.Image();
+    const finish = (error) => {
+      image.onload = image.onerror = null;
+      signal.removeEventListener('abort', abort);
+      image.removeAttribute('src');
+      if (error) reject(error); else resolve();
+    };
+    const abort = () => finish(new Error('Background image aborted'));
+    image.onload = () => finish();
+    image.onerror = () => finish(new Error('Background image unavailable'));
+    signal.addEventListener('abort', abort, { once: true });
+    if (signal.aborted) abort(); else image.src = url;
+  })));
 }
 
 function withOriginalBackground(doc, action) {
@@ -119,13 +173,14 @@ function makeTransparent(description) {
 
 export function createPrototypeBackdrop(root, slot) {
   if (!slot) return { prepare: async () => ({ commit() {}, dispose() {} }), clear() {}, resize() {} };
-  let current = null, currentType = '', version = 0, raf = 0, disposed = false;
+  let current = null, version = 0, disposed = false;
+  const retired = new Map(), preparing = new Set();
   const resetPalette = () => {
     PALETTE_KEYS.forEach((key) => root.style.removeProperty(key));
     delete root.dataset.detailTone;
   };
   const resize = () => {
-    if (!current?.frame) return;
+    if (!current) return;
     const scale = backgroundCover(current.description.view, { width: root.clientWidth, height: root.clientHeight });
     current.frame.style.transform = `translate(-50%, -50%) scale(${scale})`;
   };
@@ -133,14 +188,36 @@ export function createPrototypeBackdrop(root, slot) {
     version++;
     current?.dispose();
     current = null;
+    preparing.forEach((pending) => pending.dispose());
+    retired.forEach((timer, pending) => { clearTimeout(timer); pending.dispose(); });
+    retired.clear();
     slot.replaceChildren();
     resetPalette();
   }
+  const fallback = (iframe, signal) => {
+    let dead = false;
+    return { source: iframe, commit() { if (!dead && !disposed && !signal.aborted) clear(); }, dispose() { dead = true; } };
+  };
+  const capture = (iframe, type) => {
+    try {
+      const doc = iframe.contentDocument;
+      if (!doc) return null;
+      return withOriginalBackground(doc, () => {
+        const description = describePrototypeBackground(iframe, type);
+        if (!description) return null;
+        const palette = extractPrototypePalette(description);
+        const attributes = (node) => [...node.attributes].filter(({ name }) => name !== OWNER && name !== DECOR).map(({ name, value }) => [name, value]);
+        const signature = JSON.stringify({ view: description.view, layers: description.layers.map(({ element, ...styles }) => ({ attributes: attributes(element), ...styles })), decorations: description.decorations.map((element, index) => ({ attributes: attributes(element), style: description.decorationStyles[index] })), palette });
+        return { description, palette, signature };
+      });
+    } catch { return null; }
+  };
   async function prepare(iframe, type, signal) {
-    const doc = iframe.contentDocument;
-    const description = doc && withOriginalBackground(doc, () => describePrototypeBackground(iframe, type));
-    if (!description) return { source: iframe, commit() { clear(); }, dispose() {} };
-    const palette = extractPrototypePalette(description);
+    if (disposed || signal.aborted) return fallback(iframe, signal);
+    const captured = capture(iframe, type);
+    if (!captured) return fallback(iframe, signal);
+    const { description, palette, signature } = captured;
+    const { doc, win } = description;
     const frame = document.createElement('iframe');
     frame.className = 'detail-background-frame';
     frame.setAttribute('sandbox', 'allow-same-origin');
@@ -150,70 +227,120 @@ export function createPrototypeBackdrop(root, slot) {
     frame.style.width = description.view.width + 'px';
     frame.style.height = description.view.height + 'px';
     frame.style.opacity = '0';
-    const scale = backgroundCover(description.view, { width: root.clientWidth, height: root.clientHeight });
-    frame.style.transform = `translate(-50%, -50%) scale(${scale})`;
-    let timeout = 0, restore = null, observer = null, stopWatching = () => {};
+    frame.style.transform = `translate(-50%, -50%) scale(${backgroundCover(description.view, { width: root.clientWidth, height: root.clientHeight })})`;
+    let dead = false, committed = false, restore = null, observer = null, timer = 0, refreshController = null;
+    let stopWatching = () => {}, cancelLoad = () => {};
+    const schedule = () => {
+      if (dead || timer) return;
+      timer = setTimeout(() => { timer = 0; refresh(pending); }, 80);
+    };
     const pending = {
-      frame, description, source: iframe,
-      dispose() { restore?.(); observer?.disconnect(); stopWatching(); frame.remove(); clearTimeout(timeout); },
+      frame, description, source: iframe, type, signature,
+      dispose() {
+        if (dead) return;
+        dead = true;
+        preparing.delete(pending);
+        cancelLoad();
+        clearTimeout(timer);
+        refreshController?.abort();
+        observer?.disconnect();
+        stopWatching();
+        restore?.();
+        frame.remove();
+      },
       commit() {
-        if (signal.aborted) { pending.dispose(); return; }
+        if (committed || dead) return;
+        if (signal.aborted || disposed) { pending.dispose(); return; }
+        committed = true;
+        preparing.delete(pending);
         const old = current;
+        if (old?.source === iframe) old.dispose();
         current = pending;
-        currentType = type;
         version++;
         restore = makeTransparent(description);
         const resolved = resolvePrototypePalette(palette);
-        PALETTE_KEYS.forEach((key) => root.style.setProperty(key, resolved[key] || ''));
+        PALETTE_KEYS.forEach((key) => root.style.setProperty(key, resolved[key]));
         root.dataset.detailTone = resolved['--detail-tone'];
         frame.style.opacity = '1';
         resize();
-        const removeOld = () => old?.dispose();
-        setTimeout(removeOld, 200);
-        const schedule = () => {
-          if (raf) return;
-          raf = requestAnimationFrame(() => { raf = 0; if (current === pending) refresh(); });
-        };
-        observer = new MutationObserver(schedule);
-        description.hosts.forEach((element) => observer.observe(element, { attributes: true, attributeFilter: ['style', 'class', 'data-theme'] }));
-        doc.addEventListener('click', schedule, { passive: true });
+        if (old && old.source !== iframe) {
+          old.frame.remove();
+          retired.set(old, setTimeout(() => { old.dispose(); retired.delete(old); }, 200));
+        }
+        observer = new MutationObserver((records) => {
+          if (records.some((record) => doc.head.contains(record.target) || record.type !== 'attributes' || /^(style|class|data-)/.test(record.attributeName) && ![OWNER, DECOR].includes(record.attributeName))) schedule();
+        });
+        [...description.hosts, ...description.decorations].forEach((element) => observer.observe(element, { attributes: true }));
+        observer.observe(doc.head, { subtree: true, childList: true, characterData: true, attributes: true });
+        doc.addEventListener('change', schedule, { passive: true });
         doc.addEventListener('transitionend', schedule, { passive: true });
-        description.win.addEventListener('resize', schedule, { passive: true });
-        stopWatching = () => { doc.removeEventListener('click', schedule); doc.removeEventListener('transitionend', schedule); description.win.removeEventListener('resize', schedule); };
+        win.addEventListener('resize', schedule, { passive: true });
+        const styleError = (event) => { if (event.target.matches?.('link[rel~="stylesheet"]') && current === pending) clear(); };
+        doc.head.addEventListener('load', schedule, true);
+        doc.head.addEventListener('error', styleError, true);
+        stopWatching = () => {
+          doc.removeEventListener('change', schedule);
+          doc.removeEventListener('transitionend', schedule);
+          win.removeEventListener('resize', schedule);
+          doc.head.removeEventListener('load', schedule, true);
+          doc.head.removeEventListener('error', styleError, true);
+        };
       },
     };
+    async function refresh(old) {
+      if (dead || current !== old || disposed) return;
+      if (old.source.contentDocument && !stylesReady(old.source.contentDocument)) return;
+      const token = version, nextCapture = capture(old.source, type);
+      if (nextCapture?.signature === old.signature) { resize(); return; }
+      refreshController?.abort();
+      const controller = new AbortController();
+      refreshController = controller;
+      const next = await prepare(old.source, type, controller.signal);
+      if (dead || token !== version || current !== old || controller.signal.aborted) { next.dispose(); return; }
+      next.commit();
+    }
+    preparing.add(pending);
     try {
+      const html = buildBackgroundDocument(description);
       await new Promise((resolve, reject) => {
-        const fail = () => reject(new Error('Background unavailable'));
-        signal.addEventListener('abort', fail, { once: true });
-        frame.addEventListener('load', resolve, { once: true, signal });
-        frame.addEventListener('error', fail, { once: true, signal });
-        timeout = setTimeout(fail, 5000);
-        frame.srcdoc = buildBackgroundDocument(description);
+        const resources = new AbortController();
+        let settled = false;
+        const finish = (error) => {
+          if (settled) return;
+          settled = true;
+          resources.abort();
+          clearTimeout(timeout);
+          signal.removeEventListener('abort', abort);
+          frame.removeEventListener('load', load);
+          frame.removeEventListener('error', fail);
+          cancelLoad = () => {};
+          if (error) reject(error); else resolve();
+        };
+        const abort = () => finish(new Error('Background aborted'));
+        const load = async () => {
+          try {
+            const replayDoc = frame.contentDocument;
+            if (!stylesReady(replayDoc, doc) || !replayDoc.querySelector(`[${OWNER}]`)) { fail(); return; }
+            await loadBackgroundImages(description, resources.signal, replayDoc.defaultView);
+            finish();
+          } catch { fail(); }
+        };
+        const fail = () => finish(new Error('Background unavailable'));
+        const timeout = setTimeout(fail, 5000);
+        cancelLoad = abort;
+        signal.addEventListener('abort', abort, { once: true });
+        frame.addEventListener('load', load, { once: true });
+        frame.addEventListener('error', fail, { once: true });
+        frame.srcdoc = html;
         slot.append(frame);
+        if (signal.aborted) abort();
       });
-      clearTimeout(timeout);
-      if (signal.aborted) throw new Error('Background aborted');
+      if (dead || signal.aborted) throw new Error('Background aborted');
       return pending;
     } catch {
       pending.dispose();
-      return { source: iframe, commit() { clear(); }, dispose() {} };
+      return fallback(iframe, signal);
     }
-  }
-  let signature = '';
-  async function refresh() {
-    if (!current || disposed) return;
-    const old = current, token = version;
-    const description = withOriginalBackground(old.description.doc, () => describePrototypeBackground(old.source, currentType));
-    if (!description) return;
-    const identity = JSON.stringify({ view: description.view, hosts: description.layers.map((layer) => ({ cls: layer.element.className, inline: layer.element.style.cssText, bg: layer.styles, before: layer.before?.['background-image'], after: layer.after?.['background-image'] })) });
-    if (identity === signature) { resize(); return; }
-    signature = identity;
-    const next = await prepare(old.source, currentType, new AbortController().signal);
-    if (token !== version || current !== old) { next.dispose(); return; }
-    old.dispose(); // 同一个前景文档先撤旧透明层，再安装新层，避免嵌套恢复。
-    current = null;
-    next.commit();
   }
   return { prepare, clear, resize, dispose() { disposed = true; clear(); } };
 }

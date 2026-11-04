@@ -29,7 +29,7 @@ export function contrast(a, b) {
 
 const BACKGROUND_PROPERTIES = ['background-color', 'background-image', 'background-position', 'background-size', 'background-repeat', 'background-origin', 'background-clip', 'background-attachment', 'background-blend-mode'];
 const DECOR_PROPERTIES = [...BACKGROUND_PROPERTIES, 'position', 'inset', 'top', 'right', 'bottom', 'left', 'width', 'height', 'min-width', 'min-height', 'max-width', 'max-height', 'opacity', 'transform', 'transform-origin', 'filter', 'mix-blend-mode', 'clip-path', 'mask-image', 'mask-size', 'mask-position', 'mask-repeat', 'border', 'border-radius', 'box-shadow', 'z-index', 'animation-name', 'animation-duration', 'animation-delay', 'animation-timing-function', 'animation-iteration-count', 'animation-direction', 'animation-fill-mode'];
-const WRAPPER = /(?:^|[\s_-])(stage|backdrop|desk|scene|demo-stage|prototype-stage)(?:$|[\s_-])/i;
+const WRAPPER = /(?:^|[\s_-])(stage|canvas|backdrop|desk|scene|demo-stage|prototype-stage)(?:$|[\s_-])/i;
 
 export function hasBackground(css) {
   return Boolean((colorToRgba(css.backgroundColor)?.[3] || 0) > 0 || (css.backgroundImage && css.backgroundImage !== 'none'));
@@ -38,7 +38,8 @@ export function isBackgroundWrapper(element, css, view) {
   const rect = element.getBoundingClientRect();
   const full = rect.width >= view.width * .97 && rect.height >= view.height * .9;
   const centered = ['center', 'space-around'].includes(css.justifyContent) || css.placeItems?.includes('center') || css.alignItems === 'center';
-  return full && WRAPPER.test(element.className || '') && centered && element.tagName !== 'CANVAS';
+  const unframed = (!css.boxShadow || css.boxShadow === 'none') && (!css.borderRadius || parseFloat(css.borderRadius) === 0);
+  return full && WRAPPER.test(element.className || '') && centered && unframed && element.tagName !== 'CANVAS';
 }
 export function isBackgroundDecoration(element, css, view) {
   const rect = element.getBoundingClientRect();
@@ -51,10 +52,13 @@ export function isBackgroundDecoration(element, css, view) {
 function snapshotStyle(css, properties) {
   return Object.fromEntries(properties.map((name) => [name, css.getPropertyValue(name)]).filter(([, value]) => value));
 }
-function pseudoBackground(win, host, kind) {
+function pseudoBackground(win, host, kind, view) {
   const css = win.getComputedStyle(host, kind);
   if (css.content === 'none' || css.content === 'normal' || !hasBackground(css)) return null;
-  if (!['fixed', 'absolute'].includes(css.position) && host.tagName !== 'BODY' && host.tagName !== 'HTML') return null;
+  const fullInset = [css.top, css.right, css.bottom, css.left].every((value) => parseFloat(value) === 0);
+  const wide = parseFloat(css.width) >= view.width * .75 && parseFloat(css.height) >= view.height * .75;
+  const behind = Number.parseInt(css.zIndex, 10) < 0;
+  if (!['fixed', 'absolute'].includes(css.position) || (!behind && !(css.pointerEvents === 'none' && (fullInset || wide)))) return null;
   return snapshotStyle(css, DECOR_PROPERTIES);
 }
 
@@ -66,27 +70,34 @@ export function describePrototypeBackground(iframe, type) {
     const view = { width: iframe.clientWidth || win.innerWidth, height: iframe.clientHeight || win.innerHeight };
     if (!view.width || !view.height) return null;
     const hosts = [doc.documentElement, doc.body];
-    if (['software', 'app', 'component'].includes(type)) {
-      let parent = doc.body;
-      for (let depth = 0; depth < 4; depth++) {
-        const wrappers = [...parent.children].filter((child) => isBackgroundWrapper(child, win.getComputedStyle(child), view));
-        if (wrappers.length !== 1) break;
-        hosts.push(wrappers[0]);
-        parent = wrappers[0];
+    let parent = doc.body;
+    for (let depth = 0; depth < 4; depth++) {
+      const wrappers = [...parent.children].filter((child) => isBackgroundWrapper(child, win.getComputedStyle(child), view));
+      if (wrappers.length !== 1) break;
+      hosts.push(wrappers[0]);
+      parent = wrappers[0];
+    }
+    const decorations = [], content = [];
+    for (const host of hosts) {
+      for (const child of host.children) {
+        if (hosts.includes(child) || ['SCRIPT', 'STYLE', 'LINK'].includes(child.tagName)) continue;
+        const css = win.getComputedStyle(child), rect = child.getBoundingClientRect();
+        if (rect.width < 1 && rect.height < 1) continue;
+        if (['CANVAS', 'VIDEO'].includes(child.tagName) && ['fixed', 'absolute'].includes(css.position) && rect.width >= view.width * .75 && rect.height >= view.height * .75) return null;
+        if (isBackgroundDecoration(child, css, view)) decorations.push(child); else content.push(child);
       }
     }
-    const deepest = hosts.at(-1), decorations = [], content = [];
-    for (const child of deepest.children) {
-      if (['SCRIPT', 'STYLE', 'LINK'].includes(child.tagName)) continue;
-      const css = win.getComputedStyle(child), rect = child.getBoundingClientRect();
-      if (rect.width < 1 && rect.height < 1) continue; // SVG 定义等保持原结构，但不当作窗口。
-      if (isBackgroundDecoration(child, css, view)) decorations.push(child); else content.push(child);
-    }
-    if (decorations.some((node) => ['CANVAS', 'VIDEO', 'IFRAME', 'OBJECT', 'EMBED'].includes(node.tagName))) return null;
-    const layers = hosts.map((element) => ({ element, styles: snapshotStyle(win.getComputedStyle(element), BACKGROUND_PROPERTIES), before: pseudoBackground(win, element, '::before'), after: pseudoBackground(win, element, '::after') }));
+    if (decorations.some((node) => ['CANVAS', 'VIDEO', 'IFRAME', 'OBJECT', 'EMBED'].includes(node.tagName) || node.querySelector('canvas, video, iframe, object, embed'))) return null;
+    const layers = hosts.map((element) => ({ element, styles: snapshotStyle(win.getComputedStyle(element), BACKGROUND_PROPERTIES), before: pseudoBackground(win, element, '::before', view), after: pseudoBackground(win, element, '::after', view) }));
     const hasLayer = layers.some((layer) => hasBackground(win.getComputedStyle(layer.element)) || layer.before || layer.after);
     if (!hasLayer && !decorations.length) return null;
-    return { doc, win, view, hosts, layers, decorations, content };
+    const bounded = content.some((node) => {
+      const rect = node.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0 && (rect.width < view.width * .97 || rect.height < view.height * .9);
+    });
+    const explicit = hosts.length > 2 || decorations.length || layers.some((layer) => layer.before || layer.after);
+    if (!explicit && (!bounded || !['software', 'app', 'component'].includes(type))) return null;
+    return { doc, win, view, hosts, layers, decorations, content, decorationStyles: decorations.map((node) => snapshotStyle(win.getComputedStyle(node), DECOR_PROPERTIES)) };
   } catch { return null; }
 }
 
@@ -95,24 +106,31 @@ const SEMANTICS = {
   muted: ['--muted', '--ink-2', '--text-muted', '--panel-muted'],
   accent: ['--accent', '--brand', '--primary', '--gold'],
   surface: ['--panel', '--card', '--surface', '--paper'],
+  line: ['--line', '--border', '--stroke'],
 };
 export function extractPrototypePalette(description) {
   if (!description) return {};
-  const { win, doc } = description, css = win.getComputedStyle(doc.body), rootCss = win.getComputedStyle(doc.documentElement);
-  const get = (keys) => keys.map((key) => colorToRgba(css.getPropertyValue(key) || rootCss.getPropertyValue(key))).find((color) => color && color[3] > 0);
+  const { win, doc, hosts, content } = description;
+  const styles = [...hosts].reverse().map((node) => win.getComputedStyle(node));
+  const get = (keys) => styles.flatMap((css) => keys.map((key) => colorToRgba(css.getPropertyValue(key)))).find((color) => color && color[3] > 0);
   const palette = Object.fromEntries(Object.entries(SEMANTICS).map(([key, keys]) => [key, get(keys)]));
-  palette.foreground ||= colorToRgba(css.color);
+  const windowCss = content[0] && win.getComputedStyle(content[0]);
+  palette.foreground ||= colorToRgba(windowCss?.color || win.getComputedStyle(doc.body).color);
+  palette.surface ||= colorToRgba(windowCss?.backgroundColor);
   const samples = [];
-  for (const layer of description.layers) {
-    const color = colorToRgba(layer.styles['background-color']);
-    if (color?.[3]) samples.push(compositeColor(color));
-    // 渐变停靠色作为安全参考，不把原渐变降级成这些样本。
-    for (const value of (layer.styles['background-image'] || '').matchAll(/rgba?\([^)]*\)|#[\da-f]{3,8}\b/gi)) {
-      const stop = colorToRgba(value[0]);
-      if (stop?.[3]) samples.push(compositeColor(stop, samples.at(-1)));
-    }
+  let base = [234, 232, 225], complex = false;
+  const backgrounds = description.layers.flatMap((layer) => [layer.styles, layer.before, layer.after]).concat(description.decorationStyles || []).filter(Boolean);
+  for (const style of backgrounds) {
+    const color = colorToRgba(style['background-color']);
+    if (color?.[3]) { base = compositeColor(color, base); samples.push(base); }
+    const image = style['background-image'] || 'none';
+    if (/url\(/i.test(image) || style.filter && style.filter !== 'none' || style['mix-blend-mode'] && style['mix-blend-mode'] !== 'normal') complex = true;
+    const stops = [...image.matchAll(/rgba?\([^)]*\)|color\(srgb\s+[^)]*\)|#[\da-f]{3,8}\b/gi)].map(([value]) => colorToRgba(value)).filter(Boolean);
+    if (image !== 'none' && !stops.length) complex = true;
+    for (const stop of stops) if (stop[3]) samples.push(compositeColor(stop, base));
   }
-  palette.samples = samples.length ? samples : [[234, 232, 225]];
+  palette.samples = samples.length ? samples : [base];
+  palette.complex = complex;
   return palette;
 }
 
@@ -122,22 +140,25 @@ export function resolvePrototypePalette(source = {}) {
   const dark = [244, 243, 238], light = [23, 22, 20];
   const original = source.foreground && compositeColor(source.foreground, samples[0]);
   const foreground = original && score(original) >= 4.5 ? original : score(dark) > score(light) ? dark : light;
-  const needsPanel = score(foreground) < 4.5;
+  const needsPanel = Boolean(source.complex) || score(foreground) < 4.5;
+  const whiteText = contrast(foreground, [0, 0, 0]) > contrast(foreground, [255, 255, 255]);
   let surface = source.surface && compositeColor(source.surface, samples[0]);
-  if (!surface || contrast(foreground, surface) < 4.5) surface = foreground === dark ? [35, 37, 40] : [244, 243, 238];
-  const backgrounds = needsPanel ? [surface] : samples;
+  if (!surface || contrast(foreground, surface) < 4.5) surface = whiteText ? [35, 37, 40] : [244, 243, 238];
+  if (contrast(foreground, surface) < 4.5) surface = contrast(foreground, [0, 0, 0]) > contrast(foreground, [255, 255, 255]) ? [0, 0, 0] : [255, 255, 255];
+  const backgrounds = [surface, ...(needsPanel ? [] : samples)];
   const safeMuted = (color) => {
     let rgb = color ? compositeColor(color, backgrounds[0]) : foreground.map((n, i) => Math.round(n * .7 + backgrounds[0][i] * .3));
     for (let step = 0; step < 10 && Math.min(...backgrounds.map((bg) => contrast(rgb, bg))) < 4.5; step++) rgb = rgb.map((n, i) => Math.round(n * .75 + foreground[i] * .25));
-    return rgb;
+    return Math.min(...backgrounds.map((bg) => contrast(rgb, bg))) >= 4.5 ? rgb : foreground;
   };
   const muted = safeMuted(source.muted), accent = safeMuted(source.accent);
-  const whiteText = contrast(foreground, [0, 0, 0]) > contrast(foreground, [255, 255, 255]);
-  const line = `rgba(${foreground.join(', ')}, .16)`;
+  const originalLine = source.line && compositeColor(source.line, surface);
+  const line = originalLine && contrast(originalLine, surface) >= 1.3 ? rgbText(originalLine) : `rgba(${foreground.join(', ')}, .3)`;
   return {
     '--ink': rgbText(foreground), '--ink-2': rgbText(muted), '--ink-3': rgbText(muted), '--gold': rgbText(accent), '--card': rgbText(surface),
     '--line': line, '--line-2': `rgba(${foreground.join(', ')}, .3)`, '--fill': `rgba(${foreground.join(', ')}, .05)`, '--fill-2': `rgba(${foreground.join(', ')}, .1)`,
     '--paper-2': rgbText(surface), '--detail-panel-bg': needsPanel ? rgbText(surface) : 'transparent',
+    '--detail-tool-bg': needsPanel ? rgbText(surface) : 'transparent',
     '--detail-tone': whiteText ? 'dark' : 'light',
   };
 }
