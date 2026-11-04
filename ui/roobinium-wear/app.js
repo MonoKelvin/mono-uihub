@@ -131,7 +131,7 @@ function closeLayer() {
 function openProduct(piece, trigger) {
   selectedPiece = piece;
   selectedSize = null;
-  byId('product-code').textContent = `CAPSULE 001 / OBJECT ${piece.number}`;
+  byId('product-code').innerHTML = `CAPSULE 001 / <span>OBJECT ${piece.number}</span>`;
   byId('product-title').textContent = piece.name;
   byId('product-price').textContent = money(piece.price);
   byId('product-description').textContent = piece.description;
@@ -287,3 +287,12 @@ narrowScreen.addEventListener('change', () => renderRack());
 phoneScreen.addEventListener('change', () => renderRack());
 renderRack();
 renderBag();
+
+// 样式表可访问但字体文件加载失败时，同样切换在线镜像。
+document.fonts.ready.then(() => {
+  const failed = [...document.fonts].some(font => ['DM Sans', 'Syne'].includes(font.family) && font.status === 'error');
+  const stylesheet = byId('brand-fonts');
+  if (failed && !stylesheet.href.startsWith('https://fonts.font.im/')) {
+    stylesheet.href = 'https://fonts.font.im/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap';
+  }
+});

@@ -8,7 +8,7 @@
   <title>Roobinium Wear — Studio Goods</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link id="brand-fonts" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" onerror="this.onerror=null;this.href='https://fonts.font.im/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Syne:wght@700;800&amp;display=swap'">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
@@ -31,8 +31,8 @@
           <h1 id="collection-title"><span>Made for</span><span>making<span class="blue-dot">.</span></span></h1>
           <div class="collection-note">
             <p class="eyebrow">CAPSULE 001 / ROOBINIUM</p>
-            <p class="collection-description">Everyday pieces.<br>A studio state of mind.</p>
-            <p class="collection-edition">04 OBJECTS / ONE CREATIVE SPIRIT</p>
+            <p class="collection-description">Everyday pieces.<br> A studio state of mind.</p>
+            <p class="collection-edition">04 PIECES</p>
           </div>
         </section>
 
@@ -51,14 +51,12 @@
           <button class="round-button close-button" data-close aria-label="Close product details"><i class="ti ti-x" aria-hidden="true"></i></button>
           <div class="detail-visual">
             <div class="detail-art" id="detail-art"></div>
-            <span class="visual-caption">DESIGNED FOR YOUR EVERYDAY.</span>
           </div>
           <div class="detail-info">
             <div class="detail-body scroll-area">
               <p class="eyebrow" id="product-code"></p>
               <h2 id="product-title"></h2>
               <div class="detail-price-row"><span id="product-price"></span><span class="availability"><span></span>In stock</span></div>
-              <p class="product-description" id="product-description"></p>
               <div class="color-label"><span class="color-swatch" id="product-swatch"></span><span id="product-color"></span></div>
               <div class="size-heading"><span>Size</span><button class="text-button" id="size-guide-button" aria-expanded="false" aria-controls="size-guide">Size guide <i class="ti ti-ruler-2" aria-hidden="true"></i></button></div>
               <div class="size-options" id="size-options" role="group" aria-label="Choose a size"></div>
@@ -66,6 +64,7 @@
                 <table><caption>Garment measurements · cm</caption><thead><tr><th scope="col">Size</th><th scope="col">Chest</th><th scope="col">Length</th></tr></thead><tbody id="size-guide-body"></tbody></table>
                 <p>Measured flat. Choose your usual size for a relaxed fit.</p>
               </div>
+              <p class="product-description" id="product-description"></p>
               <div class="product-facts">
                 <button class="fact-toggle" aria-expanded="false" aria-controls="materials-content">Materials &amp; care<i class="ti ti-plus" aria-hidden="true"></i></button>
                 <div class="fact-content" id="materials-content" hidden></div>
@@ -75,7 +74,6 @@
             </div>
             <div class="detail-footer">
               <button class="primary-button" id="add-button" disabled><span>Choose a size</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
-              <span class="footer-note">A little less noise. A little more you.</span>
             </div>
           </div>
         </div>
@@ -84,11 +82,11 @@
       <section class="layer" id="bag-layer" role="dialog" aria-modal="true" aria-labelledby="bag-title" hidden>
         <button class="scrim" data-close aria-label="Close shopping bag" tabindex="-1"></button>
         <div class="dialog bag-dialog" tabindex="-1">
-          <header class="dialog-header"><div><p class="eyebrow">YOUR EVERYDAY, COLLECTED.</p><h2 id="bag-title">The bag<span class="blue-dot">.</span></h2></div><button class="round-button" data-close aria-label="Close shopping bag"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <header class="dialog-header"><h2 id="bag-title">The bag<span class="blue-dot">.</span></h2><button class="round-button" data-close aria-label="Close shopping bag"><i class="ti ti-x" aria-hidden="true"></i></button></header>
           <div class="bag-content">
             <div class="bag-list scroll-area" id="bag-list"></div>
             <aside class="bag-summary">
-              <p class="summary-heading">A few good things.</p>
+              <p class="summary-heading">Order summary</p>
               <div class="summary-line"><span>Subtotal</span><span id="bag-subtotal">$0.00</span></div>
               <div class="summary-line"><span>Shipping</span><span id="bag-shipping">Calculated at checkout</span></div>
               <p class="shipping-note" id="shipping-note">Free shipping on orders over $150.</p>
@@ -107,7 +105,6 @@
           <button class="round-button close-button" data-close aria-label="Close about Roobinium"><i class="ti ti-x" aria-hidden="true"></i></button>
           <div class="about-symbol" aria-hidden="true"><svg viewBox="0 0 100 120" fill="none"><path d="M77 35C75 9 25 8 20 42C16 65 20 96 48 107C72 103 83 84 82 60L51 49V91C35 84 31 66 34 48C38 26 66 27 66 43" stroke="currentColor" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38C42 36 40 43 40 55L42 72M58 65L69 69C70 82 65 92 57 97" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ROOBINIUM / STUDIO GOODS</span></div>
           <div class="about-copy scroll-area">
-            <p class="eyebrow">BEYOND THE SCREEN.</p>
             <h2 id="about-title">A studio<br>state of mind<span class="blue-dot">.</span></h2>
             <p>For the sketches that turn into something. The late nights that don't feel late. The work, and the life around it.</p>
             <p>Roobinium Wear is a small collection of everyday pieces. Thoughtful shapes. Honest materials. Made to be worn, not overthought.</p>
