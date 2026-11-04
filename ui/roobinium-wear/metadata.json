@@ -1,0 +1,36 @@
+{
+  "name": "Roobinium Wear · 工作室服饰",
+  "slug": "roobinium-wear",
+  "page_type": "software",
+  "tags": ["电商", "服饰", "衣架陈列"],
+  "palette": ["#f3f1eb", "#4778ff", "#252329"],
+  "created_at": "2026-11-04 08:07:21",
+  "updated_at": "2026-11-04 08:15:31",
+  "imageToUI": "https://dribbble.com/shots/27858549-Roobinium-Wear-Fashion-Ecommerce-Website-Product-Experience",
+  "history": [
+    {
+      "prompt": "根据这个界面图片还原一个软件UI原型设计。参考来源：https://dribbble.com/shots/27858549-Roobinium-Wear-Fashion-Ecommerce-Website-Product-Experience",
+      "model": "claude-sonnet-4-6",
+      "skills": ["mono-ui-prototype", "oil-ui", "image-purify"],
+      "duration_seconds": 490,
+      "image_generation": [
+        {
+          "prompt": "A single washed black sleeveless cotton tank top suspended from a honey-colored wooden clothes hanger with a thin curved silver metal hook, photographed at a slight three-quarter angle from the left. Long relaxed silhouette, open armholes, rounded ribbed neckline, visible hem stitching and natural broad fabric folds. Plain unprinted front chest. The entire hook, hanger and garment are visible, the hook is upright at the very top center. Vertical product composition with the garment occupying 90 percent of image height. Soft large studio light from upper left, isolated transparent background.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A single warm ecru off-white heavyweight cotton pullover hoodie suspended from a honey-colored wooden clothes hanger with a thin curved silver metal hook, photographed at a slight three-quarter angle from the left. Relaxed dropped shoulders, soft folded hood, long sleeves hanging naturally, ribbed cuffs and hem, front kangaroo pocket, broad natural fabric folds. Plain unprinted chest. The entire hook, hanger and garment are visible, the hook is upright at the very top center. Vertical product composition with the garment occupying 90 percent of image height. Soft large studio light from upper left, isolated transparent background.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A single dusty lavender oversized cotton T-shirt suspended from a honey-colored wooden clothes hanger with a thin curved silver metal hook, photographed at a slight three-quarter angle from the left. Thick soft cotton jersey, loose short sleeves pointing down, rounded ribbed crewneck, relaxed dropped shoulders, wide natural fabric folds and visible hem stitching. Plain unprinted front chest. The entire hook, hanger and garment are visible, the hook is upright at the very top center. Vertical product composition with the garment occupying 90 percent of image height. Soft large studio light from upper left, isolated transparent background.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A single faded soft charcoal heavyweight oversized cotton T-shirt suspended from a honey-colored wooden clothes hanger with a thin curved silver metal hook, photographed at a slight three-quarter angle from the left. Thick washed dark gray cotton jersey, loose short sleeves pointing down, rounded ribbed crewneck, relaxed dropped shoulders, wide natural fabric folds and visible hem stitching. Plain unprinted front chest. The entire hook, hanger and garment are visible, the hook is upright at the very top center. Vertical product composition with the garment occupying 90 percent of image height. Soft large studio light from upper left, isolated transparent background.",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    }
+  ]
+}
