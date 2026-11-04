@@ -6,6 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 mono-uihub 是一个 AI 驱动的 UI 原型库：用户给一句话描述，由 `skills/mono-ui-prototype/SKILL.md` 中定义的技能生成一个完整的高保真 HTML 原型页面。没有构建系统、没有框架、没有 npm 依赖 —— 每个页面都是自包含的原生 HTML / CSS / JS。
 
+## Git 工作约定
+
+- 后续所有修改直接在 `main` 主干上进行，不主动新建或使用功能分支；除非用户另有明确要求。
+- 提交和推送仍需用户明确授权，不因直接在主干修改而自动 commit / push。
+
 ## 生成新 UI 原型的流程
 
 当用户需要生成新的 UI 原型时，**优先调用 `mono-ui-prototype` 技能**：先按它的「方向卡」流程把本页的视觉方向（容器类型 / 配色 / 字体 / 布局 / 动效）弄清楚，再按需叠加其它技能——如 `frontend-design`（设计判断）、`animate`（动效实现）、`image-purify` 配合 `tools/image-forge`（干净出图）、`ui-metadata`（元数据归档）等。素材优先用 `tools/resource-getter` 取（透明矢量 > 抠图 PNG > 摄影），不要手拼站点 URL。不要跳过 mono-ui-prototype 直接套用通用模板或先上其它技能。
