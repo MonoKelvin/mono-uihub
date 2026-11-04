@@ -14,39 +14,38 @@ const { items } = Astro.props;
         <div class="detail-snapshot-crop" data-detail-snapshot-crop></div>
       </div>
     </div>
-    <div class="detail-heading" data-detail-heading>
-      <button type="button" class="detail-icon detail-back" data-detail-back data-detail-label="back" aria-label="返回画廊">
-        <i class="ti ti-arrow-left" aria-hidden="true"></i>
+  </div>
+  <div class="detail-heading" data-detail-heading>
+    <button type="button" class="detail-icon detail-back" data-detail-back data-detail-label="back" aria-label="返回画廊">
+      <i class="ti ti-arrow-left" aria-hidden="true"></i>
+    </button>
+    <div class="detail-loading" data-detail-loading role="status" aria-live="polite">
+      <span data-detail-status>正在加载原型…</span>
+      <button type="button" class="detail-retry" data-detail-retry hidden><span data-detail-text="retry">重试</span></button>
+    </div>
+  </div>
+  <div class="detail-tools-anchor" data-detail-tools-anchor>
+    <nav class="detail-toolbar" data-detail-toolbar aria-label="原型展示工具">
+      <a class="detail-icon" data-detail-open data-detail-label="open" href="#" target="_blank" rel="noopener noreferrer" aria-label="在新标签页打开原型">
+        <i class="ti ti-external-link" aria-hidden="true"></i>
+      </a>
+      <button type="button" class="detail-icon" data-detail-fullscreen data-detail-label="fullscreen" aria-label="纯净全屏">
+        <i class="ti ti-maximize" aria-hidden="true"></i>
       </button>
-      <div class="detail-loading" data-detail-loading role="status" aria-live="polite">
-        <span data-detail-status>正在加载原型…</span>
-        <button type="button" class="detail-retry" data-detail-retry hidden><span data-detail-text="retry">重试</span></button>
-      </div>
-    </div>
-    <div class="detail-tools-anchor" data-detail-tools-anchor>
-      <nav class="detail-toolbar" data-detail-toolbar aria-label="原型展示工具">
-        <a class="detail-icon" data-detail-open data-detail-label="open" href="#" target="_blank" rel="noopener noreferrer" aria-label="在新标签页打开原型">
-          <i class="ti ti-external-link" aria-hidden="true"></i>
-        </a>
-        <button type="button" class="detail-icon" data-detail-fullscreen data-detail-label="fullscreen" aria-label="纯净全屏">
-          <i class="ti ti-maximize" aria-hidden="true"></i>
-        </button>
-        <span class="detail-tool-sep" aria-hidden="true"></span>
-        <button type="button" class="detail-icon detail-neighbor" data-detail-previous data-detail-label="previous" aria-label="上一个原型" disabled>
-          <i class="ti ti-chevron-left" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="detail-icon detail-neighbor" data-detail-next data-detail-label="next" aria-label="下一个原型" disabled>
-          <i class="ti ti-chevron-right" aria-hidden="true"></i>
-        </button>
-      </nav>
-    </div>
+      <span class="detail-tool-sep" aria-hidden="true"></span>
+      <button type="button" class="detail-icon detail-neighbor" data-detail-previous data-detail-label="previous" aria-label="上一个原型" disabled>
+        <i class="ti ti-chevron-left" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="detail-icon detail-neighbor" data-detail-next data-detail-label="next" aria-label="下一个原型" disabled>
+        <i class="ti ti-chevron-right" aria-hidden="true"></i>
+      </button>
+    </nav>
   </div>
   <button type="button" class="detail-icon detail-panel-toggle" data-detail-toggle-drawer data-detail-label="hideDetails" aria-controls="prototype-parameters" aria-expanded="true" aria-label="收起参数">
     <i class="ti ti-layout-sidebar-right" aria-hidden="true"></i>
   </button>
   <button type="button" class="detail-scrim" data-detail-scrim data-detail-label="hideDetails" aria-label="收起参数" tabindex="-1"></button>
   <aside class="detail-drawer" id="prototype-parameters" data-detail-drawer aria-label="原型参数">
-    <div class="detail-drawer-head"><span data-detail-text="parameters">原型参数</span></div>
     <div class="detail-drawer-body" data-detail-fields></div>
   </aside>
   <button type="button" class="detail-icon detail-restore" data-detail-restore data-detail-label="restore" aria-label="还原展示" hidden>

@@ -60,6 +60,16 @@ let featuredVersion = 0;
 let featuredMotion = null;
 const canAnimate = () => motionEnabled && !reducedMotion.matches && !keyboardInput;
 
+function fitAppFrame() {
+  const bodyStyle = getComputedStyle(document.body);
+  const width = document.documentElement.clientWidth - parseFloat(bodyStyle.paddingLeft) - parseFloat(bodyStyle.paddingRight);
+  const height = window.innerHeight - parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom);
+  frame.style.setProperty('--app-scale', Math.min(1, width / frame.offsetWidth, height / frame.offsetHeight));
+}
+
+fitAppFrame();
+window.addEventListener('resize', fitAppFrame);
+
 function trackMotion(animation) {
   activeMotions.add(animation);
   animation.finished.then(() => activeMotions.delete(animation), () => activeMotions.delete(animation));
@@ -139,12 +149,13 @@ function flyToCart(id, button) {
   if (!canAnimate() || !button) return;
   const source = button.closest('.product-card')?.querySelector('.product-card__img') || $('sheet-img');
   const bounds = frame.getBoundingClientRect();
+  const scale = bounds.width / frame.offsetWidth;
   const start = source.getBoundingClientRect();
   const target = navigation.querySelector('[data-tab="cart"] .tab-icon').getBoundingClientRect();
-  const x = start.left + start.width / 2 - bounds.left - 30;
-  const y = start.top + start.height / 2 - bounds.top - 30;
-  const dx = target.left + target.width / 2 - bounds.left - 30 - x;
-  const dy = target.top + target.height / 2 - bounds.top - 30 - y;
+  const x = (start.left + start.width / 2 - bounds.left) / scale - 30;
+  const y = (start.top + start.height / 2 - bounds.top) / scale - 30;
+  const dx = (target.left + target.width / 2 - bounds.left) / scale - 30 - x;
+  const dy = (target.top + target.height / 2 - bounds.top) / scale - 30 - y;
   const flower = document.createElement('img');
   flower.className = 'flower-flight';
   flower.src = findProduct(id).img;

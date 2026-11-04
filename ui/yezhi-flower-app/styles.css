@@ -71,7 +71,7 @@ img { display: block; max-width: 100%; }
 svg { display: block; width: 24px; height: 24px; }
 em { font-style: normal; }
 
-.app-frame { position: relative; isolation: isolate; display: flex; flex-direction: column; width: 390px; height: min(844px, calc(100dvh - 64px)); overflow: hidden; background: var(--bg); border-radius: 40px; box-shadow: 0 0 0 6px #fcfafc, 0 0 0 7px #d5ccd9, 0 24px 70px #362a4026; }
+.app-frame { position: absolute; top: 50%; left: 50%; isolation: isolate; display: flex; flex-direction: column; width: 390px; height: 844px; transform: translate(-50%, -50%) scale(var(--app-scale, 1)); overflow: hidden; background: var(--bg); border-radius: 40px; box-shadow: 0 0 0 6px #fcfafc, 0 0 0 7px #d5ccd9, 0 24px 70px #362a4026; }
 .status-bar { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; min-height: 36px; padding: 10px 28px 4px; font-size: var(--text-sm); font-weight: 700; line-height: 1; }
 .status-time { font-variant-numeric: tabular-nums; }
 .status-icons { display: flex; align-items: center; gap: var(--s1); font-size: var(--text-lg); }
@@ -97,7 +97,7 @@ em { font-style: normal; }
 .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 85% 30%, #dcd0e2 0%, transparent 55%); }
 .hero__content { position: relative; z-index: 1; width: 50%; }
 .hero__eyebrow { color: var(--accent-dark); font-size: var(--text-xs); letter-spacing: .12em; }
-.hero__heading { margin-top: var(--s3); font: 400 clamp(44px, 14vw, 56px)/1.15 var(--font-display); letter-spacing: -.06em; white-space: nowrap; }
+.hero__heading { margin-top: var(--s3); font: 400 56px/1.15 var(--font-display); letter-spacing: -.06em; white-space: nowrap; }
 .hero__heading em { color: var(--accent); }
 .hero__visual { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero__halo { position: absolute; width: 240px; height: 240px; right: 20px; top: -50px; border-radius: 50%; background: var(--hero-halo); transition: background var(--normal) ease; }
@@ -371,16 +371,17 @@ em { font-style: normal; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-@media (max-width: 480px) {
+@media (max-width: 480px) and (pointer: coarse) {
   body { padding: 0; background: var(--bg); }
-  .app-frame { width: 100%; height: 100vh; height: 100dvh; border-radius: 0; box-shadow: none; }
+  .app-frame { position: relative; top: auto; left: auto; width: 100%; height: 100vh; height: 100dvh; transform: none; border-radius: 0; box-shadow: none; }
   .status-bar { padding-top: max(10px, env(safe-area-inset-top, 0px)); }
   .home-indicator { display: none; }
   .tab-bar { bottom: calc(14px + var(--safe-bottom)); }
   .hero { min-height: clamp(240px, 68vw, 280px); }
+  .hero__heading { font-size: clamp(44px, 14vw, 56px); }
   .hero__img { width: 215px; height: 225px; right: 20px; top: 6%; bottom: auto; transform: none; }
 }
-@media (max-width: 360px) {
+@media (max-width: 360px) and (pointer: coarse) {
   :root { --page-pad: 20px; }
   .header-actions { gap: var(--s1); }
   .home-header__title { gap: var(--s2); }

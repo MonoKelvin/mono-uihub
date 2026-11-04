@@ -1,4 +1,8 @@
 import { configureFrameViewport } from './embedded-viewport.js';
+import { createPrototypeShadow } from './prototype-shadow.js';
+
+const SHADOWS = new WeakMap();
+export const prototypeFrameShadow = (iframe) => SHADOWS.get(iframe)?.element;
 
 // 初次展示和详情内切换共用同一加载判定，iframe 的 load 不能单独证明 HTTP 成功。
 export function loadPrototypeFrame(item, host, signal) {
@@ -22,6 +26,8 @@ export function loadPrototypeFrame(item, host, signal) {
       await new Promise((resolve) => requestAnimationFrame(resolve));
       await new Promise((resolve) => requestAnimationFrame(resolve));
       if (done || signal.aborted) return;
+      const shadow = createPrototypeShadow(iframe, item.details?.type);
+      if (shadow) SHADOWS.set(iframe, shadow);
       done = true;
       resolve(iframe);
     };

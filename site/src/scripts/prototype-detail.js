@@ -1,6 +1,6 @@
 import { coverRect, snapshotFrames, NO_BORDER } from './preview-motion.js';
 import { configureFrameViewport } from './embedded-viewport.js';
-import { loadPrototypeFrame } from './prototype-frame.js';
+import { loadPrototypeFrame, prototypeFrameShadow } from './prototype-frame.js';
 import { createPrototypeBackdrop } from './prototype-backdrop.js';
 
 const TEXT = {
@@ -10,8 +10,8 @@ const TEXT = {
     previous: '上一个原型', next: '下一个原型',
     switching: '正在切换原型…', switchSlow: '新原型仍在加载，当前界面保持不变', switchError: '切换失败，当前原型保持不变，可重试',
     loading: '正在加载原型…', slow: '加载时间较长，可以继续等待或重试', error: '原型未能加载，请重试或在新标签页打开', retry: '重试',
-    createdAt: '创建时间', updatedAt: '修改时间', model: '大模型', prompt: '提示词', promptCount: '对话总轮次',
-    images: '图片参数', type: '类型', source: '参考源', durationSeconds: '生成耗时',
+    createdAt: '创建时间', updatedAt: '修改时间', model: '大模型', prompt: '提示词', promptCount: '对话轮次',
+    images: '图片参数', type: '页面类型', source: '参考来源', durationSeconds: '生成耗时',
     copy: '复制提示词', copied: '已复制', copyFailed: '复制失败，请手动选择并复制',
     software: '软件', website: '网页', app: 'App', component: '组件',
   },
@@ -21,8 +21,8 @@ const TEXT = {
     previous: 'Previous prototype', next: 'Next prototype',
     switching: 'Switching prototype…', switchSlow: 'Still loading. The current prototype is unchanged.', switchError: 'Switch failed. The current prototype is unchanged. Retry.',
     loading: 'Loading prototype…', slow: 'Taking longer than usual. You can wait or retry.', error: 'Unable to load the prototype. Retry or open it in a new tab.', retry: 'Retry',
-    createdAt: 'Created', updatedAt: 'Modified', model: 'Model', prompt: 'Prompt', promptCount: 'Total conversation rounds',
-    images: 'Image parameters', type: 'Type', source: 'Reference source', durationSeconds: 'Generation time',
+    createdAt: 'Created', updatedAt: 'Modified', model: 'Model', prompt: 'Prompt', promptCount: 'Conversation rounds',
+    images: 'Image parameters', type: 'Page type', source: 'Reference source', durationSeconds: 'Generation time',
     copy: 'Copy prompt', copied: 'Copied', copyFailed: 'Copy failed. Select and copy the text manually.',
     software: 'Software', website: 'Website', app: 'App', component: 'Component',
   },
@@ -88,7 +88,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
   const backdrop = createPrototypeBackdrop(root, $('[data-detail-background]'));
   const fields = $('[data-detail-fields]'), drawer = $('[data-detail-drawer]');
   const back = $('[data-detail-back]'), heading = $('[data-detail-heading]'), toolbar = $('[data-detail-toolbar]');
-  const toolsAnchor = $('[data-detail-tools-anchor]'), restore = $('[data-detail-restore]');
+  const restore = $('[data-detail-restore]');
   const loading = $('[data-detail-loading]'), retry = $('[data-detail-retry]');
   const panelToggle = $('[data-detail-toggle-drawer]');
   const previous = $('[data-detail-previous]'), next = $('[data-detail-next]');
@@ -109,9 +109,11 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
   const paint = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
   function animate(element, keyframes, options = {}) {
-    const animation = element.animate(keyframes, { duration: duration(), easing: sharedEase, fill: 'both', ...options });
-    animations.add(animation);
-    return animation.finished.catch(() => {});
+    return Promise.all([element, prototypeFrameShadow(element)].filter(Boolean).map((target) => {
+      const animation = target.animate(keyframes, { duration: duration(), easing: sharedEase, fill: 'both', ...options });
+      animations.add(animation);
+      return animation.finished.catch(() => {});
+    }));
   }
   function clearAnimations() {
     animations.forEach((animation) => animation.cancel());
@@ -580,17 +582,14 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     const version = ++layoutVersion;
     const from = preview.getBoundingClientRect();
     const paintFrom = snapshotImage?.getBoundingClientRect();
-    const toolsFrom = toolsAnchor.getBoundingClientRect();
     finishAnimations();
     clearAnimations();
     update();
     const to = preview.getBoundingClientRect();
-    const toolsTo = toolsAnchor.getBoundingClientRect();
     backdrop.resize();
     if (!reduce.matches) {
       await Promise.all([
         animate(preview, [{ transform: rectTransform(from, to) }, { transform: 'none' }], { duration: 280, easing: ease }),
-        animate(toolsAnchor, [{ transform: `translate(calc(-50% + ${toolsFrom.left - toolsTo.left}px), ${toolsFrom.top - toolsTo.top}px)` }, { transform: 'translateX(-50%)' }], { duration: 280, easing: ease }),
         ...moveSnapshot(from, to, to, paintFrom, imageSize && coverRect(to, imageSize), NO_BORDER, NO_BORDER, { duration: 280, easing: ease }),
       ]);
       if (version === layoutVersion && ['open', 'switching'].includes(root.dataset.phase) && root.dataset.swapping !== 'true') clearAnimations();

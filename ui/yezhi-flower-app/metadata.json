@@ -7,7 +7,7 @@
   "updated_at": "2026-10-30 15:11:32",
   "history": [
     {
-      "prompt": "重构 yezhi-flower-app UI",
+      "prompt": "一个花店App",
       "model": "gpt-6.1-sol",
       "skills": ["mono-ui-prototype", "oil-frontend", "redesign-existing-projects", "vibehub"],
       "duration_seconds": 1412

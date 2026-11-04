@@ -181,6 +181,7 @@ test('抽屉与纯净全屏切换不创建新 iframe，并保留抽屉状态', a
   assert.equal(f.root.dataset.drawer, 'closed');
   assert.equal(f.get('host').children[0], iframe);
   assert.equal(f.requests.length, 1);
+  assert.equal(f.motions.filter((motion) => motion.target === f.get('tools-anchor')).length, 0);
 });
 
 test('加载与入场独立，404 不误判成功，重试后的旧事件不改变状态', async (t) => {
@@ -262,8 +263,10 @@ test('字段按新顺序呈现，提示词与参考源采用同一标签和值�
   for (const key of ['prompt', 'source']) assert.ok(rows.find((row) => row.dataset.field === key).className.includes('is-compact'));
   assert.equal(rows[0].children[0].textContent, '提示词');
   assert.equal(rows[0].children[0].children[0].dataset.detailLabel, 'copy');
+  assert.equal(rows[2].children[0].textContent, '页面类型');
+  assert.equal(rows[3].children[0].textContent, '参考来源');
   assert.equal(rows[4].children[0].textContent, '生成耗时');
-  assert.equal(rows[5].children[0].textContent, '对话总轮次');
+  assert.equal(rows[5].children[0].textContent, '对话轮次');
 });
 
 test('主提示词和每条图片提示词分别复制原文，结果仅在成功后确认', async (t) => {

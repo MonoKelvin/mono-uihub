@@ -263,7 +263,7 @@ function renderProfile() {
 // ---------- 记一笔 ----------
 
 const sheet = $("#sheet");
-const phone = $("#phone"); // 只用于记一笔面板的开关类名
+const phone = $("#phone");
 let amountStr = "";
 let sheetType = "expense";
 let sheetCat = "food";
@@ -690,7 +690,15 @@ function initTools() {
   },30000);
 }
 
-// ---------- 视口适配：手机框用 CSS clamp + aspect-ratio 自适应，无需 JS ----------
+function fitPhone() {
+  const style = getComputedStyle(document.body);
+  const width = document.documentElement.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  const height = document.body.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+  phone.style.setProperty("--phone-scale", Math.min(1, width / phone.offsetWidth, height / phone.offsetHeight));
+}
+
+fitPhone();
+window.addEventListener("resize", fitPhone);
 
 initTools();
 renderAll();

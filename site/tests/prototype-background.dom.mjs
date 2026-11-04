@@ -16,8 +16,8 @@ before(async () => {
 after(async () => { await browser?.close(); });
 
 const baseStyle = `html,body{margin:0;width:100%;height:100%}body{--ink:#202020;--accent:#17552b;color:var(--ink)}.stage{width:100%;height:100%;display:grid;place-items:center;background:#e8e3d8}.canvas{width:600px;height:400px;background:white;border-radius:24px;color:#202020}`;
-async function fixture(t, { css = '', html = '<main class="stage"><div class="canvas"><button>交互窗口</button></div></main>', viewer = false } = {}) {
-  const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, reducedMotion: 'reduce' });
+async function fixture(t, { css = '', html = '<main class="stage"><div class="canvas"><button>交互窗口</button></div></main>', viewer = false, viewport = { width: 1600, height: 1000 }, reducedMotion = 'reduce', details = {}, hasTouch = false } = {}) {
+  const page = await browser.newPage({ viewport, reducedMotion, hasTouch });
   t.after(() => page.close());
   const requests = [];
   await page.route('**/*', async (route) => {
@@ -28,9 +28,9 @@ async function fixture(t, { css = '', html = '<main class="stage"><div class="ca
     if (path.endsWith('/styles.css')) return route.fulfill({ contentType: 'text/css', headers: { 'Cache-Control': 'no-store' }, body: '.canvas button{font-size:16px}' });
     if (path.endsWith('.svg')) return route.fulfill({ contentType: 'image/svg+xml', headers: { 'Cache-Control': 'no-store' }, body: '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="#ddd"/></svg>' });
     if (viewer) {
-      const items = ['demo', 'next'].map((slug) => ({ slug, name: slug, href: slug === 'demo' ? '/prototype/index.html' : '/prototype-next/index.html', details: { prompt: slug, type: 'software' } }));
+      const items = ['demo', 'next'].map((slug) => ({ slug, name: slug, href: slug === 'demo' ? '/prototype/index.html' : '/prototype-next/index.html', details: { prompt: slug, type: 'software', ...details } }));
       const markup = detailMarkup.replace('data-detail-items={JSON.stringify(items)}', `data-detail-items='${JSON.stringify(items)}'`);
-      return route.fulfill({ contentType: 'text/html', body: `<!doctype html><style>:root{--paper:#eee;--card:white;--ink:#202020;--ink-2:#333;--ink-3:#444;--ease:ease;--ease-shared:ease;--ease-drawer:ease;--r-pill:999px}${detailCss}</style><div id="page"><a class="card" data-slug="demo"><div class="frame">原型</div></a><a class="card" data-slug="next"><div class="frame">下一个</div></a></div>${markup}` });
+      return route.fulfill({ contentType: 'text/html', body: `<!doctype html><style>*{box-sizing:border-box}:root{--paper:#eee;--card:white;--ink:#202020;--ink-2:#333;--ink-3:#444;--ease:ease;--ease-shared:ease;--ease-drawer:ease;--r-pill:999px}${detailCss}</style><div id="page"><a class="card" data-slug="demo"><div class="frame">原型</div></a><a class="card" data-slug="next"><div class="frame">下一个</div></a></div>${markup}` });
     }
     return route.fulfill({ contentType: 'text/html', body: '<!doctype html><style>#root{position:fixed;inset:0}#slot{position:absolute;inset:0}#source{position:absolute;left:40px;top:76px;width:1000px;height:700px;border:0}</style><div id="root"><div id="slot"></div><iframe id="source" src="/prototype/index.html"></iframe></div>' });
   });
@@ -298,10 +298,259 @@ test('详情后台预加载期间旧背景不消失，返回取消后迟到事�
   const before = await page.evaluate(() => slot.firstChild.srcdoc);
   await page.locator('[data-detail-next]').click();
   await page.waitForFunction(() => root.dataset.phase === 'switching');
+  const loadingPosition = await page.evaluate(() => {
+    const loading = document.querySelector('[data-detail-loading]').getBoundingClientRect();
+    const back = document.querySelector('[data-detail-back]').getBoundingClientRect();
+    return { left: loading.left, centerY: loading.top + loading.height / 2, backRight: back.right, backCenterY: back.top + back.height / 2, text: document.querySelector('[data-detail-status]').textContent };
+  });
+  assert.equal(loadingPosition.text, '正在切换原型…');
+  assert.ok(loadingPosition.left > loadingPosition.backRight);
+  assert.equal(loadingPosition.centerY, loadingPosition.backCenterY);
   assert.equal(await page.evaluate(() => slot.firstChild.srcdoc), before);
   assert.equal(await page.locator('[data-field="prompt"] dd').textContent(), 'demo');
   await page.locator('[data-detail-back]').click();
   await page.waitForFunction(() => root.hidden);
   for (const route of blocked) await route.fulfill({ contentType: 'text/html', body: '<body>迟到原型</body>' }).catch(() => {});
   assert.deepEqual(await page.evaluate(() => ({ hidden: root.hidden, background: slot.children.length, frames: document.querySelectorAll('[data-detail-host] iframe').length, locked: document.documentElement.classList.contains('detail-scroll-locked') })), { hidden: true, background: 0, frames: 0, locked: false });
+});
+
+test('参考来源 hover 与键盘聚焦使用原型强调色，并随深浅主题更新', async (t) => {
+  const { page } = await fixture(t, {
+    viewer: true,
+    details: { source: { raw: '参考设计', href: 'https://example.com' } },
+    css: 'body[data-mode="dark"] .stage{background:#111}body[data-mode="dark"]{--ink:#eee;--accent:#aaddbb}',
+  });
+  await viewerReady(page);
+  const link = page.locator('[data-field="source"] a');
+  await page.waitForFunction(() => {
+    const element = document.querySelector('[data-field="source"] a');
+    return getComputedStyle(element).color === getComputedStyle(element.parentElement).color;
+  });
+  const initial = await link.evaluate((element) => ({ color: getComputedStyle(element).color, parent: getComputedStyle(element.parentElement).color, accent: getComputedStyle(root).getPropertyValue('--gold').trim() }));
+  assert.equal(initial.color, initial.parent);
+  assert.notEqual(initial.color, initial.accent);
+  await link.hover();
+  const waitForHighlight = () => page.waitForFunction(() => {
+    const style = getComputedStyle(document.querySelector('[data-field="source"] a'));
+    const accent = getComputedStyle(root).getPropertyValue('--gold').trim();
+    return style.color === accent && style.textDecorationColor === accent;
+  });
+  await waitForHighlight();
+  await page.evaluate(() => { document.querySelector('[data-detail-host] iframe').contentDocument.body.dataset.mode = 'dark'; });
+  await page.waitForFunction(() => root.dataset.detailTone === 'dark');
+  await waitForHighlight();
+  assert.notEqual(await page.evaluate(() => root.style.getPropertyValue('--gold').trim()), initial.accent);
+  await page.mouse.move(0, 0);
+  await page.keyboard.press('Tab');
+  await link.focus();
+  await waitForHighlight();
+  assert.equal(await link.evaluate((element) => element.matches(':focus-visible')), true);
+  assert.equal(await link.evaluate((element) => getComputedStyle(element).transitionDuration), '0s');
+  await link.evaluate((element) => element.blur());
+  await page.waitForFunction(() => {
+    const element = document.querySelector('[data-field="source"] a');
+    return getComputedStyle(element).color === getComputedStyle(element.parentElement).color;
+  });
+});
+
+test('触摸环境不触发参考来源的鼠标 hover 高亮', async (t) => {
+  const { page } = await fixture(t, { viewer: true, hasTouch: true, details: { source: { raw: '参考设计', href: 'https://example.com' } } });
+  await viewerReady(page);
+  assert.equal(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches), false);
+  const link = page.locator('[data-field="source"] a');
+  await link.hover();
+  const result = await link.evaluate((element) => ({ hover: element.matches(':hover'), color: getComputedStyle(element).color, parent: getComputedStyle(element.parentElement).color, accent: getComputedStyle(root).getPropertyValue('--gold').trim() }));
+  assert.equal(result.hover, true);
+  assert.equal(result.color, result.parent);
+  assert.notEqual(result.color, result.accent);
+});
+
+for (const [width, height, reducedMotion] of [[1600, 1000, 'no-preference'], [960, 800, 'reduce'], [320, 720, 'reduce']]) {
+  test(`${width}px 详情工具条顶部全视口居中、图标对齐，抽屉及窗口尺寸变化不移动工具条`, async (t) => {
+    const { page } = await fixture(t, { viewer: true, viewport: { width, height }, reducedMotion });
+    await viewerReady(page);
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('[data-detail-toolbar]')).transform === 'none' && getComputedStyle(document.querySelector('[data-detail-toolbar]')).opacity === '1');
+    const geometry = () => page.evaluate(() => {
+      const rect = (selector) => document.querySelector(selector).getBoundingClientRect().toJSON();
+      return { viewport: innerWidth, toolbar: rect('[data-detail-toolbar]'), tool: rect('[data-detail-toolbar] .detail-icon'), back: rect('[data-detail-back]'), toggle: rect('[data-detail-toggle-drawer]'), preview: rect('[data-detail-preview]'), drawer: rect('[data-detail-drawer]'), parent: document.querySelector('[data-detail-tools-anchor]').parentElement === root, header: !!document.querySelector('.detail-drawer-head'), paddingTop: getComputedStyle(document.querySelector('[data-detail-fields]')).paddingTop };
+    });
+    const check = (result) => {
+      const centerY = (rect) => rect.top + rect.height / 2;
+      assert.equal(result.toolbar.left + result.toolbar.width / 2, result.viewport / 2);
+      assert.equal(centerY(result.tool), centerY(result.back));
+      assert.equal(centerY(result.tool), centerY(result.toggle));
+      assert.ok(result.toolbar.left > result.back.right);
+      assert.ok(result.toolbar.right < result.toggle.left);
+      assert.ok(result.toolbar.bottom < result.preview.top);
+      assert.equal(result.parent, true);
+    };
+    const initial = await geometry();
+    check(initial);
+    assert.equal(initial.header, false);
+    assert.equal(initial.paddingTop, '0px');
+    assert.ok(initial.drawer.width <= 332);
+    if (width === 1600) {
+      assert.ok(initial.preview.width > 1092);
+      assert.ok(initial.preview.height > 836);
+      assert.equal(initial.drawer.width, 332);
+    }
+    await page.locator('[data-detail-toggle-drawer]').click();
+    await page.waitForFunction(() => root.dataset.drawer === 'closed');
+    const closed = await geometry();
+    check(closed);
+    assert.deepEqual(closed.toolbar, initial.toolbar);
+    assert.deepEqual(closed.tool, initial.tool);
+    await page.setViewportSize({ width: width === 320 ? 390 : width - 160, height });
+    check(await geometry());
+    await page.route('**/prototype-next/index.html', (route) => route.fulfill({ status: 404, body: 'Not found' }));
+    await page.locator('[data-detail-next]').click();
+    await page.waitForFunction(() => root.dataset.phase === 'open' && !document.querySelector('[data-detail-retry]').hidden);
+    const error = await page.evaluate(() => {
+      const status = document.querySelector('[data-detail-loading]').getBoundingClientRect();
+      const toolbar = document.querySelector('[data-detail-toolbar]').getBoundingClientRect();
+      const back = document.querySelector('[data-detail-back]').getBoundingClientRect();
+      return { left: status.left, right: status.right, centerY: status.top + status.height / 2, backRight: back.right, backCenterY: back.top + back.height / 2, toolbarLeft: toolbar.left, width: innerWidth };
+    });
+    assert.ok(error.left > error.backRight && error.right <= error.width);
+    assert.equal(error.centerY, error.backCenterY);
+    assert.ok(error.right < error.toolbarLeft);
+  });
+}
+
+for (const type of ['software', 'app', 'component']) {
+  test(`${type} 外层窗口阴影越过 iframe，窗口尺寸、圆角及内部裁剪保持原样`, async (t) => {
+    const { page } = await fixture(t, {
+      viewer: true, details: { type },
+      css: '.canvas{height:calc(100% - 24px);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4),inset 0 0 0 1px white}.canvas button{box-shadow:0 10px 30px red}',
+    });
+    await viewerReady(page);
+    const result = await page.evaluate(() => {
+      const iframe = document.querySelector('[data-detail-host] iframe');
+      const window = iframe.contentDocument.querySelector('.canvas');
+      const shadow = document.querySelector('.detail-window-shadow');
+      const layer = document.querySelector('.detail-shadow-layer');
+      const sourceCss = iframe.contentWindow.getComputedStyle(window);
+      const sourceRect = window.getBoundingClientRect();
+      const frameRect = iframe.getBoundingClientRect();
+      const ghostRect = shadow.getBoundingClientRect();
+      return {
+        count: document.querySelectorAll('.detail-window-shadow').length,
+        width: iframe.clientWidth, viewWidth: iframe.contentWindow.innerWidth,
+        height: iframe.clientHeight, viewHeight: iframe.contentWindow.innerHeight,
+        sourceShadow: sourceCss.boxShadow, ghostShadow: getComputedStyle(shadow).boxShadow,
+        ghostBorder: getComputedStyle(shadow).borderBottomWidth,
+        radius: sourceCss.borderTopLeftRadius, ghostRadius: getComputedStyle(shadow).borderTopLeftRadius,
+        overflow: sourceCss.overflow, previewOverflow: getComputedStyle(document.querySelector('[data-detail-preview]')).overflow,
+        hostOverflow: getComputedStyle(document.querySelector('[data-detail-host]')).overflow,
+        clip: getComputedStyle(layer).clipPath, pointerEvents: getComputedStyle(layer).pointerEvents,
+        source: { left: frameRect.left + sourceRect.left, top: frameRect.top + sourceRect.top, width: sourceRect.width, height: sourceRect.height },
+        ghost: { left: ghostRect.left, top: ghostRect.top, width: ghostRect.width, height: ghostRect.height },
+        bottomGap: iframe.clientHeight - sourceRect.bottom,
+      };
+    });
+    assert.equal(result.count, 1);
+    assert.equal(result.width, result.viewWidth);
+    assert.equal(result.height, result.viewHeight);
+    assert.match(result.sourceShadow, /inset/);
+    assert.doesNotMatch(result.sourceShadow, /30px 80px/);
+    assert.doesNotMatch(result.ghostShadow, /inset|rgb\(255, 0, 0\)/);
+    assert.equal(result.ghostBorder, '0px');
+    assert.match(result.ghostShadow, /30px 80px/);
+    assert.equal(result.radius, result.ghostRadius);
+    assert.equal(result.overflow, 'hidden');
+    assert.equal(result.previewOverflow, 'visible');
+    assert.equal(result.hostOverflow, 'visible');
+    assert.equal(result.clip, 'none');
+    assert.equal(result.pointerEvents, 'none');
+    assert.deepEqual(result.ghost, result.source);
+    assert.ok(result.bottomGap < 30);
+    await page.locator('[data-detail-back]').click();
+    await page.waitForFunction(() => root.hidden);
+    assert.equal(await page.locator('.detail-shadow-layer').count(), 0);
+  });
+}
+
+test('阴影层保留 2D 缩放与旋转，外阴影分离不改变窗口变换', async (t) => {
+  const { page } = await fixture(t, { viewer: true, css: '.canvas{box-shadow:0 30px 80px rgba(0,0,0,.4);transform:rotate(3deg) scale(.85);padding:12px;border:2px solid black}' });
+  await viewerReady(page);
+  const result = await page.evaluate(() => {
+    const iframe = document.querySelector('[data-detail-host] iframe');
+    const window = iframe.contentDocument.querySelector('.canvas');
+    const frame = iframe.getBoundingClientRect(), source = window.getBoundingClientRect();
+    const ghost = document.querySelector('.detail-window-shadow').getBoundingClientRect();
+    return { source: [frame.left + source.left, frame.top + source.top, source.width, source.height], ghost: [ghost.left, ghost.top, ghost.width, ghost.height], transform: iframe.contentWindow.getComputedStyle(window).transform, overflow: getComputedStyle(document.querySelector('.detail-shadow-layer')).overflow };
+  });
+  result.source.forEach((value, index) => assert.ok(Math.abs(value - result.ghost[index]) < .1));
+  assert.notEqual(result.transform, 'none');
+  assert.equal(result.overflow, 'visible');
+});
+
+test('阴影层跟随主题、尺寸及原地淡化切换，旧层和监听在卸载后清理', async (t) => {
+  const { page } = await fixture(t, { viewer: true, reducedMotion: 'no-preference', css: '.canvas{box-shadow:0 30px 80px rgba(0,0,0,.4)}body[data-theme="warm"] .canvas{box-shadow:0 44px 80px -20px rgb(140,60,10)}' });
+  await viewerReady(page);
+  await page.evaluate(() => { document.querySelector('[data-detail-host] iframe').contentDocument.body.dataset.theme = 'warm'; });
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('.detail-window-shadow')).boxShadow.includes('140, 60, 10'));
+  await page.setViewportSize({ width: 1440, height: 800 });
+  await page.waitForFunction(() => document.querySelector('.detail-shadow-layer').style.width === document.querySelector('[data-detail-host] iframe').clientWidth + 'px');
+  await page.locator('[data-detail-next]').click();
+  await page.waitForFunction(() => root.dataset.swapping === 'true' && [...document.querySelectorAll('.detail-shadow-layer')].some((layer) => layer.getAnimations().some((animation) => animation.effect.getKeyframes().at(-1).opacity === '0')));
+  const animations = await page.evaluate(() => {
+    const layers = [...document.querySelectorAll('.detail-shadow-layer')];
+    return { opacity: layers.map((layer) => layer.style.opacity), linked: layers.some((layer) => layer.getAnimations().some((animation) => animation.effect.getKeyframes().at(-1).opacity === '0')) };
+  });
+  await page.waitForFunction(() => root.dataset.phase === 'open' && root.dataset.detailTone === 'dark');
+  assert.ok(animations.linked);
+  assert.equal(await page.locator('.detail-shadow-layer').count(), 1);
+  await page.locator('[data-detail-fullscreen]').click();
+  await page.waitForFunction(() => root.dataset.clean === 'true');
+  await page.locator('[data-detail-restore]').click();
+  await page.locator('[data-detail-back]').click();
+  await page.waitForFunction(() => root.hidden);
+  assert.equal(await page.locator('.detail-shadow-layer').count(), 0);
+});
+
+test('网页不补绘外层窗口阴影，阴影层也不会在失败或取消后残留', async (t) => {
+  const website = await fixture(t, { viewer: true, details: { type: 'website' }, css: '.canvas{box-shadow:0 30px 80px black}' });
+  await viewerReady(website.page);
+  assert.equal(await website.page.locator('.detail-shadow-layer').count(), 0);
+  const { page } = await fixture(t, { viewer: true, css: '.canvas{box-shadow:0 30px 80px black}' });
+  await viewerReady(page);
+  await page.route('**/prototype-next/index.html', (route) => route.fulfill({ status: 404, body: 'Not found' }));
+  await page.locator('[data-detail-next]').click();
+  await page.waitForFunction(() => root.dataset.phase === 'open' && !document.querySelector('[data-detail-retry]').hidden);
+  assert.equal(await page.locator('.detail-shadow-layer').count(), 1);
+  await page.locator('[data-detail-back]').click();
+  await page.waitForFunction(() => root.hidden);
+  assert.equal(await page.locator('.detail-shadow-layer').count(), 0);
+});
+
+test('背景重放失败保留原外阴影，不因阴影补绘移除原型样式', async (t) => {
+  const { page } = await fixture(t, { viewer: true, css: '.stage{background-image:url(assets/missing-resource)}.canvas{box-shadow:0 30px 80px black}' });
+  await page.waitForFunction(() => root.dataset.phase === 'open' && root.dataset.load === 'ready');
+  const result = await page.evaluate(() => {
+    const doc = document.querySelector('[data-detail-host] iframe').contentDocument;
+    return { background: slot.children.length, shadow: doc.defaultView.getComputedStyle(doc.querySelector('.canvas')).boxShadow, extracted: !!doc.getElementById('uihub-window-shadow') };
+  });
+  assert.equal(result.background, 0);
+  assert.match(result.shadow, /30px 80px/);
+  assert.equal(result.extracted, false);
+});
+
+test('透明页面完整绘制阴影，无底边裁切或新增边框，返回清理阴影覆盖样式', async (t) => {
+  const { page } = await fixture(t, { viewer: true, css: '.stage{background:none}.canvas{width:100%;height:100%;border-radius:0;display:flex;justify-content:center;align-items:center;box-shadow:0 30px 80px rgba(0,0,0,.4)}' });
+  await page.waitForFunction(() => root.dataset.phase === 'open' && root.dataset.load === 'ready');
+  const result = await page.evaluate(() => {
+    window.shadowDoc = document.querySelector('[data-detail-host] iframe').contentDocument;
+    const ghost = document.querySelector('.detail-window-shadow');
+    const layer = document.querySelector('.detail-shadow-layer');
+    return { boxShadow: shadowDoc.defaultView.getComputedStyle(shadowDoc.querySelector('.canvas')).boxShadow, clip: getComputedStyle(layer).clipPath, border: getComputedStyle(ghost).borderBottomWidth, background: slot.children.length };
+  });
+  assert.equal(result.boxShadow, 'none');
+  assert.equal(result.clip, 'none');
+  assert.equal(result.border, '0px');
+  assert.equal(result.background, 0);
+  await page.locator('[data-detail-back]').click();
+  await page.waitForFunction(() => root.hidden);
+  const restored = await page.evaluate(() => ({ style: !!shadowDoc.getElementById('uihub-window-shadow'), marker: shadowDoc.querySelector('.canvas').getAttribute('data-uihub-shadow-window'), layers: document.querySelectorAll('.detail-shadow-layer').length }));
+  assert.deepEqual(restored, { style: false, marker: null, layers: 0 });
 });

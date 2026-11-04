@@ -39,7 +39,7 @@ export function isBackgroundWrapper(element, css, view) {
   const full = rect.width >= view.width * .97 && rect.height >= view.height * .9;
   const centered = ['center', 'space-around'].includes(css.justifyContent) || css.placeItems?.includes('center') || css.alignItems === 'center';
   const unframed = (!css.boxShadow || css.boxShadow === 'none') && (!css.borderRadius || parseFloat(css.borderRadius) === 0);
-  return full && WRAPPER.test(element.className || '') && centered && unframed && element.tagName !== 'CANVAS';
+  return full && WRAPPER.test(element.className || '') && centered && unframed && element.tagName !== 'CANVAS' && !element.hasAttribute('data-uihub-shadow-window');
 }
 export function isBackgroundDecoration(element, css, view) {
   const rect = element.getBoundingClientRect();

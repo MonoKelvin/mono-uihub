@@ -534,4 +534,18 @@ TRACKS.forEach((item) => { const image = new Image(); image.src = item.cover; })
 
 renderTrack();
 renderVolume();
+
+const stand = document.querySelector('.stand');
+function fitPlayer() {
+  const style = getComputedStyle(stand);
+  const width = stand.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  const height = stand.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+  player.style.setProperty('--player-scale', Math.min(1, width / player.offsetWidth, height / player.offsetHeight));
+}
+
+fitPlayer();
+const sizeObserver = new ResizeObserver(fitPlayer);
+sizeObserver.observe(stand);
+sizeObserver.observe(player);
+
 setInterval(tick, 200);

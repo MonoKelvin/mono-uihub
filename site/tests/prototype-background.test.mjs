@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { colorToRgba, compositeColor, contrast, resolvePrototypePalette, isBackgroundWrapper, isBackgroundDecoration } from '../src/scripts/prototype-background.js';
 import { backgroundCover } from '../src/scripts/prototype-backdrop.js';
+import { outerBoxShadow } from '../src/scripts/prototype-shadow.js';
 
 const view = { width: 1000, height: 700 };
-const element = (className, rect = view, tagName = 'DIV') => ({ className, tagName, getBoundingClientRect: () => rect, getAttribute: () => 'true' });
+const element = (className, rect = view, tagName = 'DIV') => ({ className, tagName, getBoundingClientRect: () => rect, getAttribute: () => 'true', hasAttribute: () => false });
 
 test('颜色支持短 HEX、透明度、百分比和现代 sRGB，非法值不猜测', () => {
   assert.deepEqual(colorToRgba('#abc'), [170, 187, 204, 1]);
@@ -26,6 +27,7 @@ test('外层 stage 可以抽离，带窗口边框感的 canvas 和真实 Canvas 
   assert.equal(isBackgroundWrapper(element('stage', { width: 600, height: 400 }), css, view), false);
   assert.equal(isBackgroundWrapper(element('stage', view, 'CANVAS'), css, view), false);
   assert.equal(isBackgroundWrapper(element('work-area'), css, view), false);
+  assert.equal(isBackgroundWrapper({ ...element('canvas'), hasAttribute: () => true }, css, view), false);
 });
 
 test('只有负层级或明确不可交互的全屏装饰被识别，普通面板不抽离', () => {
@@ -76,4 +78,12 @@ test('低对比文字、透明文字和无法采样的图片背景使用可读�
       assert.equal(palette['--detail-tool-bg'], palette['--detail-panel-bg']);
     }
   }
+});
+
+test('外层阴影解析保留多层颜色和偏移，不把 inset 阴影复制到视口外', () => {
+  const outer = 'rgba(10, 20, 30, .4) 0px 25px 70px 0px';
+  const glow = 'rgb(1, 2, 3) 0px 10px 20px 0px';
+  assert.equal(outerBoxShadow(`${outer}, inset rgb(0, 0, 0) 0px 0px 1px 0px, ${glow}`), `${outer}, ${glow}`);
+  assert.equal(outerBoxShadow('inset 0 0 2px #fff'), '');
+  assert.equal(outerBoxShadow('none'), '');
 });

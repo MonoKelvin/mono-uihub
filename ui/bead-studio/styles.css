@@ -64,10 +64,7 @@ body {
   overflow: hidden;
   font: var(--text-base)/1.5 var(--font);
   color: var(--ink);
-  background:
-    radial-gradient(1120px 720px at 12% -10%, #ffffff 0%, #ffffff00 60%),
-    radial-gradient(920px 640px at 104% 110%, #dde8f4 0%, #dde8f400 62%),
-    linear-gradient(154deg, #eef4fa 0%, #e6eef7 44%, #dfe9f3 100%);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
 }
 button, input { font: inherit; }
