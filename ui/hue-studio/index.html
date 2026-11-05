@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eeedf0">
+  <meta name="description" content="色序，找到恰如其分的五色搭配。六种风格，实时应用预览，自由编辑与导出。">
+  <title>色序 hue — 五色之间，自成一派</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <main class="stage">
+    <section class="canvas" aria-label="色序配色生成器">
+      <header class="header">
+        <a class="brand" href="./index.html" aria-label="色序首页">
+          <span class="brand-symbol" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></span>
+          <span class="brand-word">hue<span>.</span></span>
+          <span class="brand-name">色序</span>
+        </a>
+        <div class="header-actions">
+          <button class="icon-button" id="history-button" aria-label="查看配色历史" data-tip="配色历史"><i class="ti ti-history" aria-hidden="true"></i></button>
+          <button class="icon-button" id="copy-all" aria-label="复制全部色值" data-tip="复制五色色值"><i class="ti ti-copy" aria-hidden="true"></i></button>
+          <span class="action-divider" aria-hidden="true"></span>
+          <button class="export-button" id="export-button"><i class="ti ti-download" aria-hidden="true"></i><span>导出</span></button>
+        </div>
+      </header>
+
+      <nav class="styles" aria-label="配色风格" id="style-list"></nav>
+
+      <div class="workspace">
+        <section class="palette-area" aria-labelledby="palette-title">
+          <div class="palette-heading">
+            <div>
+              <span class="heading-caption">一点灵感，五种可能</span>
+              <h1 id="palette-title">灰调之间</h1>
+            </div>
+            <svg class="harmony-mark" viewBox="0 0 80 80" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="1.1">
+                <ellipse cx="40" cy="40" rx="15" ry="34"/><ellipse cx="40" cy="40" rx="15" ry="34" transform="rotate(60 40 40)"/><ellipse cx="40" cy="40" rx="15" ry="34" transform="rotate(120 40 40)"/>
+              </g>
+              <circle cx="40" cy="40" r="4" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="swatches" id="swatches" aria-label="五色搭配"></div>
+          <div class="palette-bottom">
+            <div class="history-controls">
+              <button class="icon-button" id="undo" aria-label="上一组配色" data-tip="上一组"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+              <button class="icon-button" id="redo" aria-label="下一组配色" data-tip="下一组"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+              <span class="palette-count"><span id="history-position">1</span> / <span id="history-total">1</span></span>
+            </div>
+            <span class="lock-hint"><i class="ti ti-lock-open" aria-hidden="true"></i><span id="lock-hint">喜欢的颜色，锁住它</span></span>
+          </div>
+          <div class="generation-bar">
+            <button class="generate-button" id="generate"><span class="generate-icon"><i class="ti ti-dice-5" aria-hidden="true"></i></span><span id="generate-label">再来一组</span><kbd aria-hidden="true">空格</kbd></button>
+            <div class="concentration">
+              <div class="concentration-label"><label for="concentration">色彩浓度</label><span id="concentration-value">适中</span></div>
+              <div class="range-row"><i class="ti ti-droplet-half-2" aria-hidden="true"></i><input type="range" id="concentration" min="0" max="100" value="50" aria-label="色彩浓度"><i class="ti ti-droplet" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="preview-area" aria-label="配色应用预览">
+          <div class="preview-heading"><span>放进真实的想象</span><i class="ti ti-eye" aria-hidden="true"></i></div>
+          <div class="preview-frame" id="preview-frame">
+            <div class="preview-view sculpture-view" data-view="sculpture">
+              <span class="art-word" aria-hidden="true">together</span>
+              <svg class="sculpture" id="sculpture" viewBox="0 0 440 360" role="img" aria-label="五色几何雕塑应用效果">
+                <defs>
+                  <linearGradient id="arch-light" x1="0" y1="0" x2="1" y2=".3"><stop stop-color="#fff" stop-opacity=".46"/><stop offset=".48" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".21"/></linearGradient>
+                  <linearGradient id="cube-light" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".15"/><stop offset="1" stop-color="#000" stop-opacity=".23"/></linearGradient>
+                  <radialGradient id="sphere-light" cx=".3" cy=".24" r=".75"><stop stop-color="#fff" stop-opacity=".52"/><stop offset=".42" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></radialGradient>
+                  <linearGradient id="ring-light" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".4"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+                  <filter id="floor-shadow" x="-.3" y="-1" width="1.6" height="3"><feGaussianBlur stdDeviation="9"/></filter>
+                </defs>
+                <ellipse cx="221" cy="306" rx="144" ry="15" fill="#29232b" opacity=".17" filter="url(#floor-shadow)"/>
+                <g class="sculpture-piece pedestal">
+                  <path d="M65 275 Q220 234 378 275 V288 Q220 337 65 288Z" fill="var(--p1)"/>
+                  <path d="M65 275 Q220 234 378 275 V288 Q220 337 65 288Z" fill="#000" opacity=".08"/>
+                  <ellipse cx="221" cy="275" rx="156" ry="30" fill="var(--p1)"/>
+                  <ellipse cx="221" cy="275" rx="156" ry="30" fill="#fff" opacity=".27"/>
+                </g>
+                <g class="sculpture-piece arch">
+                  <path d="M198 259V121a68 68 0 0 1 136 0v138h-39V124a29 29 0 0 0-58 0v135Z" fill="var(--p2)"/>
+                  <path d="M198 259V121a68 68 0 0 1 136 0v138h-39V124a29 29 0 0 0-58 0v135Z" fill="url(#arch-light)"/>
+                  <path d="m334 259 14-12V112c0-25-14-45-36-54 14 13 22 34 22 63Z" fill="var(--p2)"/>
+                  <path d="m334 259 14-12V112c0-25-14-45-36-54 14 13 22 34 22 63Z" fill="#000" opacity=".2"/>
+                  <path d="m237 259 11-10V128c0-12 6-21 15-24-15 1-26 9-26 20Z" fill="var(--p2)"/>
+                  <path d="m237 259 11-10V128c0-12 6-21 15-24-15 1-26 9-26 20Z" fill="#000" opacity=".12"/>
+                </g>
+                <g class="sculpture-piece ring" transform="rotate(-30 144 131)">
+                  <path d="M60 131a84 46 0 1 0 168 0a84 46 0 1 0-168 0M89 131a55 26 0 1 1 110 0a55 26 0 1 1-110 0" fill="var(--p5)" fill-rule="evenodd"/>
+                  <path d="M60 131a84 46 0 1 0 168 0a84 46 0 1 0-168 0M89 131a55 26 0 1 1 110 0a55 26 0 1 1-110 0" fill="url(#ring-light)" fill-rule="evenodd"/>
+                  <path d="M61 135c3 27 39 47 83 47s80-20 83-47v-5c-6 25-40 44-83 44s-77-19-83-44Z" fill="var(--p5)"/>
+                </g>
+                <g class="sculpture-piece cube">
+                  <path d="m96 202 65-23 61 30-67 25Z" fill="var(--p3)"/>
+                  <path d="m96 202 65-23 61 30-67 25Z" fill="#fff" opacity=".23"/>
+                  <path d="m96 202 59 32v62l-59-32Z" fill="var(--p3)"/>
+                  <path d="m155 234 67-25v62l-67 25Z" fill="var(--p3)"/>
+                  <path d="m155 234 67-25v62l-67 25Z" fill="url(#cube-light)"/>
+                </g>
+                <g class="sculpture-piece sphere"><ellipse cx="285" cy="284" rx="43" ry="8" fill="#000" opacity=".08"/><circle cx="280" cy="243" r="45" fill="var(--p4)"/><circle cx="280" cy="243" r="45" fill="url(#sphere-light)"/></g>
+              </svg>
+              <div class="art-caption"><span>形 · 色 · 平衡</span><span class="tiny-palette" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></span></div>
+            </div>
+            <div class="preview-view poster-view" data-view="poster" hidden>
+              <div class="poster-top"><span>形色之间</span><i class="ti ti-asterisk" aria-hidden="true"></i></div>
+              <div class="poster-art" aria-hidden="true"><span class="poster-circle"></span><span class="poster-arch"></span><span class="poster-block"></span><span class="poster-dot"></span></div>
+              <div class="poster-title">Less,<br>but better.</div><div class="poster-bottom"><span>留白，是另一种色彩。</span><span>设计之美</span></div>
+            </div>
+            <div class="preview-view interface-view" data-view="interface" hidden>
+              <div class="sample-ui">
+                <div class="sample-header"><span class="sample-logo">forma.</span><span class="sample-avatar"><i class="ti ti-user" aria-hidden="true"></i></span></div>
+                <div class="sample-art" aria-hidden="true"><span class="sample-arch"></span><span class="sample-ball"></span><span class="sample-square"></span></div>
+                <div class="sample-copy"><span>日常，也值得好好设计</span><h2>把生活<br>留给喜欢的事。</h2></div>
+                <div class="sample-controls"><span class="sample-cta">探索生活 <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span class="sample-like"><i class="ti ti-heart" aria-hidden="true"></i></span></div>
+                <div class="sample-footer"><span>空间</span><span>器物</span><span>灵感</span><span class="sample-indicator"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="preview-switch" role="group" aria-label="选择应用场景">
+            <span class="preview-indicator" aria-hidden="true"></span>
+            <button class="preview-tab is-active" data-preview="sculpture" aria-pressed="true"><i class="ti ti-cylinder" aria-hidden="true"></i>雕塑</button>
+            <button class="preview-tab" data-preview="poster" aria-pressed="false"><i class="ti ti-layout-board" aria-hidden="true"></i>海报</button>
+            <button class="preview-tab" data-preview="interface" aria-pressed="false"><i class="ti ti-browser" aria-hidden="true"></i>界面</button>
+          </div>
+        </section>
+      </div>
+      <footer class="footer"><span><i class="ti ti-color-swatch" aria-hidden="true"></i>五色之间，自成一派。</span><span class="footer-note">灵感不重复 <span class="footer-dot"></span> 色彩有章法</span></footer>
+
+      <div class="layer" id="dialog-layer" hidden>
+        <div class="scrim" id="scrim"></div>
+        <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+          <header class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="close-dialog" aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="dialog-body" id="dialog-body"></div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+      <div class="sr-only" id="live-region" aria-live="polite" aria-atomic="true"></div>
+    </section>
+  </main>
+</body>
+</html>
