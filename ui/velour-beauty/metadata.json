@@ -1,0 +1,73 @@
+{
+  "name": "Velour 青粉美妆电商",
+  "slug": "velour-beauty",
+  "page_type": "website",
+  "tags": ["电商", "美妆", "筛选"],
+  "palette": ["#d8e9e2", "#194b40", "#d8b8bd"],
+  "created_at": "2026-11-05 15:18:46",
+  "updated_at": "2026-11-05 18:24:45",
+  "history": [
+    {
+      "prompt": "一个国外化妆品电商网站，真实化妆品抠图图像，首屏是漂亮的欧美白人女模特超大上半身（头部）的宣传海报图片，高级严肃的特写，商业气质的表情姿态，手拿化妆品放到脸部附近介绍。整个页面极简商业风，大字排版，低饱和粉青配色，电影级的产品模特特写",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "oil-ui", "vibehub", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "Luxury skincare campaign photograph of an adult European white female beauty model, oversized head and upper shoulders, slicked back dark blonde hair, blue grey eyes, serious composed commercial expression with slightly parted lips, direct eye contact, holding a small frosted glass skincare bottle with ivory cap beside her cheek with elegantly posed fingers, natural luminous skin, bare shoulders, sculptural soft cinematic studio lighting with gentle side shadows, restrained desaturated blush pink studio backdrop, editorial close up portrait, model placed toward the right side, uncluttered pale pink negative space to the left, no typography, no logos",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    },
+    {
+      "prompt": "化妆品的图片风格请尽量保持统一的风格，青粉化妆瓶，高级简约感，要电商常见的特写视角，建议使用生图模型生成\n继续",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "oil-ui", "vibehub", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "Single premium skincare serum bottle, pale seafoam aqua frosted glass rectangular bottle with rounded shoulders, ivory cylindrical dropper cap, minimalist unmarked packaging, front three-quarter commercial beauty packshot with a subtle view of the top, centered complete bottle filling most of the frame, soft studio light from upper left, restrained reflections, isolated object, no lettering, no props",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "Single premium skincare cream jar, muted blush pink frosted glass low round jar with an ivory flat circular screw lid, minimalist unmarked packaging, front three-quarter commercial beauty packshot with a subtle view of the top, centered complete jar filling most of the frame, soft studio light from upper left, restrained reflections, isolated object, no lettering, no props",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "Single premium skin tint bottle, muted blush pink frosted glass tall cylindrical cosmetic pump bottle, ivory flat cylindrical cap, minimalist unmarked packaging, front three-quarter commercial beauty packshot with a subtle view of the top, centered complete bottle filling most of the frame, soft studio light from upper left, restrained reflections, isolated object, no lettering, no props",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "Single premium perfume bottle, pale seafoam aqua frosted glass wide rectangular bottle with soft rounded corners, sculptural muted blush pink rounded rectangular cap, minimalist unmarked packaging, front three-quarter commercial beauty packshot with a subtle view of the top, centered complete bottle filling most of the frame, soft studio light from upper left, restrained reflections, isolated object, no lettering, no props",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    },
+    {
+      "prompt": "从新生成图片，化妆品上可以有图案和文字，要符合品牌设计，精美一点。配色以青色为主，粉色作为点缀装饰颜色。选择只重生成四张商品图，保留模特海报。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "One premium Velour skincare serum bottle, predominantly muted seafoam cyan frosted glass rectangular bottle with softly rounded shoulders, ivory cylindrical dropper cap with a narrow dusty blush pink collar, precision printed lowercase dark teal serif wordmark 'velour' on the front, smaller dark teal lettering 'THE DEW SERUM' and '30 ml', a fine graceful botanical sprig line drawing printed in dusty blush pink on one lower side of the bottle, refined luxury brand packaging with generous negative space and a clear typographic hierarchy, front three-quarter e-commerce close-up product photograph with a slight view of the top, centered complete bottle, soft studio key light from upper left, restrained natural material reflections, isolated product, no surrounding props",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One premium Velour face cream jar, predominantly muted seafoam cyan frosted glass low round jar, ivory flat circular screw lid with a narrow dusty blush pink rim, precision printed lowercase dark teal serif wordmark 'velour' on the front, smaller dark teal lettering 'THE CLOUD CREAM' and '50 ml', a fine graceful botanical sprig line drawing printed in dusty blush pink on one lower side of the jar, refined luxury brand packaging with generous negative space and a clear typographic hierarchy, front three-quarter e-commerce close-up product photograph with a slight view of the top, centered complete jar, soft studio key light from upper left, restrained natural material reflections, isolated product, no surrounding props",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One premium Velour skin tint bottle, predominantly muted seafoam cyan frosted glass tall cylindrical cosmetic bottle, ivory cylindrical cap with a narrow dusty blush pink collar, precision printed lowercase dark teal serif wordmark 'velour' on the front, smaller dark teal lettering 'THE BARE TINT' and '30 ml', a fine graceful botanical sprig line drawing printed in dusty blush pink on one lower side of the bottle, refined luxury brand packaging with generous negative space and a clear typographic hierarchy, front three-quarter e-commerce close-up product photograph with a slight view of the top, centered complete bottle, soft studio key light from upper left, restrained natural material reflections, isolated product, no surrounding props",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One premium Velour perfume bottle, predominantly muted seafoam cyan frosted glass wide rectangular bottle with softly rounded corners, sculptural ivory rounded rectangular cap with a narrow dusty blush pink collar, precision printed lowercase dark teal serif wordmark 'velour' on the front, smaller dark teal lettering 'THE PETAL ESSENCE' and '50 ml', a fine graceful botanical sprig line drawing printed in dusty blush pink on one lower side of the bottle, refined luxury brand packaging with generous negative space and a clear typographic hierarchy, front three-quarter e-commerce close-up product photograph with a slight view of the top, centered complete bottle, soft studio key light from upper left, restrained natural material reflections, isolated product, no surrounding props",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    },
+    {
+      "prompt": "UI设计排版太普通了，没有高级奢华感，请优化，多加一些丰富的动画效果。之前的没有文字的图片可以删除了。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "oil-ui", "redesign-existing-projects", "animate", "gsap-core", "gsap-timeline", "gsap-scrolltrigger", "vibehub"]
+    }
+  ]
+}

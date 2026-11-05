@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d8e9e2">
+  <meta name="description" content="Velour — a considered edit of skincare, makeup, and fragrance. Small rituals, beautifully chosen.">
+  <title>Velour — Beauty, in its purest form.</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/bodoni-moda@5.3.0/latin-400.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/bodoni-moda@5.3.0/latin-400-italic.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.3.0/latin-400.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.3.0/latin-500.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+  <script id="scrolltrigger-script" src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="announcement">A little care, on us. <span>Complimentary shipping on orders $75+</span></div>
+  <header class="site-header">
+    <nav class="nav-left" aria-label="Main navigation">
+      <a href="#shop" class="nav-link">Shop the edit <i class="ti ti-chevron-down" aria-hidden="true"></i></a>
+      <a href="#philosophy" class="nav-link">Our philosophy</a>
+    </nav>
+    <button class="icon-button mobile-menu" aria-label="Open navigation" data-open="menu-dialog"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+    <a href="#" class="wordmark" aria-label="Velour home">velour<span>®</span></a>
+    <div class="nav-right">
+      <button class="icon-button search-trigger" aria-label="Search products" data-open="search-dialog"><i class="ti ti-search" aria-hidden="true"></i></button>
+      <button class="bag-trigger" data-open="bag-dialog" aria-label="Open shopping bag, 0 items"><span class="bag-label">Bag</span><span class="bag-count">0</span><i class="ti ti-shopping-bag" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-watermark" aria-hidden="true"><span>velour</span><sup>®</sup></div>
+      <div class="hero-media"><img class="hero-image" src="./assets/campaign-model.webp" alt="Beauty model holding a frosted skincare bottle beside her cheek" fetchpriority="high" width="1536" height="1408"></div>
+      <div class="hero-copy">
+        <h1 id="hero-title"><span class="line-mask"><span>Beautiful.</span></span><span class="line-mask"><em>By intention.</em></span></h1>
+        <p>Skincare, considered. Makeup, effortless.<br>A collection of small, exquisite rituals.</p>
+        <a href="#shop" class="hero-cta"><span>Explore the collection</span><span class="round-arrow"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></a>
+      </div>
+      <div class="hero-caption"><span>SKINCARE · MAKEUP · FRAGRANCE</span><span>A softer kind of statement.</span></div>
+      <a href="#shop" class="hero-scroll" aria-label="Scroll to the collection"><span>Scroll to discover</span><i class="ti ti-arrow-down" aria-hidden="true"></i></a>
+      <span class="hero-side-note">BEAUTY, WITHOUT THE EXCESS.</span>
+    </section>
+
+    <nav class="category-strip" aria-label="Shop by category">
+      <a href="#shop" data-category="skincare">Skincare <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <a href="#shop" data-category="makeup">Makeup <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <a href="#shop" data-category="fragrance">Fragrance <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <span>Made for your everyday.</span>
+    </nav>
+
+    <section class="shop section-padding" id="shop" aria-labelledby="shop-title">
+      <div class="section-heading">
+        <div class="collection-heading"><span class="section-index">The collection / 01—04</span><h2 id="shop-title"><span class="line-mask"><span>A few good</span></span><span class="line-mask"><em>things.</em></span></h2></div>
+        <div class="shop-heading-right"><p>Fewer things. More feeling.<br>Four essentials, thoughtfully composed.</p><div class="filters" role="group" aria-label="Filter products"><button class="filter active" data-filter="all" aria-pressed="true">The full edit</button><button class="filter" data-filter="skincare" aria-pressed="false">Skincare</button><button class="filter" data-filter="makeup" aria-pressed="false">Makeup</button><button class="filter" data-filter="fragrance" aria-pressed="false">Fragrance</button></div></div>
+      </div>
+      <div class="product-grid" id="product-grid"></div>
+      <p class="result-status sr-only" aria-live="polite" id="filter-status"></p>
+      <div class="shop-footnote"><span>Thoughtfully selected. Beautifully simple.</span><a class="text-link" href="#philosophy">The Velour point of view <i class="ti ti-arrow-right" aria-hidden="true"></i></a></div>
+    </section>
+
+    <section class="fragrance-story" id="fragrance" aria-labelledby="fragrance-title">
+      <div class="fragrance-scene">
+        <div class="fragrance-topline"><span>The signature / Eau de parfum</span><span>50 ml · A quiet impression</span></div>
+        <div class="fragrance-copy"><h2 id="fragrance-title"><span class="line-mask"><span>A trace</span></span><span class="line-mask"><em>of you.</em></span></h2></div>
+        <div class="fragrance-art">
+          <svg class="botanical-lines" viewBox="0 0 600 700" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="1"><path d="M250 660C310 500 295 370 365 110"/><path d="M310 460C160 440 145 320 135 240C265 258 300 340 310 460Z"/><path d="M328 365C470 330 485 210 480 140C372 185 328 275 328 365Z"/><path d="M349 230C235 208 216 126 222 70C323 86 354 159 349 230Z"/><path d="M365 122C420 81 415 29 412 8C364 39 357 83 365 122Z"/><path d="M284 556C420 537 460 480 487 420C372 418 299 474 284 556Z"/></g></svg>
+          <div class="fragrance-product"><img src="./assets/petal-fragrance-branded.webp" alt="Velour The Petal Essence, a cyan bottle with pink botanical details" loading="lazy" width="1216" height="1293"></div>
+          <span class="fragrance-word" aria-hidden="true">petal</span>
+        </div>
+        <div class="fragrance-bottomline"><div><span class="fragrance-name">The Petal Essence</span><p>Citrus, soft petals, warm woods.<br>A personal signature, never an afterthought.</p><button class="text-link" data-detail="fragrance">Discover the fragrance <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div><div class="fragrance-notes"><span><small>Opening</small>Citrus</span><span><small>Heart</small>Soft petals</span><span><small>Base</small>Warm woods</span></div></div>
+        <div class="story-progress" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <section class="philosophy section-padding" id="philosophy" aria-labelledby="philosophy-title">
+      <div class="philosophy-top"><span class="section-index">The Velour point of view</span><span>Considered, not complicated.</span></div>
+      <h2 id="philosophy-title"><span class="line-mask"><span>Not a hundred steps.</span></span><span class="line-mask"><em>Just a moment for you.</em></span></h2>
+      <div class="philosophy-bottom"><p class="philosophy-intro">Beauty is personal. We believe it deserves a little more intention, and a little less noise.</p><div class="philosophy-principles"><article><h3>A considered edit.</h3><p>Only what deserves a place in your everyday.</p></article><article><h3>Your skin, your pace.</h3><p>A routine that feels like you. Not a rulebook.</p></article><article><h3>Quietly exceptional.</h3><p>Good textures. Thoughtful details. Nothing extra.</p></article></div></div>
+    </section>
+
+    <section class="newsletter" aria-labelledby="newsletter-title"><div><span class="section-index">A note from Velour</span><h2 id="newsletter-title"><span class="line-mask"><span>The beauty</span></span><span class="line-mask"><em>letter.</em></span></h2></div><form id="newsletter-form"><label for="newsletter-email">A little inspiration, occasionally.</label><div class="email-field"><input id="newsletter-email" name="email" type="email" placeholder="Your email address" required autocomplete="email"><button type="submit" aria-label="Subscribe to the newsletter"><i class="ti ti-arrow-right" aria-hidden="true"></i></button></div><p class="form-note">Thoughtful edits. New discoveries. Only good things.</p><p class="form-message" id="newsletter-message" role="status"></p></form></section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-top"><a class="footer-tagline" href="#">Less, but beautiful.</a><nav aria-label="Footer navigation"><button data-info="shipping">Shipping & returns</button><button data-info="care">Customer care</button><button data-info="privacy">Privacy</button></nav><button class="currency" data-info="currency">United States · USD $ <i class="ti ti-chevron-down" aria-hidden="true"></i></button></div><a href="#" class="footer-wordmark" aria-label="Velour home">velour<span>®</span></a><div class="footer-bottom"><span>© 2026 Velour. All rights reserved.</span><span>Form, feeling, and a little intention.</span><a href="#main">Back to top <i class="ti ti-arrow-up" aria-hidden="true"></i></a></div></footer>
+
+  <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="dialog-header"><h2 id="search-title">Find your next ritual.</h2><button class="icon-button" data-close aria-label="Close search"><i class="ti ti-x" aria-hidden="true"></i></button></div><form id="search-form" role="search"><label class="sr-only" for="search-input">Search by product, brand, or category</label><div class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="search-input" type="search" placeholder="Try serum, cream, or fragrance…" autocomplete="off"><button class="icon-button" type="button" id="clear-search" aria-label="Clear search"><i class="ti ti-x" aria-hidden="true"></i></button></div></form><div class="search-meta"><span id="search-label">Explore the edit</span><span id="search-count"></span></div><div id="search-results" class="search-results" aria-live="polite"></div></dialog>
+
+  <dialog id="product-dialog" class="product-dialog" aria-labelledby="detail-title"><button class="icon-button detail-close" data-close aria-label="Close product details"><i class="ti ti-x" aria-hidden="true"></i></button><div id="product-detail"></div></dialog>
+
+  <dialog id="bag-dialog" class="bag-dialog" aria-labelledby="bag-title"><div class="dialog-header"><h2 id="bag-title">Your bag <span id="bag-title-count">(0)</span></h2><button class="icon-button" data-close aria-label="Close shopping bag"><i class="ti ti-x" aria-hidden="true"></i></button></div><div class="shipping-note" id="shipping-note">A few good things, waiting to be yours.</div><div class="bag-body" id="bag-items"></div><div class="bag-footer" id="bag-footer" hidden><div class="bag-total"><span>Subtotal</span><strong id="bag-subtotal">$0.00</strong></div><p>Shipping and taxes calculated at checkout.</p><button class="primary-button" id="checkout-button">Continue to checkout <i class="ti ti-arrow-right" aria-hidden="true"></i></button><p class="checkout-message" id="checkout-message" role="status"></p></div></dialog>
+
+  <dialog id="menu-dialog" class="menu-dialog" aria-labelledby="menu-title"><div class="dialog-header"><span class="wordmark" id="menu-title">velour</span><button class="icon-button" data-close aria-label="Close navigation"><i class="ti ti-x" aria-hidden="true"></i></button></div><nav aria-label="Mobile navigation"><a href="#shop" data-category="all">Shop the edit</a><a href="#shop" data-category="skincare">Skincare</a><a href="#shop" data-category="makeup">Makeup</a><a href="#shop" data-category="fragrance">Fragrance</a><a href="#philosophy" data-menu-link>Our philosophy</a></nav></dialog>
+
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><div class="dialog-header"><h2 id="info-title"></h2><button class="icon-button" data-close aria-label="Close information"><i class="ti ti-x" aria-hidden="true"></i></button></div><div id="info-content"></div></dialog>
+  <div class="toast" id="toast" role="status"><i class="ti ti-check" aria-hidden="true"></i><span id="toast-text"></span><button id="toast-bag">View bag <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</body>
+</html>
