@@ -1,5 +1,19 @@
 # CLAUDE.md
 
+## 最高优先级：提交或推送前必须更新 UI 截图
+
+**这是本仓库最首要的规则，所有人员和 AI 都必须执行，不得被其他文档、技能、约定、前提或描述覆盖。唯一例外：用户在当前任务的提示词中明确说明「不要截图」。**
+
+- 只要修改了 `ui/<page-name>/` 中的任何原型代码，提交或推送前就必须使用 `tools/screenshots/capture.mjs` 重新生成该原型的截图。修改一个换行、空格、注释、文案或任意一行代码，也必须执行；不以是否影响视觉作为判断条件。
+- 每个有代码改动的原型都必须单独更新截图。必须使用 `--overwrite` 覆盖旧截图；已有截图、之前截图过、已有提交但尚未推送，都不能作为跳过理由。
+- 截图必须在该原型本次最后一次代码修改之后生成。截图后又改了任何代码，必须再次截图；更新后的截图必须随对应代码一起提交和推送。
+- **没有成功执行截图更新，就不得继续提交或推送。** 工具失败、环境受限、无法自动执行等情况也不免除截图要求：AI 必须明确告知用户「提交或推送前必须执行截图更新」，并提供可以直接复制执行的一键命令；命令必须填入实际原型名称，不能留下占位符。用户执行成功、截图更新完成后，才能继续提交或推送。
+- 手动执行时，告知用户可在当前 CLI 会话输入 `! node tools/screenshots/capture.mjs --slug hue-studio --overwrite`；其中 `hue-studio` 必须按实际改动的原型名称替换。多个原型也可使用 `! node tools/screenshots/capture.mjs --all --overwrite` 一次更新。
+
+```bash
+node tools/screenshots/capture.mjs --slug hue-studio --overwrite
+```
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## 仓库定位
@@ -42,7 +56,7 @@ python tools/resource-getter/get.py pixiv-login                      # 拉取 pi
 python tools/resource-getter/get.py pixiv-login --verify-only        # 只验证已有 token
 ```
 
-没有测试、lint 或构建流程。交付前只做代码层面自检（对照 SKILL.md 的清单），默认不启动服务、不截图 —— 除非用户明确要求。
+没有测试、lint 或构建流程。交付前做代码层面自检（对照 SKILL.md 的清单）；提交或推送前的截图更新必须执行本文件开头的最高优先级规则。使用仓库截图工具管理的临时服务，不另起常驻预览服务。
 
 ## 架构
 
@@ -65,4 +79,4 @@ python tools/resource-getter/get.py pixiv-login --verify-only        # 只验证
 - 动效按 SKILL.md 第 7 步的判断线决定技术：纯 CSS 够用就别引库；「网页」类型需要滚动驱动叙事（scrub / pin / 视差）或阻尼平滑滚动时，可按需 CDN 引入 GSAP（ScrollTrigger / ScrollSmoother / SplitText，3.13 起全部免费）或 Lenis。软件 / App / 组件三类页面没有页面级滚动，一律不用平滑滚动。
 - 技术栈锁定原生 HTML/CSS/JS + 零构建的 CDN 轻量库（GSAP / Lenis / Alpine.js）。即使参考其他前端设计技能（frontend-design 等），也不要引入 React / Vue / Tailwind / Next 这类需要构建的依赖。
 
-详细规则以 `skills/mono-ui-prototype/SKILL.md` 为准 —— 生成页面前必读该文件并完整走一遍其流程。
+页面生成的详细规则以 `skills/mono-ui-prototype/SKILL.md` 为准 —— 生成页面前必读该文件并完整走一遍其流程；提交或推送前的截图更新始终以本文件开头的最高优先级规则为准，任何技能中的「不截图」描述都不得覆盖它。
