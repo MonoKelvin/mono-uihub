@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e8e6e1">
+  <title>听风 · 制扇</title>
+  <link rel="preconnect" href="https://fontsapi.zeoseven.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <style id="font-imports">
+    @import url('https://fontsapi-storagedriver.zeoseven.com/19/main/result.css');
+    @import url('https://fontsapi-storagedriver.zeoseven.com/82/main/result.css');
+    @import url('https://fontsapi-storagedriver.zeoseven.com/72/main/result.css');
+    @import url('https://fontsapi-storagedriver.zeoseven.com/107/main/result.css');
+    @import url('https://fontsapi-storagedriver.zeoseven.com/236/main/result.css');
+  </style>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./fan-renderer.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <section class="canvas" aria-label="听风制扇工作台">
+      <header class="topbar">
+        <div class="brand"><canvas class="brand-seal" id="brand-seal-preview" width="384" height="384" aria-hidden="true"></canvas><strong>听风</strong></div>
+        <div class="document-heading"><h1><button class="name-button" id="rename-button" title="重命名"><span id="design-name">松风入怀</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></h1><span id="design-summary">9 寸 · 16 档</span></div>
+        <div class="top-actions">
+          <button class="icon-button" id="import-button" title="导入方案" aria-label="导入方案"><i class="ti ti-file-import" aria-hidden="true"></i></button>
+          <button class="icon-button collection-button" id="collection-button" title="藏扇" aria-label="藏扇"><i class="ti ti-folder" aria-hidden="true"></i><span id="collection-count" hidden>0</span></button>
+          <span class="toolbar-divider"></span>
+          <button class="icon-button" id="undo-button" title="撤销 · Ctrl Z" aria-label="撤销" disabled><i class="ti ti-arrow-back-up" aria-hidden="true"></i></button>
+          <button class="icon-button" id="redo-button" title="重做 · Ctrl Shift Z" aria-label="重做" disabled><i class="ti ti-arrow-forward-up" aria-hidden="true"></i></button>
+          <button class="button quiet" id="save-button">保存</button>
+          <button class="button primary" id="export-button">导出<i class="ti ti-download" aria-hidden="true"></i></button>
+          <input type="file" id="import-input" accept=".json,application/json" hidden>
+        </div>
+      </header>
+      <div class="workspace">
+        <section class="atelier" aria-label="折扇预览">
+          <div class="scene">
+            <div class="scene-corner"><span>3D</span><button class="icon-button" id="reset-design" title="重置作品" aria-label="重置作品"><i class="ti ti-rotate-clockwise" aria-hidden="true"></i></button></div>
+            <div class="render-area" id="render-area"><div class="fan-shadow" id="fan-shadow"></div><canvas id="fan-canvas" tabindex="0" aria-label="三维折扇，拖动旋转，滚轮缩放，方向键调整视角"></canvas><div class="render-error" id="render-error" hidden><i class="ti ti-alert-circle" aria-hidden="true"></i><p>预览暂不可用</p><button class="text-button" id="retry-button">重试</button></div></div>
+          </div>
+          <div class="scene-tools">
+            <div class="view-toolbar" aria-label="模型视角"><button class="view-button active" data-view="front" aria-pressed="true">正面</button><button class="view-button" data-view="back" aria-pressed="false">背面</button><button class="icon-button" id="explode-button" title="拆解结构" aria-label="拆解结构" aria-pressed="false"><i class="ti ti-stack-2" aria-hidden="true"></i></button><button class="icon-button" id="reset-view" title="复位视角" aria-label="复位视角"><i class="ti ti-focus-centered" aria-hidden="true"></i></button></div>
+            <div class="opening-control"><button id="fold-button" aria-label="收起折扇"><i class="ti ti-fold" aria-hidden="true"></i><span>收扇</span></button><input type="range" id="opening-range" min="6" max="100" value="100" aria-label="折扇开合程度"><output id="opening-value" for="opening-range">145°</output></div>
+            <div class="zoom-control"><button class="icon-button" id="zoom-out" aria-label="缩小" title="缩小"><i class="ti ti-minus" aria-hidden="true"></i></button><button class="icon-button" id="zoom-in" aria-label="放大" title="放大"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+          </div>
+          <aside class="inspiration" aria-label="预制方案"><span class="tray-label">预设</span><div class="preset-list" id="preset-list"></div></aside>
+        </section>
+        <aside class="customization" aria-label="定制选项">
+          <div class="custom-tabs" role="tablist" aria-label="定制部位"><span class="tab-indicator" id="tab-indicator"></span><button id="tab-paper" class="custom-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="custom-panel" data-tab="paper">扇面</button><button id="tab-bones" class="custom-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="custom-panel" data-tab="bones">扇骨</button><button id="tab-ink" class="custom-tab active" role="tab" aria-selected="true" aria-controls="custom-panel" data-tab="ink">笔墨</button><button id="tab-charms" class="custom-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="custom-panel" data-tab="charms">配饰</button></div>
+          <div class="custom-panel" id="custom-panel" role="tabpanel" aria-labelledby="tab-ink"></div>
+          <button class="spec-button" id="spec-button"><span>定制清单</span><i class="ti ti-list-details" aria-hidden="true"></i></button>
+        </aside>
+      </div>
+      <div class="layer" id="dialog-layer" aria-hidden="true" inert><div class="scrim" id="dialog-scrim"></div><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><header class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="dialog-body" id="dialog-body"></div><footer class="dialog-footer" id="dialog-footer"></footer></section></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </section>
+  </main>
+</body>
+</html>

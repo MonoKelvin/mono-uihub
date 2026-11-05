@@ -1,0 +1,35 @@
+{
+  "name": "听风 · 制扇工坊",
+  "slug": "tingfeng-fan",
+  "page_type": "software",
+  "tags": ["定制", "中国风", "折扇"],
+  "palette": ["#f4f3ef", "#80503c", "#302e2b"],
+  "created_at": "2026-11-05 09:42:04",
+  "updated_at": "2026-11-05 14:57:46",
+  "history": [
+    {
+      "prompt": "一个中国风折扇定制软件，设计简约高级，界面带有浓厚的中国风元素，极简的排版布局设计，丰富的交互动画，美观的折扇3D模型，精美多样的折扇定制元素，比如大骨、小骨、扇面、扇骨、扇头、扇钉、扇柄、折痕、包边。图案、花纹、书法字体、印章、材质、大小、吊坠等待。提供默认的几套预制方案。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "animate", "oil-frontend", "oil-ui", "vibehub"],
+      "duration_seconds": 732
+    },
+    {
+      "prompt": "UI设计有点丑请重构，要精简简约，尽量减少文字描述，字体不要AI常用的衬线字体，多使用高级的中文字体、扇面多使用一些书法字体（草书、行书等），印章可以使用篆体等。继续打磨完善",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "oil-frontend", "vibehub"],
+      "duration_seconds": 2402
+    },
+    {
+      "prompt": "优化印章效果（目前文字超过了方框，图形也不对，需要带有刻蚀的效果），请继续打磨优化",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "vibehub"],
+      "duration_seconds": 689
+    },
+    {
+      "prompt": "检查一遍是否可以优化，没问题后可以用项目工具生成截图。请使用 tools 里面的截图工具，那个可以正常加载字体。字体问题，可以临时下载到本地加载，截图完成后删除。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "run", "oil-frontend", "oil-ui", "vibehub"],
+      "duration_seconds": 13504
+    }
+  ]
+}
