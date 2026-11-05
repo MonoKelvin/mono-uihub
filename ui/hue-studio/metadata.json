@@ -9,7 +9,7 @@
   "history": [
     {
       "prompt": "一个高级配色板智能生成组件，每次生成都要不一样，提供一些默认的风格模板，如高级灰色系、马克龙色系、中国风色系、日式禅意、欧式简约、美式等待配色体系，默认一次生成5种颜色搭配，提供一个用于展示配色的图形或者UI看应用后的效果。页面要非常高级简约优雅，丰富花哨的动画和交互，大量的图形或图标，尽可能少的文字，独特的排版设计",
-      "model": "claude-sonnet-5",
+      "model": "gpt-6.1-sol",
       "duration_seconds": 2065,
       "skills": ["mono-ui-prototype", "frontend-design", "animate", "oil-frontend", "vibehub", "oil-ui", "gsap-core", "gsap-timeline"]
     }
