@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eeedf4">
+  <title>高阶词库 · 卷 Ⅲ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fontsapi.zeoseven.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600&family=Newsreader:ital,wght@0,400;1,400&display=swap">
+  <style>@import url("https://fontsapi.zeoseven.com/292/main/result.css");</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" aria-label="高阶词库 · 词条卡">
+      <article class="sheet" id="sheet">
+        <header class="masthead">
+          <div class="brand">
+            <span class="brand__name" lang="en">Lexicon<span aria-hidden="true">.</span></span>
+            <span class="brand__zh">高阶词库</span>
+          </div>
+          <div class="masthead__tools">
+            <label class="collection-control">
+              <span class="volume__no" aria-hidden="true">Ⅲ</span>
+              <span class="sr-only">选择词组</span>
+              <select id="collectionSelect" aria-label="选择词组"></select>
+              <i class="ti ti-chevron-down" aria-hidden="true"></i>
+            </label>
+            <button class="save button-icon" id="saveBtn" type="button" aria-label="收藏该词" aria-pressed="false" title="收藏该词">
+              <svg class="save__outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6a3 3 0 0 1 3 3v14l-6-4-6 4V7a3 3 0 0 1 3-3z"/></svg>
+              <svg class="save__filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 3a4 4 0 0 0-4 4v14a1 1 0 0 0 1.555.832L12 18.202l5.445 3.63A1 1 0 0 0 19 21V7a4 4 0 0 0-4-4H9z"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="study" id="study">
+          <section class="hero" aria-label="当前词条">
+            <span class="folio" id="folioTop"></span>
+            <h1 class="word" lang="en" id="word"></h1>
+            <div class="pronunciation">
+              <span class="ipa" lang="en" id="wordIpa"></span>
+              <button class="speak" id="speakBtn" type="button" aria-label="朗读该词" aria-pressed="false">
+                <i class="ti ti-volume" aria-hidden="true"></i><span id="speakLabel">朗读</span>
+              </button>
+              <span class="part-of-speech" id="posZh"></span>
+            </div>
+          </section>
+
+          <div class="reader" id="reader">
+            <section class="recall" id="recall" aria-label="回想释义">
+              <div class="recall__copy">
+                <span class="section-label section-label--recall"><i class="ti ti-bulb" aria-hidden="true"></i>回忆线索</span>
+                <h2 id="recallQuestion"></h2>
+              </div>
+              <svg class="recall-art" viewBox="0 0 150 130" fill="none" aria-hidden="true">
+                <path class="recall-art__cover" d="M20 35c18-5 34-3 55 6 21-9 37-11 55-6v66c-19-5-35-3-55 6-20-9-36-11-55-6V35z"/>
+                <path d="M75 42v65M20 96c19-4 35-2 55 6 20-8 36-10 55-6"/>
+                <path class="recall-art__page" d="M75 42c14-20 31-27 48-28v73c-18 1-33 7-48 20V42z"/>
+                <path class="recall-art__lines" d="M34 51c10-1 19 1 28 5M34 64c10-1 19 1 28 5M34 77c7 0 13 1 19 3"/>
+                <text id="recallInitial" x="97" y="70" text-anchor="middle"></text>
+              </svg>
+            </section>
+
+            <section class="detail" id="detail" inert aria-hidden="true" aria-label="释义与用法">
+              <div class="detail__inner" id="detailInner">
+                <div class="detail__cols">
+                  <div class="definition">
+                    <h2 class="section-label">释义</h2>
+                    <p class="definition__zh" id="defZh"></p>
+                    <p class="definition__en" lang="en" id="defEn"></p>
+                  </div>
+                  <figure class="quotation">
+                    <h2 class="section-label">在语境中记住</h2>
+                    <blockquote lang="en" id="example"></blockquote>
+                    <figcaption id="exampleNote"></figcaption>
+                  </figure>
+                </div>
+                <dl class="notes">
+                  <div class="note note--lineage"><dt>词源</dt><dd id="noteLineage"></dd></div>
+                  <div class="note"><dt>常见搭配</dt><dd lang="en" id="noteCollocations"></dd></div>
+                  <div class="note"><dt>近义词</dt><dd lang="en" id="noteSynonyms"></dd></div>
+                </dl>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <footer class="colophon">
+          <div class="assessment">
+            <div class="assessment__choices">
+              <span class="assessment__label" id="assessmentLabel">掌握程度</span>
+              <div class="grades" id="grades" role="group" aria-label="点击记录掌握程度"></div>
+            </div>
+            <button class="button button--primary" id="flipBtn" type="button" aria-expanded="false" aria-controls="detail">
+              <i class="ti ti-book-2" aria-hidden="true"></i><span id="flipLabel">查看释义</span>
+            </button>
+          </div>
+          <div class="navigation">
+            <div class="progress">
+              <span class="counter"><b id="counter"></b><span id="total"></span></span>
+              <div class="ticks" id="ticks" role="group" aria-label="本组词条"></div>
+              <button class="progress__label" id="progressLabel" type="button" disabled aria-controls="fin"></button>
+            </div>
+            <div class="nav">
+              <button class="button-icon" id="prevBtn" type="button" aria-label="上一个词" title="上一个词"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+              <button class="button-icon" id="nextBtn" type="button" aria-label="下一个词" title="下一个词"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </footer>
+
+        <section class="fin" id="fin" aria-labelledby="finTitle" hidden>
+          <span class="section-label">本组学习完成</span>
+          <h2 class="fin__title" id="finTitle">每一次回想，都让记忆更清晰。</h2>
+          <p class="fin__lead" id="finLead"></p>
+          <ul class="fin__summary" id="finSummary" aria-label="本组自评结果"></ul>
+          <div class="fin__actions">
+            <button class="button button--primary" id="againBtn" type="button"><i class="ti ti-refresh" aria-hidden="true"></i>巩固本组</button>
+            <button class="button button--secondary" id="nextGroupBtn" type="button">下一组</button>
+            <button class="text-button" id="reviewBtn" type="button">回看本组</button>
+          </div>
+        </section>
+      </article>
+      <p class="sr-only" id="live" aria-live="polite" aria-atomic="true"></p>
+    </main>
+  </div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

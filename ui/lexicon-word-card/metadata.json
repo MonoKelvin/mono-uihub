@@ -1,0 +1,31 @@
+{
+  "name": "高阶词库 · 卷 Ⅲ",
+  "slug": "lexicon-word-card",
+  "page_type": "component",
+  "palette": ["#eeedf4", "#7053b5", "#2d2839"],
+  "tags": ["语言学习", "间隔重复", "词源"],
+  "created_at": "2026-11-05 20:18:33",
+  "updated_at": "2026-11-06 10:45:37",
+  "history": [
+    {
+      "prompt": "一个高级词汇的英语单词学习卡组件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "impeccable"]
+    },
+    {
+      "prompt": "UI设计也太丑了，完全没有设计感和美观，AI味道重。请仔细阅读我的mono-ui-prototype的技能怎么说的，首要目标是好看，就是美观好高级感，功能都是次要的",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "impeccable"]
+    },
+    {
+      "prompt": "重构优化 lexicon-word-card 项目的UI设计，和动画设计，配色变量也调整下（site中详情背景是深色的，但是实际上是浅色）",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "vibehub", "animate", "frontend-design"]
+    },
+    {
+      "prompt": "调整：回忆线索尽量不要出现滚动，内容上下的间距可以调整；中文字体可以用一个美观的艺术字体；多加大量英文单词（可以全部改到data.js或者其他数据配置文件中），继续完善动画和图形设计，再美观一点；空格查看 · 1–4 自评删除，自评的部分需要支持交互点击，不要快捷键。继续简化完善\n尽量减少组件的边框，扁平化设计\n回忆线索 前面的图标不要删除了",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "animate", "vibehub", "frontend-design"]
+    }
+  ]
+}
