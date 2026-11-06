@@ -1,0 +1,62 @@
+{
+  "name": "Nexwell · 自然健康品牌",
+  "slug": "nexwell-wellness",
+  "page_type": "website",
+  "palette": ["#edf0e9", "#263c28", "#20271f"],
+  "tags": ["健康", "品牌", "滚动叙事"],
+  "created_at": "2026-11-06 15:38:32",
+  "updated_at": "2026-11-06 17:40:39",
+  "imageToUI": "https://cdn.dribbble.com/userupload/48185299/file/344438c9815983d6b02d7215976846a6.jpeg?resize=1600x7470&vertical=center",
+  "history": [
+    {
+      "prompt": "还原这个网站UI，并补充高级的交互、滚动动画。参考图：https://cdn.dribbble.com/userupload/48185299/file/344438c9815983d6b02d7215976846a6.jpeg?resize=1600x7470&vertical=center。补充要求：胶囊和罐装瓶子建议使用文生图生成出来。",
+      "model": "claude-opus-5",
+      "skills": ["mono-ui-prototype", "animate", "gsap-scrolltrigger", "oil-frontend", "oil-ui", "image-purify", "vibehub"],
+      "image_generation": [
+        {
+          "prompt": "A single wide horizontal island of vivid olive green forest moss on a tangled bed of dark weathered tree roots, thin elegant twisting branches with tiny delicate leaves arching upward around an empty center, organically asymmetric outline, front three-quarter eye-level view, soft sunlight from upper left, isolated on transparent background. The island is wider than tall, roots hanging gently beneath, empty flat moss surface at the center for placing a small cylindrical product.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A single ancient dark brown tree branch heavily covered in fresh olive green moss, stretching horizontally from the far left to the far right, organic slight curved swoop with thin bare twigs underneath and small fern fronds near each end, front view, soft daylight from upper left, isolated on transparent background. Wide panoramic composition, entire branch fits in the frame, bark wood and moss are the only subjects.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One premium dark forest green wide cylindrical supplement jar with a matching matte dark green screw lid, straight-on frontal view with a very slight view of the elliptical top, width-to-height ratio 0.72, frosted dark green recycled plastic material, blank unprinted dark green label covering the front, soft broad daylight from upper left, gentle vertical highlight on the left side, deep olive green shadows on the right, entire jar visible, centered upright, isolated on transparent background. No letters or logos.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One dark olive green translucent hard supplement capsule filled with compact dark green botanical powder, slender oblong rounded capsule with a visible seam across its midpoint, vertical orientation, straight-on macro product view, soft broad daylight from upper left, delicate elongated white glass highlight along the left side, subtle readable inner material, deep green shadows on the right, centered single object isolated on transparent background, no text.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One premium dark forest green wide cylindrical supplement jar with its lid removed, open threaded neck and a dark empty elliptical opening visible at the top, straight-on frontal view from slightly above, width-to-height ratio 0.78, frosted dark green recycled plastic material, blank unprinted dark green label covering the front, soft broad daylight from upper left, gentle vertical highlight on the left side, deep olive green shadows on the right, entire jar visible, centered upright, isolated on transparent background. No lid, no letters or logos.",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    },
+    {
+      "prompt": "继续打磨UI，修复胶囊落入动画不流畅、落在瓶子外面的问题。瓶子上的文字直接通过文生图生成，不要另外叠加；瓶子、草坪、森林、光照和阴影生成到同一张首屏图片中。最终要求：整体尽量跟源UI设计一样，恢复整体构图、字体和区块顺序，只优化细节与交互。",
+      "model": "claude-opus-5",
+      "skills": ["redesign-existing-projects", "gsap-scrolltrigger", "animate", "vibehub", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "A wide landscape photographic campaign scene for the Nexwell wellness brand. One premium cylindrical matte dark forest-green supplement jar with a matching closed screw lid stands upright on a plush olive-green moss bed in the lower right half of the frame, lit by soft sunlight from the upper left. The jar occupies roughly one third of the image height, with natural contact shadows, consistent reflections and light on both jar and moss. Its professionally printed label reads exactly 'DS-01® DAILY SYNBIOTIC' in small white type near the upper front, 'PROBIOTIC + PREBIOTIC' underneath, a small white round dot in the center, and a large clean lowercase white wordmark 'nexwell' across the lower front. The jar is surrounded by organically curved moss-covered tree roots, against a softly blurred lush woodland with warm filtered daylight. The left half is a quiet dark green defocused forest area with generous unobstructed space. Photographic perspective at moss level. The forest, moss, roots and labelled jar form one coherent real photographic scene, all with the same light. Landscape composition, entire jar including lid and base visible. No captions or typography anywhere except the printed product label.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One premium wide cylindrical matte dark forest-green Nexwell supplement jar with its lid removed and no separate lid in the frame. Straight-on product photograph from slightly above so the wide dark oval mouth is clearly visible. Professionally printed label reads exactly 'DS-01® DAILY SYNBIOTIC' in small white type on the upper front, 'PROBIOTIC + PREBIOTIC' underneath, a small white round dot centered below, a large clean lowercase white wordmark 'nexwell' on the lower front, and '60 CAPSULES' at the bottom. The real label is printed directly on the jar, with correct curved surface perspective. Wide jar with height about 1.5 times its width. Soft broad daylight from upper left, restrained vertical left highlight, deep olive green right shadows. Entire upright jar visible including neck and base. Centered isolated on a genuinely transparent background, product catalogue photography.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A wide 16:10 landscape photographic wellness product campaign, seen at moss level. One squat wide matte dark forest-green supplement jar with matching closed screw lid rests on plush green forest moss in the LOWER LEFT THIRD at x=28 percent of the frame. The jar is about 35 percent of the image height and is fully visible. A naturally arched moss-covered ancient tree trunk frames the left edge, another tree frames the right edge, and a low mossy root sweeps across the lower right foreground. The background is a calm softly defocused olive-green woodland, with warm gentle sunlight filtering from upper left. The upper center and center right are clean quiet blurred forest, unobstructed, with no objects or captions. The professionally printed jar label reads exactly 'DS-01® DAILY SYNBIOTIC' at the upper front, 'PROBIOTIC + PREBIOTIC' below, a small white round dot at center, and the large lowercase white wordmark 'nexwell' at the lower front. Natural contact shadow under the jar, matching daylight, consistent reflections across jar and moss, premium editorial botanical photography. The bottle, forest, roots and moss form a single coherent photographic scene. No text except the product label.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "One photographic botanical product diorama isolated on a transparent background: a wide low floating island of lush olive-green forest moss, tangled exposed old tree roots hanging below, and elegant thin leafy branches rising to either side of a single squat matte dark forest-green Nexwell supplement jar standing upright at the center of the moss. The jar has its closed dark green screw lid and a professionally printed white label reading exactly 'DS-01® DAILY SYNBIOTIC', 'PROBIOTIC + PREBIOTIC', a small white round dot, and a large lowercase 'nexwell' wordmark on its lower front. Front view, entire moss island and jar visible, the jar about 45 percent of the diorama height and 18 percent of its width. Soft natural daylight from upper left with physically matching contact shadows under the jar and consistent highlights on roots and moss. The jar and moss are a SINGLE integrated photographic object, no separately composited layers. Wide horizontal composition with transparent space around the subject, no background scene, no captions outside the printed label.",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    }
+  ]
+}
