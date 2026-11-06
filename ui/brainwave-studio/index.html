@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#eeeeee">
+  <meta name="description" content="A quiet workspace for shaping your next 3D idea. Create scenes, explore materials, and find a new perspective with Brainwave.">
+  <title>Brainwave — 3D Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="assets/character-source.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <section class="canvas" aria-label="Brainwave 3D design workspace">
+      <header class="mobile-header">
+        <button class="icon-button" data-action="toggle-scene" aria-label="Open scene panel"><i class="ti ti-layout-sidebar-left-collapse" aria-hidden="true"></i></button>
+        <span class="mobile-project-name">3D Boy Character</span>
+        <button class="icon-button" data-action="toggle-inspector" aria-label="Open design settings"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+      </header>
+
+      <aside class="panel scene-panel" aria-label="Scene and assets">
+        <header class="project-header">
+          <div class="brand-row">
+            <img class="brand-mark" src="assets/brand-mark.png" width="36" height="37" alt="Brainwave">
+            <button class="icon-button sidebar-toggle" data-action="toggle-scene" aria-label="Collapse scene panel" title="Collapse panel"><i class="ti ti-layout-sidebar" aria-hidden="true"></i></button>
+          </div>
+          <div class="project-menu-wrap">
+            <button class="project-title" id="projectMenuButton" aria-expanded="false" aria-controls="projectMenu"><span id="projectName">3D Boy Character</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="popover project-menu" id="projectMenu" hidden>
+              <button data-action="rename-project"><i class="ti ti-pencil" aria-hidden="true"></i>Rename project</button>
+              <button data-action="duplicate-project"><i class="ti ti-copy" aria-hidden="true"></i>Duplicate project</button>
+              <button data-action="new-project"><i class="ti ti-file-plus" aria-hidden="true"></i>New project</button>
+              <button data-action="open-project"><i class="ti ti-folder-open" aria-hidden="true"></i>Open project</button>
+              <button data-action="download-project"><i class="ti ti-download" aria-hidden="true"></i>Download project</button>
+            </div>
+          </div>
+          <p class="project-subtitle">3D Design Project</p>
+        </header>
+        <div class="panel-tab-row">
+          <div class="segmented" role="tablist" aria-label="Scene panel view">
+            <span class="segment-indicator" aria-hidden="true"></span>
+            <button role="tab" id="sceneTab" aria-selected="true" aria-controls="sceneView" data-scene-tab="scene">Scene</button>
+            <button role="tab" id="assetsTab" aria-selected="false" aria-controls="assetsView" data-scene-tab="assets">Assets</button>
+          </div>
+        </div>
+        <div class="scene-content panel-scroll">
+          <div id="sceneView" role="tabpanel" aria-labelledby="sceneTab">
+            <div class="scene-tree" id="sceneTree" aria-label="Scene objects"></div>
+            <div class="empty-state" id="sceneEmpty" hidden><i class="ti ti-search" aria-hidden="true"></i><p>No objects found</p><button class="text-button" data-action="clear-search">Clear search</button></div>
+          </div>
+          <div id="assetsView" role="tabpanel" aria-labelledby="assetsTab" hidden>
+            <div class="asset-grid">
+              <button class="asset-card" data-add="character"><span class="asset-preview"><img src="assets/boy-character.png" alt="Boy character"></span><span>Boy character</span></button>
+              <button class="asset-card" data-add="sphere"><span class="asset-preview"><span class="mini-shape mini-sphere"></span></span><span>Sphere</span></button>
+              <button class="asset-card" data-add="cube"><span class="asset-preview"><span class="mini-shape mini-cube"></span></span><span>Cube</span></button>
+              <button class="asset-card" data-add="cone"><span class="asset-preview"><span class="mini-shape mini-cone"></span></span><span>Cone</span></button>
+            </div>
+            <button class="import-asset" data-action="import-media"><i class="ti ti-upload" aria-hidden="true"></i>Import an asset</button>
+          </div>
+        </div>
+        <footer class="scene-footer">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input id="sceneSearch" type="search" placeholder="Search..." aria-label="Search scene objects" autocomplete="off">
+          <kbd title="Ctrl or Command + K">⌘ K</kbd>
+        </footer>
+      </aside>
+
+      <section class="workspace" aria-label="Scene editor">
+        <nav class="toolbar" aria-label="Editor tools">
+          <div class="tool-group" role="group" aria-label="Interaction tools">
+            <button class="icon-button tool-button active" data-tool="select" aria-label="Select tool" aria-pressed="true" title="Select · V"><i class="ti ti-pointer" aria-hidden="true"></i></button>
+            <button class="icon-button tool-button" data-tool="hand" aria-label="Pan tool" aria-pressed="false" title="Pan · H"><i class="ti ti-hand-stop" aria-hidden="true"></i></button>
+            <button class="icon-button tool-button" data-tool="comment" aria-label="Comment tool" aria-pressed="false" title="Add a comment · C"><i class="ti ti-message" aria-hidden="true"></i></button>
+            <button class="icon-button tool-button" data-tool="crop" aria-label="Crop tool" aria-pressed="false" title="Crop · X"><i class="ti ti-crop" aria-hidden="true"></i></button>
+            <button class="icon-button" id="playButton" data-action="play" aria-label="Play animation" aria-pressed="false" title="Play animation · Space"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+          </div>
+          <div class="zoom-wrap">
+            <button class="zoom-button" id="zoomButton" aria-expanded="false" aria-controls="zoomMenu"><span id="zoomLabel">100%</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="popover zoom-menu" id="zoomMenu" hidden>
+              <button data-zoom="50">50%<span>−</span></button>
+              <button data-zoom="75">75%</button>
+              <button data-zoom="100">100%<i class="ti ti-check" aria-hidden="true"></i></button>
+              <button data-zoom="125">125%</button>
+              <button data-zoom="150">150%<span>+</span></button>
+              <button data-action="fit-view">Fit to view<span>0</span></button>
+            </div>
+          </div>
+          <div class="tool-group history-tools" role="group" aria-label="Edit history">
+            <button class="icon-button" id="undoButton" data-action="undo" aria-label="Undo" title="Undo · Ctrl + Z" disabled><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+            <button class="icon-button" id="redoButton" data-action="redo" aria-label="Redo" title="Redo · Ctrl + Shift + Z" disabled><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+          </div>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <button class="surface-button export-button" data-action="export">Export</button>
+        </nav>
+
+        <div class="viewport" id="viewport" aria-label="3D scene preview" tabindex="0">
+          <canvas class="scene-background" id="sceneBackground" aria-hidden="true"></canvas>
+          <div class="viewport-grid" id="viewportGrid" hidden aria-hidden="true"></div>
+          <div class="scene-world" id="sceneWorld"><div class="objects-layer" id="objectsLayer"></div><div class="comments-layer" id="commentsLayer"></div></div>
+          <div class="crop-frame" id="cropFrame" hidden><button class="crop-corner top-left" data-crop-handle="nw" aria-label="Resize crop from top left"></button><button class="crop-corner top-right" data-crop-handle="ne" aria-label="Resize crop from top right"></button><button class="crop-corner bottom-left" data-crop-handle="sw" aria-label="Resize crop from bottom left"></button><button class="crop-corner bottom-right" data-crop-handle="se" aria-label="Resize crop from bottom right"></button><button class="surface-button" data-action="export-crop">Export crop<i class="ti ti-download" aria-hidden="true"></i></button></div>
+          <div class="viewport-empty" id="viewportEmpty" hidden><i class="ti ti-cube-plus" aria-hidden="true"></i><p>A little space for your next idea.</p><button class="surface-button" data-action="add-object">Add an object</button></div>
+        </div>
+
+        <div class="viewport-status"><button class="status-object" data-action="object-settings" id="selectionLabel">Boy character</button><span id="sceneCount">1 object</span><span class="status-spacer"></span><button class="icon-button small" data-action="toggle-grid" id="gridButton" aria-label="Toggle grid" aria-pressed="false" title="Toggle grid"><i class="ti ti-grid-dots" aria-hidden="true"></i></button><button class="icon-button small" data-action="fit-view" title="Fit to view" aria-label="Fit to view"><i class="ti ti-focus-centered" aria-hidden="true"></i></button></div>
+        <form class="composer" id="promptForm">
+          <label class="sr-only" for="promptInput">Describe your 3D scene</label>
+          <textarea id="promptInput" placeholder="Describe your 3D scene..." rows="2" maxlength="1200"></textarea>
+          <div class="attachment-list" id="attachmentList" hidden></div>
+          <div class="composer-actions">
+            <div class="attachment-wrap">
+              <button type="button" class="surface-button add-button" id="addButton" aria-label="Add to scene" aria-expanded="false" aria-controls="addMenu"><i class="ti ti-plus" aria-hidden="true"></i></button>
+              <div class="popover add-menu" id="addMenu" hidden>
+                <button type="button" data-action="import-media"><i class="ti ti-photo-scan" aria-hidden="true"></i><span>Add photos or videos</span></button>
+                <button type="button" data-action="add-object"><i class="ti ti-cube" aria-hidden="true"></i><span>Add scene objects</span></button>
+                <button type="button" data-action="import-file"><i class="ti ti-file-plus" aria-hidden="true"></i><span>Add files (docs, txt...)</span></button>
+              </div>
+            </div>
+            <div class="inspiration-wrap">
+              <button type="button" class="surface-button inspiration-button" id="inspirationButton" aria-expanded="false" aria-controls="inspirationMenu"><i class="ti ti-bolt" aria-hidden="true"></i><span>Inspiration</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+              <div class="popover inspiration-menu" id="inspirationMenu" hidden>
+                <span class="menu-heading">A starting point</span>
+                <button type="button" data-prompt="A friendly clay character in a warm terracotta studio">A little clay character<i class="ti ti-arrow-up-left" aria-hidden="true"></i></button>
+                <button type="button" data-prompt="A playful boy in a pastel architectural world">A pastel architectural world<i class="ti ti-arrow-up-left" aria-hidden="true"></i></button>
+                <button type="button" data-prompt="A dreamy character scene with a pink sunset and soft shadows">Somewhere after sunset<i class="ti ti-arrow-up-left" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <span class="composer-spacer"></span>
+            <div class="model-wrap">
+              <button type="button" class="model-button" id="modelButton" aria-expanded="false" aria-controls="modelMenu"><span id="modelLabel">Scene presets</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+              <div class="popover model-menu" id="modelMenu" hidden>
+                <span class="menu-heading">Scene intelligence</span>
+                <button type="button" data-model="Brainwave 2.5">Brainwave 2.5<span>Latest</span></button>
+                <button type="button" data-model="Brainwave 2.0">Brainwave 2.0<span>Classic</span></button>
+                <button type="button" data-model="Scene presets">Scene presets<i class="ti ti-palette" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <button type="button" class="icon-button microphone-button" data-action="voice" aria-label="Voice input" title="Voice input"><i class="ti ti-microphone" aria-hidden="true"></i></button>
+            <button type="submit" class="surface-button send-button" id="sendButton" aria-label="Create scene" title="Apply scene · Ctrl + Enter"><i class="ti ti-arrow-up" aria-hidden="true"></i></button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel inspector" aria-label="Design inspector">
+        <header class="collaboration-header">
+          <button class="collaborators" data-action="collaborators" aria-label="View project collaborators" title="Project collaborators"><img src="assets/avatar-designer.png" alt="Alex Morgan"><img src="assets/avatar-artist.png" alt="Jamie Chen"></button>
+          <button class="surface-button share-button" data-action="share">Share</button>
+        </header>
+        <div class="panel-tab-row inspector-tabs">
+          <div class="segmented" role="tablist" aria-label="Inspector view">
+            <span class="segment-indicator" aria-hidden="true"></span>
+            <button role="tab" id="designTab" aria-selected="true" aria-controls="designView" data-inspector-tab="design">Design</button>
+            <button role="tab" id="animationTab" aria-selected="false" aria-controls="animationView" data-inspector-tab="animation">Animation</button>
+          </div>
+        </div>
+        <div class="inspector-content panel-scroll">
+          <div id="designView" role="tabpanel" aria-labelledby="designTab">
+            <section class="property-section transform-section" id="transformSection">
+              <div class="section-heading"><h2 id="inspectorObjectName">Boy character</h2><button class="icon-button small" data-action="object-settings" aria-label="Object settings" title="Object settings"><i class="ti ti-dots" aria-hidden="true"></i></button></div>
+              <div class="transform-grid">
+                <label class="number-control"><span>X</span><input id="objectX" type="number" min="0" max="100" step="1" aria-label="Object horizontal position"><span>%</span></label>
+                <label class="number-control"><span>Y</span><input id="objectY" type="number" min="0" max="100" step="1" aria-label="Object vertical position"><span>%</span></label>
+                <label class="number-control"><i class="ti ti-maximize" aria-hidden="true"></i><input id="objectScale" type="number" min="10" max="300" step="5" aria-label="Object scale"><span>%</span></label>
+                <label class="number-control"><i class="ti ti-rotate" aria-hidden="true"></i><input id="objectRotation" type="number" min="-180" max="180" step="5" aria-label="Object rotation"><span>°</span></label>
+              </div>
+            </section>
+            <section class="property-section material-section">
+              <div class="section-heading"><h2>Materials</h2><output id="materialValue">Original</output><button class="icon-button small" data-action="materials" aria-label="Explore materials" title="Explore materials"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+              <div class="material-grid">
+                <button class="material-card" data-material="silver" aria-label="Silver material" aria-pressed="false" title="Silver"><img src="assets/material-silver.png" alt="Silver sphere"></button>
+                <button class="material-card" data-material="clay" aria-label="Terracotta material" aria-pressed="false" title="Terracotta"><img src="assets/material-clay.png" alt="Terracotta sphere"></button>
+                <button class="material-card" data-material="graphite" aria-label="Graphite material" aria-pressed="false" title="Graphite"><img src="assets/material-graphite.png" alt="Graphite sphere"></button>
+                <button class="material-card" data-material="obsidian" aria-label="Obsidian material" aria-pressed="false" title="Obsidian"><img src="assets/material-obsidian.png" alt="Obsidian sphere"></button>
+              </div>
+            </section>
+            <section class="property-section style-section">
+              <div class="section-heading"><h2>Styles</h2><button class="icon-button small" data-action="styles" aria-label="Explore scene styles" title="Explore scene styles"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+              <div class="style-grid">
+                <button class="style-card" data-style="architecture" aria-label="Pastel architecture style" aria-pressed="false" title="Pastel architecture"><img src="assets/style-architecture.png" width="100" height="100" alt="Pastel pink and blue architectural composition"></button>
+                <button class="style-card" data-style="dreamscape" aria-label="Dreamscape style" aria-pressed="false" title="Dreamscape"><img src="assets/style-dreamscape.png" width="100" height="100" alt="A pink sunset in a surreal blue landscape"></button>
+              </div>
+            </section>
+            <section class="property-section background-section">
+              <div class="section-heading"><h2>Background</h2><button class="icon-button small" data-action="background" aria-label="Choose background color" title="Choose background color"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+              <div class="background-control">
+                <button class="color-swatch" id="backgroundSwatch" data-action="background" aria-label="Choose background color"></button>
+                <label class="sr-only" for="backgroundHex">Background hex color</label><input id="backgroundHex" value="F8F7F7" maxlength="7" spellcheck="false" autocomplete="off">
+                <div class="opacity-input"><label class="sr-only" for="backgroundOpacity">Background opacity</label><input id="backgroundOpacity" type="number" value="100" min="0" max="100"><span>%</span></div>
+              </div>
+            </section>
+            <section class="property-section camera-section">
+              <div class="section-heading"><h2>View</h2><button class="icon-button small" data-action="camera" aria-label="Reset view" title="Reset view"><i class="ti ti-rotate" aria-hidden="true"></i></button></div>
+              <div class="segmented camera-mode" role="group" aria-label="Camera projection">
+                <span class="segment-indicator" aria-hidden="true"></span>
+                <button data-camera="isometric" aria-pressed="true">Isometric</button>
+                <button data-camera="perspective" aria-pressed="false">Perspective</button>
+              </div>
+              <label class="control-label" for="distortionRange">Depth effect <output id="distortionValue">40%</output></label>
+              <div class="distortion-controls"><input id="distortionRange" type="range" min="0" max="100" value="40" aria-label="Camera distortion"><button class="duration-chip" data-action="animation-settings" title="Animation duration"><i class="ti ti-clock" aria-hidden="true"></i><span id="durationLabel">8s</span></button></div>
+            </section>
+          </div>
+          <div id="animationView" role="tabpanel" aria-labelledby="animationTab" hidden>
+            <section class="property-section">
+              <div class="section-heading"><h2>Movement</h2><button class="icon-button small" data-action="reset-animation" aria-label="Reset animation"><i class="ti ti-rotate" aria-hidden="true"></i></button></div>
+              <div class="motion-options">
+                <button class="motion-option active" data-motion="idle"><i class="ti ti-lungs" aria-hidden="true"></i><span>Soft breathing<small>A little life, quietly.</small></span><i class="ti ti-check" aria-hidden="true"></i></button>
+                <button class="motion-option" data-motion="float"><i class="ti ti-balloon" aria-hidden="true"></i><span>Gentle float<small>Light and weightless.</small></span><i class="ti ti-check" aria-hidden="true"></i></button>
+                <button class="motion-option" data-motion="sway"><i class="ti ti-wave-sine" aria-hidden="true"></i><span>Easy sway<small>A playful side-to-side.</small></span><i class="ti ti-check" aria-hidden="true"></i></button>
+              </div>
+            </section>
+            <section class="property-section animation-timing">
+              <div class="section-heading"><h2>Duration</h2><output id="animationDurationValue" for="animationDuration">8 seconds</output></div>
+              <input id="animationDuration" type="range" min="2" max="16" value="8" aria-label="Animation duration in seconds">
+              <div class="range-ends"><span>2s</span><span>16s</span></div>
+              <button class="surface-button animation-preview" data-action="play"><i class="ti ti-player-play" aria-hidden="true"></i><span id="animationPlayLabel">Preview animation</span></button>
+            </section>
+            <section class="property-section">
+              <div class="section-heading"><h2>Playback</h2></div>
+              <label class="switch-row"><span>Loop animation</span><input type="checkbox" id="loopAnimation" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+              <p class="property-note">Make your character feel right, one small movement at a time.</p>
+            </section>
+          </div>
+        </div>
+      </aside>
+
+      <button class="collapsed-scene-button icon-button" data-action="toggle-scene" aria-label="Expand scene panel" hidden><i class="ti ti-layout-sidebar" aria-hidden="true"></i></button>
+      <div class="panel-scrim" id="panelScrim" hidden></div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-info-circle" aria-hidden="true"></i><span id="toastText"></span></div>
+      <div class="layer" id="dialogLayer" hidden>
+        <div class="scrim" data-action="close-dialog"></div>
+        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogDescription" tabindex="-1">
+          <header class="dialog-header"><div><h2 id="dialogTitle"></h2><p id="dialogDescription"></p></div><button class="icon-button" data-action="close-dialog" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="dialog-body" id="dialogBody"></div>
+          <footer class="dialog-footer" id="dialogFooter"></footer>
+        </section>
+      </div>
+      <input type="file" id="mediaInput" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm" multiple hidden>
+      <input type="file" id="fileInput" accept=".txt,.md,.json,.pdf,.doc,.docx,.obj,.gltf,.glb" multiple hidden>
+      <input type="file" id="projectInput" accept=".json" hidden>
+    </section>
+  </main>
+</body>
+</html>

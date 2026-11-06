@@ -1,0 +1,16 @@
+{
+  "name": "Brainwave Studio",
+  "slug": "brainwave-studio",
+  "page_type": "software",
+  "tags": ["设计工具", "场景编辑", "角色设计"],
+  "palette": ["#f8f7f7", "#428e58", "#111111"],
+  "updated_at": "2026-11-06 14:01:14",
+  "imageToUI": "https://dribbble.com/shots/26150699-Real-time-3D-AI-Design-Canvas",
+  "history": [
+    {
+      "prompt": "https://cdn.dribbble.com/userupload/43708282/file/original-1b5fee53ede08268cf06071b4859e2b1.png?resize=1600x1200&vertical=center 还原这个UI原型。一个强大的AI驱动的3D设计UI套件，专为希望在几分钟内构建令人惊叹的3D设计工具、AI平台或创意网络应用程序的创作者、设计师和开发人员而打造。",
+      "model": "gpt-6.1-sol",
+      "skills": ["oil-frontend", "oil-ui", "vibehub", "run"]
+    }
+  ]
+}
