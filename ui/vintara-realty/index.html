@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#49251f">
+  <meta name="description" content="SailingEscape — thoughtful residences, timeless architecture, and a more intelligent way to live.">
+  <title>Vintara Realty — SailingEscape</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#residences">Explore residences</a>
+  <main id="page-content">
+    <div class="hero-shell">
+      <section class="canvas hero" id="home" aria-labelledby="hero-heading">
+        <header class="site-header">
+          <a class="brand" href="#home" aria-label="SailingEscape home">
+            <svg viewBox="0 0 32 44" aria-hidden="true"><path d="M25 1C10 1 1 12 1 25h9c0-8 6-14 15-14V1Zm-18 42c15 0 24-11 24-24h-9c0 8-6 14-15 14v10Z" fill="currentColor"/><circle cx="16" cy="22" r="7" fill="currentColor"/></svg>
+            <span>SailingEscape</span>
+          </a>
+          <nav class="desktop-nav" aria-label="Main navigation">
+            <a href="#home" aria-current="page">Home</a>
+            <a href="#residences">Products</a>
+            <button type="button" data-open="community">Community</button>
+            <button type="button" data-open="careers">Careers</button>
+            <a href="#about">About us</a>
+          </nav>
+          <button class="cut-button header-contact" type="button" data-open="contact">Contact Us</button>
+          <button class="menu-button" type="button" data-open="menu" aria-label="Open navigation"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+        </header>
+
+        <div class="title-layer"><h1 class="hero-title" id="hero-heading">Vintara<span>Realty</span></h1></div>
+        <svg class="orbit-art" viewBox="0 0 2000 1422" fill="none" aria-hidden="true"><circle cx="1000" cy="884" r="614"/></svg>
+        <img class="architecture" src="./assets/terracotta-residence.png" alt="A sculptural terracotta residence with tall, sunlit glass windows" fetchpriority="high" decoding="async" draggable="false">
+        <div class="title-layer title-layer--front" aria-hidden="true"><div class="hero-title">Vintara<span>Realty</span></div></div>
+        <div class="ground-shade" aria-hidden="true"></div>
+        <svg class="foreground-orbit" viewBox="0 0 2000 1422" fill="none" aria-hidden="true"><path d="M448 1422a620 620 0 0 1 1104 0"/></svg>
+
+        <button class="hotspot hotspot--left" type="button" data-property="deepkey" aria-label="Explore Estateon DeepKey"><span class="hotspot-dot"></span><span class="hotspot-name">Estateon<strong>DeepKey</strong></span></button>
+        <button class="hotspot hotspot--right" type="button" data-property="maisonya" aria-label="Explore Maisonya Power"><span class="hotspot-dot"></span><span class="hotspot-name">Maisonya<strong>Power</strong></span></button>
+        <button class="branch-card cut-card" type="button" data-open="branches">
+          <span class="branch-heading">Our Professional<strong>Branches</strong></span>
+          <i class="ti ti-arrow-up-right branch-arrow" aria-hidden="true"></i>
+          <img class="branch-art" src="./assets/terracotta-branch.png" alt="" decoding="async" draggable="false">
+        </button>
+        <button class="community-card cut-card" type="button" data-open="community" aria-label="Meet our community, 10.2 thousand members, rated 5 out of 5">
+          <strong class="community-count">10.2k+</strong><span class="community-caption">Active users worldwide</span>
+          <span class="community-bottom">
+            <span class="avatar-stack" aria-hidden="true">
+              <span class="avatar"><img src="https://i.pravatar.cc/120?u=elena" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
+              <span class="avatar"><img src="https://i.pravatar.cc/120?u=claire" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
+              <span class="avatar"><img src="https://i.pravatar.cc/120?u=sofia" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
+            </span>
+            <span class="rating"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.1 6.7 1-4.9 4.8 1.2 6.8-6-3.2-6 3.2 1.2-6.8L2.3 9.1l6.7-1Z" fill="currentColor"/></svg>5.0</span>
+          </span>
+        </button>
+        <a class="start-button" href="#residences"><span>Start<br>Now</span></a>
+        <a class="join-link" href="#about"><span><strong>Today</strong> Join Us</span><span class="join-caption">Learn more</span></a>
+        <p class="hero-description">Tech-Driven Real Estate with<br>Timeless Taste Intelligent<br>Living, Elegantly Designed</p>
+      </section>
+    </div>
+
+    <section class="residences content-section" id="residences" aria-labelledby="residences-heading">
+      <div class="section-topline"><span>Spaces for a life well lived</span><span>SailingEscape / Collection</span></div>
+      <div class="section-heading-row"><h2 id="residences-heading">Find your<br> <em>next chapter.</em></h2><p>Extraordinary spaces. Thoughtfully connected.<br>Discover a home that feels like you.</p></div>
+      <div class="collection-toolbar">
+        <div class="filter-group" role="group" aria-label="Filter residences by city">
+          <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">All residences</button>
+          <button type="button" class="filter-button" data-filter="London" aria-pressed="false">London</button>
+          <button type="button" class="filter-button" data-filter="Lisbon" aria-pressed="false">Lisbon</button>
+          <button type="button" class="filter-button" data-filter="Barcelona" aria-pressed="false">Barcelona</button>
+        </div>
+        <label class="search-control"><i class="ti ti-search" aria-hidden="true"></i><input id="property-search" type="search" placeholder="Find a residence" aria-label="Search residences" maxlength="120"></label>
+      </div>
+      <p class="result-count" id="result-count" role="status">3 residences to discover</p>
+      <div class="property-grid" id="property-grid"></div>
+      <div class="empty-state" id="empty-state" hidden><i class="ti ti-building-estate" aria-hidden="true"></i><h3>A little further from home.</h3><p>No residences match your search. Try another city or name.</p><button type="button" class="text-button" id="reset-search">View all residences <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+    </section>
+    <section class="about-section content-section" id="about" aria-labelledby="about-heading">
+      <span class="eyebrow">Thoughtful by design</span><h2 id="about-heading">A better way<br>to <em>feel at home.</em></h2>
+      <div class="about-copy"><p>We bring architecture, technology, and everyday living together. Not to change what makes a home special, but to make room for more of it.</p><button type="button" class="cut-button" data-open="contact">Let's find your place <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+    </section>
+    <footer class="site-footer"><a class="brand" href="#home"><span>SailingEscape</span></a><span>Timeless spaces. Intelligent living.</span><button type="button" class="text-button" data-open="branches">Our branches <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button><a class="back-top" href="#home" aria-label="Back to top"><i class="ti ti-arrow-up" aria-hidden="true"></i></a></footer>
+  </main>
+
+  <div class="modal-layer" id="modal-layer" hidden>
+    <div class="scrim" id="modal-scrim"></div>
+    <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+      <header class="dialog-header"><span class="dialog-kicker" id="dialog-kicker">SailingEscape</span><button class="icon-button" type="button" id="dialog-close" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+      <div class="dialog-body" id="dialog-body"></div>
+    </section>
+  </div>
+  <template id="contact-template">
+    <div class="contact-layout">
+      <div class="contact-intro"><h2 id="dialog-title">Your next<br> <em>beginning.</em></h2><p>Tell us what home means to you.<br> We'll help you put the details together.</p><span class="contact-note"><i class="ti ti-file-description" aria-hidden="true"></i>Create a personal enquiry to share with your advisor.</span></div>
+      <form id="contact-form" novalidate>
+        <div class="form-field"><label for="contact-name">Your name</label><input id="contact-name" name="name" autocomplete="name" placeholder="Full name" maxlength="80" required aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
+        <div class="form-field"><label for="contact-email">Email address</label><input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" maxlength="254" required aria-describedby="email-error"><span class="field-error" id="email-error"></span></div>
+        <div class="form-field"><span id="interest-label">I'm interested in</span><div class="custom-select"><button class="select-trigger" id="interest-trigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="interest-options" aria-labelledby="interest-label interest-value"><span id="interest-value">Finding a residence</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="select-panel" id="interest-options" role="listbox" aria-labelledby="interest-label" hidden><button type="button" class="select-option is-selected" role="option" aria-selected="true" data-interest="Finding a residence">Finding a residence<i class="ti ti-check" aria-hidden="true"></i></button><button type="button" class="select-option" role="option" aria-selected="false" data-interest="Visiting a branch">Visiting a branch<i class="ti ti-check" aria-hidden="true"></i></button><button type="button" class="select-option" role="option" aria-selected="false" data-interest="Joining the team">Joining the team<i class="ti ti-check" aria-hidden="true"></i></button><button type="button" class="select-option" role="option" aria-selected="false" aria-disabled="true" disabled>Commercial spaces<span>Coming soon</span></button></div></div></div>
+        <div class="form-field"><label for="contact-message">A little about your plans <span>(optional)</span></label><textarea id="contact-message" name="message" rows="2" maxlength="1200" placeholder="Your ideal place, city, or a question for us…"></textarea></div>
+        <p class="form-status" id="form-status" role="status"></p>
+        <div class="form-actions"><button class="solid-button" id="create-enquiry" type="submit">Create enquiry <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button><button class="text-button" id="download-enquiry" type="button" hidden>Download enquiry <i class="ti ti-download" aria-hidden="true"></i></button></div>
+      </form>
+    </div>
+  </template>
+</body>
+</html>

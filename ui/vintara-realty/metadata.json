@@ -1,0 +1,27 @@
+{
+  "name": "Vintara Realty · SailingEscape",
+  "slug": "vintara-realty",
+  "page_type": "website",
+  "tags": ["房地产", "建筑", "住宅浏览"],
+  "palette": ["#49251f", "#f4eee5", "#96736b"],
+  "created_at": "2026-11-07 18:50:27",
+  "updated_at": "2026-11-07 20:36:24",
+  "imageToUI": "https://dribbble.com/shots/27802663-Sailing-Marine-Equipment-E-Commerce-Modern-Web-UI-UX",
+  "history": [
+    {
+      "prompt": "还原这个 UI 原型的网站。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz", "gsap-scrolltrigger"]
+    },
+    {
+      "prompt": "各个分区页面有问题，尽量自适应浏览器屏幕窗口尺寸；字体也可以尝试换一些好看的",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-scrolltrigger"]
+    },
+    {
+      "prompt": "建筑建议使用真实抠图图片；当浏览器窗口稍微小的时候，首屏下部分被遮挡了，应该自适应调整首屏内容，尽量让内容都展示出来显示完整（首屏大字出现了缺漏，比如最后 y 的下部分，可能是行高遮挡了，需要调整）。整体继续优化。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-scrolltrigger"]
+    }
+  ]
+}
