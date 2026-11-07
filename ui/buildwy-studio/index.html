@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#171818">
+  <meta name="theme-color" content="#000000">
+  <style>:root { --buildwy-stage-bg: #000000; } html, body { background-color: var(--buildwy-stage-bg); color-scheme: dark; }</style>
   <title>Buildwy — Riro Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -117,7 +118,7 @@
                   <button class="swatch slate-art" data-material="Graphite stone" aria-label="Graphite stone" aria-pressed="false"></button>
                 </div>
                 <span class="field-label finish-label">Finishing materials</span>
-                <div class="finishing-row"><button class="finish-swatch ochre-art is-selected" data-action="finish" aria-label="Choose mineral wall finish"></button><span id="finish-description">Prevents mold growth</span><button class="finish-next slate-art" data-action="finish" aria-label="Next wall finish"></button></div>
+                <div class="finishing-row"><button class="finish-swatch ochre-art is-selected" data-action="finish" aria-label="Choose mineral wall finish"></button><span id="finish-description">Prevents mold growth</span><button class="finish-next slate-art" data-action="finish" aria-label="Next wall finish"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
               </div>
               <div id="insulation-materials" hidden><span class="field-label">Thermal insulation</span><div class="material-grid" data-material-group="insulation"><button class="swatch wool-art is-selected" data-material="Mineral wool" aria-label="Mineral wool" aria-pressed="true"></button><button class="swatch plaster-art" data-material="Rigid foam" aria-label="Rigid foam" aria-pressed="false"></button><button class="swatch cork-art" data-material="Natural cork" aria-label="Natural cork" aria-pressed="false"></button></div><p class="material-description" id="insulation-description">Mineral wool · 120 mm · A1 fire rating</p></div>
               <div class="export-row"><span>Save as</span><div class="format-control"><button id="format-toggle" class="format-toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="format-menu"><span id="format-label">PDF</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="dropdown format-menu" id="format-menu" role="listbox" aria-label="Export format" hidden><button role="option" data-format="PDF" aria-selected="true">PDF<span>Material sheet</span></button><button role="option" data-format="JSON" aria-selected="false">JSON<span>Project settings</span></button><button role="option" data-format="SVG" aria-selected="false">SVG<span>Floor drawing</span></button><button role="option" aria-selected="false" disabled>IFC<span>Connect BIM service</span></button></div></div><button class="download-button" id="download-button" data-action="download">Download file</button></div>
