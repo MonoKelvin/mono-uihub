@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#edf1fa">
+  <title>Klamma — Online banking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="klamma-mark" viewBox="0 0 36 36">
+        <circle cx="24" cy="17" r="9" fill="currentColor" />
+        <circle cx="18" cy="11" r="8" fill="var(--mark-paper, #fff)" stroke="currentColor" stroke-width="1.8" />
+        <circle cx="17" cy="24" r="8" fill="var(--mark-paper, #fff)" stroke="currentColor" stroke-width="1.8" />
+        <circle cx="11" cy="18" r="8" fill="var(--mark-paper, #fff)" stroke="currentColor" stroke-width="1.8" />
+      </symbol>
+      <symbol id="card-art" viewBox="0 0 410 256">
+        <path d="M193 0H410V256H302C302 158 194 95 193 0Z" fill="#4e78e1" />
+        <path d="M231 0H410V70H319C265 70 239 37 231 0Z" fill="#fff" />
+        <path d="M311 0H410V88H331C308 61 303 32 311 0Z" fill="#f5b8d0" />
+        <circle cx="359" cy="94" r="71" fill="#fff" />
+        <circle cx="359" cy="94" r="57" fill="none" stroke="#efd4df" stroke-width=".9" />
+        <circle cx="359" cy="94" r="43" fill="none" stroke="#efd4df" stroke-width=".9" />
+        <circle cx="433" cy="117" r="72" fill="#fff" stroke="#efd4df" stroke-width=".9" />
+      </symbol>
+    </defs>
+  </svg>
+  <div class="stage">
+    <div class="preview-frame" id="preview-frame">
+    <div class="bank-app" id="bank-app">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#overview" aria-label="Klamma overview">
+          <svg class="brand-mark" aria-hidden="true"><use href="#klamma-mark" /></svg>
+          <span>Klamma</span>
+        </a>
+        <nav class="navigation">
+          <a class="nav-item is-active" href="#overview" data-view="overview" aria-current="page"><i class="ti ti-home" aria-hidden="true"></i><span>Overview</span></a>
+          <a class="nav-item" href="#cards" data-view="cards"><i class="ti ti-wallet" aria-hidden="true"></i><span>Cards</span></a>
+          <a class="nav-item" href="#payments" data-view="payments"><i class="ti ti-arrows-exchange" aria-hidden="true"></i><span>Payments</span><i class="ti ti-chevron-down nav-chevron" aria-hidden="true"></i></a>
+          <a class="nav-item" href="#reports" data-view="reports"><i class="ti ti-chart-bar" aria-hidden="true"></i><span>Reports</span><i class="ti ti-chevron-down nav-chevron" aria-hidden="true"></i></a>
+          <a class="nav-item" href="#contacts" data-view="contacts"><i class="ti ti-address-book" aria-hidden="true"></i><span>Contacts</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+          <button class="nav-item" data-action="settings"><i class="ti ti-settings" aria-hidden="true"></i><span>Settings</span></button>
+          <button class="nav-item" data-action="account"><i class="ti ti-user" aria-hidden="true"></i><span>Account</span></button>
+        </div>
+      </aside>
+      <main class="workspace">
+        <header class="page-header">
+          <button class="icon-button menu-button" data-action="menu" aria-label="Open navigation" aria-expanded="false"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+          <div class="heading-group">
+            <h1 id="page-title">Your Cards</h1>
+            <button class="soft-button header-action" id="header-action" data-action="new-card"><span>New card</span><i class="ti ti-plus" aria-hidden="true"></i></button>
+          </div>
+          <button class="notification-button icon-button" id="notification-button" data-action="notifications" aria-label="Notifications, 2 unread" aria-expanded="false"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot"></span></button>
+        </header>
+        <div class="content-scroll" id="content-scroll" tabindex="0" aria-label="Banking workspace">
+          <section id="overview-view" class="view-panel">
+            <div class="card-carousel" aria-label="Your bank cards">
+              <div class="card-window"><div class="card-track" id="card-track"></div></div>
+              <button class="carousel-next icon-button" id="carousel-next" data-action="next-card" aria-label="Show next card"><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+              <div class="card-pagination" id="card-pagination" aria-label="Choose active card"></div>
+            </div>
+            <div class="overview-columns">
+              <div class="financial-summary">
+                <section class="limits-row" aria-label="Card spending limits">
+                  <button class="limit-summary" data-action="credit-limit" aria-label="View credit limit">
+                    <span class="limit-meter" id="credit-meter" role="meter" aria-label="Credit limit used" aria-valuemin="0" aria-valuemax="2000" aria-valuenow="1500" style="--used: 75%"><span class="meter-center"></span></span>
+                    <span class="limit-copy"><span class="limit-title">Credit limit</span><span class="limit-value"><strong id="credit-used">1500</strong><span> / <span id="credit-total">2000</span> <span class="limit-currency">USD</span></span></span></span>
+                  </button>
+                  <button class="limit-summary" data-action="online-limit" aria-label="View online limit">
+                    <span class="limit-meter" id="online-meter" role="meter" aria-label="Online limit used" aria-valuemin="0" aria-valuemax="1500" aria-valuenow="1324" style="--used: 88.2667%"><span class="meter-center"></span></span>
+                    <span class="limit-copy"><span class="limit-title">Online limit</span><span class="limit-value"><strong id="online-used">1324</strong><span> / <span id="online-total">1500</span> <span class="limit-currency">USD</span></span></span></span>
+                  </button>
+                </section>
+                <section class="payment-summary" aria-labelledby="payment-summary-title">
+                  <div class="section-heading"><h2 id="payment-summary-title">Int. Payments</h2><span class="period-label">the last 30 days</span></div>
+                  <div class="payment-counts">
+                    <button class="payment-stat" data-status="Awaiting"><strong>8</strong><span>Awaiting</span></button>
+                    <button class="payment-stat" data-status="In Progress"><span class="attention-dot" aria-label="Action required">!</span><strong>5</strong><span>In Progress</span></button>
+                    <button class="payment-stat" data-status="Completed"><strong>12</strong><span>Completed</span></button>
+                    <button class="payment-stat" data-status="Canceled"><strong>4</strong><span>Canceled</span></button>
+                  </div>
+                </section>
+                <section class="cash-flow" aria-label="Cash flow in the last 30 days">
+                  <button class="flow-card" data-action="money-in"><span class="flow-title money-in"><i class="ti ti-arrow-down-left" aria-hidden="true"></i>Money In</span><span class="flow-value"><strong>10,425<small>.00</small></strong><span>USD<i class="ti ti-chevron-down" aria-hidden="true"></i></span></span><span class="flow-subtitle">the last 30 days</span></button>
+                  <button class="flow-card" data-action="money-out"><span class="flow-title money-out"><i class="ti ti-arrow-up-right" aria-hidden="true"></i>Money Out</span><span class="flow-value"><strong>6,640<small>.14</small></strong><span>USD<i class="ti ti-chevron-down" aria-hidden="true"></i></span></span><span class="flow-subtitle">the last 30 days</span></button>
+                </section>
+              </div>
+              <section class="recent-activities" aria-labelledby="activities-title">
+                <div class="section-heading"><h2 id="activities-title">Recent Activities</h2><button class="soft-button" data-action="view-report">View a report</button></div>
+                <div id="activity-list" class="activity-list"></div>
+                <button class="text-button all-activity" data-action="view-report">View all activities<i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+              </section>
+            </div>
+          </section>
+          <section id="cards-view" class="view-panel" hidden aria-label="Manage cards"></section>
+          <section id="payments-view" class="view-panel" hidden aria-label="International payments"></section>
+          <section id="reports-view" class="view-panel" hidden aria-label="Transaction reports"></section>
+          <section id="contacts-view" class="view-panel" hidden aria-label="Contacts"></section>
+        </div>
+      </main>
+      <div class="mobile-scrim" id="mobile-scrim" hidden></div>
+      <section class="notification-popover" id="notification-popover" aria-labelledby="notification-title" hidden>
+        <div class="popover-heading"><h2 id="notification-title">Notifications</h2><button class="text-button" data-action="mark-read">Mark all as read</button></div>
+        <button class="notification-row" data-action="payment-alert"><i class="ti ti-alert-circle" aria-hidden="true"></i><span><strong>A payment needs your attention</strong><small>Review your international payments.</small></span></button>
+        <button class="notification-row" data-action="corporate-alert"><i class="ti ti-lock" aria-hidden="true"></i><span><strong>Your corporate card is frozen</strong><small>Manage access in your card settings.</small></span></button>
+      </section>
+      <button class="chat-launcher" data-action="support" aria-label="Open Klamma help"><i class="ti ti-messages" aria-hidden="true"></i></button>
+      <div class="modal-layer" id="modal-layer" hidden>
+        <div class="modal-scrim" data-action="close-dialog"></div>
+        <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+          <header class="dialog-heading"><h2 id="dialog-title"></h2><button class="icon-button" data-action="close-dialog" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="dialog-body" id="dialog-body"></div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>

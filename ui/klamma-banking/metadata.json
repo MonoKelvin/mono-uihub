@@ -1,0 +1,32 @@
+{
+  "name": "Klamma 在线银行",
+  "slug": "klamma-banking",
+  "page_type": "software",
+  "tags": ["金融", "银行卡", "Klamma"],
+  "palette": ["#edf1fa", "#353878", "#4e78e1"],
+  "imageToUI": "https://dribbble.com/shots/10819156-Klamma-Online-banking-dashboard",
+  "created_at": "2026-11-07 12:50:42",
+  "updated_at": "2026-11-07 13:28:47",
+  "history": [
+    {
+      "prompt": "还原这个UI原型",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz"]
+    },
+    {
+      "prompt": "UI还原的时候尽量保持和原图片一样的比例，适当可以整体放大或者缩小适配窗口中",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "对话框内部的字体内容都太小的，可以适当调大一点，整体更舒服一点",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    },
+    {
+      "prompt": "可以适当将界面中其他的最小的字体调大一点点，否则太小了，整体不要差别太大就行了",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}
