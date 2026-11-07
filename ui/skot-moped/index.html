@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#20211e">
+  <meta name="description" content="Meet Skot. Classic electric mopeds, made for a different kind of everyday.">
+  <title>Skot. — A different kind of everyday.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <section class="canvas" aria-label="Skot electric mopeds">
+      <div class="page-frame" aria-hidden="true"></div>
+      <header class="header">
+        <div class="header-left">
+          <button class="icon-button search-button" data-open="search" aria-label="Search mopeds"><i class="ti ti-search" aria-hidden="true"></i></button>
+          <nav class="navigation" aria-label="Main navigation">
+            <button data-open="about">About</button>
+            <button data-open="collections">Collections</button>
+            <button data-open="services">Services</button>
+            <button data-open="options">Options</button>
+          </nav>
+        </div>
+        <a class="brand" href="#" aria-label="Skot home">
+          <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M6 51V25C6 9 15 4 33 4c17 0 25 5 27 18-6-7-14-10-27-10-12 0-19 4-19 16v29C8 57 6 55 6 51Z"/><path fill="currentColor" d="M19 29c0-9 5-12 16-12 15 0 23 5 25 17-8-7-17-6-24 1L19 53V29Zm6 29 17-18c6-6 12-5 18 1v17H25Z"/></svg>
+          <span>Skot<span class="brand-period">.</span></span>
+        </a>
+        <div class="header-actions">
+          <button class="theme-switch" role="switch" aria-checked="false" aria-label="Light theme"><i class="ti ti-moon" aria-hidden="true"></i><span class="theme-knob"><span></span></span></button>
+          <div class="contact-group"><button class="contact-button" data-open="contact">Contact us</button><button class="icon-button phone-button" data-open="contact" aria-label="Contact Skot"><i class="ti ti-phone-call" aria-hidden="true"></i></button></div>
+          <button class="cart-button" data-open="cart"><span>Cart<span class="cart-count" hidden>0</span></span><span class="cart-icon"><i class="ti ti-shopping-bag" aria-hidden="true"></i></span></button>
+        </div>
+      </header>
+
+      <h1 class="hero-heading"><span class="heading-line">Super fast <span class="hero-badges" aria-hidden="true"><span class="planet-badge"><svg viewBox="0 0 70 90"><defs><radialGradient id="planet-metal" cx=".28" cy=".2"><stop stop-color="#fff7dd"/><stop offset=".5" stop-color="#ccae66"/><stop offset="1" stop-color="#675b36"/></radialGradient><linearGradient id="planet-ring"><stop stop-color="#62543a"/><stop offset=".45" stop-color="#eee4b7"/><stop offset="1" stop-color="#a38749"/></linearGradient></defs><g transform="rotate(32 35 45)"><circle cx="35" cy="45" r="16" fill="url(#planet-metal)"/><ellipse cx="35" cy="45" rx="25" ry="9" fill="none" stroke="url(#planet-ring)" stroke-width="5" transform="rotate(-67 35 45)"/></g></svg></span><span class="bolt-badge"><i class="ti ti-bolt" aria-hidden="true"></i></span></span></span><span class="heading-line">electric Moped</span></h1>
+
+      <button class="reviews-trigger" data-open="reviews" aria-label="Read rider reviews">
+        <span class="review-avatars"><img src="https://i.pravatar.cc/120?img=12" alt="" width="120" height="120"><img src="https://i.pravatar.cc/120?img=13" alt="" width="120" height="120"><img src="https://i.pravatar.cc/120?img=11" alt="" width="120" height="120"><span class="avatar-more"><i class="ti ti-plus" aria-hidden="true"></i></span></span>
+        <span class="review-copy">10k+ positive reviews we<br>achieved <span class="stars" aria-label="5 out of 5 stars">★★★★★</span></span>
+      </button>
+
+      <svg class="hero-outline" viewBox="0 0 2000 1500" aria-hidden="true">
+        <defs><radialGradient id="product-light" gradientUnits="userSpaceOnUse" cx="1030" cy="970" r="790"><stop stop-color="#8b9e3f" stop-opacity=".48"/><stop offset=".54" stop-color="#5a6437" stop-opacity=".19"/><stop offset="1" stop-color="#262823" stop-opacity=".38"/></radialGradient><linearGradient id="outline-line" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#666850"/><stop offset=".5" stop-color="#939654"/><stop offset="1" stop-color="#55594a"/></linearGradient></defs>
+        <path class="outline-surface" d="M184 598H1417Q1469 598 1474 560Q1478 528 1515 528H1838Q1878 528 1878 565V1229Q1878 1265 1842 1265H444V1004Q444 937 375 937H184Q125 937 125 879V656Q125 598 184 598Z" fill="url(#product-light)" stroke="url(#outline-line)" stroke-width="1.5"/>
+      </svg>
+      <div class="product-shadow" aria-hidden="true"></div>
+      <div class="product-art" aria-live="polite" aria-busy="false">
+        <img class="moped-image is-active" data-art="ivory" src="./assets/moped-hero.webp" alt="Ivory C45 classic electric moped, front three-quarter view" fetchpriority="high">
+        <img class="moped-image" data-art="panther" src="./assets/moped-ivory.png" alt="Black DB50QT Panther electric moped" loading="eager">
+        <img class="moped-image" data-art="sport" src="./assets/moped-ivory.png" alt="Sport electric moped" loading="eager">
+        <div class="image-error" hidden><i class="ti ti-photo-off" aria-hidden="true"></i><span>The product image couldn't load.</span><button class="text-button" id="retry-image">Try again</button></div>
+      </div>
+      <div class="product-description">
+        <span class="description-dot" aria-hidden="true"></span>
+        <h2 id="model-name">C45</h2>
+        <p class="model-category" id="model-category">Classic Model</p>
+        <p class="model-story" id="model-story">Officially the UK’s No.1 selling moped. <span class="story-highlight">This 50cc</span> Panther moped is agile and ready to strike.</p>
+      </div>
+      <button class="explore-button" data-open="product" aria-label="Explore the C45 moped"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+
+      <div class="model-carousel" aria-label="Choose your moped">
+        <div class="model-track">
+          <button class="model-card is-selected" data-model="ivory" aria-pressed="true"><img src="./assets/moped-ivory.png" alt="" loading="eager"><span><strong>C45</strong><small>Classic Moped</small></span><i class="ti ti-check" aria-hidden="true"></i></button>
+          <button class="model-card" data-model="panther" aria-pressed="false"><img src="./assets/moped-ivory.png" alt="" loading="eager"><span><strong>DB50QT</strong><small>Panther Moped</small></span><i class="ti ti-check" aria-hidden="true"></i></button>
+          <button class="model-card" data-model="sport" aria-pressed="false"><img src="./assets/moped-ivory.png" alt="" loading="eager"><span><strong>S72</strong><small>Sport Moped</small></span><i class="ti ti-check" aria-hidden="true"></i></button>
+        </div>
+        <span class="carousel-rail" aria-hidden="true"><span></span></span>
+      </div>
+
+      <div class="layer" id="overlay" hidden>
+        <div class="scrim" data-close></div>
+        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+          <header class="dialog-header"><div><span class="eyebrow">SKOT. / ELECTRIC EVERYDAY</span><h2 id="dialog-title"></h2></div><button class="icon-button close-button" data-close aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="dialog-body" id="dialog-content"></div>
+        </section>
+      </div>
+      <div class="toast" role="status" hidden><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </section>
+  </main>
+</body>
+</html>

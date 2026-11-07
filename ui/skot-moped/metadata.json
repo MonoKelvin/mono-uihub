@@ -1,0 +1,48 @@
+{
+  "name": "Skot 电动踏板车",
+  "slug": "skot-moped",
+  "page_type": "website",
+  "tags": ["出行", "电商", "电动踏板车"],
+  "palette": ["#20211e", "#c8f52c", "#f5f1df"],
+  "created_at": "2026-11-07 21:04:47",
+  "updated_at": "2026-11-07 22:38:55",
+  "imageToUI": "https://dribbble.com/shots/27771525-Modern-Electric-Moped-Landing-Page-UI-Design-Premium-EV-Scoote",
+  "history": [
+    {
+      "prompt": "还原这个UI原型",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "image-purify", "run"],
+      "image_generation": [
+        {
+          "prompt": "A single cream ivory retro electric moped with a vintage Vespa silhouette, glossy enamel body, black leather saddle, black handlebars and mirrors, round white headlamp with black housing, thick black tyres, vivid acid lime green wheel rims, polished metal front suspension. Low front three-quarter camera angle from the scooter's front left side, the large front wheel at the lower right, the rear body at the lower left, handlebars above centre. The whole moped faces right, its front wheel slightly turned towards the viewer, body extending diagonally across a wide composition. Soft studio key light from upper left, gentle reflections on the ivory panels. Isolated subject on transparent background, no person, no stand, no text or logo.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "保留页面本身即可，矩形的背景应该是作为整个区域的背景；页面本身的矩形容器还是要的；页面本身的容器要加上阴影",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    },
+    {
+      "prompt": "有内容超出页面容器了。要按照源图片，图片不是正放置的，而是更大的倾斜放置的，有点像要从UI平面里面飞出一样的角度。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    },
+    {
+      "prompt": "再放大，向右倾斜一些",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    },
+    {
+      "prompt": "右中侧和左下角位置的文字太粗导致换行太多，可以调小一点；首屏的大图换成 moped-hero.png (其他图片不动)，更有冲击感。将图片转成webp格式的（项目工具提供了转换脚本；用户授权仅本次转换，保留原PNG和其他素材）。大图向下移动一点。大图缩小一点点。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    },
+    {
+      "prompt": "右中侧和左下角位置的文字太粗导致换行太多，可以调小。大图左旋转一点。",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    }
+  ]
+}
