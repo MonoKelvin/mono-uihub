@@ -1,0 +1,37 @@
+{
+  "name": "LUXEVIA 高端地产",
+  "slug": "luxevia-estate",
+  "page_type": "website",
+  "tags": ["地产", "搜索筛选", "LUXEVIA"],
+  "palette": ["#f8f7f5", "#a28b6d", "#0b0b0a"],
+  "created_at": "2026-11-07 14:58:50",
+  "updated_at": "2026-11-07 16:16:46",
+  "imageToUI": "https://dribbble.com/shots/27511279-Luxury-Real-Estate-Landing-Page",
+  "history": [
+    {
+      "prompt": "还原这个UI原型网站",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz", "run"]
+    },
+    {
+      "prompt": "请设计成网页的滚动类型，不是单页面",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    },
+    {
+      "prompt": "首屏的外边距间距太大了，尽量适配浏览器窗口",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    },
+    {
+      "prompt": "首屏图片尽量靠右一点，文字在左边，形成对比",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    },
+    {
+      "prompt": "首屏不要外边距，尽量让首屏自适应一个屏幕，首屏图片和左侧有个明显的分割，请调整设计成宽屏",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    }
+  ]
+}

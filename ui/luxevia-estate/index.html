@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e5e4e3">
+  <meta name="description" content="Discover exceptional homes in extraordinary locations with Luxevia Real Estate.">
+  <title>LUXEVIA — Find Your Perfect Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=DM+Sans:wght@400;450;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <div class="canvas" id="home" tabindex="-1">
+      <div class="website">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-photo" aria-hidden="true"></div>
+          <header class="header">
+            <a class="brand" href="#home" aria-label="Luxevia home" data-action="home">
+              <svg class="brand-mark" viewBox="0 0 48 68" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 59V9L25 2l9 7v50l-9 7V2M16 14l-8 7v34l8 5M34 14l8 7v34l-8 5M8 21l-5 6v26l5 2M42 21l3 6v26l-3 2"/></g></svg>
+              <span class="brand-type">LUXEVIA<span>REAL ESTATE</span></span>
+            </a>
+            <nav class="navigation" aria-label="Main navigation">
+              <a href="#home" data-action="home" aria-current="page">Home</a>
+              <a href="#properties" data-action="properties">Properties</a>
+              <a href="#about" data-action="about">About Us</a>
+              <a href="#services" data-action="services">Services</a>
+              <div class="pages-menu">
+                <button class="nav-link" id="pages-trigger" aria-expanded="false" aria-controls="pages-panel">Pages <i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+                <div class="dropdown nav-dropdown" id="pages-panel" hidden>
+                  <button class="option" data-action="team">Our team <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+                  <button class="option" data-action="guide">Buying guide <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+                  <button class="option" data-action="faq">Frequently asked questions</button>
+                  <button class="option" disabled>Market report <span>Coming soon</span></button>
+                </div>
+              </div>
+              <a href="#contact" data-action="contact">Contact</a>
+            </nav>
+            <div class="header-actions">
+              <button class="phone-button" data-action="contact"><i class="ti ti-phone" aria-hidden="true"></i> <span>+1 (234) 567 8900</span></button>
+              <button class="button visit-button" data-action="visit">Schedule a Visit <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+            </div>
+            <button class="mobile-menu icon-button" id="mobile-trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-navigation"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+            <nav class="dropdown mobile-navigation" id="mobile-navigation" aria-label="Mobile navigation" hidden>
+              <button class="option" data-action="home">Home</button>
+              <button class="option" data-action="properties">Properties</button>
+              <button class="option" data-action="about">About Us</button>
+              <button class="option" data-action="services">Services</button>
+              <button class="option" data-action="guide">Buying guide</button>
+              <button class="option" data-action="contact">Contact</button>
+            </nav>
+          </header>
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> PREMIUM REAL ESTATE</div>
+            <h1 id="hero-title"><span>Find Your</span><span>Perfect Home</span></h1>
+            <p>Discover exceptional properties in prime locations.<br class="desktop-break"> We help you find a home that fits your lifestyle<br class="desktop-break"> and your future.</p>
+            <div class="hero-actions">
+              <button class="button explore-button" data-action="properties">Explore Properties <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+              <button class="video-button" data-action="video"><span class="play-circle"><i class="ti ti-player-play-filled" aria-hidden="true"></i></span> Watch Video</button>
+            </div>
+          </div>
+        </section>
+        <form class="search-bar" id="property-search">
+          <span class="search-symbol" aria-hidden="true"><i class="ti ti-search"></i></span>
+          <div class="filter" data-filter="location">
+            <span class="filter-label" id="location-label">LOCATION</span>
+            <button type="button" class="filter-trigger" id="location-trigger" aria-labelledby="location-label location-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="location-options"><i class="ti ti-map-pin location-icon" aria-hidden="true"></i><span id="location-value">Enter location</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="dropdown filter-dropdown" id="location-options" role="listbox" aria-label="Location" hidden></div>
+          </div>
+          <div class="filter" data-filter="type">
+            <span class="filter-label" id="type-label">PROPERTY TYPE</span>
+            <button type="button" class="filter-trigger" id="type-trigger" aria-labelledby="type-label type-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="type-options"><span id="type-value">All Type</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="dropdown filter-dropdown" id="type-options" role="listbox" aria-label="Property type" hidden></div>
+          </div>
+          <div class="filter" data-filter="price">
+            <span class="filter-label" id="price-label">PRICE RANGE</span>
+            <button type="button" class="filter-trigger" id="price-trigger" aria-labelledby="price-label price-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="price-options"><span id="price-value">$10,000 - $50,000+</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="dropdown filter-dropdown" id="price-options" role="listbox" aria-label="Monthly price range" hidden></div>
+          </div>
+          <div class="filter bedrooms-filter" data-filter="bedrooms">
+            <span class="filter-label" id="bedrooms-label">BEDROOMS</span>
+            <button type="button" class="filter-trigger" id="bedrooms-trigger" aria-labelledby="bedrooms-label bedrooms-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="bedrooms-options"><span id="bedrooms-value">Any</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="dropdown filter-dropdown" id="bedrooms-options" role="listbox" aria-label="Bedrooms" hidden></div>
+          </div>
+          <button class="button search-button" type="submit"><span>Search Properties</span><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+        </form>
+        <section class="statistics" aria-label="Luxevia at a glance">
+          <div class="stat"><span class="stat-icon"><i class="ti ti-home" aria-hidden="true"></i></span><div><p class="stat-value">1,200+</p><p class="stat-label">Premium Properties</p></div></div>
+          <div class="stat"><span class="stat-icon"><i class="ti ti-users" aria-hidden="true"></i></span><div><p class="stat-value">3,500+</p><p class="stat-label">Happy Clients</p></div></div>
+          <div class="stat"><span class="stat-icon"><i class="ti ti-building-skyscraper" aria-hidden="true"></i></span><div><p class="stat-value">15+</p><p class="stat-label">Years of Experience</p></div></div>
+          <div class="stat"><span class="stat-icon"><i class="ti ti-rosette-discount-check" aria-hidden="true"></i></span><div><p class="stat-value stat-award">Award Winning</p><p class="stat-label">Real Estate Agency</p></div></div>
+        </section>
+      </div>
+    </div>
+    <div class="page-content">
+      <section class="page-section collection-section" id="properties" tabindex="-1" aria-labelledby="properties-title">
+        <div class="section-heading"><div><span class="section-label">THE COLLECTION</span><h2 id="properties-title">Discover your next home.</h2></div><p>Considered spaces. Exceptional locations.<br>A collection chosen for the way you live.</p></div>
+        <div class="collection-layout">
+          <aside class="collection-visual"><div class="collection-photo" aria-hidden="true"></div><div class="collection-caption"><span>Architecture with a point of view.</span><span>PRIVATE RESIDENCES</span></div></aside>
+          <div id="property-results" aria-live="polite" aria-busy="false"></div>
+        </div>
+      </section>
+      <section class="page-section story-section" id="about" tabindex="-1" aria-labelledby="about-title">
+        <span class="section-label">OUR PHILOSOPHY</span>
+        <div class="story-layout"><h2 id="about-title">A place to live.<br>A way to belong.</h2><div class="editorial-copy"><p>We believe a home should feel right long before you turn the key. Our work brings together considered architecture, exceptional locations and a clear understanding of how you want to live.</p><h3>A relationship, not just a transaction.</h3><p>From your first conversation to your private viewing, a dedicated advisor helps you compare your options and ask the questions that matter.</p><a class="text-button" href="#contact" data-action="contact">Start a conversation <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div></div>
+        <div class="advisory-block" id="team" tabindex="-1"><div><span class="section-label">YOUR ADVISORS</span><h3>Local knowledge.<br>Personal attention.</h3></div><p>Our property discovery, rental and viewing teams guide each part of your journey. One dedicated advisor helps you build a shortlist, plan your viewings and understand your next steps.</p><a class="text-button" href="#contact" data-action="contact">Meet the team <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div>
+      </section>
+      <section class="page-section services-section" id="services" tabindex="-1" aria-labelledby="services-title">
+        <div class="section-heading"><div><span class="section-label">OUR SERVICES</span><h2 id="services-title">Every detail, considered.</h2></div><button class="button" data-action="visit">Arrange a consultation <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+        <div class="service-list"><article class="service"><i class="ti ti-home-search" aria-hidden="true"></i><h3>Property discovery</h3><p>A focused shortlist based on your preferred location, budget and the way you live.</p></article><article class="service"><i class="ti ti-key" aria-hidden="true"></i><h3>Private viewings</h3><p>Explore a home at your own pace with a dedicated advisor and time for every question.</p></article><article class="service"><i class="ti ti-building-estate" aria-hidden="true"></i><h3>Rental guidance</h3><p>Understand terms, compare neighbourhoods and plan your next move with confidence.</p></article></div>
+      </section>
+      <section class="page-section guide-section" id="guide" tabindex="-1" aria-labelledby="guide-title">
+        <div><span class="section-label">BEFORE YOU MOVE</span><h2 id="guide-title">Know what matters.<br>Find what fits.</h2><a class="text-button" href="#properties" data-action="properties">Explore the collection <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div>
+        <div class="editorial-copy"><h3>Start with your priorities</h3><p>Set a comfortable monthly budget and consider the spaces, commute and neighbourhood that support your daily life.</p><h3>Look beyond the photographs</h3><p>During a viewing, check natural light, privacy, storage, noise and the condition of fixtures. Ask about utilities, deposits and the full rental terms.</p><h3>Take time to compare</h3><p>Keep notes from each visit and confirm all terms in writing before you make a commitment.</p></div>
+      </section>
+      <section class="page-section faq-section" id="faq" tabindex="-1" aria-labelledby="faq-title">
+        <div><span class="section-label">GOOD TO KNOW</span><h2 id="faq-title">A few questions,<br>answered.</h2></div>
+        <div class="faq-list"><details class="faq-item" open><summary>How do I arrange a private viewing?</summary><p>Choose a property and select Schedule a Visit. Save your preferred date and time, then call our team to confirm availability.</p></details><details class="faq-item"><summary>Are the listed prices monthly rentals?</summary><p>Yes. Property prices are displayed per month. Deposits, utilities and lease terms should be confirmed with your advisor before proceeding.</p></details><details class="faq-item"><summary>Can I search more than one location?</summary><p>Select All locations to browse our complete collection, then narrow your search by property type, monthly price and bedrooms.</p></details><details class="faq-item"><summary>What should I bring to a viewing?</summary><p>A list of priorities and questions is a good starting point. Your advisor can explain which documents will be needed if you decide to proceed.</p></details></div>
+      </section>
+      <section class="page-section contact-section" id="contact" tabindex="-1" aria-labelledby="contact-title">
+        <div><span class="section-label">YOUR NEXT CHAPTER</span><h2 id="contact-title">Tell us what<br>home means to you.</h2><button class="button contact-visit" data-action="visit">Plan a private visit <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+        <div class="contact-details"><p>Speak with our residential team</p><div class="contact-number">+1 (234) 567 8900</div><p>Monday – Saturday<br>9:00 AM – 6:00 PM</p><button class="text-button" data-action="copy-phone">Copy phone number <i class="ti ti-copy" aria-hidden="true"></i></button><p id="copy-error" class="field-error" role="status" hidden></p></div>
+      </section>
+      <footer class="footer"><a class="footer-brand" href="#home" data-action="home">LUXEVIA<span>REAL ESTATE</span></a><p>© 2026 Luxevia. All rights reserved.</p><a class="text-button" href="#home" data-action="home">Back to top <i class="ti ti-arrow-up" aria-hidden="true"></i></a></footer>
+    </div>
+  </main>
+  <div class="modal-layer viewport-layer" id="modal-layer" hidden>
+    <div class="scrim" data-close-modal></div>
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+      <header class="dialog-header"><div><span class="dialog-eyebrow">LUXEVIA REAL ESTATE</span><h2 id="dialog-title"></h2></div><button class="icon-button close-button" data-close-modal aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+      <div class="dialog-body scroll-area" id="dialog-body"></div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" hidden><i class="ti ti-circle-check" aria-hidden="true"></i><span></span></div>
+</body>
+</html>
