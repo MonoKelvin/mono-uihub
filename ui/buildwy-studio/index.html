@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171818">
+  <title>Buildwy — Riro Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <div class="canvas" id="canvas">
+      <section class="workspace" aria-label="Buildwy architectural workspace">
+        <header class="topbar">
+          <button class="brand icon-button" data-action="project" aria-label="Buildwy project">
+            <svg viewBox="0 0 32 44" aria-hidden="true"><path d="M3 15 28 1v8L3 23zm0 17 9-5v16H3zm14-8 11-6v25H17zm-5 8 5-3v7l-5 3z" fill="currentColor"/></svg>
+          </button>
+          <button class="project-button" data-action="project"><i class="ti ti-chevron-left" aria-hidden="true"></i><span>«Riro Home» complex</span></button>
+          <nav class="view-tabs" aria-label="Project views">
+            <button class="view-tab" data-view="drawings" aria-pressed="false">Drawings</button>
+            <button class="view-tab is-active" data-view="model" aria-pressed="true">3D models</button>
+            <button class="view-tab" data-view="interior" aria-pressed="false">Interior</button>
+          </nav>
+          <div class="header-actions">
+            <button class="publish-button" data-action="publish"><i class="ti ti-speakerphone" aria-hidden="true"></i><span>Publish</span></button>
+            <button class="icon-button" data-action="share" aria-label="Share project"><i class="ti ti-share" aria-hidden="true"></i></button>
+            <div class="menu-anchor">
+              <button class="icon-button apps-button" id="more-toggle" aria-label="Project menu" aria-expanded="false" aria-controls="project-menu"><i class="ti ti-layout-grid" aria-hidden="true"></i></button>
+              <div class="dropdown project-menu" id="project-menu" role="menu" hidden>
+                <button role="menuitem" data-action="project"><i class="ti ti-home" aria-hidden="true"></i>Project details</button>
+                <button role="menuitem" data-action="reset"><i class="ti ti-refresh" aria-hidden="true"></i>Reset view</button>
+                <button role="menuitem" data-action="import"><i class="ti ti-file-import" aria-hidden="true"></i>Import project</button>
+                <button role="menuitem" data-action="export-json"><i class="ti ti-file-code" aria-hidden="true"></i>Export project</button>
+                <button role="menuitem" disabled><i class="ti ti-cloud" aria-hidden="true"></i>Cloud sync</button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="collaboration">
+          <div class="avatar-group">
+            <button class="avatar" data-action="collaborators" aria-label="Marco Rossi, architect"><img src="https://i.pravatar.cc/120?u=marco-buildwy" alt="Marco Rossi"></button>
+            <button class="avatar" data-action="collaborators" aria-label="Anna Miller, interior designer"><img src="https://i.pravatar.cc/120?u=anna-buildwy" alt="Anna Miller"></button>
+            <button class="add-person" data-action="collaborators" aria-label="Manage collaborators"><i class="ti ti-plus" aria-hidden="true"></i></button>
+          </div>
+          <button class="comment-button" data-action="comments"><i class="ti ti-message" aria-hidden="true"></i><span>Add comment</span><span id="comment-count" hidden>0</span></button>
+        </div>
+
+        <div class="model-view" id="model-view" tabindex="0" role="region" aria-label="Architectural model. Arrow keys to pan, plus and minus to zoom.">
+          <div class="model-object" id="model-object">
+            <img class="villa-image" id="villa-image" src="assets/riro-villa.png" alt="Illuminated ivory villa with glass facades, cedar panels and landscaped entrance" draggable="false">
+          </div>
+          <div class="interior-view" id="interior-view" hidden><img src="assets/riro-interior.png" alt="Riro Home living room with full-height glazing and natural oak finishes" draggable="false"><span class="view-caption">Living room · Ground floor</span></div>
+          <div class="drawing-view" id="drawing-view" hidden>
+            <svg id="floor-plan" viewBox="0 0 720 600" xmlns="http://www.w3.org/2000/svg" aria-label="Ground floor architectural drawing" role="img">
+              <defs><pattern id="floor-hatch" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 12 12 0" stroke="#74736b" stroke-width=".3"/></pattern></defs>
+              <g fill="none" stroke="#d3d0c5" stroke-width="1">
+                <path d="M120 60H600V520H120Z" stroke-width="7"/><path d="M120 330H400V60M400 260H600M400 400H600" stroke-width="5"/>
+                <path d="M120 160v95M220 520h125M480 60h90" stroke="#f9c83e" stroke-width="8"/>
+                <path d="M400 292v60M460 400h60" stroke="#252626" stroke-width="8"/><path d="M400 292a60 60 0 0 1 60 60h-60M460 400a60 60 0 0 0 60-60v60"/>
+                <rect x="145" y="87" width="36" height="187" rx="5"/><rect x="187" y="87" width="126" height="36" rx="5"/><rect x="221" y="169" width="83" height="67" rx="16"/>
+                <rect x="448" y="88" width="108" height="130" rx="4"/><path d="M448 119h108M456 95h42v16h-42zm51 0h42v16h-42z"/>
+                <rect x="143" y="361" width="29" height="112"/><rect x="193" y="380" width="129" height="61" rx="7"/><path d="M209 373v-12m34 12v-12m34 12v-12m29 12v-12m-97 79v12m34-12v12m34-12v12m29-12v12" stroke-width="4"/>
+                <path d="M433 292h133v77H433Z M433 303h133m-133 11h133m-133 11h133m-133 11h133m-133 11h133m-133 11h133"/>
+                <path d="M80 60V520M72 60h16M72 520h16M120 552H600M120 544v16M600 544v16" stroke="#77776e"/>
+              </g>
+              <g fill="#bdbbb1" font-family="DM Sans, sans-serif" font-size="13" text-anchor="middle"><text x="260" y="290">LIVING ROOM</text><text x="500" y="243">BEDROOM</text><text x="264" y="480">KITCHEN &amp; DINING</text><text x="500" y="465">ENTRANCE</text><text x="360" y="578">12 000 mm</text><text x="55" y="295" transform="rotate(-90 55 295)">11 500 mm</text></g>
+            </svg>
+            <span class="view-caption">Ground floor · 1:100</span>
+          </div>
+          <div class="asset-error" id="asset-error" hidden><i class="ti ti-photo-off" aria-hidden="true"></i><span>Unable to load this view</span><button data-action="retry-image">Try again</button></div>
+        </div>
+
+        <aside class="view-tools" aria-label="Viewport controls">
+          <div class="lighting-switch" role="group" aria-label="Scene lighting">
+            <button data-light="day" aria-label="Day lighting" aria-pressed="false"><i class="ti ti-sun" aria-hidden="true"></i></button>
+            <button class="is-active" data-light="night" aria-label="Night lighting" aria-pressed="true"><i class="ti ti-moon" aria-hidden="true"></i></button>
+          </div>
+          <button class="interior-thumbnail" data-action="toggle-interior" aria-label="Open interior view"><img src="assets/riro-interior.png" alt=""><span><i class="ti ti-cube" aria-hidden="true"></i></span></button>
+          <div class="object-controls">
+            <span class="control-heading">Object size</span>
+            <div class="zoom-row"><div class="zoom-buttons"><button data-zoom="-5" aria-label="Zoom out"><i class="ti ti-minus" aria-hidden="true"></i></button><button data-zoom="5" aria-label="Zoom in"><i class="ti ti-plus" aria-hidden="true"></i></button></div><output id="zoom-value" for="zoom-range">80%</output></div>
+            <input id="zoom-range" type="range" min="40" max="120" step="5" value="80" aria-label="Object size">
+            <div class="control-divider"></div>
+            <div class="orientation-pad">
+              <button class="pan-up" data-pan="up" aria-label="Move object up"><i class="ti ti-caret-up" aria-hidden="true"></i></button>
+              <button class="pan-left" data-pan="left" aria-label="Move object left"><i class="ti ti-caret-left" aria-hidden="true"></i></button>
+              <button class="orientation-globe" data-action="reset" aria-label="Center object and reset zoom"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27"/><ellipse cx="30" cy="30" rx="13" ry="27"/><ellipse cx="30" cy="30" rx="26" ry="10"/><path d="M3 30h54M7 16h46M7 44h46"/></svg></button>
+              <button class="pan-right" data-pan="right" aria-label="Move object right"><i class="ti ti-caret-right" aria-hidden="true"></i></button>
+              <button class="pan-down" data-pan="down" aria-label="Move object down"><i class="ti ti-caret-down" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </aside>
+
+        <aside class="inspector scroll-area" aria-label="Building materials">
+          <section class="material-section" data-section="roof">
+            <button class="section-toggle" aria-expanded="false" aria-controls="roof-content"><span class="category-art roof-art" aria-hidden="true"></span><span class="category-copy"><strong>Roofing materials</strong><span>Tile, ondulin, soft roofing</span></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="section-content" id="roof-content" inert><div class="section-inner"><span class="field-label">Roof finish</span><div class="material-grid" data-material-group="roof"><button class="swatch roof-art is-selected" data-material="Terracotta tile" aria-label="Terracotta tile" aria-pressed="true"></button><button class="swatch slate-art" data-material="Graphite slate" aria-label="Graphite slate" aria-pressed="false"></button><button class="swatch concrete-art" data-material="Flat concrete" aria-label="Flat concrete" aria-pressed="false"></button></div><p class="material-description" id="roof-description">Terracotta tile · Natural clay</p></div></div>
+          </section>
+          <section class="material-section is-open wall-section" data-section="wall">
+            <button class="section-toggle" aria-expanded="true" aria-controls="wall-content"><span class="category-art stone-art" aria-hidden="true"></span><span class="category-copy"><strong>Wall materials</strong><span>Insulation and finishing materials</span></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="section-content" id="wall-content"><div class="section-inner">
+              <div class="material-tabs" role="group" aria-label="Wall material type"><button class="is-active" data-material-tab="decorative" aria-pressed="true">Decorative materials</button><button data-material-tab="insulation" aria-pressed="false">Insulation</button></div>
+              <div id="decorative-materials">
+                <span class="field-label">Panels</span>
+                <div class="material-grid panels-grid" data-material-group="wall">
+                  <button class="swatch concrete-art" data-material="Travertine" aria-label="Travertine" aria-pressed="false"></button>
+                  <button class="swatch plaster-art" data-material="Limestone" aria-label="Limestone" aria-pressed="false"></button>
+                  <button class="swatch wood-art" data-material="Cedar slats" aria-label="Cedar slats" aria-pressed="false"></button>
+                  <button class="swatch bark-art" data-material="Weathered oak" aria-label="Weathered oak" aria-pressed="false"></button>
+                  <button class="swatch fan-art is-selected" data-material="Architectural concrete" aria-label="Architectural concrete" aria-pressed="true"><span class="selection-pin"></span></button>
+                  <button class="swatch slate-art" data-material="Graphite stone" aria-label="Graphite stone" aria-pressed="false"></button>
+                </div>
+                <span class="field-label finish-label">Finishing materials</span>
+                <div class="finishing-row"><button class="finish-swatch ochre-art is-selected" data-action="finish" aria-label="Choose mineral wall finish"></button><span id="finish-description">Prevents mold growth</span><button class="finish-next slate-art" data-action="finish" aria-label="Next wall finish"></button></div>
+              </div>
+              <div id="insulation-materials" hidden><span class="field-label">Thermal insulation</span><div class="material-grid" data-material-group="insulation"><button class="swatch wool-art is-selected" data-material="Mineral wool" aria-label="Mineral wool" aria-pressed="true"></button><button class="swatch plaster-art" data-material="Rigid foam" aria-label="Rigid foam" aria-pressed="false"></button><button class="swatch cork-art" data-material="Natural cork" aria-label="Natural cork" aria-pressed="false"></button></div><p class="material-description" id="insulation-description">Mineral wool · 120 mm · A1 fire rating</p></div>
+              <div class="export-row"><span>Save as</span><div class="format-control"><button id="format-toggle" class="format-toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="format-menu"><span id="format-label">PDF</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="dropdown format-menu" id="format-menu" role="listbox" aria-label="Export format" hidden><button role="option" data-format="PDF" aria-selected="true">PDF<span>Material sheet</span></button><button role="option" data-format="JSON" aria-selected="false">JSON<span>Project settings</span></button><button role="option" data-format="SVG" aria-selected="false">SVG<span>Floor drawing</span></button><button role="option" aria-selected="false" disabled>IFC<span>Connect BIM service</span></button></div></div><button class="download-button" id="download-button" data-action="download">Download file</button></div>
+            </div></div>
+          </section>
+          <section class="material-section" data-section="technology">
+            <button class="section-toggle" aria-expanded="false" aria-controls="technology-content"><span class="category-art technology-art" aria-hidden="true"><span></span></span><span class="category-copy"><strong>Technological filling</strong><span>Devices that simplify everyday life</span></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="section-content" id="technology-content" inert><div class="section-inner device-settings"><label class="toggle-row"><span>Smart climate control</span><input type="checkbox" id="climate-toggle" checked><span class="switch-track" aria-hidden="true"></span></label><label class="toggle-row"><span>Entrance lighting</span><input type="checkbox" id="entrance-toggle" checked><span class="switch-track" aria-hidden="true"></span></label><p class="material-description">Connected home · KNX compatible</p></div></div>
+          </section>
+          <section class="material-section" data-section="landscape">
+            <button class="section-toggle" aria-expanded="false" aria-controls="landscape-content"><span class="category-art landscape-art" aria-hidden="true"></span><span class="category-copy"><strong>Landscape plans</strong><span>Plants for every climate</span></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="section-content" id="landscape-content" inert><div class="section-inner"><span class="field-label">Garden palette</span><div class="landscape-options" role="group" aria-label="Landscape palette"><button class="is-selected" data-landscape="Woodland" aria-pressed="true">Woodland</button><button data-landscape="Mediterranean" aria-pressed="false">Mediterranean</button><button data-landscape="Minimal" aria-pressed="false">Minimal</button></div><p class="material-description" id="landscape-description">Birch, boxwood and ornamental grasses</p></div></div>
+          </section>
+        </aside>
+
+        <button class="generation-button" data-action="generation"><span><i class="ti ti-wand" aria-hidden="true"></i></span>AI Generation</button>
+      </section>
+      <div class="dialog-layer" id="dialog-layer" hidden><button class="scrim" id="dialog-scrim" aria-label="Close dialog"></button><section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1"><header class="dialog-header"><h1 id="dialog-title"></h1><button class="dialog-close" id="dialog-close" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="dialog-body scroll-area" id="dialog-body"></div></section></div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </div>
+  </main>
+</body>
+</html>

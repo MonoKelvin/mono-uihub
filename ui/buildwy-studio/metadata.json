@@ -1,0 +1,32 @@
+{
+  "name": "Buildwy 建筑建模工作台",
+  "slug": "buildwy-studio",
+  "page_type": "software",
+  "tags": ["建筑", "建模", "材质设计"],
+  "palette": ["#242525", "#fac83e", "#141414"],
+  "created_at": "2026-11-07 18:10:02",
+  "updated_at": "2026-11-07 18:27:24",
+  "imageToUI": "https://dribbble.com/shots/26726129-UI-UX-for-a-Modeling-Product-Buildwy",
+  "history": [
+    {
+      "prompt": "还原这个UI软件原型",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "An architectural scale model of a three-story contemporary villa, three offset rectangular volumes with flat rooftop parapets, smooth warm ivory concrete, floor-to-ceiling glass windows glowing with amber interior light, vertical cedar slats, a broad cantilevered terrace and covered carport extending to the right. The entire villa sits on a thin square limestone foundation platform with geometric raised planters, low shrubs, two slender bare deciduous trees at the front left, wide entrance steps with warm recessed linear lighting. Elevated front-left axonometric camera, see the roof and both facades, building centered, whole foundation visible. Nighttime warm interior lighting and soft neutral exterior lighting. Only this freestanding architectural miniature, transparent surrounding space.",
+          "model": "gpt-image-2.5"
+        },
+        {
+          "prompt": "A contemporary living room inside a warm minimalist villa, double-height floor-to-ceiling black framed glass windows, cream boucle low sofa, round oak coffee table, pale travertine floor, warm oak ceiling, a leafy garden visible through the glass. Wide-angle interior architectural camera, late afternoon natural light, warm ivory and muted olive palette.",
+          "model": "gpt-image-2.5"
+        }
+      ]
+    },
+    {
+      "prompt": "可以适当调整宽一点软件，间距、布局也可以放松一点，尽可能实现里面的功能逻辑",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    }
+  ]
+}
