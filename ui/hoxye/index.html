@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6518ee">
+  <meta name="description" content="Hoxye — your home for esports, matches and friends.">
+  <title>Hoxye — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" id="app">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#home" aria-label="Hoxye home"><span class="brand-mark">G</span><span>Hoxye</span></a>
+        <nav class="navigation">
+          <span class="nav-indicator" aria-hidden="true"></span>
+          <a class="nav-item" href="#home" data-route="home"><i class="ti ti-home" aria-hidden="true"></i><svg class="active-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 2.6a2 2 0 0 1 2.8 0l7 6.7A2 2 0 0 1 21 11v9a2 2 0 0 1-2 2h-4v-8H9v8H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 .6-1.7z"/></svg><span>Home</span></a>
+          <a class="nav-item" href="#trending" data-route="trending"><i class="ti ti-trending-up" aria-hidden="true"></i><span>Trending</span></a>
+          <a class="nav-item" href="#matches" data-route="matches"><i class="ti ti-device-gamepad-2" aria-hidden="true"></i><span>Match</span></a>
+          <a class="nav-item" href="#friends" data-route="friends"><i class="ti ti-users" aria-hidden="true"></i><span>Friends</span></a>
+          <a class="nav-item" href="#schedule" data-route="schedule"><i class="ti ti-calendar-week" aria-hidden="true"></i><span>Schedule</span></a>
+          <a class="nav-item" href="#messages" data-route="messages"><i class="ti ti-message-circle" aria-hidden="true"></i><span>Messages</span><span class="nav-count" id="message-count" hidden>2</span></a>
+        </nav>
+        <div class="secondary-navigation">
+          <a class="nav-item" href="#settings" data-route="settings"><i class="ti ti-settings" aria-hidden="true"></i><span>Settings</span></a>
+          <a class="nav-item logout-link" href="#account"><i class="ti ti-logout" aria-hidden="true"></i><span>LogOut</span></a>
+        </div>
+        <a class="profile-switch" href="#settings/profile"><span class="portrait" aria-hidden="true"></span><strong id="sidebar-name">Killua</strong><i class="ti ti-chevron-down" aria-hidden="true"></i></a>
+      </aside>
+      <div class="workspace">
+        <header class="topbar">
+          <form class="global-search" id="global-search" role="search"><i class="ti ti-search" aria-hidden="true"></i><input id="search-input" type="search" aria-label="Search matches, teams and news" placeholder="Find a match . . ." autocomplete="off" maxlength="100"><button class="search-clear icon-button" type="button" data-action="clear-search" aria-label="Clear search" hidden><i class="ti ti-x" aria-hidden="true"></i></button></form>
+          <div class="topbar-actions"><a class="icon-button notification-button" href="#notifications" aria-label="Notifications"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot" id="notification-dot"></span></a><a class="avatar-button portrait" href="#settings/profile" aria-label="Your profile"></a></div>
+        </header>
+        <main class="content" id="content" tabindex="-1" aria-label="Home"></main>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+      <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bird-a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#35e5d4"/><stop offset=".55" stop-color="#03a8ce"/><stop offset="1" stop-color="#6620ee"/></linearGradient><linearGradient id="bird-b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe54e"/><stop offset=".48" stop-color="#fd9b57"/><stop offset="1" stop-color="#eb3acc"/></linearGradient><linearGradient id="bird-c" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8bea44"/><stop offset=".5" stop-color="#24dfb0"/><stop offset="1" stop-color="#2184ed"/></linearGradient><symbol id="team-butterfly" viewBox="0 0 64 70"><path d="M32 37C13 30 11 5 8 3c19 2 20 12 22 25z" fill="url(#bird-c)"/><path d="M29 35C35 17 49 25 60 24c-10 5-11 14-24 15z" fill="url(#bird-b)"/><path d="M31 27C26 40 18 35 8 27c8 21 16 29 27 19z" fill="url(#bird-a)"/><path d="M30 35c-1 18 8 22 6 32-13-6-17-16-11-28z" fill="#b732dc"/><path d="M34 36c4 11 12 13 15 13-2 7-8 14-13 16 1-16-7-13-2-29z" fill="#6722e8"/></symbol><symbol id="team-peacock" viewBox="0 0 64 70"><path d="M29 26C13 19 10 39 10 47c1 9 11 19 27 20-9-14 0-28-8-41z" fill="url(#bird-a)"/><path d="M32 23C15 30 21 52 37 61c-6-14 1-22-5-38z" fill="url(#bird-b)"/><path d="M32 27c-4 19 7 29 18 35 1-9-11-19-18-35z" fill="url(#bird-c)"/><path d="M34 30c-5-16 14-14 8-24-3-4-9-3-11-1 10-1 8 6 3 9-9 5-10 12-5 18z" fill="url(#bird-b)"/><path d="m39 7 9 2-8 3" fill="#be55ce"/><circle cx="38" cy="7" r="1.5" fill="#27164e"/></symbol><symbol id="team-deer" viewBox="0 0 64 70"><path d="M31 7c24-4 33 32 16 49-15 15-37 7-41-12C2 29 12 14 23 13c-10 10-12 19-7 26 5-12 24-14 21-22z" fill="url(#bird-a)"/><path d="M29 9c23 7 32 31 16 44 6-15 1-23-10-23 10-5 5-14-6-21z" fill="url(#bird-b)"/><path d="M28 33c-4-8-11-2-8 4 3 7 14 6 16 12 3-10-1-17-8-16z" fill="#ffffff"/></symbol><symbol id="team-wolf" viewBox="0 0 64 70"><path d="m9 9 19 11 25-10-4 24 8 14-25 16L8 46l8-15z" fill="url(#bird-a)"/><path d="m19 29 13 10 13-10-6 21-7 5-7-5z" fill="#ffffff"/><path d="m21 33 7 4-6 2m21-6-7 4 6 2" fill="#452075"/></symbol></defs></svg>
+    </div>
+  </div>
+</body>
+</html>

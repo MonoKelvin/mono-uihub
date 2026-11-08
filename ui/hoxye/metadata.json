@@ -1,0 +1,17 @@
+{
+  "name": "Hoxye 电竞社区",
+  "slug": "hoxye",
+  "page_type": "software",
+  "tags": ["电竞", "赛事", "社区"],
+  "palette": ["#ffffff", "#6518ee", "#26232d"],
+  "created_at": "2026-11-08 21:49:19",
+  "updated_at": "2026-11-08 22:05:07",
+  "imageToUI": "https://dribbble.com/shots/14775845--Hoxye",
+  "history": [
+    {
+      "prompt": "还原这个UI软件。尽量根据UI现有内容实现其他模块的独立页面的功能逻辑，减少弹对话框。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz"]
+    }
+  ]
+}
