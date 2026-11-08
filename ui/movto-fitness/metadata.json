@@ -1,0 +1,17 @@
+{
+  "name": "Movto Fitness",
+  "slug": "movto-fitness",
+  "page_type": "component",
+  "tags": ["健身", "数据可视化", "运动追踪"],
+  "palette": ["#aca49c", "#e99123", "#3e3331"],
+  "created_at": "2026-11-08 08:35:23",
+  "updated_at": "2026-11-08 08:35:23",
+  "imageToUI": "https://dribbble.com/shots/26281589-UI-UX-for-a-Fitness-Product-Movto",
+  "history": [
+    {
+      "prompt": "还原这个UI组件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz"]
+    }
+  ]
+}

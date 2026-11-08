@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#aca49c">
+  <title>Movto — Daily Activity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <div class="canvas" aria-label="Movto fitness overview">
+      <div class="fitness-grid">
+        <section class="card hero-card" aria-labelledby="hero-title">
+          <img class="hero-photo" src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1000" alt="Portrait of an athlete in warm-toned clothing" fetchpriority="high">
+          <div class="hero-footer">
+            <h1 id="hero-title">UNLOCK YOUR<br>POTENTIAL</h1>
+            <button class="brand-button" id="open-motivation" aria-label="View your fitness goals">
+              <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M10 8h29l-5 7H15l-5 7-5-7zm6 11h17l-5 7H18L9 40l-5-7z" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <section class="card activity-card" aria-labelledby="activity-title">
+          <header class="card-header">
+            <h2 id="activity-title">DAILY ACTIVITY</h2>
+            <button class="more-button" id="activity-more" aria-label="Activity options" aria-haspopup="menu" aria-expanded="false" aria-controls="activity-menu"><i class="ti ti-dots" aria-hidden="true"></i></button>
+            <div class="popover activity-menu" id="activity-menu" role="menu" hidden>
+              <button role="menuitem" data-action="export-activity"><i class="ti ti-download" aria-hidden="true"></i>Export activity</button>
+              <button role="menuitem" data-action="clear-day"><i class="ti ti-rotate" aria-hidden="true"></i>Clear this day</button>
+              <button role="menuitem" data-action="undo-clear" disabled><i class="ti ti-arrow-back-up" aria-hidden="true"></i>Undo clear</button>
+            </div>
+          </header>
+          <div class="week-strip" role="group" aria-label="Activity for April 17 to 23">
+            <button class="day is-selected" data-day="0" aria-pressed="true" aria-label="Monday, April 17"><span class="day-number">17</span><span class="day-name">Mon</span></button>
+            <button class="day" data-day="1" aria-pressed="false" aria-label="Tuesday, April 18"><span class="day-number">18</span><span class="day-name">Tue</span></button>
+            <button class="day" data-day="2" aria-pressed="false" aria-label="Wednesday, April 19"><span class="day-number">19</span><span class="day-name">Wed</span></button>
+            <button class="day" data-day="3" aria-pressed="false" aria-label="Thursday, April 20"><span class="day-number">20</span><span class="day-name">Thu</span></button>
+            <button class="day" data-day="4" aria-pressed="false" aria-label="Friday, April 21"><span class="day-number">21</span><span class="day-name">Fri</span></button>
+            <button class="day" data-day="5" aria-pressed="false" aria-label="Saturday, April 22"><span class="day-number">22</span><span class="day-name">Sat</span></button>
+            <button class="day" data-day="6" aria-pressed="false" aria-label="Sunday, April 23"><span class="day-number">23</span><span class="day-name">Sun</span></button>
+          </div>
+          <div class="activity-rows" aria-live="polite">
+            <button class="activity-row" data-metric="steps" aria-label="Edit steps">
+              <span class="metric-icon metric-icon--steps"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+              <span class="metric-copy"><span class="metric-label">Steps</span><span class="metric-value"><span id="steps-value">22000</span><span class="metric-target"> / 22000</span></span></span>
+              <span class="metric-status" id="steps-status">Completed</span><span class="metric-percent" id="steps-percent">100%</span>
+            </button>
+            <button class="activity-row" data-metric="calories" aria-label="Edit calories">
+              <span class="metric-icon metric-icon--calories"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+              <span class="metric-copy"><span class="metric-label">Calories</span><span class="metric-value"><span id="calories-value">1420</span><span class="metric-target"> / 1680 Cal</span></span></span>
+              <span class="metric-status" id="calories-status">In Progress</span><span class="metric-percent" id="calories-percent">85%</span>
+            </button>
+            <button class="activity-row" data-metric="water" aria-label="Edit water intake">
+              <span class="metric-icon metric-icon--water"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+              <span class="metric-copy"><span class="metric-label">Water</span><span class="metric-value"><span id="water-value">2,2</span><span class="metric-target"> / 3 L</span></span></span>
+              <span class="metric-status" id="water-status">In Progress</span><span class="metric-percent" id="water-percent">73%</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="card heart-card" aria-label="Heart rate">
+          <div class="heart-dial">
+            <svg class="dial-svg" viewBox="0 0 240 240" aria-hidden="true"><g id="dial-ticks"></g><circle class="dial-inner" cx="120" cy="120" r="94"/></svg>
+            <div class="heart-reading">
+              <svg class="heart-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12.6 12 20l-7.5-7.4a4.8 4.8 0 0 1 0-6.8 4.8 4.8 0 0 1 6.8 0l.7.7.7-.7a4.8 4.8 0 0 1 6.8 0 4.8 4.8 0 0 1 0 6.8Z" fill="currentColor"/></svg>
+              <strong id="heart-value">120</strong><span>BPM</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card distance-card" aria-labelledby="distance-title">
+          <div class="distance-top">
+            <div><h2 id="distance-title">DISTANCE</h2><p class="distance-reading"><strong id="distance-value">3.37</strong><span>km</span></p></div>
+            <div class="avatars" aria-label="Running partners: Alex and Emma">
+              <img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1000" alt="Alex" loading="eager">
+              <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=160" alt="Emma" loading="eager">
+            </div>
+          </div>
+          <div class="distance-controls">
+            <button class="sport-button" id="sport-toggle" aria-label="Choose activity" aria-haspopup="menu" aria-expanded="false" aria-controls="sport-menu"><span class="shoe-icon"><i class="ti ti-shoe" aria-hidden="true"></i></span><span id="sport-label">Running</span></button>
+            <button class="round-button" id="open-workout" aria-label="View current workout"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+          <div class="popover sport-menu" id="sport-menu" role="menu" hidden>
+            <button role="menuitemradio" aria-checked="true" data-sport="Running"><i class="ti ti-shoe" aria-hidden="true"></i>Running<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+            <button role="menuitemradio" aria-checked="false" data-sport="Walking"><i class="ti ti-walk" aria-hidden="true"></i>Walking<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+            <button role="menuitemradio" aria-checked="false" data-sport="Cycling"><i class="ti ti-bike" aria-hidden="true"></i>Cycling<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+          </div>
+        </section>
+
+        <section class="card tracking-card" aria-label="Workout tracking">
+          <div class="tracking-top"><h2 id="tracking-status">Tracking<br>Now</h2><p class="timer-value" id="timer-value" role="timer" aria-label="Workout duration">00:18:16</p></div>
+          <div class="run-history" id="run-history" aria-label="Recent runs">
+            <button class="history-row" data-run="0"><span>5d ago</span><span>10.37km</span></button>
+            <button class="history-row" data-run="1"><span>9d ago</span><span>8.21km</span></button>
+            <button class="history-row" data-run="2"><span>14d ago</span><span>9.54km</span></button>
+          </div>
+          <div class="tracking-controls">
+            <button class="tracking-button stop-button" id="stop-run" aria-label="Finish workout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z" fill="currentColor"/></svg></button>
+            <button class="tracking-button pause-button" id="pause-run" aria-label="Pause workout" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg></button>
+          </div>
+        </section>
+
+        <section class="card weight-card" aria-labelledby="weight-title">
+          <header class="weight-header">
+            <span class="weight-icon"><i class="ti ti-scale-outline" aria-hidden="true"></i></span>
+            <div class="weight-heading"><span>WEIGHT LOSS</span><h2 id="weight-title"><span id="weight-goal">70</span> KG GOAL</h2></div>
+            <button class="more-button" id="weight-more" aria-label="Weight options" aria-haspopup="menu" aria-expanded="false" aria-controls="weight-menu"><i class="ti ti-dots" aria-hidden="true"></i></button>
+            <div class="popover weight-menu" id="weight-menu" role="menu" hidden>
+              <button role="menuitem" data-action="weight-goal"><i class="ti ti-target-arrow" aria-hidden="true"></i>Change goal</button>
+              <button role="menuitem" data-action="weight-table"><i class="ti ti-table" aria-hidden="true"></i><span id="table-menu-label">View as table</span></button>
+              <button role="menuitem" data-action="export-weight"><i class="ti ti-download" aria-hidden="true"></i>Export weights</button>
+            </div>
+          </header>
+          <div class="weight-visual">
+            <div class="weight-chart" id="weight-chart" role="group" tabindex="0" aria-label="Monthly weight, January to June. Use left and right arrow keys to select a month.">
+              <svg class="chart-svg" viewBox="0 0 740 430" preserveAspectRatio="none" aria-hidden="true">
+                <defs><linearGradient id="crosshair-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--chart-line)" stop-opacity="0"/><stop offset=".5" stop-color="var(--chart-line)" stop-opacity=".65"/><stop offset="1" stop-color="var(--chart-line)" stop-opacity="0"/></linearGradient></defs>
+                <g class="chart-grid"><path d="M54 28H740M54 106H740M54 184H740M54 262H740M54 340H740"/></g>
+                <path class="weight-line" d="M54 196C70 202 82 198 90 191.8C116 178 148 131 167 122C184 109 207 117 214 125.5C244 140 263 161 276 219C290 264 309 241 338 215.2C360 189 383 185 403 196C425 210 441 223 462 203.5C498 179 536 155 562 170C572 174 582 180 586 184C610 221 635 282 659 271C679 266 695 246 710 234.7C719 229 727 227 734 229"/>
+                <path class="chart-crosshair" id="chart-crosshair" d="M462 42V324"/>
+                <circle class="endpoint" cx="90" cy="191.8" r="8"/><circle class="endpoint" cx="710" cy="234.7" r="8"/>
+                <circle class="selected-point" id="selected-point" cx="462" cy="203.5" r="10"/>
+              </svg>
+              <div class="chart-y-axis" aria-hidden="true"><span style="--tick-y: 6.5116%">120</span><span style="--tick-y: 24.6512%">100</span><span style="--tick-y: 42.7907%">80</span><span style="--tick-y: 60.9302%">60</span><span style="--tick-y: 79.0698%">40</span></div>
+              <div class="chart-tooltip" id="chart-tooltip" role="status"><span id="tooltip-month">April,</span> <strong id="tooltip-weight">75</strong> <span>kg</span></div>
+              <div class="chart-months" aria-label="Select month">
+                <button data-month="0" aria-pressed="false">Jan</button><button data-month="1" aria-pressed="false">Feb</button><button data-month="2" aria-pressed="false">Mar</button><button class="is-selected" data-month="3" aria-pressed="true">Apr</button><button data-month="4" aria-pressed="false">May</button><button data-month="5" aria-pressed="false">Jun</button>
+              </div>
+            </div>
+            <div class="weight-table-wrap" id="weight-table-wrap" hidden>
+              <table class="weight-table"><caption class="sr-only">Monthly weight in kilograms</caption><thead><tr><th scope="col">Month</th><th scope="col">Weight</th><th scope="col">To goal</th></tr></thead><tbody id="weight-table-body"></tbody></table>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="layer" id="dialog-layer" hidden>
+        <div class="scrim" id="dialog-scrim"></div>
+        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+          <header class="dialog-header"><h2 id="dialog-title"></h2><button class="dialog-close" id="dialog-close" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <p class="dialog-description" id="dialog-description"></p>
+          <form id="entry-form" novalidate hidden>
+            <label for="entry-value" id="entry-label"></label>
+            <div class="entry-control"><input id="entry-value" name="value" type="text" inputmode="decimal" autocomplete="off" aria-describedby="entry-error"><span id="entry-unit"></span></div>
+            <p class="field-error" id="entry-error" role="alert"></p>
+            <button class="primary-button" type="submit">Save entry<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+          </form>
+          <div class="workout-details" id="workout-details" hidden><div><span>Distance</span><strong id="summary-distance"></strong></div><div><span>Duration</span><strong id="summary-duration"></strong></div><div><span>Pace</span><strong id="summary-pace"></strong></div></div>
+          <button class="primary-button" id="dialog-action" hidden>Keep moving<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span id="toast-copy"></span></div>
+    </div>
+  </main>
+</body>
+</html>
