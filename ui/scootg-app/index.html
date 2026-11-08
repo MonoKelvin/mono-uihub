@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#eeeeee">
+  <title>SCOOTG — Electric rides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <div class="canvas" aria-label="SCOOTG shopping app">
+      <div class="status-bar" aria-hidden="true">
+        <span>9:41</span>
+        <div class="status-icons"><span class="signal"><b></b><b></b><b></b><b></b></span><i class="ti ti-wifi"></i><span class="battery"></span></div>
+      </div>
+      <div class="app-content" id="app-content">
+        <section class="screen home-screen is-active" id="screen-home" aria-label="Home">
+          <header class="home-header">
+            <button class="icon-button" data-action="menu" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
+            <div class="brand" aria-label="SCOOTG">
+              <svg class="brand-mark" viewBox="0 0 76 60" aria-hidden="true"><path d="M35 6a24 24 0 0 0-20 38l4-6A17 17 0 0 1 36 12l9-6Z" fill="currentColor"/><path d="m47 4 10 11-19 13 11 6-36 20 15-20-10-7Z" fill="currentColor"/><path d="m45 30 28 1-27 5m-10 3 32 2-38 5m-8 2 31 2-40 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+              <span>SCOOTG</span>
+            </div>
+            <button class="icon-button notifications-button" data-action="notifications" aria-label="Notifications"><i class="ti ti-bell"></i><span class="notification-dot"></span></button>
+          </header>
+          <div class="search-row">
+            <label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="search-input" type="search" placeholder="What are you looking for?" aria-label="Search products" autocomplete="off"></label>
+            <button class="icon-button" data-action="filters" aria-label="Filter products"><i class="ti ti-adjustments"></i></button>
+          </div>
+          <button class="promo-card" id="promo-card" data-action="promo" aria-label="View Mi Electric Scooter Pro2, 15 percent off">
+            <span class="promo-ribbon" id="promo-discount">15% off</span>
+            <span class="promo-copy"><span id="promo-brand">Mi Electric</span><strong id="promo-name">Scooter Pro2</strong><b id="promo-price">$1350</b></span>
+            <img id="promo-image" class="promo-image" alt="Mi Electric Scooter Pro2" draggable="false">
+          </button>
+          <div class="promo-pagination" aria-label="Featured offers"><button class="is-active" data-action="offer" data-index="0" aria-label="First offer" aria-pressed="true"></button><button data-action="offer" data-index="1" aria-label="Second offer" aria-pressed="false"></button></div>
+          <section class="release-section" aria-labelledby="release-heading">
+            <div class="section-heading"><h1 id="release-heading">New Releases</h1><button class="text-button" data-action="catalog">View all</button></div>
+            <div class="release-window" id="release-window" tabindex="0" aria-label="New releases, use the left and right arrow keys"><div class="product-track" id="product-track"></div></div>
+            <div class="list-message" id="search-message" hidden><i class="ti ti-search" aria-hidden="true"></i><strong>No rides found</strong><span>Try another name or category.</span><button class="text-button" data-action="reset-search">Clear search</button></div>
+          </section>
+          <section class="category-section" aria-labelledby="category-heading">
+            <div class="section-heading"><h2 id="category-heading">Category</h2><button class="text-button" data-action="categories">View all</button></div>
+            <div class="category-tabs" id="category-tabs" aria-label="Product categories">
+              <button class="is-active" data-action="category" data-category="E-Scooter" aria-pressed="true">E-Scooter</button><button data-action="category" data-category="E-Bike" aria-pressed="false">E-Bike</button><button data-action="category" data-category="For Kids" aria-pressed="false">For Kids</button><button data-action="category" data-category="Accessories" aria-pressed="false">Accessories</button>
+            </div>
+          </section>
+        </section>
+        <section class="screen detail-screen" id="screen-detail" aria-label="Product details" hidden>
+          <header class="page-header detail-header"><button class="icon-button" data-action="back" aria-label="Go back"><i class="ti ti-chevron-left"></i></button><button class="icon-button heart-button" id="favorite-button" data-action="favorite" aria-label="Save product" aria-pressed="false"><i class="ti ti-heart"></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21 3.7 12.7A5.7 5.7 0 0 1 12 4.9a5.7 5.7 0 0 1 8.3 7.8Z" fill="currentColor"/></svg></button></header>
+          <div class="product-viewer">
+            <img id="detail-image" class="detail-image" alt="Mi Electric Scooter 3" draggable="false">
+            <button class="angle-button" id="angle-button" data-action="angle" aria-label="Change product view"><svg viewBox="0 0 360 100" aria-hidden="true"><defs><linearGradient id="orbit-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eeeeee"/><stop offset=".4" stop-color="#929292"/><stop offset="1" stop-color="#7d7d7d"/></linearGradient></defs><path d="M15 13C-16 53 45 80 157 84M345 13c31 40-30 67-142 71" fill="none" stroke="url(#orbit-fade)" stroke-width="2.8"/></svg><span id="angle-label">360°</span></button>
+          </div>
+          <div class="detail-information"><div class="product-heading"><h1 id="detail-name">Mi Electric Scooter 3</h1><button class="rating-button" data-action="reviews" aria-label="Read product reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.1 6.7 1-4.8 4.7 1.1 6.7-6-3.2-6 3.2 1.1-6.7L2.3 9.1l6.7-1Z" fill="currentColor"/></svg><span id="detail-rating">4.8</span></button></div>
+            <span class="price-label">MRP:</span><strong class="detail-price" id="detail-price">$ 1590</strong>
+            <dl class="specifications" id="specifications"></dl>
+            <div class="purchase-actions"><button class="button button-outline" id="add-cart-button" data-action="add-cart"><i class="ti ti-shopping-cart"></i><span>Add to cart</span></button><button class="button button-dark" data-action="buy-now"><i class="ti ti-credit-card"></i><span>Buy it now</span></button></div>
+          </div>
+        </section>
+        <section class="screen cart-screen" id="screen-cart" aria-label="My cart" hidden>
+          <header class="page-header"><button class="icon-button" data-action="back" aria-label="Go back"><i class="ti ti-chevron-left"></i></button><h1>My cart</h1><span class="header-spacer"></span></header>
+          <div class="cart-items" id="cart-items"></div>
+          <div class="list-message cart-empty" id="cart-empty" hidden><i class="ti ti-shopping-cart" aria-hidden="true"></i><strong>Your cart is empty</strong><span>Find your next everyday ride.</span><button class="button button-dark" data-action="home">Explore scooters</button></div>
+          <section class="order-info" id="order-info" aria-labelledby="order-heading"><h2 id="order-heading">Order info</h2><dl><div><dt>Subtotal</dt><dd id="cart-subtotal">$1710.00</dd></div><div><dt>Shipping cost</dt><dd id="cart-shipping">+ $10.00</dd></div><div class="total-row"><dt>Total</dt><dd id="cart-total">$1720.00</dd></div></dl><button class="button button-dark checkout-button" id="checkout-button" data-action="checkout">Checkout</button></section>
+        </section>
+        <section class="screen utility-screen" id="screen-utility" aria-label="Account" hidden><header class="page-header"><button class="icon-button" data-action="back" aria-label="Go back"><i class="ti ti-chevron-left"></i></button><h1 id="utility-title">Account</h1><span class="header-spacer"></span></header><div class="utility-content" id="utility-content"></div></section>
+      </div>
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <svg class="nav-surface" viewBox="0 0 390 98" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30Q0 8 25 8H133Q157 8 160 27C164 67 226 67 230 27Q233 8 257 8H365Q390 8 390 30V98H0Z" fill="#ffffff"/></svg>
+        <button class="nav-item is-active" data-action="home" data-nav="home" aria-current="page"><span class="nav-icon"><i class="ti ti-home"></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-8 9 8v10a2 2 0 0 1-2 2h-4v-8H9v8H5a2 2 0 0 1-2-2Z" fill="currentColor"/></svg></span><span>Home</span></button>
+        <button class="nav-item" data-action="rent" data-nav="rent"><span class="nav-icon"><i class="ti ti-scooter"></i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="18" r="4" fill="currentColor"/><circle cx="19" cy="18" r="4" fill="currentColor"/><path d="M8 17h9l-2-13h-4v3h2l1.5 10Z" fill="currentColor"/></svg></span><span>Rent</span></button>
+        <button class="cart-nav-button" data-action="cart" data-nav="cart" aria-label="Open cart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2H1v3h3l3 12h12l3-11H6l-.5-2A2 2 0 0 0 3 2Z" fill="currentColor"/><circle cx="9" cy="21" r="2" fill="currentColor"/><circle cx="18" cy="21" r="2" fill="currentColor"/></svg><span class="cart-badge" id="cart-badge" hidden></span></button>
+        <button class="nav-item" data-action="history" data-nav="history"><span class="nav-icon"><i class="ti ti-route"></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2a5 5 0 0 0-5 5c0 4 5 9 5 9s5-5 5-9a5 5 0 0 0-5-5Zm10 7a5 5 0 0 0-5 5c0 4 5 9 5 9s5-5 5-9a5 5 0 0 0-5-5Z" fill="currentColor"/></svg></span><span>History</span></button>
+        <button class="nav-item" data-action="account" data-nav="account"><span class="nav-icon"><i class="ti ti-user"></i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="4" fill="currentColor"/><path d="M3 22v-3a9 9 0 0 1 18 0v3Z" fill="currentColor"/></svg></span><span>Account</span></button>
+      </nav>
+      <div class="home-indicator" aria-hidden="true"></div>
+      <div class="layer" id="panel-layer" hidden>
+        <div class="scrim" data-action="close-panel"></div>
+        <section class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" tabindex="-1"><header class="panel-header"><h2 id="panel-title"></h2><button class="icon-button" data-action="close-panel" aria-label="Close"><i class="ti ti-x"></i></button></header><div class="panel-body" id="panel-body"></div></section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span id="toast-message"></span></div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "SCOOTG 电动滑板车",
+  "slug": "scootg-app",
+  "page_type": "app",
+  "tags": ["电商", "出行", "滑板车"],
+  "palette": ["#eeeeee", "#ffffff", "#1d1d1d"],
+  "created_at": "2026-11-08 13:13:42",
+  "updated_at": "2026-11-08 13:27:18",
+  "imageToUI": "https://dribbble.com/shots/17412526-E-Scooter-App-Electric-Scooter",
+  "history": [
+    {
+      "prompt": "还原这个app",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    }
+  ]
+}
