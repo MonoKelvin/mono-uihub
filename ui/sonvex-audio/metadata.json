@@ -5,13 +5,42 @@
   "tags": ["音频", "设备管理", "数据可视化"],
   "palette": ["#f2f2f2", "#9c87e7", "#080808"],
   "created_at": "2026-11-08 11:49:09",
-  "updated_at": "2026-11-08 11:49:09",
+  "updated_at": "2026-11-08 13:09:52",
   "imageToUI": "https://dribbble.com/shots/27856003-SONVEX-Smart-Audio-Dashboard-Premium-Sound-Experience-UI",
   "history": [
     {
-      "prompt": "还原这个UI软件。参考来源：https://dribbble.com/shots/27856003-SONVEX-Smart-Audio-Dashboard-Premium-Sound-Experience-UI",
-      "model": "claude-sonnet-4-6[1M]",
+      "prompt": "还原这个UI软件",
+      "model": "gpt-6.1-sol",
       "skills": ["mono-ui-prototype", "oil-ui", "dataviz"]
+    },
+    {
+      "prompt": "进入到 sonvex-audio 项目，图片请使用真实的耳机图片，不要svg绘制。首屏的图片是一个耳机两侧有一个丝带轻链着飘逸，耳机请生成或者获取一些比较高级简约的图片",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "A single premium matte graphite over-ear headphone with smooth oval earcups, slim brushed aluminium yokes and a black leather headband, floating at a three-quarter angle tilted gently clockwise. One narrow black satin ribbon loosely touches both earcups, with its two long ends drifting outward to the left and right in broad graceful S-curves. The complete headphone is centered in the right two thirds of a horizontal composition, every part of the headphone is visible, the ribbons are delicate and secondary, soft directional studio light with cool silver edge highlights, no logo or lettering.",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A single premium wireless over-ear headphone, matte graphite black oval earcups with a smooth unbranded shell, slim brushed dark aluminium yokes, padded black leather headband and soft black leather cushions. Upright front three-quarter product view with the headband and both earcups fully visible, centered and filling three quarters of the frame, isolated on transparent background. Soft upper-left studio light with subtle silver edge highlights. The product is standalone with no cables, accessories, ribbon, logo or text.",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A single luxury wireless over-ear headphone, satin silver aluminium oval earcups with smooth unbranded shells, slender silver metal yokes, an ivory fabric padded headband and ivory memory foam cushions. Upright front three-quarter product view with the complete headband and both earcups fully visible, centered and filling three quarters of the frame, isolated on transparent background. Soft upper-left studio light with restrained natural metal reflections. Minimal industrial design, no cables, accessories, ribbon, logo or text.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "我说的是 headphones_PNG101921.png 这个要替换掉，换成真实耳机",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "要抠图后的",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
     }
   ]
 }
