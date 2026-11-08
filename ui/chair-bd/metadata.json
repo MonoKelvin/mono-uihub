@@ -1,0 +1,32 @@
+{
+  "name": "Chair.Bd 家具产品页",
+  "slug": "chair-bd",
+  "page_type": "website",
+  "tags": ["家具", "电商", "产品展示"],
+  "palette": ["#ffffff", "#dff3e9", "#493f5b"],
+  "created_at": "2026-11-07 23:10:11",
+  "updated_at": "2026-11-08 00:04:55",
+  "imageToUI": "https://dribbble.com/shots/13858750-Product-Landing-Concept",
+  "history": [
+    {
+      "prompt": "还原UI原型",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "run"]
+    },
+    {
+      "prompt": "位置偏差有点大，请调整。统一整页缩放基准，重新校准主椅、参数区、侧视展示、评价与产品轮播的位置。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "run"]
+    },
+    {
+      "prompt": "调整，让网页宽度撑满浏览器左右宽度。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "run"]
+    },
+    {
+      "prompt": "可以调整首屏的尺寸，尽量让内容展示完全。首屏单独按高度适配，保留满宽和自然纵向滚动。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "run"]
+    }
+  ]
+}
