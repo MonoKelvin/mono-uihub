@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#071324">
+  <title>Aceagency — Sidebar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="icon-brand" viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="25" fill="currentColor"/>
+        <path d="M24.9 10.8c-1.4 0-2.3.7-2.9 2L11 34.6c-1.2 2.3.1 4.2 2.6 4.2h8.1l2.7-4.9h-6.6l7.1-14.7 7.4 14.7h-5l2.7 4.9h6.2c2.5 0 3.6-2 2.4-4.3L28 12.8c-.6-1.3-1.6-2-3.1-2Z" fill="var(--brand-ink)"/>
+      </symbol>
+      <symbol id="icon-offers" viewBox="0 0 24 24">
+        <rect x="3" y="7" width="18" height="15" rx="5" fill="currentColor"/>
+        <path d="M8 7V5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v2" fill="none" stroke="var(--icon-highlight)" stroke-width="1.5"/>
+        <path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3c-4.8 2.5-13.2 2.5-18 0Z" fill="var(--icon-highlight)"/>
+        <rect x="10" y="11" width="4" height="5" rx="1.5" fill="currentColor"/>
+        <rect x="11" y="12" width="2" height="2" rx=".6" fill="var(--icon-highlight)"/>
+      </symbol>
+      <symbol id="icon-tasks" viewBox="0 0 24 24">
+        <rect x="4" y="3" width="16" height="20" rx="5" fill="currentColor"/>
+        <rect x="8" y="1" width="8" height="5" rx="2.5" fill="var(--icon-highlight)"/>
+        <path d="M8.5 11h7m-7 4h7m-7 4h4" fill="none" stroke="var(--icon-highlight)" stroke-width="1.5" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-discounts" viewBox="0 0 24 24">
+        <path d="m3.1 11.2 7.7-7.7A5 5 0 0 1 14.3 2H19a3 3 0 0 1 3 3v4.7a5 5 0 0 1-1.5 3.5l-7.7 7.7a3 3 0 0 1-4.2 0l-5.5-5.5a3 3 0 0 1 0-4.2Z" fill="currentColor"/>
+        <circle cx="16.3" cy="7.7" r="2.7" fill="var(--icon-highlight)"/>
+        <path d="m6.5 13.5 4 4" fill="none" stroke="var(--icon-highlight)" stroke-width="1.5" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-case" viewBox="0 0 24 24">
+        <path d="M5 10h14v8c0 3.7-14 3.7-14 0Z" fill="currentColor"/>
+        <path d="m2 7.4 8.1-4.8a3.7 3.7 0 0 1 3.8 0L22 7.4a2.5 2.5 0 0 1 0 4.2l-8.1 4.8a3.7 3.7 0 0 1-3.8 0L2 11.6a2.5 2.5 0 0 1 0-4.2Z" fill="var(--icon-highlight)"/>
+      </symbol>
+      <symbol id="icon-security" viewBox="0 0 24 24">
+        <path d="m4 4 6-2a6 6 0 0 1 4 0l6 2v9c0 4-4.5 7-8 9-3.5-2-8-5-8-9Z" fill="currentColor"/>
+        <path d="M15 9a3 3 0 1 0-4.5 2.6V15a1.5 1.5 0 0 0 3 0v-3.4A3 3 0 0 0 15 9Z" fill="var(--icon-highlight)"/>
+      </symbol>
+      <symbol id="icon-ability" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="currentColor"/>
+        <path d="m13.4 4.8-7 8.2h4l-.8 6.2 8-9h-4.9Z" fill="var(--icon-highlight)"/>
+      </symbol>
+      <symbol id="icon-left" viewBox="0 0 24 24"><path d="m14.5 7-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-right" viewBox="0 0 24 24"><path d="m9.5 7 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5Z" fill="currentColor"/></symbol>
+      <symbol id="icon-collapse" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5Z" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+  <main class="stage">
+    <div class="canvas" aria-label="Aceagency navigation">
+      <aside class="sidebar sidebar--wide" data-collapsed="false" aria-label="Expanded navigation">
+        <div class="sidebar-surface" aria-hidden="true"></div>
+        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <button class="collapse-control" type="button" aria-label="Collapse navigation" aria-expanded="true"><svg><use href="#icon-collapse"/></svg></button>
+        <button class="brand" type="button" aria-label="Toggle navigation" aria-expanded="true">
+          <svg class="brand-mark"><use href="#icon-brand"/></svg>
+          <span class="brand-name wide-content">Aceagency.Design</span>
+        </button>
+        <div class="header-divider" aria-hidden="true"></div>
+        <h2 class="section-label menu-label">MENU</h2>
+        <nav class="navigation" aria-label="Main menu"></nav>
+        <div class="messages-divider" aria-hidden="true"></div>
+        <div class="messages-heading">
+          <h2 class="section-label">MESSAGES</h2>
+          <div class="message-pagination wide-content">
+            <button class="page-prev" type="button" aria-label="Previous contacts" disabled><svg><use href="#icon-left"/></svg></button>
+            <button class="page-next" type="button" aria-label="Next contacts"><svg><use href="#icon-right"/></svg></button>
+          </div>
+        </div>
+        <section class="message-widget" aria-label="Recent messages">
+          <div class="message-surface" aria-hidden="true"></div>
+          <div class="recent-contacts"></div>
+          <button class="all-messages" type="button" aria-label="Show recent messages" aria-pressed="true"><svg><use href="#icon-down"/></svg><span class="wide-content">All messages</span></button>
+        </section>
+        <div class="profile">
+          <span class="avatar profile-avatar"><img alt="" src="https://i.pravatar.cc/120?img=13" referrerpolicy="no-referrer"></span>
+          <span class="profile-copy wide-content"><strong>AmirBagian</strong><span>Product Designer</span></span>
+        </div>
+      </aside>
+      <aside class="sidebar sidebar--rail" data-collapsed="true" data-preview="true" aria-label="Compact navigation">
+        <div class="sidebar-surface" aria-hidden="true"></div>
+        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <button class="collapse-control" type="button" aria-label="Collapse navigation" aria-expanded="false" tabindex="-1"><svg><use href="#icon-collapse"/></svg></button>
+        <button class="brand" type="button" aria-label="Expand navigation" aria-expanded="false"><svg class="brand-mark"><use href="#icon-brand"/></svg><span class="brand-name wide-content">Aceagency.Design</span></button>
+        <div class="header-divider" aria-hidden="true"></div>
+        <h2 class="section-label menu-label">MENU</h2>
+        <nav class="navigation" aria-label="Main menu"></nav>
+        <div class="messages-divider" aria-hidden="true"></div>
+        <div class="messages-heading">
+          <h2 class="section-label">MESSAGES</h2>
+          <div class="message-pagination wide-content" inert>
+            <button class="page-prev" type="button" aria-label="Previous contacts" disabled><svg><use href="#icon-left"/></svg></button>
+            <button class="page-next" type="button" aria-label="Next contacts"><svg><use href="#icon-right"/></svg></button>
+          </div>
+        </div>
+        <section class="message-widget" aria-label="Recent messages">
+          <div class="message-surface" aria-hidden="true"></div>
+          <div class="recent-contacts"></div>
+          <button class="all-messages" type="button" aria-label="Show recent messages" aria-pressed="true"><svg><use href="#icon-down"/></svg><span class="wide-content">All messages</span></button>
+        </section>
+        <div class="profile">
+          <span class="avatar profile-avatar"><img alt="" src="https://i.pravatar.cc/120?img=13" referrerpolicy="no-referrer"></span>
+          <span class="profile-copy wide-content"><strong>AmirBagian</strong><span>Product Designer</span></span>
+        </div>
+      </aside>
+      <p class="announcement" role="status" aria-live="polite"></p>
+    </div>
+  </main>
+</body>
+</html>

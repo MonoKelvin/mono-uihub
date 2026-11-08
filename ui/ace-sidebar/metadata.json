@@ -1,0 +1,22 @@
+{
+  "name": "Aceagency 玻璃侧边导航",
+  "slug": "ace-sidebar",
+  "page_type": "component",
+  "tags": ["导航", "消息", "Windows 11"],
+  "palette": ["#111820", "#0863f7", "#071324"],
+  "created_at": "2026-11-08 15:26:42",
+  "updated_at": "2026-11-08 16:28:47",
+  "imageToUI": "https://uiiiuiii.com/inspiration/1616421691.html",
+  "history": [
+    {
+      "prompt": "还原这个UI组件。整个的背景图片可以使用经典的Windows11桌面壁纸。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "animate"]
+    },
+    {
+      "prompt": "删除这些交互的对话框不需要；请换成经典蓝色的那个壁纸，之前都是对的；组件需要毛玻璃效果；毛玻璃效果没有了，请修复",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "animate"]
+    }
+  ]
+}
