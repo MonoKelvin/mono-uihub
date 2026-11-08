@@ -1,0 +1,17 @@
+{
+  "name": "阡途 · 旅行探索",
+  "slug": "verdant-voyage",
+  "page_type": "software",
+  "tags": ["旅游", "行程", "古迹"],
+  "palette": ["#e9e5db", "#46533b", "#a98952"],
+  "created_at": "2026-11-08 20:56:41",
+  "updated_at": "2026-11-08 21:23:43",
+  "imageToUI": "./assets/source-verdant-voyage.jpg",
+  "history": [
+    {
+      "prompt": "仔细查看这个图片的风格、特色。设计一个旅游软件，这个软件采用和图片一样的配色和装饰图形等",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    }
+  ]
+}

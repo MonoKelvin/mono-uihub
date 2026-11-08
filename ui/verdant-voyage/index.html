@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e5db">
+  <meta name="description" content="阡途，探索文明与自然交汇的目的地，编排属于自己的旅程。">
+  <title>阡途 · 旅行探索</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" id="travel-app">
+      <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <pattern id="stone-weave" width="32" height="32" patternUnits="userSpaceOnUse">
+            <path d="M0 16 16 0 32 16 16 32Z M8 16 16 8 24 16 16 24Z" fill="none" stroke="currentColor" stroke-width="1"/>
+          </pattern>
+          <symbol id="bookmark" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-4-6 4Z"/></symbol>
+          <symbol id="brand-mark" viewBox="0 0 48 48"><path d="m24 2 22 22-22 22L2 24Zm0 8L10 24l14 14 14-14Z" fill="currentColor" fill-rule="evenodd"/><path d="M16 28v-8h8v-8h8v16h-8v8h-8Z" fill="currentColor"/></symbol>
+        </defs>
+      </svg>
+
+      <aside class="sidebar" aria-label="主导航">
+        <a class="brand" href="./index.html" aria-label="阡途首页">
+          <svg aria-hidden="true"><use href="#brand-mark"/></svg>
+          <span><strong>阡途</strong><small>Q I A N T U</small></span>
+        </a>
+        <div class="nav-label">去往远方</div>
+        <nav class="navigation">
+          <span class="nav-indicator" aria-hidden="true"></span>
+          <button class="nav-item is-active" data-view="discover" aria-current="page"><i class="ti ti-compass" aria-hidden="true"></i><span>探索目的地</span></button>
+          <button class="nav-item" data-view="itinerary"><i class="ti ti-route" aria-hidden="true"></i><span>我的行程</span></button>
+          <button class="nav-item" data-view="saved"><svg class="bookmark-icon" aria-hidden="true"><use href="#bookmark"/></svg><span>心愿清单</span><span class="nav-count" id="saved-count">1</span></button>
+        </nav>
+        <div class="sidebar-landmark" aria-hidden="true">
+          <svg viewBox="0 0 160 195" fill="none">
+            <g stroke="currentColor" stroke-width="1.1">
+              <path d="M15 77 80 13l65 64-65 39Z M24 77 80 23l56 54-56 31Z M39 75 80 36l41 39-41 23Z"/>
+              <path d="M31 90v66M129 90v66M41 96v51M119 96v51M41 147h78M35 155h90M29 163h102M23 171h114M17 179h126"/>
+              <path d="M59 83v49M67 93v30M76 79v63M86 87v43M97 80v36"/>
+              <path d="m25 62 5 5 5-5 5 5 5-5M112 57l5 5 5-5 5 5 5-5"/>
+            </g>
+            <g fill="currentColor"><path d="M17 160c-8-15-1-25 7-28 2 12-2 21-7 28ZM23 171c-1-15 9-22 20-21-4 12-11 19-20 21ZM131 150c-4-15 3-22 11-26 1 12-3 19-11 26Z"/></g>
+            <path d="M15 181c-1-32 4-42 18-55M139 179c-12-20-11-38 2-57" stroke="currentColor"/>
+          </svg>
+          <div class="landmark-caption">文明与自然之间</div>
+        </div>
+        <div class="sidebar-bottom">
+          <button class="quiet-button preferences-button" id="preferences-open"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i><span>旅行偏好</span></button>
+          <div class="identity"><span class="avatar">予</span><div><strong>林予</strong><span>寻迹旅行者</span></div><svg class="identity-diamond" aria-hidden="true"><use href="#brand-mark"/></svg></div>
+        </div>
+      </aside>
+
+      <header class="topbar">
+        <div class="breadcrumb"><span>旅行探索</span><i class="ti ti-chevron-right" aria-hidden="true"></i><strong id="view-label">目的地</strong></div>
+        <form class="search-form" id="search-form" role="search">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input id="search" type="search" placeholder="寻找一处值得出发的地方" aria-label="搜索目的地" autocomplete="off" maxlength="80">
+          <kbd>/</kbd>
+        </form>
+        <div class="topbar-end"><span class="edition"><span class="tiny-diamond" aria-hidden="true"></span>高棉石迹</span><button class="icon-button" id="export-top" aria-label="导出行程" title="导出行程"><i class="ti ti-download" aria-hidden="true"></i></button></div>
+      </header>
+
+      <main class="discover" id="discover-panel">
+        <div class="discover-heading">
+          <div><span class="eyebrow" id="section-label">文化与自然</span><h1 id="view-title">高棉石迹</h1></div>
+          <div class="region-control">
+            <button id="region-toggle" class="region-toggle" aria-expanded="false" aria-controls="region-menu" aria-haspopup="listbox"><i class="ti ti-map-pin" aria-hidden="true"></i><span id="region-label">所有区域</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <div class="select-panel" id="region-menu" role="listbox" aria-label="目的地区域" hidden>
+              <button role="option" data-region="all" aria-selected="true">所有区域<i class="ti ti-check" aria-hidden="true"></i></button>
+              <button role="option" data-region="angkor" aria-selected="false">吴哥窟区<i class="ti ti-check" aria-hidden="true"></i></button>
+              <button role="option" data-region="thom" aria-selected="false">吴哥王城<i class="ti ti-check" aria-hidden="true"></i></button>
+              <button role="option" data-region="outer" aria-selected="false">古迹外圈<i class="ti ti-check" aria-hidden="true"></i></button>
+              <button role="option" aria-selected="false" disabled><span>洞里萨湖<small>即将开放</small></span><i class="ti ti-lock" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <section class="hero" aria-label="精选目的地" id="hero">
+          <img class="hero-image" id="hero-image" src="./assets/angkor-wat.webp" alt="吴哥遗迹的石构建筑">
+          <div class="hero-shade" aria-hidden="true"></div>
+          <div class="media-error" id="hero-error" hidden><i class="ti ti-photo-off" aria-hidden="true"></i><span>照片暂时无法加载</span><button class="light-link" id="image-retry">重新加载</button></div>
+          <svg class="hero-frieze" viewBox="0 0 630 44" fill="none" aria-hidden="true"><path d="m-20 22 22-22 22 22L2 44Zm44 0L46 0l22 22-22 22Zm44 0L90 0l22 22-22 22Zm44 0L134 0l22 22-22 22Zm44 0L178 0l22 22-22 22Zm44 0L222 0l22 22-22 22Zm44 0L266 0l22 22-22 22Zm44 0L310 0l22 22-22 22Zm44 0L354 0l22 22-22 22Zm44 0L398 0l22 22-22 22Zm44 0L442 0l22 22-22 22Zm44 0L486 0l22 22-22 22Zm44 0L530 0l22 22-22 22Zm44 0L574 0l22 22-22 22Zm44 0L618 0l22 22-22 22Z" stroke="currentColor"/><path d="M0 22h630" stroke="currentColor"/></svg>
+          <div class="hero-head"><span class="hero-category"><span class="tiny-diamond" aria-hidden="true"></span><span id="hero-category">世界遗产 · 石迹</span></span><button class="icon-button on-image save-button" id="hero-save" aria-label="收藏吴哥窟" aria-pressed="false"><svg class="bookmark-icon" aria-hidden="true"><use href="#bookmark"/></svg></button></div>
+          <div class="hero-content"><span class="hero-location" id="hero-location">暹粒，柬埔寨</span><h2 id="hero-title">吴哥窟</h2><span class="hero-english" id="hero-english">ANGKOR WAT</span><p id="hero-description">穿过石廊，等一场千年的日出。</p><button class="hero-detail" id="detail-open">探索此地<i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+          <div class="hero-bottom"><span class="hero-coordinate" id="hero-coordinate">13°24′45″N · 103°52′02″E</span><div class="hero-pagination"><span id="hero-position">01 <span>/ 03</span></span><button class="icon-button on-image" id="hero-prev" aria-label="上一个目的地" disabled><i class="ti ti-arrow-left" aria-hidden="true"></i></button><button class="icon-button on-image" id="hero-next" aria-label="下一个目的地"><i class="ti ti-arrow-right" aria-hidden="true"></i></button></div></div>
+        </section>
+
+        <section class="destinations" aria-labelledby="destinations-title">
+          <div class="destinations-heading"><h2 id="destinations-title">附近值得去</h2><div class="category-tabs" role="group" aria-label="目的地类型"><button data-category="all" class="is-selected" aria-pressed="true">全部</button><button data-category="culture" aria-pressed="false">石迹</button><button data-category="nature" aria-pressed="false">林野</button></div></div>
+          <div class="destination-grid" id="destination-grid" aria-live="polite"></div>
+          <div class="empty-state" id="empty-state" hidden><i class="ti ti-map-search" aria-hidden="true"></i><div><strong id="empty-title">还没有找到这处目的地</strong><p id="empty-description">换个关键词，或看看所有目的地。</p></div><button class="text-button" id="filters-reset">查看全部<i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+        </section>
+        <div class="discover-footer"><span><span class="tiny-diamond" aria-hidden="true"></span>慢一点，看见更多</span><span id="result-count">3 处目的地 · 暹粒</span></div>
+      </main>
+
+      <aside class="planner" aria-labelledby="planner-title">
+        <div class="planner-heading"><h2 id="planner-title">我的旅程</h2><button class="icon-button" id="journey-edit" aria-label="编辑旅程" title="编辑旅程"><i class="ti ti-pencil" aria-hidden="true"></i></button></div>
+        <div class="journey-card">
+          <svg class="journey-pattern" viewBox="0 0 160 160" aria-hidden="true"><path d="m80 4 76 76-76 76L4 80Zm0 17L21 80l59 59 59-59Zm0 17L38 80l42 42 42-42Z" fill="none" stroke="currentColor" stroke-width="1"/><path d="M52 101V67h18V49h28v34H80v18Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="journey-card-top"><span class="eyebrow">下一段旅程</span><span class="journey-days">3 天</span></div>
+          <h3 id="journey-name">暹粒行记</h3>
+          <div class="journey-dates" id="journey-dates">11 月 18 日 — 20 日</div>
+          <div class="journey-card-bottom"><span><i class="ti ti-users" aria-hidden="true"></i><span id="traveler-count">2 位旅行者</span></span><span class="tiny-diamond" aria-hidden="true"></span></div>
+        </div>
+        <div class="day-tabs" id="day-tabs" role="tablist" aria-label="行程日期"><span class="day-indicator" aria-hidden="true"></span></div>
+        <div class="day-heading"><span id="day-caption">第 1 天 · 石迹漫步</span><span id="day-count">2 处</span></div>
+        <ol class="itinerary-list" id="itinerary-list" aria-label="当日目的地"></ol>
+        <button class="add-place" id="browse-places"><span class="add-place-icon"><i class="ti ti-plus" aria-hidden="true"></i></span><span>寻找下一个目的地</span></button>
+        <div class="planner-footer"><div class="trip-summary"><span><i class="ti ti-walk" aria-hidden="true"></i><span id="trip-duration">约 4 小时</span></span><span id="trip-places">2 处目的地</span></div><button class="primary-button" id="add-to-trip"><i class="ti ti-plus" aria-hidden="true"></i><span>加入第 1 天</span></button><button class="export-button" id="export-journey"><i class="ti ti-file-download" aria-hidden="true"></i><span>导出我的旅程</span></button></div>
+      </aside>
+
+      <div class="layer" id="dialog-layer" inert aria-hidden="true">
+        <div class="scrim" id="dialog-scrim"></div>
+        <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+          <button class="icon-button dialog-close" id="dialog-close" aria-label="关闭"><i class="ti ti-x" aria-hidden="true"></i></button>
+          <div id="dialog-content"></div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </div>
+  </div>
+</body>
+</html>
