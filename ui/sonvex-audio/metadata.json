@@ -1,0 +1,17 @@
+{
+  "name": "SONVEX 智能音频控制台",
+  "slug": "sonvex-audio",
+  "page_type": "software",
+  "tags": ["音频", "设备管理", "数据可视化"],
+  "palette": ["#f2f2f2", "#9c87e7", "#080808"],
+  "created_at": "2026-11-08 11:49:09",
+  "updated_at": "2026-11-08 11:49:09",
+  "imageToUI": "https://dribbble.com/shots/27856003-SONVEX-Smart-Audio-Dashboard-Premium-Sound-Experience-UI",
+  "history": [
+    {
+      "prompt": "还原这个UI软件。参考来源：https://dribbble.com/shots/27856003-SONVEX-Smart-Audio-Dashboard-Premium-Sound-Experience-UI",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz"]
+    }
+  ]
+}

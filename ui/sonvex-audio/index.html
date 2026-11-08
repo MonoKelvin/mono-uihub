@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#cecece">
+  <meta name="description" content="SONVEX — your sound experience, in control.">
+  <title>SONVEX — Your Sound, In Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css"></noscript>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" aria-label="SONVEX sound dashboard">
+      <div class="app-shell">
+        <header class="app-header">
+          <button class="brand" data-action="overview" aria-label="SONVEX overview">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="18" fill="currentColor"/><ellipse cx="24" cy="24" rx="25" ry="15" transform="rotate(46 24 24)" fill="#f2f2f2"/></svg>
+          </button>
+          <nav class="navigation" aria-label="Main navigation">
+            <span class="nav-indicator" aria-hidden="true"></span>
+            <button class="nav-item is-active" data-view="overview" aria-current="page">Overview</button>
+            <button class="nav-item" data-view="devices">Devices</button>
+            <button class="nav-item" data-view="activity">Activity</button>
+            <button class="nav-item" data-view="sound">Sound</button>
+            <button class="nav-item" data-view="support">Support</button>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-button" data-action="search" aria-label="Search devices and sound settings"><i class="ti ti-search" aria-hidden="true"></i></button>
+            <button class="icon-button notification-button" data-action="notifications" aria-label="Notifications" aria-expanded="false"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot" hidden></span></button>
+            <button class="account" data-action="account" aria-label="Alex Morgan account menu" aria-expanded="false">
+              <img class="avatar" src="https://i.pravatar.cc/120?u=alex-morgan" alt="" referrerpolicy="no-referrer">
+              <span class="account-copy"><span class="account-name">Alex Morgan</span><span>Premium Member</span></span>
+              <i class="ti ti-chevron-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </header>
+
+        <div class="dashboard" id="overview-view">
+          <section class="top-row" aria-label="Sound experience and connected device">
+            <article class="hero card">
+              <svg class="hero-ribbons" viewBox="0 0 760 380" preserveAspectRatio="none" aria-hidden="true">
+                <defs><linearGradient id="ribbon-light"><stop stop-color="#0c1014"/><stop offset=".48" stop-color="#454950"/><stop offset=".7" stop-color="#05070a"/><stop offset="1" stop-color="#7b838d"/></linearGradient></defs>
+                <path d="M123 276 C223 312 217 226 315 222 C404 218 446 275 519 229 C575 194 602 168 652 187 C695 203 725 210 790 166 L790 176 C734 227 698 222 651 207 C596 192 571 223 528 251 C446 301 392 245 322 243 C232 242 222 330 123 285 Z" fill="url(#ribbon-light)"/>
+                <path d="M534 93 C590 56 616 121 671 100 C712 86 731 61 780 53 L785 69 C730 66 709 112 671 112 C615 122 587 67 534 97 Z" fill="url(#ribbon-light)"/>
+              </svg>
+              <img class="hero-headphones" src="https://pngimg.com/uploads/headphones/headphones_PNG101921.png" alt="Black over-ear headphones" referrerpolicy="no-referrer" fetchpriority="high">
+              <div class="hero-copy">
+                <h1>Your Sound<br>Experience,<br><em>In Control.</em></h1>
+                <button class="explore-button" data-action="devices">Explore Devices<span><i class="ti ti-chevron-right" aria-hidden="true"></i></span></button>
+              </div>
+            </article>
+
+            <article class="device-card card">
+              <div class="card-heading">
+                <h2>Your Device</h2>
+                <div class="device-status-actions"><span class="connection-badge" id="connection-status"><span></span>Connected</span><button class="icon-button small" data-action="device-menu" aria-label="Device options" aria-expanded="false"><i class="ti ti-dots-vertical" aria-hidden="true"></i></button></div>
+              </div>
+              <div class="device-overview">
+                <h3 id="device-name">Nova Pro</h3>
+                <p>Wireless Noise Cancelling<br>Headphones</p>
+                <img src="https://pngimg.com/uploads/headphones/headphones_PNG7659.png" alt="Nova Pro black headphones" referrerpolicy="no-referrer">
+              </div>
+              <div class="battery-section">
+                <div class="battery-label"><span><i class="ti ti-battery-3" aria-hidden="true"></i><strong id="battery-value">78%</strong></span><span id="battery-time">8h 20m left</span></div>
+                <div class="battery-track" role="meter" aria-label="Battery level" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+              </div>
+              <div class="device-features" aria-label="Device sound controls">
+                <button class="feature is-active" data-feature="noise" aria-pressed="true"><i class="ti ti-waveform" aria-hidden="true"></i><span>Noise Cancelling</span><small id="noise-label">Adaptive</small></button>
+                <button class="feature" data-feature="ambient" aria-pressed="false"><i class="ti ti-sun" aria-hidden="true"></i><span>Ambient Mode</span><small id="ambient-label">Off</small></button>
+                <button class="feature" data-feature="spatial" aria-pressed="true"><i class="ti ti-box" aria-hidden="true"></i><span>Spatial Audio</span><small id="spatial-label">On</small></button>
+                <button class="feature" data-feature="multipoint" aria-pressed="true"><i class="ti ti-link" aria-hidden="true"></i><span>Multipoint</span><small id="multipoint-label">Connected</small></button>
+              </div>
+              <button class="settings-link" data-action="settings">Device Settings<i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+            </article>
+          </section>
+
+          <section class="stats-row" aria-label="Listening insights">
+            <article class="activity-card card">
+              <div class="card-heading"><h2>Listening Activity</h2><button class="period-button" data-period="listening" aria-haspopup="menu" aria-expanded="false"><span>This Week</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div>
+              <div class="metric" id="listening-total">28.4h</div>
+              <div class="metric-description">Total Listening Time<span class="trend-badge"><i class="ti ti-arrow-up" aria-hidden="true"></i><span id="listening-trend">18%</span></span></div>
+              <div class="bar-chart" aria-label="Listening hours by day">
+                <div class="bar-axis" aria-hidden="true"><span>8h</span><span>6h</span><span>4h</span><span>2h</span><span>0h</span></div>
+                <div class="chart-bars" id="listening-bars"></div>
+              </div>
+            </article>
+            <article class="profile-card card">
+              <div class="card-heading"><h2>Sound Profile Insights</h2><button class="period-button" data-period="profile" aria-haspopup="menu" aria-expanded="false"><span>Monthly</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div>
+              <div class="profile-bars" id="profile-bars"></div>
+            </article>
+            <article class="moments-card card">
+              <div class="card-heading"><h2>Top Listening Moments</h2><button class="period-button" data-period="moments" aria-haspopup="menu" aria-expanded="false"><span>Today</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div>
+              <div class="metric" id="daily-total">4.2h</div>
+              <div class="metric-description">Daily Listening Time<span class="trend-badge"><i class="ti ti-arrow-up" aria-hidden="true"></i><span id="daily-trend">12%</span></span></div>
+              <div class="moments-chart" tabindex="0" role="group" aria-label="Listening timeline. Use left and right arrow keys to explore.">
+                <svg class="area-chart" viewBox="0 0 400 92" preserveAspectRatio="none" aria-hidden="true">
+                  <defs><linearGradient id="area-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9c87e7" stop-opacity=".3"/><stop offset="1" stop-color="#9c87e7" stop-opacity=".02"/></linearGradient></defs>
+                  <path id="moment-area" fill="url(#area-fill)"/>
+                  <path id="moment-line" fill="none" stroke="#9c87e7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line id="moment-crosshair" y1="4" y2="91" stroke="#b9aceb" stroke-width=".8"/>
+                  <circle id="moment-dot" r="3.3" fill="#9c87e7" stroke="#fff" stroke-width="1.5"/>
+                </svg>
+                <div class="moment-tooltip"><strong>2.8h</strong><span>6 PM</span></div>
+                <div class="moment-axis" aria-hidden="true"><span>6 AM</span><span>10 AM</span><span>2 PM</span><span>6 PM</span><span>10 PM</span></div>
+              </div>
+              <div class="listening-summary"><span><i class="ti ti-clock" aria-hidden="true"></i><span><strong id="summary-day">4.2h</strong><small>Today</small></span></span><span><i class="ti ti-flame" aria-hidden="true"></i><span><strong>28.4h</strong><small>This Week</small></span></span><span><i class="ti ti-calendar" aria-hidden="true"></i><span><strong>112h</strong><small>This Month</small></span></span></div>
+            </article>
+          </section>
+
+          <section class="bottom-row" aria-label="Personalized sound and recommendations">
+            <article class="ai-card card">
+              <div class="ai-orb" aria-hidden="true"><span></span></div>
+              <div class="ai-heading"><h2>SONVEX AI</h2><span class="new-badge">New</span></div>
+              <h3>Find Your<br>Perfect Sound.</h3>
+              <button class="ai-link" data-action="personalize">Personalized sound recommendations<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="recommendations-card card">
+              <h2>Recommended for You</h2>
+              <div class="product-list" id="product-list"></div>
+            </article>
+          </section>
+        </div>
+      </div>
+
+      <section class="workspace card" id="workspace" hidden aria-label="Workspace"></section>
+      <div class="popover" id="popover" hidden></div>
+      <div class="modal-layer" id="modal-layer" inert aria-hidden="true">
+        <div class="scrim" data-action="close-dialog"></div>
+        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+          <header class="dialog-header"><div><span class="eyebrow">SONVEX</span><h2 id="dialog-title"></h2></div><button class="icon-button" data-action="close-dialog" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="dialog-body" id="dialog-body"></div>
+          <footer class="dialog-footer" id="dialog-footer"></footer>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </main>
+  </div>
+</body>
+</html>

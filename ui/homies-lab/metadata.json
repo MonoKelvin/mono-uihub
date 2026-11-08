@@ -1,0 +1,166 @@
+{
+  "name": "HomiesLab",
+  "slug": "homies-lab",
+  "page_type": "website",
+  "tags": [
+    "fashion",
+    "ecommerce",
+    "lookbook",
+    "oversized-type",
+    "vintage"
+  ],
+  "palette": [
+    "#e8efec",
+    "#17756a",
+    "#0a3a35"
+  ],
+  "created_at": "2026-11-07 13:35:34",
+  "updated_at": "2026-11-08 12:29:44",
+  "imageToUI": "https://dribbble.com/shots/24862801-Fashion-E-Commerce-Website",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的网站",
+      "model": "deepseek-v4.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 10470
+    },
+    {
+      "prompt": "首屏人像要放大上半身，内容要左右自适应对齐，减少冗余的内容，合理调整排版布局等",
+      "model": "minimax-m3.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 14400,
+      "changes": [
+        "hero portrait replaced by an upper-body crop (assets/model-upper.png) scaled up",
+        "one shared rail (--stage-w / --rail) aligns every section's left and right edge",
+        "removed the hero arc, the hero store badges, the hero photo plate, the ticker band and the duplicate footer link column",
+        "lookbook demoted from a floating button to a secondary text action beside the single primary CTA",
+        "product grid reduced to one uniform 4:5 frame; section rhythm and type scale retuned",
+        "hero type given a hard 12px floor (--t-min) and split into --u (type) / --g (geometry) units"
+      ]
+    },
+    {
+      "prompt": "请调整首屏人物居中腿部以上的上半身，而不是只有头部，页面宽度尽量撑开自适应占满页面，各个区域调整合适的间距和对齐，不要紧凑在一起",
+      "model": "minimax-m3.1-flash",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "duration_seconds": 7200,
+      "changes": [
+        "hero is now a fluid full-width band (no locked aspect-ratio) sized in svh; the page fills the viewport at every width",
+        "the portrait is centred on the page's middle line and shows the whole upper body (head to hips, nothing clipped); the crop's head-forward composition is compensated with translate -62%",
+        "one fluid rail (--rail) plus a full-width content shell aligns every band's left and right edge (spread 0 at 1600 / 1366 / 1280 / 1024 / 420)",
+        "the sticky topbar was deleted so the hero nav is the only navigation; the nav gained Drop / Weaves / Lookbook",
+        "section rhythm opened up: 7rem band padding, wider grid gaps and list spacing, social proof stacked so the gown never touches it",
+        "the product grid stays three columns above the 1366x768 baseline (no re-layout above the baseline, per SKILL.md rule 17)"
+      ]
+    },
+    {
+      "page_type": "website",
+      "tags": [
+        "fashion",
+        "ecommerce",
+        "lookbook",
+        "oversized-type",
+        "vintage"
+      ],
+      "prompt": "首屏人物放大并只展示腿部以上，头部遮挡上方部分标题文字；把原本堆在左侧的按钮组移到右侧，让左右内容分布平衡。",
+      "model": "hy4",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "changes": [
+        "hero figure 改为 top 定位、高度 min(142svh, 84cqw)、水平居中；透明全身素材在画布底被裁到大腿，头顶进入标题带并靠 z-index 压住部分字母",
+        "hero__actions 从 hero__lede 中拆出，绝对定位到右侧同一 30svh 基线并垂直右对齐；左侧保留 eyebrow/文案与 100K+ 证明，右侧承接两个动作与 Scroll Down",
+        "窄屏 flex 单列补 order 4/5 与横排按钮，保持原有渐隐与单列节奏"
+      ]
+    },
+    {
+      "page_type": "website",
+      "tags": [
+        "fashion",
+        "ecommerce",
+        "lookbook",
+        "oversized-type",
+        "vintage"
+      ],
+      "prompt": "左侧文字改为在左侧垂直居中；100K+ Happy Customers 与头像组移到右下角右对齐，Scroll Down 相应让到左下角避免冲突。",
+      "model": "hy4",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "changes": [
+        "hero__lede 由 top:30svh 改为 top:50% + translate:0 -50%，在左侧垂直居中并保持左对齐",
+        "hero__customers 由 left:var(--rail) 改为 right:var(--rail)、align-items:flex-end、text-align:right，落到右下角",
+        "hero__scroll 由 right:var(--rail) 改为 left:var(--rail)，让出右下角；窄屏补 text-align:left 重置",
+        "桌面与 420×900 窄屏均复核：五组元素两两无碰撞、按钮与滚动交互正常"
+      ]
+    },
+    {
+      "page_type": "website",
+      "tags": [
+        "fashion",
+        "ecommerce",
+        "lookbook",
+        "oversized-type",
+        "vintage"
+      ],
+      "prompt": "左下角竖排 Scroll Down 的文字与线条调小、调浅，退为次要装饰。",
+      "model": "hy4",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "changes": [
+        "hero__scroll 字号 .94u→.72u（实测 12.1px，仍守 12px 下限）、字重 600→500、字距 .22em→.18em、常驻 opacity .55，hover 只提对比度不再变深色",
+        "hero__scroll-line 由 .18u×6u（约 3×101px）改为 .12u×4u（约 2×67px），opacity .6→.7 与父级叠加后更淡；hover 展开间距同步收小",
+        "竖排整体高度 281px→202px；点击滚动到 #collection 仍正常"
+      ]
+    },
+    {
+      "page_type": "website",
+      "tags": [
+        "fashion",
+        "ecommerce",
+        "lookbook",
+        "oversized-type",
+        "vintage"
+      ],
+      "prompt": "人物再放大一点；标题层（人物后面的背景大字）整体下移一点。",
+      "model": "hy4",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "changes": [
+        "hero__figure 高度由 min(142svh,84cqw) 提到 min(152svh,92cqw)：1600×1000 下 1344→1472px、宽 735→800px（约 +9%），可见范围仍在大腿以上",
+        "hero__lede 宽度 20u→18u（336→302px），为放大后的人物左缘留出 18px 间隙",
+        "hero__title top 由 clamp(4rem,11svh,8rem) 改为 clamp(4.5rem,14svh,9rem)，实测 y=110→140（下移 30px / 3svh）",
+        "桌面复核：五组元素两两无碰撞、标题不碰导航、头部遮挡仍成立、Lookbook 可开、无 pageerror"
+      ]
+    },
+    {
+      "page_type": "website",
+      "tags": [
+        "fashion",
+        "ecommerce",
+        "lookbook",
+        "oversized-type",
+        "vintage"
+      ],
+      "prompt": "人物背后的超大标题再放大并下移。",
+      "model": "hy4",
+      "skills": [
+        "mono-ui-prototype"
+      ],
+      "changes": [
+        "诊断出字号被 hero 高 16% 上限与填满宽度双重卡住；hero__title inset-inline 由 var(--rail) 收到 calc(var(--rail)*.1)，可用宽 1440→1584px，文字仍完整不裁",
+        "app.js initHeroFit 高度上限 0.16→0.19，字号实测 159.85→175.83px（+10%）",
+        "hero__title top 由 clamp(4.5rem,14svh,9rem) 改 clamp(5rem,17svh,12rem)，y=140→170（下移 30px / 3svh）",
+        "hero__actions top 由 clamp(15rem,30svh,23rem) 提到 clamp(17rem,34svh,25rem)（300→340px），避开下移后的标题底",
+        "桌面复核：标题与导航/按钮/文案两两不碰、两端字母完整、头部遮挡成立、无 pageerror"
+      ]
+    }
+  ]
+}

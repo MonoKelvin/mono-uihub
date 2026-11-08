@@ -43,3 +43,9 @@ site/.vercel/
 
 # Agent runtime skills（本地缓存，与 .claude/ 同类）
 agent/
+
+# Agent session cache & nested worktrees — never version-controlled
+.claude/
+
+# Never commit API credentials (e.g. tools/image-forge/qingjiu.env)
+*.env
