@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d9d8e5">
+  <title>Chef Music — For you</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" id="music-app" aria-label="Chef Music">
+      <div class="app-shell">
+      <div class="workspace">
+        <aside class="sidebar" aria-label="Main navigation">
+          <button class="brand" data-view="for-you" aria-label="Chef Music home">
+            <i class="ti ti-chart-bar" aria-hidden="true"></i><span>Chef Music</span>
+          </button>
+          <nav class="navigation">
+            <section class="nav-group">
+              <h2>Recommend</h2>
+              <div class="nav-items">
+                <button class="nav-item is-active" data-view="for-you" aria-current="page"><i class="ti ti-disc" aria-hidden="true"></i><span>For you</span></button>
+                <button class="nav-item" data-view="library"><i class="ti ti-playlist" aria-hidden="true"></i><span>Library</span></button>
+                <button class="nav-item" data-view="radio"><i class="ti ti-broadcast" aria-hidden="true"></i><span>Radio Station</span></button>
+                <button class="nav-item" data-view="videos"><i class="ti ti-player-play" aria-hidden="true"></i><span>Music Video</span></button>
+              </div>
+            </section>
+            <section class="nav-group">
+              <h2>My music</h2>
+              <div class="nav-items">
+                <button class="nav-item" data-view="liked"><i class="ti ti-heart" aria-hidden="true"></i><span>Liked Song</span></button>
+                <button class="nav-item" data-view="albums"><i class="ti ti-album" aria-hidden="true"></i><span>Albums</span></button>
+                <button class="nav-item" data-view="artists"><i class="ti ti-microphone-2" aria-hidden="true"></i><span>Artists</span></button>
+                <button class="nav-item" data-view="recent"><i class="ti ti-clock" aria-hidden="true"></i><span>Recent</span></button>
+              </div>
+            </section>
+            <section class="nav-group playlist-group">
+              <div class="nav-group-heading"><h2>Playlists</h2><button class="playlist-page icon-button" id="playlist-page" hidden aria-label="More playlists"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
+              <div class="nav-items" id="playlist-nav">
+                <button class="nav-item" data-playlist="hip-hop"><i class="ti ti-music" aria-hidden="true"></i><span>Hip-hop</span></button>
+                <button class="nav-item" data-playlist="jazz"><i class="ti ti-music" aria-hidden="true"></i><span>Jazz</span></button>
+              </div>
+            </section>
+          </nav>
+          <button class="new-playlist" id="new-playlist"><i class="ti ti-playlist-add" aria-hidden="true"></i><span>New Playlist</span></button>
+        </aside>
+
+        <main class="main-pane">
+          <header class="topbar">
+            <div class="search-field">
+              <i class="ti ti-search" aria-hidden="true"></i>
+              <input id="search" type="search" autocomplete="off" placeholder="Search" aria-label="Search songs, artists and albums" maxlength="120">
+              <button id="clear-search" class="icon-button" aria-label="Clear search" hidden><i class="ti ti-x" aria-hidden="true"></i></button>
+            </div>
+            <button class="profile" id="profile-button" aria-haspopup="menu" aria-expanded="false">
+              <img src="./assets/avatar-alisha.jpg" alt="" class="avatar">
+              <span>Hello, Alisha</span>
+            </button>
+          </header>
+
+          <section class="release-section" aria-labelledby="view-title">
+            <div class="section-heading">
+              <h1 id="view-title">Releases for You</h1>
+              <div class="list-pagination" id="list-pagination" hidden>
+                <button class="icon-button" id="previous-page" aria-label="Previous songs"><i class="ti ti-chevron-left" aria-hidden="true"></i></button>
+                <span id="page-count"></span>
+                <button class="icon-button" id="next-page" aria-label="Next songs"><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <div class="release-content" id="release-content">
+              <button class="featured-cover artwork" id="featured-cover" aria-label="Play Sleep 4Ever">
+                <img id="featured-image" src="./assets/album-sleep-4ever.svg" alt="Sleep 4Ever album cover">
+                <span class="cover-play"><i class="ti ti-player-play" aria-hidden="true"></i></span>
+              </button>
+              <div class="track-list" id="track-list" aria-label="Songs"></div>
+            </div>
+            <div class="empty-state" id="empty-state" hidden>
+              <i class="ti ti-music-off" aria-hidden="true"></i>
+              <h2 id="empty-title">No songs found</h2>
+              <p id="empty-description">Try another song or artist.</p>
+              <button class="soft-button" id="empty-action">Clear search</button>
+            </div>
+          </section>
+
+          <section class="recent-section" aria-labelledby="recent-title">
+            <h2 id="recent-title">Recently Played</h2>
+            <div class="album-grid" id="album-grid"></div>
+          </section>
+        </main>
+
+        <aside class="activity-pane" aria-label="Listening activity">
+          <section class="friends-section" aria-labelledby="friends-title">
+            <h2 id="friends-title">Friends Activity</h2>
+            <div class="friends-list" id="friends-list"></div>
+          </section>
+          <section class="your-section" aria-labelledby="activity-title">
+            <h2 id="activity-title">Your Activity</h2>
+            <div class="activity-list" id="activity-list"></div>
+          </section>
+        </aside>
+      </div>
+
+      <footer class="player" aria-label="Music player">
+        <div class="seek-wrapper">
+          <input id="seek" class="seek-range" type="range" min="0" max="100" step="0.1" value="53.7" aria-label="Playback position" aria-valuetext="Ready to play">
+        </div>
+        <button class="now-playing" id="now-playing" aria-label="Open current album">
+          <span class="now-art artwork"><img id="now-image" src="./assets/album-sleep-4ever.svg" alt=""></span>
+          <span class="now-details"><span id="now-title">Sleep 4Ever</span><span id="now-artist" class="muted">MAGGIE ANDREW, blackbear</span></span>
+        </button>
+        <div class="transport">
+          <button class="icon-button" id="shuffle" aria-label="Enable shuffle" aria-pressed="false"><i class="ti ti-arrows-shuffle" aria-hidden="true"></i></button>
+          <button class="icon-button" id="previous-track" aria-label="Previous track"><i class="ti ti-player-skip-back" aria-hidden="true"></i></button>
+          <button class="play-button" id="play-toggle" aria-label="Play" aria-pressed="false"><i class="ti ti-player-play" aria-hidden="true"></i></button>
+          <button class="icon-button" id="next-track" aria-label="Next track"><i class="ti ti-player-skip-forward" aria-hidden="true"></i></button>
+          <button class="icon-button" id="repeat" aria-label="Enable repeat" aria-pressed="false"><i class="ti ti-repeat" aria-hidden="true"></i></button>
+        </div>
+        <div class="player-options">
+          <button class="icon-button" id="mute" aria-label="Mute" aria-pressed="false"><i class="ti ti-volume" aria-hidden="true"></i></button>
+          <input id="volume" class="volume-range" type="range" min="0" max="100" step="1" value="60" aria-label="Volume">
+          <button class="icon-button heart-button" id="player-like" aria-label="Like current song" aria-pressed="false"><svg class="heart-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 0 1 7.5-6.6 5 5 0 0 1 7.5 6.6Z"/></svg></button>
+          <button class="icon-button" id="player-more" aria-label="Player options" aria-haspopup="menu" aria-expanded="false"><i class="ti ti-dots-circle-horizontal" aria-hidden="true"></i></button>
+        </div>
+      </footer>
+
+      <div class="context-menu" id="context-menu" role="menu" hidden></div>
+      <div class="dialog-layer" id="dialog-layer" hidden>
+        <div class="scrim" id="scrim"></div>
+        <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+          <header class="dialog-header"><h2 id="dialog-title">New Playlist</h2><button class="icon-button" id="close-dialog" aria-label="Close"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div id="dialog-content"></div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+      <span class="sr-only" id="player-status" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

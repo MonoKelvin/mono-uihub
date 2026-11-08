@@ -1,0 +1,17 @@
+{
+  "name": "Chef Music 音乐播放器",
+  "slug": "chef-music",
+  "page_type": "software",
+  "tags": ["音乐", "播放器", "歌单"],
+  "palette": ["#dfe0eb", "#a88ad1", "#282832"],
+  "created_at": "2026-11-08 22:21:24",
+  "updated_at": "2026-11-08 22:37:04",
+  "imageToUI": "https://dribbble.com/shots/15149633-Music-Player-Desktop-App",
+  "history": [
+    {
+      "prompt": "还原这个UI软件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "run"]
+    }
+  ]
+}
