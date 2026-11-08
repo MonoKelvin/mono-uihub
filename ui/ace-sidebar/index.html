@@ -59,58 +59,66 @@
     <div class="canvas" aria-label="Aceagency navigation">
       <aside class="sidebar sidebar--wide" data-collapsed="false" aria-label="Expanded navigation">
         <div class="sidebar-surface" aria-hidden="true"></div>
-        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-        <button class="collapse-control" type="button" aria-label="Collapse navigation" aria-expanded="true"><svg><use href="#icon-collapse"/></svg></button>
-        <button class="brand" type="button" aria-label="Toggle navigation" aria-expanded="true">
-          <svg class="brand-mark"><use href="#icon-brand"/></svg>
-          <span class="brand-name wide-content">Aceagency.Design</span>
-        </button>
-        <div class="header-divider" aria-hidden="true"></div>
-        <h2 class="section-label menu-label">MENU</h2>
-        <nav class="navigation" aria-label="Main menu"></nav>
-        <div class="messages-divider" aria-hidden="true"></div>
-        <div class="messages-heading">
-          <h2 class="section-label">MESSAGES</h2>
-          <div class="message-pagination wide-content">
-            <button class="page-prev" type="button" aria-label="Previous contacts" disabled><svg><use href="#icon-left"/></svg></button>
-            <button class="page-next" type="button" aria-label="Next contacts"><svg><use href="#icon-right"/></svg></button>
+        <div class="sidebar-viewport">
+          <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <button class="collapse-control" type="button" aria-label="Collapse navigation" aria-expanded="true"><svg><use href="#icon-collapse"/></svg></button>
+          <button class="brand" type="button" aria-label="Collapse navigation" aria-expanded="true">
+            <svg class="brand-mark"><use href="#icon-brand"/></svg>
+            <span class="brand-name wide-content">Aceagency.Design</span>
+          </button>
+          <div class="header-divider" aria-hidden="true"></div>
+          <h2 class="section-label menu-label">MENU</h2>
+          <nav class="navigation" aria-label="Main menu"></nav>
+          <div class="messages-divider" aria-hidden="true"></div>
+          <div class="messages-heading">
+            <h2 class="section-label">MESSAGES</h2>
+            <div class="message-pagination wide-content">
+              <button class="page-prev" type="button" aria-label="Previous contacts" disabled><svg><use href="#icon-left"/></svg></button>
+              <button class="page-next" type="button" aria-label="Next contacts"><svg><use href="#icon-right"/></svg></button>
+            </div>
+          </div>
+          <section class="message-widget" aria-label="Recent messages">
+            <div class="message-surface" aria-hidden="true"></div>
+            <div class="recent-contacts"></div>
+            <button class="all-messages" type="button" aria-label="Show recent messages" aria-pressed="true"><svg><use href="#icon-down"/></svg><span class="wide-content">All messages</span></button>
+          </section>
+          <div class="profile">
+            <span class="avatar profile-avatar"><img alt="" src="https://i.pravatar.cc/120?img=13" referrerpolicy="no-referrer"></span>
+            <span class="profile-copy wide-content"><strong>AmirBagian</strong><span>Product Designer</span></span>
           </div>
         </div>
-        <section class="message-widget" aria-label="Recent messages">
-          <div class="message-surface" aria-hidden="true"></div>
-          <div class="recent-contacts"></div>
-          <button class="all-messages" type="button" aria-label="Show recent messages" aria-pressed="true"><svg><use href="#icon-down"/></svg><span class="wide-content">All messages</span></button>
-        </section>
-        <div class="profile">
-          <span class="avatar profile-avatar"><img alt="" src="https://i.pravatar.cc/120?img=13" referrerpolicy="no-referrer"></span>
-          <span class="profile-copy wide-content"><strong>AmirBagian</strong><span>Product Designer</span></span>
-        </div>
+        <span class="tooltip" aria-hidden="true">Case Study</span>
+        <span class="typing-indicator" hidden><span></span><span></span><span></span></span>
       </aside>
       <aside class="sidebar sidebar--rail" data-collapsed="true" data-preview="true" aria-label="Compact navigation">
         <div class="sidebar-surface" aria-hidden="true"></div>
-        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-        <button class="collapse-control" type="button" aria-label="Collapse navigation" aria-expanded="false" tabindex="-1"><svg><use href="#icon-collapse"/></svg></button>
-        <button class="brand" type="button" aria-label="Expand navigation" aria-expanded="false"><svg class="brand-mark"><use href="#icon-brand"/></svg><span class="brand-name wide-content">Aceagency.Design</span></button>
-        <div class="header-divider" aria-hidden="true"></div>
-        <h2 class="section-label menu-label">MENU</h2>
-        <nav class="navigation" aria-label="Main menu"></nav>
-        <div class="messages-divider" aria-hidden="true"></div>
-        <div class="messages-heading">
-          <h2 class="section-label">MESSAGES</h2>
-          <div class="message-pagination wide-content" inert>
-            <button class="page-prev" type="button" aria-label="Previous contacts" disabled><svg><use href="#icon-left"/></svg></button>
-            <button class="page-next" type="button" aria-label="Next contacts"><svg><use href="#icon-right"/></svg></button>
+        <div class="sidebar-viewport">
+          <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <button class="collapse-control" type="button" aria-label="Collapse navigation" aria-expanded="false" tabindex="-1"><svg><use href="#icon-collapse"/></svg></button>
+          <button class="brand" type="button" aria-label="Expand navigation" aria-expanded="false"><svg class="brand-mark"><use href="#icon-brand"/></svg><span class="brand-name wide-content">Aceagency.Design</span></button>
+          <div class="header-divider" aria-hidden="true"></div>
+          <h2 class="section-label menu-label">MENU</h2>
+          <nav class="navigation" aria-label="Main menu"></nav>
+          <div class="messages-divider" aria-hidden="true"></div>
+          <div class="messages-heading">
+            <h2 class="section-label">MESSAGES</h2>
+            <div class="message-pagination wide-content" inert>
+              <button class="page-prev" type="button" aria-label="Previous contacts" disabled><svg><use href="#icon-left"/></svg></button>
+              <button class="page-next" type="button" aria-label="Next contacts"><svg><use href="#icon-right"/></svg></button>
+            </div>
+          </div>
+          <section class="message-widget" aria-label="Recent messages">
+            <div class="message-surface" aria-hidden="true"></div>
+            <div class="recent-contacts"></div>
+            <button class="all-messages" type="button" aria-label="Show recent messages" aria-pressed="true"><svg><use href="#icon-down"/></svg><span class="wide-content">All messages</span></button>
+          </section>
+          <div class="profile">
+            <span class="avatar profile-avatar"><img alt="" src="https://i.pravatar.cc/120?img=13" referrerpolicy="no-referrer"></span>
+            <span class="profile-copy wide-content"><strong>AmirBagian</strong><span>Product Designer</span></span>
           </div>
         </div>
-        <section class="message-widget" aria-label="Recent messages">
-          <div class="message-surface" aria-hidden="true"></div>
-          <div class="recent-contacts"></div>
-          <button class="all-messages" type="button" aria-label="Show recent messages" aria-pressed="true"><svg><use href="#icon-down"/></svg><span class="wide-content">All messages</span></button>
-        </section>
-        <div class="profile">
-          <span class="avatar profile-avatar"><img alt="" src="https://i.pravatar.cc/120?img=13" referrerpolicy="no-referrer"></span>
-          <span class="profile-copy wide-content"><strong>AmirBagian</strong><span>Product Designer</span></span>
-        </div>
+        <span class="tooltip" aria-hidden="true">Case Study</span>
+        <span class="typing-indicator" hidden><span></span><span></span><span></span></span>
       </aside>
       <p class="announcement" role="status" aria-live="polite"></p>
     </div>

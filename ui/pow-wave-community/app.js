@@ -283,7 +283,7 @@
     newPost.dataset.liked = 'false';
     newPost.innerHTML = `
       <header class="post-head">
-        <img src="./assets/avatar-12.jpg" alt="我" class="post-avatar">
+        <img src="./assets/avatar-12.webp" alt="我" class="post-avatar">
         <div class="post-meta">
           <span class="post-name">我 <span class="post-tag">@me</span></span>
           <span class="post-time"><i class="ti ti-clock"></i> 刚刚 · 广场</span>

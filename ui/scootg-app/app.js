@@ -1,10 +1,10 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
   const products = [
-    { id: 'voi', name: 'Voi unveils scooter', price: 1590, category: 'E-Scooter', image: './assets/scooter-voi.png', speed: '25km/h', power: '2kw', charge: '5 hours', load: '120kg', rating: '4.8' },
-    { id: 'm300', name: 'M300 Electric scooter', price: 1399, category: 'E-Scooter', image: './assets/scooter-m300.png', speed: '25km/h', power: '1.5kw', charge: '4 hours', load: '100kg', rating: '4.7' },
-    { id: 'mi3', name: 'Mi Electric Scooter 3', price: 1590, category: 'E-Scooter', image: './assets/scooter-mi3.png', speed: '25km/h', power: '2kw', charge: '5 hours', load: '120kg', rating: '4.8' },
-    { id: 'pro2', name: 'Mi Electric Scooter Pro2', price: 1350, category: 'E-Scooter', image: './assets/scooter-pro2.png', speed: '25km/h', power: '2kw', charge: '6 hours', load: '120kg', rating: '4.9' },
+    { id: 'voi', name: 'Voi unveils scooter', price: 1590, category: 'E-Scooter', image: './assets/scooter-voi.webp', speed: '25km/h', power: '2kw', charge: '5 hours', load: '120kg', rating: '4.8' },
+    { id: 'm300', name: 'M300 Electric scooter', price: 1399, category: 'E-Scooter', image: './assets/scooter-m300.webp', speed: '25km/h', power: '1.5kw', charge: '4 hours', load: '100kg', rating: '4.7' },
+    { id: 'mi3', name: 'Mi Electric Scooter 3', price: 1590, category: 'E-Scooter', image: './assets/scooter-mi3.webp', speed: '25km/h', power: '2kw', charge: '5 hours', load: '120kg', rating: '4.8' },
+    { id: 'pro2', name: 'Mi Electric Scooter Pro2', price: 1350, category: 'E-Scooter', image: './assets/scooter-pro2.webp', speed: '25km/h', power: '2kw', charge: '6 hours', load: '120kg', rating: '4.9' },
     { id: 'helmet', name: 'Atphfety scooter helmet', price: 60, category: 'Accessories', image: './assets/helmet-black.svg', speed: 'M / L', power: '420g', charge: 'ABS shell', load: 'Adjustable', rating: '4.8' },
     { id: 'bag', name: 'Epessa scooter storage bag', price: 60, category: 'Accessories', image: './assets/storage-bag.svg', speed: '3L', power: 'EVA shell', charge: 'Waterproof', load: 'Universal', rating: '4.7' }
   ];

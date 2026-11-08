@@ -111,12 +111,12 @@
   /* ---------------- 映像弹窗 ---------------- */
   const PV = {
     pv1: {
-      img: 'assets/still-reflection.png',
+      img: 'assets/still-reflection.webp',
       title: '第1弾PV', len: '90秒',
       info: '11月14日 18:00 公開予定です。公開までこの場で映像を再生することはできません。'
     },
     pv0: {
-      img: 'assets/still-town.png',
+      img: 'assets/still-town.webp',
       title: 'ティザー映像', len: '30秒',
       info: '10月31日 公開予定です。公開までこの場で映像を再生することはできません。'
     }

@@ -4,7 +4,7 @@ const pieces = [
   {
     id: 'tank', number: '01', name: 'Studio Tank', color: 'BLACK / OFF-WHITE',
     selectedColor: 'Washed black', swatch: '#29292b', print: '#f3f1eb', price: 48,
-    image: './assets/studio-tank.png', artClass: 'tank',
+    image: './assets/studio-tank.webp', artClass: 'tank',
     description: 'Room to move. A relaxed, open-arm tank with a softly washed finish. Made for the studio, and everything after.',
     materials: '100% cotton jersey · 240 GSM. Wash cold with similar colors, inside out. Reshape while damp. Do not tumble dry.',
     measurements: [[54, 69], [57, 72], [60, 75], [63, 78]]
@@ -12,7 +12,7 @@ const pieces = [
   {
     id: 'hoodie', number: '02', name: 'Off-Duty Hoodie', color: 'WARM ECRU',
     selectedColor: 'Warm ecru', swatch: '#ded9cc', print: '#353332', price: 118,
-    image: './assets/off-duty-hoodie.png', artClass: 'hoodie',
+    image: './assets/off-duty-hoodie.webp', artClass: 'hoodie',
     description: 'Your soft landing. A substantial cotton hoodie with dropped shoulders, a generous hood and a pocket for the essentials.',
     materials: '100% cotton brushed fleece · 420 GSM. Wash cold on a gentle cycle. Dry flat. Avoid bleach and direct heat on the print.',
     measurements: [[60, 66], [63, 69], [66, 72], [69, 75]]
@@ -20,7 +20,7 @@ const pieces = [
   {
     id: 'creative', number: '03', name: 'Creative Tee', color: 'DUSTY LAVENDER',
     selectedColor: 'Dusty lavender', swatch: '#b9a5cc', print: '#4f356b', price: 58,
-    image: './assets/creative-tee.png', artClass: 'tee',
+    image: './assets/creative-tee.webp', artClass: 'tee',
     description: 'A different kind of blank canvas. An easy, oversized tee in dusty lavender, with a soft hand feel and space for your ideas.',
     materials: '100% cotton jersey · 260 GSM. Machine wash cold, inside out. Line dry in the shade. Iron on reverse at low heat.',
     measurements: [[57, 68], [60, 71], [63, 74], [66, 77]]
@@ -28,7 +28,7 @@ const pieces = [
   {
     id: 'heavyweight', number: '04', name: 'Heavyweight Tee', color: 'SOFT CHARCOAL',
     selectedColor: 'Soft charcoal', swatch: '#454445', print: '#f3f1eb', price: 68,
-    image: './assets/heavyweight-tee.png', artClass: 'tee',
+    image: './assets/heavyweight-tee.webp', artClass: 'tee',
     description: 'A little more weight. A little more structure. A washed charcoal tee with a boxy silhouette that only gets better with wear.',
     materials: '100% heavyweight cotton jersey · 320 GSM. Wash cold with dark colors, inside out. Line dry. Do not iron directly on the print.',
     measurements: [[58, 67], [61, 70], [64, 73], [67, 76]]

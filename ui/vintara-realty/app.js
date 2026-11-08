@@ -18,7 +18,7 @@ const dialog = document.getElementById('dialog');
 const dialogBody = document.getElementById('dialog-body');
 
 function residenceArt() {
-  return '<img src="./assets/terracotta-residence.png" alt="" loading="lazy" decoding="async" draggable="false">';
+  return '<img src="./assets/terracotta-residence.webp" alt="" loading="lazy" decoding="async" draggable="false">';
 }
 
 function renderResidences() {

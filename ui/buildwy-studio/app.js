@@ -224,7 +224,7 @@ function start() {
   }
 
   function showProject() {
-    openDialog('Project details', '<div class="project-summary"><img src="assets/riro-interior.png" alt="Riro Home living room"><div><h2>A home, thoughtfully built.</h2><p>3 floors · Architecture by Marco Rossi</p></div></div><form id="project-form" novalidate><div class="project-fields"><label>Project name<input id="project-name" maxlength="80" required></label><label>Location<input id="project-location" maxlength="100" required></label><label>Floor area, m²<input id="project-area" type="number" min="1" max="100000" step="0.1" required></label></div><p class="form-error" id="project-error" role="alert" hidden></p><div><button class="primary-action" type="submit">Save changes</button> <button class="secondary-action" type="button" data-dialog-action="export-json">Export project</button></div></form>');
+    openDialog('Project details', '<div class="project-summary"><img src="assets/riro-interior.webp" alt="Riro Home living room"><div><h2>A home, thoughtfully built.</h2><p>3 floors · Architecture by Marco Rossi</p></div></div><form id="project-form" novalidate><div class="project-fields"><label>Project name<input id="project-name" maxlength="80" required></label><label>Location<input id="project-location" maxlength="100" required></label><label>Floor area, m²<input id="project-area" type="number" min="1" max="100000" step="0.1" required></label></div><p class="form-error" id="project-error" role="alert" hidden></p><div><button class="primary-action" type="submit">Save changes</button> <button class="secondary-action" type="button" data-dialog-action="export-json">Export project</button></div></form>');
     document.getElementById('project-name').value = state.name;
     document.getElementById('project-location').value = state.location;
     document.getElementById('project-area').value = state.area;
@@ -408,7 +408,7 @@ function start() {
   }
 
   function showPublish() {
-    openDialog('Present your project', '<div class="project-summary"><img src="assets/riro-interior.png" alt="Riro Home interior"><div><h2>Riro Home complex</h2><p>Your architecture and material selections, ready for the next conversation.</p></div></div><p>Connect a Buildwy workspace to publish online. You can download your material sheet now.</p><button class="primary-action" data-dialog-action="export-pdf">Download material sheet</button>');
+    openDialog('Present your project', '<div class="project-summary"><img src="assets/riro-interior.webp" alt="Riro Home interior"><div><h2>Riro Home complex</h2><p>Your architecture and material selections, ready for the next conversation.</p></div></div><p>Connect a Buildwy workspace to publish online. You can download your material sheet now.</p><button class="primary-action" data-dialog-action="export-pdf">Download material sheet</button>');
     dialogBody.querySelector('.project-summary h2').textContent = state.name;
   }
 

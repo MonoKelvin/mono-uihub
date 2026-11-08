@@ -6,10 +6,10 @@
   const layer = $('#modal-layer');
   const popover = $('#popover');
   const products = [
-    { id: 'nova', name: 'Nova Pro', description: 'Wireless Headphones', image: './assets/nova-headphones.png', rating: '4.8', reviews: '1.2K', price: '$249', battery: '32 hours', feature: 'Adaptive ANC' },
+    { id: 'nova', name: 'Nova Pro', description: 'Wireless Headphones', image: './assets/nova-headphones.webp', rating: '4.8', reviews: '1.2K', price: '$249', battery: '32 hours', feature: 'Adaptive ANC' },
     { id: 'air', name: 'Air Pro', description: 'True Wireless Earbuds', image: 'https://pngimg.com/uploads/airPods/airPods_PNG40.png', rating: '4.6', reviews: '748', price: '$149', battery: '24 hours', feature: 'Transparency mode' },
-    { id: 'focus', name: 'Focus', description: 'ANC Headphones', image: './assets/focus-headphones.png', rating: '4.7', reviews: '936', price: '$199', battery: '40 hours', feature: 'Active noise cancelling' },
-    { id: 'studio', name: 'Studio Max', description: 'Over-Ear Headphones', image: './assets/studio-headphones.png', rating: '4.6', reviews: '624', price: '$329', battery: '30 hours', feature: 'High-resolution audio' }
+    { id: 'focus', name: 'Focus', description: 'ANC Headphones', image: './assets/focus-headphones.webp', rating: '4.7', reviews: '936', price: '$199', battery: '40 hours', feature: 'Active noise cancelling' },
+    { id: 'studio', name: 'Studio Max', description: 'Over-Ear Headphones', image: './assets/studio-headphones.webp', rating: '4.6', reviews: '624', price: '$329', battery: '30 hours', feature: 'High-resolution audio' }
   ];
   const listening = {
     'This Week': { values: [1.6, 3.2, 4.8, 6.2, 3.6, 5.2, 3.8], labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], trend: 18 },

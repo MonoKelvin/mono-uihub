@@ -1,17 +1,17 @@
 const models = [
   {
     id: 'ivory', name: 'C45', category: 'Classic Model', label: 'Classic Moped', finish: 'Ivory', price: 2495,
-    image: './assets/moped-ivory.png', range: '65 miles', speed: '28 mph', charging: '4–6 hours',
+    image: './assets/moped-ivory.webp', range: '65 miles', speed: '28 mph', charging: '4–6 hours',
     story: 'Officially the UK’s No.1 selling moped. <span class="story-highlight">This 50cc</span> Panther moped is agile and ready to strike.'
   },
   {
     id: 'panther', name: 'DB50QT', category: 'Panther Model', label: 'Panther Moped', finish: 'Panther black', price: 2695,
-    image: './assets/moped-ivory.png', range: '70 miles', speed: '28 mph', charging: '4–6 hours',
+    image: './assets/moped-ivory.webp', range: '70 miles', speed: '28 mph', charging: '4–6 hours',
     story: 'Quiet confidence. A deep black finish, instant electric response, and a little more freedom in your everyday.'
   },
   {
     id: 'sport', name: 'S72', category: 'Sport Model', label: 'Sport Moped', finish: 'Sunburst', price: 2895,
-    image: './assets/moped-ivory.png', range: '80 miles', speed: '28 mph', charging: '4–6 hours',
+    image: './assets/moped-ivory.webp', range: '80 miles', speed: '28 mph', charging: '4–6 hours',
     story: 'A brighter way through the city. Distinctive colour and the same effortless, all-electric ride.'
   }
 ];

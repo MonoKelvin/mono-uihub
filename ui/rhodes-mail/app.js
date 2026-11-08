@@ -7,13 +7,13 @@
   const { initialMessages, contacts, materials } = window.RhodesData;
   const assetRoot = 'assets/';
   const portraitByEmail = {
-    'amiya@rhodes.is': assetRoot + 'rhodes-amiya.png',
-    'kaltsit@rhodes.is': assetRoot + 'rhodes-kaltsit.png',
-    'closure@rhodes.is': assetRoot + 'rhodes-closure.png',
-    'exusiai@penguin.logistics': assetRoot + 'rhodes-exusiai.png',
-    'dobermann@rhodes.is': assetRoot + 'rhodes-dobermann.png',
-    'perfumer@rhodes.is': assetRoot + 'rhodes-perfumer.png',
-    'prts@rhodes.is': assetRoot + 'rhodes-prts.png'
+    'amiya@rhodes.is': assetRoot + 'rhodes-amiya.webp',
+    'kaltsit@rhodes.is': assetRoot + 'rhodes-kaltsit.webp',
+    'closure@rhodes.is': assetRoot + 'rhodes-closure.webp',
+    'exusiai@penguin.logistics': assetRoot + 'rhodes-exusiai.webp',
+    'dobermann@rhodes.is': assetRoot + 'rhodes-dobermann.webp',
+    'perfumer@rhodes.is': assetRoot + 'rhodes-perfumer.webp',
+    'prts@rhodes.is': assetRoot + 'rhodes-prts.webp'
   };
   const storeKey = 'rhodes-mail-v2';
   const folderNames = {inbox:['收件箱','INBOX'],starred:['星标邮件','STARRED'],snoozed:['稍后处理','SNOOZED'],sent:['发件箱','OUTBOX'],drafts:['草稿箱','DRAFTS'],archive:['已归档','ARCHIVE'],trash:['回收站','RECYCLE']};
@@ -527,7 +527,7 @@
   function openMaterial(id) {
     const material=materials.find((m)=>m.id===id);if(!material)return;
     $('#material-title').textContent=material.name+' / '+material.reference;
-    $('#material-content').innerHTML='<div class="material-stage"><span class="hud-bracket"></span>'+(id==='originium'?'<canvas id="interactive-specimen" data-specimen="interactive" tabindex="0" role="img" aria-label="原创源石晶簇三维结构，拖动或使用方向键旋转"></canvas>':'<svg aria-label="'+esc(material.name)+'"><use href="#'+(id==='case'?'cargo-mark':'record-mark')+'"/></svg>')+'<span class="model-overlay-label">'+esc(material.reference.toUpperCase())+'</span><span class="model-overlay-label bottom">'+(id==='originium'?'DRAG TO ROTATE':'CARGO INSPECTION')+'</span></div>'+(id==='originium'?'<div class="material-controls"><button class="secondary-button" id="turn-model">'+icon('rotate')+'旋转视角</button><button class="secondary-button" id="reset-model">重置</button><label class="wireframe-toggle"><input type="checkbox" id="wireframe-model">结构线框</label><label>缩放<input id="zoom-model" type="range" min="60" max="165" value="100" aria-label="模型缩放"></label></div>':'')+'<div class="material-description"><div><h3>'+esc(material.english)+'</h3><p>'+esc(material.description)+'</p><small>'+esc(material.handling)+' / '+material.quantity+' '+material.unit+'</small></div>'+(id==='originium'?'<div><img class="reference-image" id="game-reference" src="assets/originium-shard.png" alt="明日方舟至纯源石物品图" width="86" height="86"><div class="reference-caption">本地资源对照</div></div>':'')+'</div>';
+    $('#material-content').innerHTML='<div class="material-stage"><span class="hud-bracket"></span>'+(id==='originium'?'<canvas id="interactive-specimen" data-specimen="interactive" tabindex="0" role="img" aria-label="原创源石晶簇三维结构，拖动或使用方向键旋转"></canvas>':'<svg aria-label="'+esc(material.name)+'"><use href="#'+(id==='case'?'cargo-mark':'record-mark')+'"/></svg>')+'<span class="model-overlay-label">'+esc(material.reference.toUpperCase())+'</span><span class="model-overlay-label bottom">'+(id==='originium'?'DRAG TO ROTATE':'CARGO INSPECTION')+'</span></div>'+(id==='originium'?'<div class="material-controls"><button class="secondary-button" id="turn-model">'+icon('rotate')+'旋转视角</button><button class="secondary-button" id="reset-model">重置</button><label class="wireframe-toggle"><input type="checkbox" id="wireframe-model">结构线框</label><label>缩放<input id="zoom-model" type="range" min="60" max="165" value="100" aria-label="模型缩放"></label></div>':'')+'<div class="material-description"><div><h3>'+esc(material.english)+'</h3><p>'+esc(material.description)+'</p><small>'+esc(material.handling)+' / '+material.quantity+' '+material.unit+'</small></div>'+(id==='originium'?'<div><img class="reference-image" id="game-reference" src="assets/originium-shard.webp" alt="明日方舟至纯源石物品图" width="86" height="86"><div class="reference-caption">本地资源对照</div></div>':'')+'</div>';
     openDialog($('#material-dialog'));mountArt();
     if(id==='originium'){
       const view=canvasViews.get($('#interactive-specimen'));

@@ -63,7 +63,7 @@
      根因：plate 瓦片是不透明方形图版，contain 直贴 = 四条硬直切口，
      在 0.05–0.15 的低透明度下尤其像"贴了一张方图"，与周围的暖黑底接不上。
      做法：整体裁成近椭圆的不规则团块，边缘随机起伏，再从底下透出一层模糊。
-       1. --plate-mask    assets/plate_mask.png —— 已烘焙好的「噪声等值线 × 径向衰减」，
+       1. --plate-mask    assets/plate_mask.webp —— 已烘焙好的「噪声等值线 × 径向衰减」，
                           轮廓由低频噪声决定，因此天然不规则：有的方位鼓出、有的凹陷；
                           中心有硬核，图案主体不会被噪声打散。
        2. 每处两层：清晰层在上（无 blur，线稿锐利）、模糊层在下（同 mask + blur），
@@ -72,7 +72,7 @@
      踩过的坑：曾用多层 mask + mask-composite: intersect 现算求交，
      图片层一旦解析为空交集即为 0 —— 整块背景直接消失。改为单层烘焙图，
      物理上不可能再"消失"，也不依赖 mask-composite 的兼容性。 */
-  --plate-mask: url("assets/plate_mask.png");
+  --plate-mask: url("assets/plate_mask.webp");
   --plate-blur: 4px;
 }
 

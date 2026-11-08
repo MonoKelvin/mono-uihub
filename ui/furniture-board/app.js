@@ -1,8 +1,8 @@
 'use strict';
 
 const assets = {
-  cognac: './assets/chair-cognac.png',
-  grey: './assets/chair-grey.png',
+  cognac: './assets/chair-cognac.webp',
+  grey: './assets/chair-grey.webp',
   lamp: './assets/lamp-minimal.svg'
 };
 const products = [
