@@ -1,0 +1,21 @@
+{
+  "name": "Roggy 训练目标",
+  "slug": "roggy-training",
+  "page_type": "software",
+  "tags": ["健身", "数据可视化", "运动路线"],
+  "palette": ["#f7f4f3", "#957b96", "#2a1d2b"],
+  "created_at": "2026-11-08 18:02:54",
+  "updated_at": "2026-11-08 18:14:21",
+  "imageToUI": "https://dribbble.com/shots/26809160-UI-UX-for-a-Fitness-Product-Roggy",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的软件。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "dataviz", "run"]
+    },
+    {
+      "prompt": "TRAINING HISTORY 那个图标缺失了，请修复",
+      "skills": ["mono-ui-prototype", "run"]
+    }
+  ]
+}

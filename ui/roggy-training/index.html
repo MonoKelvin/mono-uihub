@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4f3">
+  <title>Roggy — Training Goals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" aria-label="Roggy training dashboard">
+      <header class="topbar">
+        <button class="brand" data-action="home" aria-label="Roggy home">
+          <svg class="brand-mark" viewBox="0 0 34 50" aria-hidden="true">
+            <defs><linearGradient id="brand-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d1aedc"/><stop offset="1" stop-color="#ffd39e"/></linearGradient></defs>
+            <path d="M13 2 30 12Q34 15 31 20L28 24 11 14Q8 12 10 7Z" fill="#d7b6df"/>
+            <path d="m10 20 20 12q5 3 2 7l-3 4L3 28q-3-2 0-4Z" fill="url(#brand-gradient)"/>
+            <path d="M11 36 24 44 11 50Z" fill="#f9cc9b"/>
+          </svg>
+          <span>Roggy</span>
+        </button>
+        <nav class="primary-nav" aria-label="Main navigation">
+          <span class="nav-indicator" aria-hidden="true"></span>
+          <button class="nav-button is-active" data-view="overview" aria-label="Overview" aria-current="page" title="Overview">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7v7H3zm11 0h7v5h-7zM3 14h7v7H3zm11-2h7v9h-7z" fill="currentColor"/></svg>
+          </button>
+          <button class="nav-button" data-view="training" aria-label="Training history" title="Training history"><i class="ti ti-wave-sine" aria-hidden="true"></i></button>
+          <button class="nav-button" data-view="challenges" aria-label="Challenges" title="Challenges"><i class="ti ti-flame" aria-hidden="true"></i></button>
+          <button class="nav-button" data-view="community" aria-label="Community" title="Community"><i class="ti ti-circles" aria-hidden="true"></i></button>
+        </nav>
+        <div class="account-actions">
+          <button class="icon-button search-button" data-action="search" aria-label="Search activities" title="Search activities · /"><i class="ti ti-search" aria-hidden="true"></i></button>
+          <button class="avatar-button" data-action="profile" aria-label="Alex Morgan's profile" title="Alex Morgan">
+            <img src="https://i.pravatar.cc/120?u=roggy-alex" alt="Alex Morgan" referrerpolicy="no-referrer">
+          </button>
+        </div>
+      </header>
+
+      <section class="dashboard" aria-label="Training overview">
+        <section class="goals-panel" aria-labelledby="goals-heading">
+          <h1 id="goals-heading">Training<br>Goals</h1>
+          <button class="goal-ring" data-action="goal" aria-label="Monthly goal: 76 of 120 kilometers. Edit goal." title="Edit monthly goal">
+            <svg class="goal-graphic" viewBox="0 0 280 280" aria-hidden="true">
+              <defs><linearGradient id="ring-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffdaa7"/><stop offset=".5" stop-color="#eac5d1"/><stop offset="1" stop-color="#cfacdc"/></linearGradient></defs>
+              <circle class="ring-track" cx="140" cy="140" r="115" pathLength="100"/>
+              <circle class="ring-fill" cx="140" cy="140" r="115" pathLength="100"/>
+              <circle class="ring-highlight" cx="140" cy="140" r="115" pathLength="100"/>
+            </svg>
+            <span class="runner-badge"><i class="ti ti-run" aria-hidden="true"></i></span>
+            <span class="goal-figure"><span class="goal-number">76</span><span class="goal-unit">km</span></span>
+            <span class="goal-caption">Goal: <span id="goal-target">120</span> km</span>
+          </button>
+          <button class="update-status" data-action="refresh" title="Refresh training data"><i class="ti ti-alert-triangle" aria-hidden="true"></i><span>Data is being updated</span></button>
+        </section>
+
+        <section class="training-card" aria-labelledby="training-heading">
+          <div class="card-header">
+            <h2 id="training-heading">Last Training</h2>
+            <button class="text-button training-link" data-action="training-detail"><span>Today 9:24 am</span><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+          </div>
+          <div class="training-stats">
+            <div class="stat"><div class="stat-value">8,00 <span>km</span></div><span class="stat-label">Distance</span></div>
+            <div class="stat"><div class="stat-value">36:40</div><span class="stat-label">Duration</span></div>
+            <div class="stat"><div class="stat-value">526 <span>cal</span></div><span class="stat-label">Calories</span></div>
+            <div class="feeling-control">
+              <button id="feeling-button" class="feeling-button" data-menu="feelings" aria-label="Feeling: Great. Change feeling" aria-expanded="false" aria-controls="feelings-menu">
+                <svg class="feeling-portrait" viewBox="0 0 60 60" aria-hidden="true">
+                  <circle cx="30" cy="30" r="29" fill="#ffdbad"/>
+                  <path d="M13 46C10 33 12 11 28 9c17-3 23 15 17 38Z" fill="#463132"/>
+                  <path d="M18 55q1-17 12-17t14 17" fill="#f9f4ed"/>
+                  <path d="M25 37v8q5 5 10 0v-9" fill="#eebda2"/>
+                  <ellipse cx="30" cy="28" rx="12" ry="16" fill="#f7cdb0"/>
+                  <path d="M17 25q1-20 13-15 13 0 15 17-8-7-10-15-2 10-18 13" fill="#463132"/>
+                  <path d="M22 25q3-2 5 0m7 0q3-2 5 0" fill="none" stroke="#6c4540" stroke-width="1.2" stroke-linecap="round"/>
+                  <ellipse cx="25" cy="28" rx="1.2" ry="1.6" fill="#382728"/><ellipse cx="36" cy="28" rx="1.2" ry="1.6" fill="#382728"/>
+                  <path d="M25 35q5 7 11 0" fill="#fff" stroke="#b9766c" stroke-width="1.2" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <span class="stat-label" id="feeling-label">Feelings</span>
+              <div class="dropdown feelings-menu" id="feelings-menu" role="menu" hidden>
+                <span class="menu-caption">How did it feel?</span>
+                <button class="menu-option is-selected" role="menuitemradio" aria-checked="true" data-feeling="Great"><i class="ti ti-mood-happy" aria-hidden="true"></i>Great<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                <button class="menu-option" role="menuitemradio" aria-checked="false" data-feeling="Good"><i class="ti ti-mood-smile" aria-hidden="true"></i>Good<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                <button class="menu-option" role="menuitemradio" aria-checked="false" data-feeling="Tired"><i class="ti ti-mood-empty" aria-hidden="true"></i>Tired<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                <button class="menu-option" role="menuitemradio" aria-checked="false" disabled>Not recorded</button>
+              </div>
+            </div>
+          </div>
+          <div class="pace-chart" id="pace-chart" tabindex="0" role="group" aria-label="Pace by distance. Use left and right arrow keys to inspect your run.">
+            <svg id="pace-svg" viewBox="0 0 650 330" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="point-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffdaa7"/><stop offset="1" stop-color="#d4aedf"/></linearGradient>
+                <linearGradient id="crosshair-gradient" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#957b96" stop-opacity="0"/><stop offset=".5" stop-color="#957b96" stop-opacity=".22"/><stop offset="1" stop-color="#957b96" stop-opacity="0"/></linearGradient>
+              </defs>
+              <g class="chart-grid"><path d="M0 22H588M0 112H588M0 202H588M0 292H588"/></g>
+              <path class="average-line" d="M0 235H620"/>
+              <path id="pace-line" class="pace-line" d=""/>
+              <path id="chart-crosshair" class="chart-crosshair" d="M265 0V306"/>
+              <circle id="chart-point" class="chart-point" cx="265" cy="89" r="9"/>
+            </svg>
+            <div class="chart-y-axis" aria-hidden="true"><span>03:30</span><span>04:00</span><span>04:30</span><span>05:00</span></div>
+            <div class="chart-x-axis" aria-hidden="true"><span>0</span><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span></div>
+            <div class="chart-tooltip" id="chart-tooltip" role="status"><strong id="tooltip-distance">03,82 <small>km</small></strong><strong id="tooltip-pace">03:48 <small>min/km</small></strong></div>
+            <button class="chart-data-button" data-action="splits" aria-label="View pace data table" title="View pace data"><i class="ti ti-wave-sine" aria-hidden="true"></i></button>
+          </div>
+        </section>
+
+        <section class="map-card" aria-label="Morning run route">
+          <svg class="city-map" id="city-map" viewBox="0 0 400 580" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="map-ground" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9e3e9"/><stop offset="1" stop-color="#dad3dd"/></linearGradient>
+              <linearGradient id="map-route" x1="0" y1="1" x2=".6" y2="0"><stop stop-color="#d3aadf"/><stop offset=".65" stop-color="#f4c8b3"/><stop offset="1" stop-color="#ffd291"/></linearGradient>
+              <linearGradient id="roof-light" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#f0edf1"/></linearGradient>
+              <filter id="building-shadow" x="-40%" y="-40%" width="200%" height="200%"><feDropShadow dx="-10" dy="15" stdDeviation="9" flood-color="#918292" flood-opacity=".16"/></filter>
+            </defs>
+            <rect width="400" height="580" fill="url(#map-ground)"/>
+            <g class="map-streets"><path d="M0 55H400M0 311H400M0 513H400M193 0V580M350 0V580"/></g>
+            <g id="city-buildings"></g>
+            <path class="route-shadow" d="M114 442V471Q114 480 123 480H216Q225 480 225 471V77Q225 68 234 68H314Q323 68 323 77V126"/>
+            <path class="route-path" id="route-path" d="M114 442V471Q114 480 123 480H216Q225 480 225 471V77Q225 68 234 68H314Q323 68 323 77V126"/>
+            <circle class="route-start-outer" cx="114" cy="442" r="10"/><circle class="route-start-inner" cx="114" cy="442" r="6"/>
+          </svg>
+          <button class="finish-marker" data-action="route" aria-label="View morning run route" title="View route"><i class="ti ti-flag-check" aria-hidden="true"></i></button>
+          <div class="map-metrics" aria-label="Run pace summary">
+            <button class="map-metric metric-average" data-pace="average" aria-label="Average pace 4 minutes 35 seconds per kilometer" title="Average pace"><i class="ti ti-wave-sine" aria-hidden="true"></i><span>04:35</span></button>
+            <button class="map-metric metric-slowest" data-pace="slowest" aria-label="Slowest pace 4 minutes 54 seconds per kilometer" title="Slowest pace"><i class="ti ti-gauge" aria-hidden="true"></i><span>04:54</span></button>
+            <button class="map-metric metric-fastest" data-pace="fastest" aria-label="Fastest pace 3 minutes 38 seconds per kilometer" title="Fastest pace"><i class="ti ti-brand-speedtest" aria-hidden="true"></i><span>03:38</span></button>
+          </div>
+        </section>
+      </section>
+
+      <section class="activity-section" aria-label="Activities and friends">
+        <section class="activities-panel" aria-labelledby="activities-heading">
+          <div class="section-heading">
+            <h2 id="activities-heading">Activities</h2>
+            <div class="activity-tools">
+              <div class="menu-anchor">
+                <button class="pill-button activity-type" data-menu="sport" aria-label="Activity type: Running" aria-expanded="false" aria-controls="sport-menu"><i class="ti ti-run" id="sport-icon" aria-hidden="true"></i><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+                <div class="dropdown filter-menu" id="sport-menu" role="menu" hidden>
+                  <span class="menu-caption">Activity type</span>
+                  <button class="menu-option is-selected" role="menuitemradio" aria-checked="true" data-sport="running"><i class="ti ti-run" aria-hidden="true"></i>Running<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" data-sport="cycling"><i class="ti ti-bike" aria-hidden="true"></i>Cycling<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" data-sport="walking"><i class="ti ti-walk" aria-hidden="true"></i>Walking<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" data-sport="all"><i class="ti ti-activity" aria-hidden="true"></i>All activities<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" disabled>Swimming · coming soon</button>
+                </div>
+              </div>
+              <div class="menu-anchor">
+                <button class="pill-button date-filter" data-menu="period" aria-label="Date range" aria-expanded="false" aria-controls="period-menu"><span id="period-label">This Week</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+                <div class="dropdown filter-menu" id="period-menu" role="menu" hidden>
+                  <span class="menu-caption">Date range</span>
+                  <button class="menu-option is-selected" role="menuitemradio" aria-checked="true" data-period="week">This Week<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" data-period="last">Last Week<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" data-period="month">This Month<i class="ti ti-check option-check" aria-hidden="true"></i></button>
+                  <button class="menu-option" role="menuitemradio" aria-checked="false" disabled>Custom range · unavailable</button>
+                </div>
+              </div>
+              <button class="icon-button settings-button" data-action="settings" aria-label="Training settings" title="Training settings"><i class="ti ti-settings" aria-hidden="true"></i></button>
+              <button class="icon-button next-activities" data-action="next-activities" aria-label="Next activities" title="Next activities"><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <table class="activities-table">
+            <colgroup><col class="col-index"><col class="col-name"><col class="col-distance"><col class="col-pace"><col class="col-duration"><col class="col-route"><col class="col-favorite"></colgroup>
+            <thead><tr><th scope="col">#</th><th scope="col">Name</th><th scope="col" aria-sort="none"><button class="sort-button" data-sort="distance">Distance<span class="sort-arrows" aria-hidden="true"></span></button></th><th scope="col" aria-sort="none"><button class="sort-button" data-sort="pace">Avg.Pace<span class="sort-arrows" aria-hidden="true"></span></button></th><th scope="col" aria-sort="none"><button class="sort-button" data-sort="duration">Duration<span class="sort-arrows" aria-hidden="true"></span></button></th><th scope="col">Route</th><th scope="col"><button class="favorite-filter" data-action="favorites" aria-label="Show favorite activities" aria-pressed="false" title="Favorite activities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></button></th></tr></thead>
+            <tbody id="activities-body"></tbody>
+          </table>
+          <div class="list-state" id="activity-state" role="status" hidden><i class="ti ti-route" aria-hidden="true"></i><span>No activities in this period</span><button class="text-button" data-action="reset-filters">Clear filters</button></div>
+        </section>
+        <section class="friends-panel" aria-labelledby="friends-heading">
+          <div class="section-heading friends-heading"><h2 id="friends-heading">Friends</h2><div class="friend-tools"><button class="icon-button add-friend" data-action="add-friend" aria-label="Add a friend" title="Add a friend"><i class="ti ti-plus" aria-hidden="true"></i></button><button class="icon-button" data-action="next-friends" aria-label="Next friends" title="Next friends"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div></div>
+          <div class="friends-list" id="friends-list"></div>
+        </section>
+      </section>
+
+      <div class="modal-layer" id="modal-layer" aria-hidden="true" inert>
+        <div class="scrim" data-action="close-dialog"></div>
+        <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+          <header class="dialog-header"><div><span class="eyebrow" id="dialog-eyebrow">YOUR TRAINING</span><h2 id="dialog-title">Training details</h2></div><button class="icon-button close-dialog" data-action="close-dialog" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header>
+          <div class="dialog-content" id="dialog-content"></div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+    </main>
+  </div>
+</body>
+</html>
