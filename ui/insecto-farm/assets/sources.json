@@ -1,0 +1,27 @@
+{
+  "source": "pngimg.com",
+  "license": "CC BY-NC 4.0",
+  "attribution": "pngimg.com (CC BY-NC 4.0)",
+  "commercial_use": false,
+  "delivery": "hotlink",
+  "assets": [
+    {
+      "name": "tomato",
+      "url": "https://pngimg.com/uploads/tomato/tomato_PNG12588.png",
+      "description": "Real tomatoes with leaves, transparent cutout",
+      "ttfb_ms": 641
+    },
+    {
+      "name": "lemon",
+      "url": "https://pngimg.com/uploads/lemon/lemon_PNG3876.png",
+      "description": "Real lemon, transparent cutout",
+      "ttfb_ms": 438
+    },
+    {
+      "name": "grape",
+      "url": "https://pngimg.com/uploads/grape/grape_PNG2997.png",
+      "description": "Black grape bunch, transparent cutout",
+      "ttfb_ms": 422
+    }
+  ]
+}

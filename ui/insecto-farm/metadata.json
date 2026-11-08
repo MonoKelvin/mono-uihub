@@ -1,0 +1,17 @@
+{
+  "name": "Insecto 农业管理",
+  "slug": "insecto-farm",
+  "page_type": "software",
+  "tags": ["农业", "数据可视化", "工作流"],
+  "palette": ["#fbfdf7", "#9be071", "#143407"],
+  "created_at": "2026-11-08 20:11:21",
+  "updated_at": "2026-11-08 20:34:21",
+  "imageToUI": "https://dribbble.com/shots/27615655-Product-for-an-Agriculture-Company-Insecto",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的软件。水果需要真实图片并抠图，并根据现有内容补充完善其他模块页面的内容，并实现相关的功能，减少对话框。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz", "run", "mobile-native"]
+    }
+  ]
+}
