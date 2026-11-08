@@ -1,0 +1,22 @@
+{
+  "name": "Clap · 智能家居",
+  "slug": "smart-home",
+  "page_type": "app",
+  "tags": ["智能家居", "设备控制", "安防"],
+  "palette": ["#f3f5f8", "#ffffff", "#262626"],
+  "created_at": "2026-11-08 07:02:07",
+  "updated_at": "2026-11-08 07:27:16",
+  "imageToUI": "https://huaban.com/pins/7039467836?modalImg=https%3A%2F%2Fgd-hbimg-edge.huaban.com%2F2686f46f1336cbdbcd6ed4e41264a9667248ce5396f54-LyNI0A_fw1200%3Fauth_key%3D1772467200-8fafa29472ed4e59a4aa8bf3c97a1e79-0-3a7eb53093bd39d738748154df8e6208",
+  "history": [
+    {
+      "prompt": "还原这个UI",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    },
+    {
+      "prompt": "请整合到一个页面中，设计成一个App页面",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    }
+  ]
+}

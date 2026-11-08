@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f5f8">
+  <meta name="description" content="Clap — a quieter way to feel at home. Rooms, devices and security, in one place.">
+  <title>Clap · Smart home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h11M4 17h6"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="m14 5-7 7 7 7"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+      <symbol id="i-home-filled" viewBox="0 0 24 24"><path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-rooms" viewBox="0 0 24 24"><path d="M5 5h14v5h-2a3 3 0 0 0 0 6h2v3H5v-3h2a3 3 0 0 0 0-6H5z"/></symbol>
+      <symbol id="i-rooms-filled" viewBox="0 0 24 24"><path d="M5 5h14v5h-2a3 3 0 0 0 0 6h2v3H5v-3h2a3 3 0 0 0 0-6H5z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-shield-filled" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z" fill="currentColor" stroke="none"/><path d="m9 12 2 2 4-4" stroke="white"/></symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-.5 3-2 1-2.5-1L2 10l2 2-2 2 2 4 2.5-1 2 1 .5 3h6l.5-3 2-1 2.5 1 2-4-2-2 2-2-2-4-2.5 1-2-1L15 3z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-settings-filled" viewBox="0 0 24 24"><path d="m9 3-.5 3-2 1-2.5-1L2 10l2 2-2 2 2 4 2.5-1 2 1 .5 3h6l.5-3 2-1 2.5 1 2-4-2-2 2-2-2-4-2.5 1-2-1L15 3z" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="3" fill="white" stroke="none"/></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M5 18l2-4V9a5 5 0 0 1 10 0v5l2 4z"/></symbol>
+      <symbol id="i-bell-filled" viewBox="0 0 24 24"><path d="M5 18h14l-2-4V9a5 5 0 0 0-10 0v5zM10 21h4" fill="currentColor"/></symbol>
+      <symbol id="i-sofa" viewBox="0 0 24 24"><path d="M5 13V6h14v7M12 6v7M3 11h3v5h12v-5h3v8H3zM5 19v2M19 19v2"/></symbol>
+      <symbol id="i-bath" viewBox="0 0 24 24"><path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM5 20v2M19 20v2M17 12V4a2 2 0 0 0-4 0v1M11 5h4"/></symbol>
+      <symbol id="i-desk" viewBox="0 0 24 24"><path d="M2 14h20v4H2zM4 18v4M20 18v4M14 5h7v6h-7zM17.5 11v3M5 8h4M7 8v6"/></symbol>
+      <symbol id="i-garage" viewBox="0 0 24 24"><path d="M3 21V4h18v17M6 21V7h12v14M6 11h12M6 15h12M6 19h12"/></symbol>
+      <symbol id="i-library" viewBox="0 0 24 24"><path d="M4 3h16v18H4zM7 6v6M10 6v6M14 6l2 6M7 15h10M7 18h10"/></symbol>
+      <symbol id="i-washer" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M4 7h16M7 4h.01M10 4h.01"/><circle cx="12" cy="14" r="4"/><path d="M8 14c3-2 5 2 8 0"/></symbol>
+      <symbol id="i-climate" viewBox="0 0 24 24"><path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0zM12 8v9M3 6h2M3 10h2M3 14h2M18 6c3 2 3 5 0 7"/><circle cx="12" cy="18" r="1"/></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><path d="m3 5 12 1 4 4-12 4-4-3zM7 14v5h5M10 19v2M16 3c3 0 5 2 5 5M16 6c1 0 2 1 2 2"/><path d="m14 11 2 3"/></symbol>
+      <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 17c0-4-4-4-4-9a7 7 0 0 1 14 0c0 5-4 5-4 9zM9 20h6M10 23h4M12 17v-6M9 8l3 3 3-3"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="12" rx="3"/><path d="M8 10V6a4 4 0 0 1 8 0v4M12 15v2"/></symbol>
+      <symbol id="i-lock-filled" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="12" rx="3" fill="currentColor" stroke="none"/><path d="M8 10V6a4 4 0 0 1 8 0v4M12 15v2"/><path d="M12 15v2" stroke="white"/></symbol>
+      <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="12" rx="3" fill="currentColor" stroke="none"/><path d="M8 10V6a4 4 0 0 1 7-2M12 15v2"/><path d="M12 15v2" stroke="white"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-13h-7z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-intercom" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M9 5h6M9 8h6"/><circle cx="12" cy="14" r="3"/><path d="M10 19h4M20 4l2 2M20 8h2"/></symbol>
+      <symbol id="i-service" viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 7h4M8 11h2M8 17l2 2 6-6M18 2l3 3"/></symbol>
+      <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4M2 12h20"/><path d="M8 7h3v3H8zM14 7h3v3h-3zM8 14h3v3H8zM14 14h3v3h-3z"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="m3 3 18 18M10 5h2c6 0 10 7 10 7a21 21 0 0 1-3 4M6 6a22 22 0 0 0-4 6s4 7 10 7a13 13 0 0 0 5-1M10 10a3 3 0 0 0 4 4"/></symbol>
+      <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14 22v-9h3l.5-4H14V7c0-1 .5-2 2-2h2V1h-3c-4 0-6 2-6 6v2H6v4h3v9z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-google" viewBox="0 0 24 24"><path d="M21 12h-9v4h5c-2 6-12 4-12-3 0-6 6-9 10-5l3-3C12-1 1 3 1 12c0 13 22 13 20 0z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-hub" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="currentColor" stroke="none"/><circle cx="9" cy="8" r="2" fill="white" stroke="none"/><path d="m6 17 5-5 3 2 4-5v8z" fill="white" stroke="none"/></symbol>
+      <symbol id="avatar-yehor" viewBox="0 0 100 100">
+        <path d="M21 100V83c0-14 12-23 29-23s29 9 29 23v17" fill="#242424"/>
+        <path d="m39 69 11 8 11-8 8 31H31z" fill="#fff"/>
+        <path d="m39 71 11 7-6 9-11-15m28-1-11 7 6 9 11-15" fill="#fff" stroke="#242424" stroke-width="1.5"/>
+        <path d="m49 78-3 11 4 11 4-11-3-11" fill="#242424"/>
+        <path d="M28 26C21 19 28 8 37 8c4-8 16-8 22-3 10-1 18 8 16 17 8 10 2 19-4 24H29c-10-4-10-14-1-20" fill="#242424"/>
+        <path d="M30 28c0-12 40-12 40 0v25c0 14-9 21-20 21S30 67 30 53z" fill="#fff" stroke="#242424" stroke-width="2"/>
+        <path d="M28 33c5-1 12-7 15-14 8 9 17 11 28 11l-4-15-27-3-12 10z" fill="#242424"/>
+        <path d="M29 44h-5c-4 0-4 12 5 12m42-12h5c4 0 4 12-5 12" fill="#fff" stroke="#242424" stroke-width="2"/>
+        <path d="M29 51c3 0 5 7 8 8 3-6 7-5 13-4 6-1 10-2 13 4 3-1 5-8 8-8v7c0 15-9 23-21 23s-21-8-21-23z" fill="#242424"/>
+        <path d="M44 66q6 5 12 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M33 38h13v12H33zm21 0h13v12H54z" fill="#fff" stroke="#242424" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M46 42h8M30 40h3M67 40h4M50 43v12h-4" fill="none" stroke="#242424" stroke-width="2"/>
+        <circle cx="39" cy="43" r="1.5" fill="#242424"/><circle cx="61" cy="43" r="1.5" fill="#242424"/>
+        <path d="m29 83 7 17M71 83l-7 17M25 93h10" fill="none" stroke="#fff" stroke-width="1.5"/>
+      </symbol>
+    </defs>
+  </svg>
+  <main class="stage">
+    <section class="canvas" aria-label="Clap smart home">
+      <div class="phone-shell app-shell" aria-label="Welcome home"></div>
+    </section>
+  </main>
+</body>
+</html>
