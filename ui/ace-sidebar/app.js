@@ -57,26 +57,27 @@ function badge(count, className = '') {
   return span;
 }
 
-function reversibleAnimation(element, frames, atEnd = false) {
+function reversibleAnimation(element, frames) {
   const animation = element.animate(frames, {
     duration: parseFloat(tokens.getPropertyValue('--duration-panel')),
     easing: tokens.getPropertyValue('--ease-in-out').trim(),
     fill: 'both',
   });
-  animation.pause();
-  animation.currentTime = atEnd ? animation.effect.getTiming().duration : 0;
+  animation.cancel();
   return animation;
 }
 
-function moveTimeline(animations, toEnd, instant = false) {
+function moveTimeline(timeline, toEnd, instant = false) {
+  const { animations } = timeline;
   const duration = animations[0].effect.getTiming().duration;
   const targetTime = toEnd ? duration : 0;
-  const currentTime = animations[0].currentTime;
+  const currentTime = animations[0].currentTime ?? timeline.position;
   const immediate = instant || reducedMotion.matches || currentTime === targetTime;
+  timeline.position = targetTime;
   animations.forEach((animation) => {
-    animation.currentTime = immediate ? targetTime : currentTime;
-    if (immediate) animation.pause();
+    if (immediate) animation.cancel();
     else {
+      animation.currentTime = currentTime;
       animation.playbackRate = 1;
       if (toEnd) animation.play();
       else animation.reverse();
@@ -244,9 +245,11 @@ function start() {
         { transform: 'translate(0, -50%)' },
         { transform: 'translate(.5625cqw, -50%)' },
       ]],
-    ].flatMap(([selector, frames]) => [...sidebar.querySelectorAll(selector)].map((element) => reversibleAnimation(element, frames, collapsed)));
-    foldTimelines.set(sidebar, animations);
+    ].flatMap(([selector, frames]) => [...sidebar.querySelectorAll(selector)].map((element) => reversibleAnimation(element, frames)));
+    foldTimelines.set(sidebar, { animations, position: collapsed ? animations[0].effect.getTiming().duration : 0 });
     animations[0].onfinish = () => {
+      if (animations[0].playState !== 'finished') return;
+      animations.forEach((animation) => animation.cancel());
       sidebar.dataset.transitioning = 'false';
       syncSidebarControls(sidebar);
     };
