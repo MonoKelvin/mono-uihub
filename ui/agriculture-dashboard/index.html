@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#cccccc">
+  <title>Verdant — Agriculture Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" data-view="overview" aria-label="Verdant agriculture dashboard">
+      <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#overview" aria-label="Verdant overview">
+          <svg viewBox="0 0 64 66" aria-hidden="true" fill="currentColor">
+            <path d="M31.5 31C29 21 20 11 24.5 4.5 28-1 37-1 40.5 4.5 45 11 35 23 32.5 31Z"/>
+            <path d="M25 33C17 24 4 21 5 14.5 5.5 9 12 7.5 16 11 22 16 23 25 25 33ZM39 33C41 25 42 16 48 11 52 7.5 58.5 9 59 14.5 60 21 47 24 39 33Z"/>
+            <path d="M24 40C15 36 4 37 3 31 2 26 7 23 12 26 17 29 21 35 24 40ZM40 40C43 35 47 29 52 26 57 23 62 26 61 31 60 37 49 36 40 40Z"/>
+            <path d="M27 46C17 45 9 48 5 42 2 38 4 36 9 37 15 38 22 42 27 46ZM37 46C42 42 49 38 55 37 60 36 62 38 59 42 55 48 47 45 37 46Z"/>
+            <path d="M29 54C20 48 13 49 7 49 11 58 18 61 29 63ZM35 54C44 48 51 49 57 49 53 58 46 61 35 63Z"/>
+            <path d="M30 66V53L32 46 34 53V66Z"/>
+          </svg>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <span class="nav-indicator" aria-hidden="true"></span>
+          <button class="nav-tab is-active" data-view-target="overview" aria-current="page">Overview</button>
+          <button class="nav-tab" data-view-target="analytics">Analytics</button>
+          <button class="nav-tab" data-view-target="monitoring">Monitoring</button>
+        </nav>
+        <div class="account-actions">
+          <button class="icon-button notification-toggle" id="notification-toggle" aria-label="Notifications" aria-expanded="false" aria-controls="notification-menu"><i class="ti ti-bell bell-outline" aria-hidden="true"></i><svg class="bell-filled" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7v4.4l-1.7 2.3A1.5 1.5 0 0 0 4.5 18h15a1.5 1.5 0 0 0 1.2-2.3L19 13.4V9a7 7 0 0 0-7-7Zm-3 18a3.1 3.1 0 0 0 6 0Z"/></svg></button>
+          <button class="profile-toggle" id="profile-toggle" aria-expanded="false" aria-controls="profile-menu">
+            <img src="./assets/cody-fisher.png" class="avatar" alt="">
+            <span class="profile-copy"><span id="profile-name">Cody Fisher</span><small>Farmer</small></span>
+            <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="dashboard-grid">
+        <section class="hero-panel" aria-label="Greenhouse view">
+          <img class="greenhouse-image" src="./assets/greenhouse-widescreen.png" alt="A distant greenhouse in a native widescreen scene with soft mist, slight radial softness and restrained red-green signal fringes" fetchpriority="high">
+          <div class="camera-overlay" hidden>
+            <div class="camera-label"><span class="status-dot"></span><span>Greenhouse 01</span><span class="camera-subtitle">North garden</span></div>
+            <div class="camera-controls"><span>Last reading · 11:40</span><button id="refresh-camera" aria-label="Refresh greenhouse connection"><i class="ti ti-refresh" aria-hidden="true"></i></button></div>
+          </div>
+          <div class="hero-analytics" hidden>
+            <div class="hero-analytics-heading"><div><span class="eyebrow">NORTH GARDEN</span><h1>Every season, a little greener.</h1></div><button class="icon-button" data-open="insights" aria-label="Open agricultural insights"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+            <div class="analytics-summary"><div><span>Field health score</span><strong id="hero-health">78<small>/100</small></strong></div><div><span>Growth this month</span><strong>12<small>%</small></strong></div><div><span>Growing area</span><strong>240<small>m²</small></strong></div></div>
+            <div id="hero-bars" class="hero-bars" aria-label="Field health by month"></div>
+            <div class="hero-analytics-footer"><span><span class="status-dot"></span>Healthy growing conditions</span><button class="text-button" data-open="insights">View field data <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+          </div>
+          <div class="compact-shortcuts"><button data-open="activity"><i class="ti ti-calendar-event" aria-hidden="true"></i> Activity</button><button data-open="weather"><i class="ti ti-sun" aria-hidden="true"></i> Weather</button></div>
+        </section>
+
+        <section class="card monitoring-card" aria-labelledby="monitoring-heading">
+          <div class="card-heading"><h2 id="monitoring-heading">Greenhouse Monitoring</h2><span class="live-badge">Live</span></div>
+          <div class="outside-weather"><div><span class="reading-date">Mon 06 Aug</span><strong>22°C</strong></div><div class="sunny-weather"><i class="ti ti-sun" aria-hidden="true"></i><span>Sunny 11:40 <span class="weather-divider">|</span> 53%</span></div></div>
+          <div class="forest-scene"><img src="./assets/forest-diorama.png" alt="A miniature forest with lush trees on a square garden plot"></div>
+          <div class="metric-grid" aria-label="Greenhouse measurements">
+            <button class="metric-tile is-selected" data-metric="temperature" aria-pressed="true"><span><i class="ti ti-temperature" aria-hidden="true"></i>Temp</span><strong id="temperature-value">24.8°C</strong></button>
+            <button class="metric-tile" data-metric="humidity" aria-pressed="false"><span><i class="ti ti-droplet" aria-hidden="true"></i>Humidity</span><strong>68%</strong></button>
+            <button class="metric-tile" data-metric="co2" aria-pressed="false"><span><i class="ti ti-cloud" aria-hidden="true"></i>CO₂</span><strong>742 <small>ppm</small></strong></button>
+            <button class="metric-tile" data-metric="moisture" aria-pressed="false"><span><i class="ti ti-ripple" aria-hidden="true"></i>Moisture</span><strong>73%</strong></button>
+          </div>
+          <button class="environment-link" data-open="environment"><i class="ti ti-info-circle" aria-hidden="true"></i><span><span class="environment-full">Real-time environmental insights</span><span class="environment-compact">View insights</span></span><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+        </section>
+
+        <section class="card activity-card" aria-labelledby="activity-heading">
+          <div class="card-heading"><div><h2 id="activity-heading">Activity Overview</h2><p>Track sales, leads, performance.</p></div><button class="expand-button" data-open="activity" aria-label="Expand activity overview"><i class="ti ti-arrows-diagonal" aria-hidden="true"></i></button></div>
+          <div class="day-selector" aria-label="Activity day">
+            <span class="day-indicator" aria-hidden="true"></span>
+            <button data-day="0" aria-pressed="false">MON</button><button data-day="1" aria-pressed="false">TUE</button><button data-day="2" aria-pressed="false">WED</button><button data-day="3" class="is-active" aria-pressed="true">THU</button><button data-day="4" aria-pressed="false">FRI</button><button data-day="5" aria-pressed="false">SAT</button>
+          </div>
+          <div class="activity-timeline">
+            <div class="timeline-grid" aria-hidden="true"></div>
+            <button class="activity-event" id="activity-event" data-open="activity" aria-label="Watering at 09:00"><span class="activity-label" id="activity-label">Watering</span><span class="leaf-circle"><img src="./assets/leaf-bud.png" alt=""></span></button>
+            <div class="activity-empty" hidden><i class="ti ti-calendar-check" aria-hidden="true"></i><span>No activities scheduled</span><button class="text-button" data-open="activity">View schedule</button></div>
+            <div class="time-axis" aria-hidden="true"><span>08:00</span><span>09:00</span><span>10:00</span><span>11:00</span></div>
+          </div>
+        </section>
+
+        <section class="card insights-card" aria-labelledby="insights-heading">
+          <div class="card-heading"><h2 id="insights-heading">Agricultural Insights</h2><div class="dropdown-anchor"><button class="period-toggle" id="period-toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="period-menu"><span>Monthly</span><i class="ti ti-caret-down" aria-hidden="true"></i></button><div class="dropdown select-menu" id="period-menu" role="listbox" aria-label="Insights period" hidden><button role="option" data-period="monthly" aria-selected="true">Monthly<i class="ti ti-check" aria-hidden="true"></i></button><button role="option" data-period="weekly" aria-selected="false">Weekly<i class="ti ti-check" aria-hidden="true"></i></button><button role="option" data-period="quarterly" aria-selected="false">Quarterly<i class="ti ti-check" aria-hidden="true"></i></button><button role="option" disabled aria-disabled="true">Yearly<span>Not available</span></button></div></div></div>
+          <div class="field-score"><span>Field Health Score <button class="inline-info" data-open="insights" aria-label="About field health score"><i class="ti ti-info-circle" aria-hidden="true"></i></button></span><div><strong id="health-score">78</strong><small>/100</small></div><span class="score-trend"><i class="ti ti-arrow-up" aria-hidden="true"></i><span id="health-trend">12%</span><span id="trend-period">vs last month</span></span><span class="chart-average">Avg 70</span></div>
+          <div class="health-chart" aria-label="Field health scores, January to July">
+            <div class="y-axis" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+            <div class="chart-plot"><div class="chart-grid" aria-hidden="true"></div><div class="average-line" aria-hidden="true"></div><div class="chart-bars" id="chart-bars"></div><div class="chart-tooltip" id="chart-tooltip" role="status"><span>May</span><strong>78<small>/100</small></strong></div></div>
+          </div>
+        </section>
+
+        <section class="card weather-card" aria-labelledby="weather-heading">
+          <div class="card-heading"><h2 id="weather-heading">Weather</h2><div class="dropdown-anchor"><button class="period-toggle" id="weather-toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="weather-menu"><span>Today</span><i class="ti ti-caret-down" aria-hidden="true"></i></button><div class="dropdown select-menu" id="weather-menu" role="listbox" aria-label="Forecast day" hidden><button role="option" data-weather-day="today" aria-selected="true">Today<i class="ti ti-check" aria-hidden="true"></i></button><button role="option" data-weather-day="tomorrow" aria-selected="false">Tomorrow<i class="ti ti-check" aria-hidden="true"></i></button><button role="option" disabled aria-disabled="true">Next week<span>Not available</span></button></div></div></div>
+          <div class="weather-current"><strong id="weather-current-value">30°</strong><div class="weather-measures"><button data-weather-measure="humidity"><i class="ti ti-droplet" aria-hidden="true"></i>Humidity</button><button data-weather-measure="feels"><i class="ti ti-temperature" aria-hidden="true"></i>Feels like</button><button data-weather-measure="wind"><i class="ti ti-wind" aria-hidden="true"></i>Wind</button></div></div>
+          <div class="forecast-strip" id="forecast-strip" aria-label="Hourly forecast"></div>
+          <button class="report-button" data-open="weather">View Detailed Report</button>
+        </section>
+      </div>
+      </div>
+
+      <div class="dropdown profile-menu" id="profile-menu" hidden><span class="menu-caption">NORTH GARDEN</span><button data-open="profile"><i class="ti ti-user-circle" aria-hidden="true"></i>Profile & preferences</button><button id="export-all"><i class="ti ti-download" aria-hidden="true"></i>Export field data</button><button disabled aria-disabled="true"><i class="ti ti-building-cottage" aria-hidden="true"></i>Switch farm<span>1 farm</span></button></div>
+      <div class="dropdown notification-menu" id="notification-menu" hidden><div class="notification-heading"><h3>Notifications</h3><button class="text-button" id="mark-read">Mark all read</button></div><div id="notification-list"></div></div>
+      <div class="dialog-layer" id="dialog-layer" hidden><div class="scrim" id="dialog-scrim"></div><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1"><header class="dialog-heading"><div><span class="eyebrow" id="dialog-eyebrow">NORTH GARDEN</span><h2 id="dialog-title"></h2></div><button class="icon-button" id="dialog-close" aria-label="Close dialog"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="dialog-content" id="dialog-content"></div><footer class="dialog-footer" id="dialog-footer"></footer></section></div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-circle-check" aria-hidden="true"></i><span></span></div>
+    </main>
+  </div>
+</body>
+</html>

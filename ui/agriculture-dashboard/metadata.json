@@ -1,0 +1,52 @@
+{
+  "name": "Verdant 农业监控",
+  "slug": "agriculture-dashboard",
+  "page_type": "software",
+  "imageToUI": "https://dribbble.com/shots/27627326-Agriculture-Dashboard-Design",
+  "tags": ["农业", "温室", "数据可视化"],
+  "palette": ["#dddddd", "#3f8503", "#11140f"],
+  "created_at": "2026-11-08 10:08:59",
+  "updated_at": "2026-11-08 11:34:10",
+  "history": [
+    {
+      "prompt": "还原这个UI软件，主要图片请使用生图实现",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify", "oil-ui", "dataviz"],
+      "duration_seconds": 1306,
+      "image_generation": [
+        {
+          "prompt": "A solitary glass greenhouse at night viewed from the front right at eye level, long rectangular translucent frosted glass walls and a pitched glass roof, greenhouse occupies the middle two thirds of a wide 2:1 composition, pale mint light softly shines inside, one warm amber vertical light at the doorway on the right, dense dark climbing plants with small crimson flowers across the left wall and roof, wet garden paving in the foreground reflects the warm doorway, still muted sage grey fog fills the empty background, quiet atmospheric botanical architecture",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A miniature botanical forest diorama on a thin square earthy tile viewed from a raised isometric angle, dense lush emerald and olive green rounded deciduous trees and a few slender conifers, low ferns cover the ground, square tile rotated to make a diamond silhouette, whole object centered with generous white margin on a seamless pure white background, soft daylight, realistic botanical model",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A single small fresh lime green botanical leaf bud, three plump folded leaves with smooth curved ribs tapering into one little brown stem, tilted diagonally from bottom left to top right, waxy living plant material, soft studio light, whole object centered and isolated",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A head and shoulders portrait of a young male farmer with short wavy dark brown hair and a neatly trimmed beard, wearing an olive work shirt, looking slightly to the left with a calm expression, soft natural window light, warm grey plain background, centered square composition",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "优化：主要大图风格不对，原图带有轻微屏幕故障风格、雾气的朦胧效果，主体没有很大，需要稍远的拍摄视角并重新生成；调整界面尺寸、布局和部分字体，支持1366×768。继续优化：修正 Activity Overview 日期选中块的位置，增加右上角头像与胶囊组件间距；重新生成原生16:9主图，加入轻微径向模糊与故障偏色，删除旧主图。调整显示图片，适配铺满容器，不出现间隙。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify", "oil-ui", "dataviz"],
+      "duration_seconds": 3155,
+      "image_generation": [
+        {
+          "prompt": "A small solitary glass greenhouse at night seen from a few steps farther back, front right three quarter view at eye level in a wide 2:1 landscape composition. The greenhouse occupies only about 52 percent of the image width and 48 percent of the image height, positioned below the center, with generous empty misty sky above and wet garden paving in front. Translucent milky glass walls and a pitched roof glow with diffuse pale mint light, one slim warm amber vertical light at the right doorway, dark climbing foliage and subdued crimson flowers spread across the left wall and roof. Soft eucalyptus grey fog veils the building and garden in layered translucent mist, gently blurred silhouettes, dim reflected amber light in shallow puddles. The scene is seen through a slightly malfunctioning digital display, with faint horizontal signal tearing and small restrained red and green channel offsets along foliage contours, subtle spectral smearing near the door reflection, a dreamy quiet soft-focus digital botanical scene rather than sharp architectural photography",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A quiet dreamlike botanical night scene composed as a native 16:9 landscape. A solitary glass greenhouse is photographed from a few steps farther back at eye level from the front right, the building covers about 55 percent of the frame width and 36 percent of its height, placed just below center with generous misty sky above and wet garden paving in the foreground. Milky translucent glass panels and a pitched roof glow with diffuse pale mint light, a single slim warm amber light beside the doorway on the right. Dark climbing vines and muted crimson flowers cover part of the left wall and roof, an amber reflection rests in a shallow puddle. Soft eucalyptus grey mist gently veils the architecture and plants. Add only a very slight radial lens softness around the outer edges and an extremely restrained digital-display color-channel offset along foliage contours and the amber reflection, tiny red and green spectral fringes and faint horizontal signal slippage, the center remains readable and the effects are barely noticeable, calm hazy atmospheric glass architecture rather than sharp commercial photography",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    }
+  ]
+}
