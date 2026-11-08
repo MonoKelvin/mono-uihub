@@ -1,0 +1,32 @@
+{
+  "name": "VEXA 数字人",
+  "slug": "vexa-agents",
+  "page_type": "website",
+  "tags": ["数字人", "智能体", "VEXA"],
+  "palette": ["#d4d6cd", "#c4c4be", "#161408"],
+  "created_at": "2026-11-08 19:21:02",
+  "updated_at": "2026-11-08 20:07:54",
+  "imageToUI": "https://dribbble.com/shots/27094197-Orbita-Ring-premium-wearable-UI-concept",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的网页。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "image-purify", "run"],
+      "image_generation": [
+        {
+          "prompt": "Portrait of a young adult female digital human with a short chin-length silver platinum bob swept to the side, sage green eyes, fine freckles across her nose and cheeks, neutral relaxed expression and slightly parted lips, realistic game cinematic character, wearing a black high collar technical suit with a central silver zipper and subtle dark seams. Front facing three-quarter angle, entire hair silhouette, head and both shoulders visible, chest-up composition filling a vertical portrait, soft warm diffused studio light, isolated.",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "Portrait of a young adult female digital human with brown hair tied in a loose high bun, a few strands framing her face, gray green eyes and fine freckles, neutral relaxed expression, realistic game cinematic character. Wearing a charcoal gray futuristic fitted high collar suit with pale silver piping and one small warm brass earring. Looking back over her shoulder toward the camera in a three-quarter side view, whole head and upper torso inside a vertical portrait composition, soft warm diffused studio light, isolated.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "右侧人物需要抠图，尽量调整后让这个页面做成首屏自适应窗口尺寸撑满。不是设计成单页面，而是设计成可以向下滚动的网页页面，页面内容自行根据主题来生成补充，减少对话框。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-core", "gsap-timeline", "gsap-scrolltrigger"]
+    }
+  ]
+}

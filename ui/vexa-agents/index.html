@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d4d6cd">
+  <meta name="description" content="VEXA — crafting human-like digital agents with purpose. Explore the core, choose a human presence, and build on your own terms.">
+  <title>VEXA — Digital agents with purpose</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Roboto:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="vexa-mark" viewBox="0 0 120 120">
+      <path fill="currentColor" fill-rule="evenodd" d="M60 5C74 5 85 16 85 30C85 39 79 45 82 54C85 62 94 66 102 70C113 76 119 87 116 99C113 112 101 119 89 117C78 116 70 108 66 101C63 94 57 94 53 101C48 110 40 118 27 117C13 116 3 106 3 93C3 81 10 71 21 67C31 64 35 59 37 51C39 44 35 37 35 30C35 16 46 5 60 5ZM60 51C54 51 50 60 45 69C41 76 43 82 50 84C55 86 65 86 71 84C78 82 80 76 76 69C70 60 66 51 60 51Z"/>
+    </symbol>
+  </svg>
+
+  <div class="page" id="top">
+    <header class="topbar">
+      <a class="wordmark" href="#top" aria-label="VEXA home">V<span class="wordmark-e" aria-hidden="true"><span></span><span></span><span></span></span>XA</a>
+      <nav class="navigation" aria-label="Main navigation">
+        <a class="nav-link" href="#core"><span aria-hidden="true">[</span> EXPLORE <span aria-hidden="true">]</span></a>
+        <a class="nav-link" href="#pricing"><span aria-hidden="true">[</span> PRICING <span aria-hidden="true">]</span></a>
+        <a class="nav-link" href="#api"><span aria-hidden="true">[</span> API <span aria-hidden="true">]</span></a>
+      </nav>
+      <a class="app-button" href="#app"><i class="ti ti-brand-apple" aria-hidden="true"></i><span>GET THE APP</span></a>
+    </header>
+
+    <main id="content" tabindex="-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-portrait">
+          <img id="hero-agent" class="agent-image" src="./assets/agent-silver-cutout.webp" alt="Silver-haired digital human wearing a black technical suit" fetchpriority="high">
+          <div class="human-badge">
+            <svg class="badge-mark" viewBox="0 0 120 120" aria-hidden="true"><use href="#vexa-mark"/></svg>
+            <p>optimized for agents<br>&amp; humans</p>
+          </div>
+        </div>
+        <div class="hero-left">
+          <div class="hero-copy">
+            <span class="corner-code" aria-hidden="true">[ :// ]</span>
+            <h1 class="hero-title" id="hero-title"><span class="title-line title-line--one">CRAFTING</span><span class="title-line title-line--two">HUMAN-LIKE</span><span class="title-line title-line--three">DIGITAL AGENTS</span><span class="title-line title-line--four">WITH PURPOSE</span></h1>
+          </div>
+          <div class="hero-action">
+            <p class="hero-description">DISCOVER NEW TOOLS<br>TO BUILD WITH AGENTS<br>ACROSS WEB3 SYSTEMS</p>
+            <a class="deploy-button" href="#build"><i class="ti ti-grip-vertical" aria-hidden="true"></i><span>deploy agent</span></a>
+          </div>
+          <div class="module-grid">
+            <a class="module-card module-card--core" href="#core" aria-label="Explore the core module">
+              <span class="module-heading"><span class="module-label"><i class="ti ti-grip-vertical" aria-hidden="true"></i><span>CORE MODULE</span></span><i class="ti ti-arrow-up-right module-arrow" aria-hidden="true"></i></span>
+              <svg class="core-mark" viewBox="0 0 120 120" aria-hidden="true"><use href="#vexa-mark"/></svg>
+            </a>
+            <a class="module-card module-card--skin" href="#skins" aria-label="Explore agent skins">
+              <span class="module-heading"><span class="module-label"><i class="ti ti-grip-vertical" aria-hidden="true"></i><span>AGENT SKIN</span></span><i class="ti ti-arrow-up-right module-arrow" aria-hidden="true"></i></span>
+              <img class="skin-image" src="./assets/agent-skin.webp" alt="Brown-haired digital human in a charcoal technical suit">
+            </a>
+          </div>
+        </div>
+        <div class="hero-scroll"><span>CORE / SKIN / PURPOSE</span><a href="#core">EXPLORE BELOW <i class="ti ti-arrow-down" aria-hidden="true"></i></a></div>
+      </section>
+
+      <section class="content-section core-section" id="core" aria-labelledby="core-title">
+        <div class="section-label">[ THE CORE MODULE ]</div>
+        <div class="core-layout">
+          <div class="core-visual">
+            <svg class="core-symbol" viewBox="0 0 120 120" aria-hidden="true"><use href="#vexa-mark"/></svg>
+            <span class="core-caption">ONE CORE. YOUR PURPOSE.</span>
+          </div>
+          <div class="core-copy">
+            <h2 class="section-title" id="core-title">A PURPOSE.<br>NOT JUST<br>A PROMPT.</h2>
+            <p class="section-description">A familiar presence starts with a clear identity. Give your agent useful context, a defined role, and boundaries that stay yours.</p>
+            <div class="capability-list">
+              <div class="capability-row"><i class="ti ti-fingerprint" aria-hidden="true"></i><div><h3>Identity</h3><p>A name, a role, a point of view.</p></div></div>
+              <div class="capability-row"><i class="ti ti-stack-2" aria-hidden="true"></i><div><h3>Context</h3><p>The knowledge that makes an answer useful.</p></div></div>
+              <div class="capability-row"><i class="ti ti-arrow-branch" aria-hidden="true"></i><div><h3>Actions</h3><p>Clear permissions. Deliberate next steps.</p></div></div>
+            </div>
+            <a class="text-link text-link--light" href="#build">GIVE IT A PURPOSE <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section skins-section" id="skins" aria-labelledby="skins-title">
+        <div class="section-label">[ A HUMAN PRESENCE ]</div>
+        <div class="skins-layout">
+          <div class="skins-copy">
+            <h2 class="section-title" id="skins-title">A FACE<br>THEY<br>REMEMBER.</h2>
+            <p class="section-description">Same core. A different character. Choose the presence that feels right for the people on the other side of the conversation.</p>
+            <div class="skin-selector" role="group" aria-label="Choose an agent skin">
+              <button class="skin-option" type="button" data-skin="silver" aria-pressed="true"><span>SILVER</span><i class="ti ti-check" aria-hidden="true"></i></button>
+              <button class="skin-option" type="button" data-skin="sienna" aria-pressed="false"><span>SIENNA</span><i class="ti ti-check" aria-hidden="true"></i></button>
+            </div>
+            <a class="text-link" href="#build">MAKE IT YOURS <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          </div>
+          <figure class="skin-showcase" data-selected-skin="silver">
+            <div class="skin-portraits">
+              <img class="skin-portrait is-selected" data-portrait="silver" src="./assets/agent-silver-cutout.webp" alt="Silver, a silver-haired digital agent" aria-hidden="false" loading="lazy">
+              <img class="skin-portrait" data-portrait="sienna" src="./assets/agent-skin.webp" alt="Sienna, a brown-haired digital agent" aria-hidden="true" loading="lazy">
+            </div>
+            <figcaption><span id="skin-name">SILVER</span><span>DIGITAL IDENTITY / VEXA</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="content-section purpose-section" id="purpose" aria-labelledby="purpose-title">
+        <div class="section-label">[ REAL ROLES. REAL CONNECTIONS. ]</div>
+        <div class="section-heading"><h2 class="section-title" id="purpose-title">USEFUL,<br>BY DESIGN.</h2><p class="section-description">Not every agent needs to do everything. Start with one role. Make that role matter.</p></div>
+        <div class="usecase-list">
+          <article class="usecase"><i class="ti ti-users" aria-hidden="true"></i><span class="usecase-label">COMMUNITY</span><h3>A better<br>first hello.</h3><p>Welcome new members, help them find their way, and keep the conversation moving.</p><button class="text-link" type="button" data-purpose="community">BUILD A COMMUNITY GUIDE <i class="ti ti-arrow-right" aria-hidden="true"></i></button></article>
+          <article class="usecase"><i class="ti ti-shopping-bag" aria-hidden="true"></i><span class="usecase-label">COMMERCE</span><h3>Less searching.<br>More finding.</h3><p>Bring product knowledge into the conversation and help people make an informed choice.</p><button class="text-link" type="button" data-purpose="commerce">BUILD A PRODUCT ADVISOR <i class="ti ti-arrow-right" aria-hidden="true"></i></button></article>
+          <article class="usecase"><i class="ti ti-sparkles" aria-hidden="true"></i><span class="usecase-label">PERSONAL</span><h3>A little more<br>headspace.</h3><p>Organize ideas, keep useful context close, and turn a next thought into a next step.</p><button class="text-link" type="button" data-purpose="personal">BUILD A PERSONAL ASSISTANT <i class="ti ti-arrow-right" aria-hidden="true"></i></button></article>
+        </div>
+      </section>
+
+      <section class="content-section api-section" id="api" aria-labelledby="api-title">
+        <div class="section-label">[ BUILD ON YOUR TERMS ]</div>
+        <div class="builder-layout">
+          <div class="builder-column" id="build">
+            <h2 class="section-title" id="api-title">NAME IT.<br>MAKE IT<br>YOUR OWN.</h2>
+            <p class="section-description">A small configuration. A clear starting point. Take your agent into the stack you already use.</p>
+            <form id="agent-form" class="agent-form" novalidate>
+              <div class="field-group"><label for="agent-name">Agent name</label><input id="agent-name" name="agentName" type="text" placeholder="Give your agent a name" autocomplete="off" minlength="2" maxlength="40" aria-describedby="name-error" required><p class="field-error" id="name-error" hidden></p></div>
+              <fieldset class="skin-field"><legend>Agent skin</legend><div class="skin-choices"><label class="skin-choice"><input type="radio" name="skin" value="silver" checked><span>Silver</span><i class="ti ti-check" aria-hidden="true"></i></label><label class="skin-choice"><input type="radio" name="skin" value="sienna"><span>Sienna</span><i class="ti ti-check" aria-hidden="true"></i></label></div></fieldset>
+              <div class="config-summary"><span id="purpose-name">Community guide</span><span id="plan-name">BUILD PLAN</span></div>
+              <button class="solid-button export-button" type="submit"><i class="ti ti-download" aria-hidden="true"></i><span>Download agent</span></button>
+              <p class="form-result" id="form-result" role="status" hidden></p>
+              <button class="text-button" id="reset-agent" type="button" data-action="reset" hidden>Create another agent</button>
+            </form>
+          </div>
+          <div class="code-column">
+            <div class="code-panel">
+              <div class="code-heading"><span><i class="ti ti-code" aria-hidden="true"></i> agent.config.json</span><span>JSON</span></div>
+              <pre class="api-code" id="api-code" tabindex="0">{
+  "name": "Lumi",
+  "skin": "silver",
+  "purpose": "community",
+  "modules": ["core", "skin"],
+  "workspace": null,
+  "plan": "build"
+}</pre>
+              <div class="api-actions"><button class="light-button" type="button" data-action="copy"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy configuration</span></button><button class="code-download" type="button" data-action="export" aria-label="Download configuration JSON"><i class="ti ti-download" aria-hidden="true"></i></button></div>
+              <p class="api-feedback" id="api-feedback" role="status" hidden></p>
+            </div>
+            <div class="integration-note"><i class="ti ti-plug-connected" aria-hidden="true"></i><p>Your configuration stays portable.<br>Connect a workspace to publish and run your agent.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section pricing-section" id="pricing" aria-labelledby="pricing-title">
+        <div class="section-label">[ ROOM TO GROW ]</div>
+        <div class="section-heading"><h2 class="section-title" id="pricing-title">START SMALL.<br>BUILD WHAT'S NEXT.</h2><p class="section-description">Find your agent's purpose first.<br>Choose the workspace when you're ready.</p></div>
+        <div class="pricing-grid">
+          <article class="pricing-tier" data-tier="build"><div class="tier-heading"><span class="tier-name">BUILD</span><span class="tier-caption">YOUR FIRST IDEA</span></div><p class="tier-price">$0<span>/ month</span></p><p>A place to begin.</p><ul><li>Core module</li><li>Two agent identities</li><li>Portable configuration</li></ul><button class="outline-button" type="button" data-plan="build" aria-pressed="true"><span>Use Build</span><i class="ti ti-check" aria-hidden="true"></i></button></article>
+          <article class="pricing-tier pricing-tier--dark" data-tier="scale"><div class="tier-heading"><span class="tier-name">SCALE</span><span class="tier-caption">YOUR NEXT CHAPTER</span></div><p class="tier-price">$29<span>/ month</span></p><p>A connected agent workspace.</p><ul><li>Everything in Build</li><li>Custom agent identity</li><li>Workspace integrations</li></ul><button class="light-button" type="button" data-plan="scale" aria-pressed="false"><span>Use Scale</span><i class="ti ti-arrow-right" aria-hidden="true"></i></button></article>
+        </div>
+        <p class="section-note">A connected workspace is required to activate a paid plan.</p>
+      </section>
+
+      <section class="content-section questions-section" id="questions" aria-labelledby="questions-title">
+        <div class="questions-layout"><div><span class="section-label">[ A FEW THINGS TO KNOW ]</span><h2 class="section-title" id="questions-title">GOOD<br>QUESTIONS.</h2></div>
+          <div class="faq-list">
+            <details class="faq-item"><summary>What can I build here?<i class="ti ti-plus" aria-hidden="true"></i></summary><p>Choose an identity, give your agent a name and a role, then export its configuration. A connected workspace is required to publish and run it.</p></details>
+            <details class="faq-item"><summary>Can I change the agent's appearance?<i class="ti ti-plus" aria-hidden="true"></i></summary><p>Yes. The skin is separate from the core. Switch between Silver and Sienna without changing your agent's name or purpose.</p></details>
+            <details class="faq-item"><summary>Who decides what an agent can do?<i class="ti ti-plus" aria-hidden="true"></i></summary><p>You do. Define its role and review the action permissions in your connected workspace before allowing it to act.</p></details>
+            <details class="faq-item"><summary>Do I need a paid plan to start?<i class="ti ti-plus" aria-hidden="true"></i></summary><p>No. Build lets you create and export a configuration. Choose Scale when you want to connect a workspace; plan activation happens there.</p></details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="content-section closing-section" id="app">
+      <div class="section-label">[ HUMAN BY DESIGN ]</div>
+      <div class="closing-layout"><h2 class="section-title">A LITTLE<br>MORE HUMAN.<br>WHEREVER YOU WORK.</h2><div class="desktop-release"><i class="ti ti-brand-apple" aria-hidden="true"></i><h3>VEXA for macOS</h3><p>A connected release is required to download the desktop app.</p><button class="unavailable-button outline-button" type="button" disabled>macOS download unavailable</button><a class="text-link" href="#build">CONTINUE IN BROWSER <i class="ti ti-arrow-right" aria-hidden="true"></i></a></div></div>
+      <div class="footer-wordmark" aria-hidden="true">VEXA</div>
+      <div class="footer-bottom"><span>VEXA / DIGITAL AGENTS WITH PURPOSE</span><a href="#top">BACK TO TOP <i class="ti ti-arrow-up" aria-hidden="true"></i></a></div>
+    </footer>
+  </div>
+</body>
+</html>
