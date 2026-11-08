@@ -1,0 +1,27 @@
+{
+  "name": "Event Guide",
+  "slug": "event-guide",
+  "page_type": "app",
+  "tags": ["音乐", "活动", "票务"],
+  "palette": ["#070707", "#6678ff", "#939cb1"],
+  "created_at": "2026-11-08 14:32:14",
+  "updated_at": "2026-11-08 14:56:40",
+  "imageToUI": "https://huaban.com/pins/5187748925",
+  "history": [
+    {
+      "prompt": "还原这个UI原型",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    },
+    {
+      "prompt": "修正 Home 文字遮挡、收藏图标位置与右上角菜单图标居中，并修正手机尺寸和圆角。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "UI要加上阴影",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}
