@@ -3,6 +3,15 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
+# OS temp
+*.tmp
+*.log
+
+# Agent session cache & nested worktrees — never version-controlled
+.claude/worktrees/
+.claude/plans/
+.claude/temp/
+
 # Editor
 .vscode/
 .idea/
@@ -12,9 +21,8 @@ Desktop.ini
 # finesse 构建历史（本地轮换记忆，随每次构建重写）
 .finesse/
 
-# OS temp
-*.tmp
-*.log
+# Never commit API credentials (e.g. tools/image-forge/qingjiu.env)
+*.env
 
 # Image Forge — never commit real credentials
 .env
@@ -39,13 +47,3 @@ site/.astro/
 site/public/prototypes/
 site/public/site/modules/
 site/.vercel/
-
-
-# Agent runtime skills（本地缓存，与 .claude/ 同类）
-agent/
-
-# Agent session cache & nested worktrees — never version-controlled
-.claude/
-
-# Never commit API credentials (e.g. tools/image-forge/qingjiu.env)
-*.env
