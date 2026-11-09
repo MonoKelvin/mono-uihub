@@ -71,13 +71,11 @@ h1, h2, h3, p { margin: 0; }
 .svg-library { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .presentation {
-  width: min(calc(100vw - 112px), calc((100svh - 48px) * 1048 / 741), 1048px);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4.96%;
+  width: min(calc(100vw - 32px), calc((100svh - 32px) * 314 / 681), 390px);
+  display: block;
 }
-.stage { min-width: 0; display: flex; align-items: flex-start; }
-.stage--middle { padding-top: 18.79%; }
+.stage { min-width: 0; display: block; }
+.stage--middle, .stage--tickets { display: none; }
 .canvas {
   position: relative;
   width: 100%;
@@ -226,9 +224,7 @@ h1, h2, h3, p { margin: 0; }
 @keyframes poster-arrive { from { opacity: .65; transform: translateY(2.5cqw); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 1050px), (max-height: 720px) {
-  .presentation { width: min(calc(100vw - 32px), calc((100svh - 32px) * 314 / 681), 390px); display: block; }
-  .stage { display: block; }
-  .stage--middle, .stage--tickets { display: none; }
+  .presentation { width: min(calc(100vw - 32px), calc((100svh - 32px) * 314 / 681), 390px); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
