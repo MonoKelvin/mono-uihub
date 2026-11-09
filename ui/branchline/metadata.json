@@ -1,0 +1,23 @@
+{
+  "name": "Branchline · Git 工作台",
+  "slug": "branchline",
+  "page_type": "software",
+  "tags": ["Git", "版本控制", "开发工具"],
+  "palette": ["#fbfbf9", "#cb572e", "#282b28"],
+  "created_at": "2026-11-09 11:43:32",
+  "updated_at": "2026-11-09 14:26:06",
+  "history": [
+    {
+      "prompt": "一个git项目管理软件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "oil-frontend", "dataviz", "vibehub", "run"],
+      "duration_seconds": 6592
+    },
+    {
+      "prompt": "进入 branchline 项目，检查没问题后提交推送",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-frontend", "vibehub", "run"],
+      "duration_seconds": 2226
+    }
+  ]
+}

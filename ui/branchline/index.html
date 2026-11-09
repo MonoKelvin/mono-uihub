@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e6e7e2">
+  <title>Branchline — Git 工作台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <section class="canvas" aria-label="Branchline Git 工作台">
+      <header class="titlebar">
+        <div class="brand">
+          <button class="icon-button mobile-menu" data-action="toggle-sidebar" aria-label="打开仓库导航" aria-expanded="false"><i class="ti ti-layout-sidebar" aria-hidden="true"></i></button>
+          <span class="brand-mark"><i class="ti ti-git-branch" aria-hidden="true"></i></span>
+          <span class="brand-name">branchline<span>.</span></span>
+        </div>
+        <div class="titlebar-actions">
+          <button class="command-trigger" data-action="open-commands"><i class="ti ti-search" aria-hidden="true"></i><span>搜索命令</span><kbd>Ctrl K</kbd></button>
+          <span class="avatar avatar-user" title="林乔">LQ</span>
+        </div>
+      </header>
+      <div class="app-body">
+        <button class="sidebar-scrim scrim" data-action="toggle-sidebar" aria-label="关闭仓库导航" tabindex="-1"></button>
+        <aside class="sidebar" aria-label="仓库导航">
+          <div class="workspace-label"><span class="workspace-avatar">O</span><div><strong>Orbit 工作区</strong><span>个人项目</span></div></div>
+          <div class="section-label"><span>仓库</span><button class="icon-button small" data-action="open-repository" aria-label="添加仓库"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+          <div id="repository-list" class="repository-list scroll-area"></div>
+          <div class="sidebar-rule"></div>
+          <nav id="view-navigation" class="view-navigation" aria-label="仓库视图"></nav>
+          <div class="section-label branch-section-label"><span>本地分支</span><button class="icon-button small" data-action="new-branch" aria-label="新建分支"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+          <div id="sidebar-branches" class="sidebar-branches scroll-area"></div>
+          <button class="remote-item" data-action="show-settings"><i class="ti ti-cloud" aria-hidden="true"></i><span>origin</span><i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+          <div class="sidebar-bottom">
+            <button class="settings-link" data-action="show-settings"><i class="ti ti-settings" aria-hidden="true"></i><span>仓库设置</span></button>
+            <button id="theme-toggle" class="icon-button" data-action="toggle-theme" aria-label="切换到深色主题" aria-pressed="false"><i class="ti ti-moon" aria-hidden="true"></i></button>
+          </div>
+        </aside>
+        <section class="workspace">
+          <header class="repository-header">
+            <div class="repository-heading"><div class="repository-title"><h1 id="repository-name">orbit-web</h1><i class="ti ti-lock" aria-hidden="true" title="私有仓库"></i></div><button id="current-branch" class="branch-trigger" data-menu="checkout" aria-haspopup="menu" aria-expanded="false"></button></div>
+            <div class="sync-group"><button class="sync-button" data-action="remote-operation" data-operation="fetch" aria-label="获取远程更新"><i class="ti ti-refresh" aria-hidden="true"></i><span>获取</span></button><button class="sync-button" data-action="remote-operation" data-operation="pull" aria-label="拉取远程提交"><i class="ti ti-arrow-down" aria-hidden="true"></i><span>拉取</span></button><button class="sync-button push-button" data-action="remote-operation" data-operation="push" aria-label="推送本地提交"><i class="ti ti-arrow-up" aria-hidden="true"></i><span>推送</span><b id="ahead-count">1</b></button></div>
+          </header>
+          <div id="connection-banner" class="connection-banner" role="status" hidden></div>
+          <div id="view-root" class="view-root"></div>
+        </section>
+      </div>
+      <footer class="statusbar"><div><span class="status-dot"></span><span id="status-text">工作区就绪</span></div><div><span id="status-branch">main</span><span class="status-separator"></span><span>UTF-8</span><span class="status-separator"></span><span>Git 2.47</span></div></footer>
+      <div id="popover" class="popover" role="menu" aria-hidden="true"></div>
+      <div id="graph-tooltip" class="graph-tooltip" role="tooltip" hidden></div>
+      <div id="dialog-layer" class="layer" hidden><div class="scrim" data-action="close-dialog"></div><section id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1"></section></div>
+      <div id="toast" class="toast" role="status" aria-live="polite"><i class="ti ti-circle-check" aria-hidden="true"></i><span></span><button class="icon-button small" data-action="dismiss-toast" aria-label="关闭通知"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+    </section>
+  </main>
+</body>
+</html>
