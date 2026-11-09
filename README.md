@@ -1,50 +1,63 @@
-# mono-uihub
+<div align="center">
 
-AI-powered UI prototype design hub. Generate design pages in one sentence, providing endless inspiration for designers and developers.
+<img src="docs/cover.jpg" width="100%" alt="mono-uihub prototype gallery">
+
+[![AI-generated UI prototypes](https://img.shields.io/badge/AI--generated-UI%20prototypes-121212?style=flat-square&labelColor=6678ff)](https://github.com/MonoKelvin/mono-uihub)
+![stack](https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-121212?style=flat-square)
+![license](https://img.shields.io/badge/license-MIT-121212?style=flat-square)
+
+# mono-uihub
 
 [中文说明](README.zh.md)
 
-## What's inside
+</div>
 
-```
-mono-uihub/
-├── ui/                        # UI prototypes, one folder per page
-│   └── ...                    # pages grow over time
-├── skills/                    # Agent skills behind the generation
-│   ├── mono-ui-prototype/     # the page-generation skill
-│   │   └── SKILL.md
-│   └── image-purify/          # clean-image prompt packs (no noise, no scaly texture)
-│       ├── SKILL.md
-│       └── purify.json        # single source of truth, read by the tool
-├── tools/                     # helper scripts for the agent
-│   ├── image-forge/           # on-demand transparent PNG generation (auto-purified prompts)
-│   └── resource-getter/       # free illustrations / cut-out PNGs / photos, with latency-aware hot-link vs download
-├── LICENSE                    # MIT
-└── README.md / README.zh.md
-```
+A collection of AI-generated UI prototypes for websites, mobile apps, desktop software and components. Each prototype is a standalone HTML / CSS / JavaScript page you can open, inspect and edit. Interactions use local mock data, with no backend connection.
 
-## How it works
+## Examples
 
-Describe a page in one sentence — say, "an online configurator for a mechanical keyboard" or "a desktop chat window for an IM app". The skill in [`skills/SKILL.md`](skills/SKILL.md) turns that brief into a complete, high-fidelity prototype:
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <a href="ui/chef-music/"><img src="ui/chef-music/screenshots/1.jpg" width="100%" alt="Chef Music player"></a><br>
+      <sub><b>Chef Music</b> — music player</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="ui/card-market/"><img src="ui/card-market/screenshots/1.jpg" width="100%" alt="Card Market trading platform"></a><br>
+      <sub><b>卡场</b> — card-trading platform</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="ui/event-guide/"><img src="ui/event-guide/screenshots/1.jpg" width="100%" alt="Event Guide event program"></a><br>
+      <sub><b>Event Guide</b> — event program</sub>
+    </td>
+  </tr>
+</table>
 
-- **Derives a fresh visual direction every time** — color, typography, layout and motion are reasoned from the page's content and audience, never copied from a fixed template or the previous page.
-- **Pure front-end, zero setup** — every page is self-contained HTML / CSS / vanilla JS. No build step, no framework, no dependencies to install.
-- **Interactive, not a dead mock** — clickable elements are wired with minimal JS and local mock data, so prototypes can be demoed as-is.
-- **Anti-slop by design** — a hard checklist of "AI look" tells is enforced before delivery: one accent color, one radius system, real copy, deliberate whitespace.
-- **Clean generated imagery** — when a page needs a custom asset, [`skills/image-purify`](skills/image-purify/SKILL.md) is layered onto the prompt automatically, so assets come back free of noise, fish-scale micro-texture and floating debris.
-- **Cut-out assets first** — [`tools/resource-getter`](tools/resource-getter/README.md) pulls transparent SVG illustrations (unDraw, Storyset), cut-out PNGs (Pixabay, pngimg) and photos, strips baked-in SVG backgrounds, and downloads instead of hot-linking when the origin is slow.
+Click an image for its source and screenshots. More pages are in [`ui/`](ui/).
 
-## How to use
+## Usage
 
-Browse the `ui/` folder and open any `index.html` in your browser. That's it.
+**View a prototype:** Open `index.html` in any page folder under `ui/`. No installation or build required.
+
+**Run the gallery:** Search, filter and preview prototypes. Requires Node.js 22.12.0 or later.
 
 ```bash
-# optional: serve locally
-npx serve .
+cd site
+npm install
+npm run dev
 ```
 
-To generate a new page, hand the skill to your coding agent with a one-sentence brief.
+**Generate a prototype:** Ask your coding agent to follow the [`mono-ui-prototype`](skills/mono-ui-prototype/SKILL.md) skill, with a brief or reference image. For example:
+
+> Build a mechanical keyboard configurator with switch selection, keycap options and a live preview.
+
+The skill defines the design process and delivery checks. Colors, typography and layout are chosen for the brief; you can request changes afterward.
+
+## Tools
+
+- [`resource-getter`](tools/resource-getter/README.md): Fetch illustrations, transparent PNGs and photos; download locally when the source is slow.
+- [`image-forge`](tools/image-forge/README.md): Generate transparent PNGs with prompt additions to reduce noise and unwanted texture.
 
 ## License
 
-[MIT](LICENSE)
+Code is licensed under [MIT](LICENSE). Third-party images, fonts and other assets retain their own licenses.

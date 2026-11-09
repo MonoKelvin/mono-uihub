@@ -516,7 +516,7 @@ python tools/resource-getter/get.py probe <url>
 
 按需引，别一次加载一堆字重和字符集；设好回退栈，字体没加载时布局不能塌。Fontsource 找中文展示体好用：`fontsource.org/?classifications=handwriting&languages=zh_Hans`。
 
-**加载慢**：先换字体、换来源。所有源都试过只剩这个慢字体时，才下载到 `ui/<page>/assets/` 用本地 `@font-face`；超过 512KB 转 woff。
+**加载慢**：先换字体、换来源。字体一律在线 CDN 引入并设置系统兜底栈，不下载托管到 `assets/`。
 
 ### AI 生图：最次选项
 

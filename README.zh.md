@@ -1,50 +1,63 @@
-# mono-uihub
+<div align="center">
 
-AI 驱动的 UI 原型设计库。一句话生成设计页面，为设计师与开发者提供源源不断的灵感。
+<img src="docs/cover.jpg" width="100%" alt="mono-uihub 原型画廊">
+
+[![AI 生成的 UI 原型](https://img.shields.io/badge/AI%20%E7%94%9F%E6%88%90-UI%20%E5%8E%9F%E5%9E%8B-121212?style=flat-square&labelColor=6678ff)](https://github.com/MonoKelvin/mono-uihub)
+![纯前端](https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-121212?style=flat-square)
+![协议](https://img.shields.io/badge/MIT-%E5%BC%80%E6%BA%90-121212?style=flat-square)
+
+# mono-uihub
 
 [English](README.md)
 
-## 目录结构
+</div>
 
-```
-mono-uihub/
-├── ui/                        # UI 原型，一个页面一个文件夹
-│   └── ...                    # 页面持续增加
-├── skills/                    # 背后的生成技能
-│   ├── mono-ui-prototype/     # 页面生成技能
-│   │   └── SKILL.md
-│   └── image-purify/          # 干净出图词表（去噪点 / 去鳞片感 / 去 AI 味）
-│       ├── SKILL.md
-│       └── purify.json        # 唯一词源，生图工具直接读取
-├── tools/                     # 给助手用的脚本
-│   ├── image-forge/           # 按需生成透明 PNG（提示词自动叠加干净词）
-│   └── resource-getter/       # 免费插画 / 抠图 PNG / 摄影，按延迟自动热链或下载
-├── LICENSE                    # MIT
-└── README.md / README.zh.md
-```
+一个用 AI 制作的 UI 原型库，包含网页、手机 App、桌面软件和组件。每个原型都是独立的 HTML / CSS / JavaScript 页面，可直接打开、查看源码或修改。交互使用本地模拟数据，不连接后端。
 
-## 工作方式
+## 页面示例
 
-用一句话描述一个页面，比如"一个机械键盘的在线定制页""一个桌面端聊天窗口"。[`skills/SKILL.md`](skills/SKILL.md) 中定义的技能会把它变成一份完整的高保真原型：
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <a href="ui/chef-music/"><img src="ui/chef-music/screenshots/1.jpg" width="100%" alt="Chef Music 音乐播放器"></a><br>
+      <sub><b>Chef Music</b> · 音乐播放器</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="ui/card-market/"><img src="ui/card-market/screenshots/1.jpg" width="100%" alt="卡场在线卡牌交易"></a><br>
+      <sub><b>卡场</b> · 在线卡牌交易</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="ui/event-guide/"><img src="ui/event-guide/screenshots/1.jpg" width="100%" alt="Event Guide 活动手册"></a><br>
+      <sub><b>Event Guide</b> · 活动手册</sub>
+    </td>
+  </tr>
+</table>
 
-- **每次都推导全新的视觉方向**：配色、字体、布局、动效都从页面内容与受众现场推导，绝不套用固定模板，也不复用上一个页面的风格。
-- **纯前端，零配置**：每个页面都是独立的 HTML / CSS / 原生 JS，无构建、无框架、无依赖。
-- **可交互，不是死壳**：能点的元素都用最简 JS 接上本地假数据，拿来即可演示。
-- **自带"去 AI 味"检查**：交付前按硬性清单自检，一个强调色、一套圆角、真实文案、刻意的留白。
-- **生成的图也要干净**：页面需要定制素材时，[`skills/image-purify`](skills/image-purify/SKILL.md) 的干净词会在生图前自动叠加，避免噪点、鳞片感、满屏碎片这类一眼 AI 的脏图。
-- **优先抠图素材**：[`tools/resource-getter`](tools/resource-getter/README.md) 负责取透明 SVG 插画（unDraw / Storyset）、抠图 PNG（Pixabay / pngimg）与摄影，自动去掉 SVG 的满幅背景；探测到源站太慢时改为下载，不再硬挂远程链接。
+点击图片查看源码和截图，更多页面见 [`ui/`](ui/)。
 
-## 使用方式
+## 使用
 
-浏览 `ui/` 目录，用浏览器打开任意 `index.html` 即可。
+**查看原型**：打开 `ui/` 下任意页面目录中的 `index.html`，无需安装依赖或构建。
+
+**启动画廊**：支持搜索、筛选和原型预览，需要 Node.js 22.12.0 或更高版本。
 
 ```bash
-# 可选：本地起个静态服务
-npx serve .
+cd site
+npm install
+npm run dev
 ```
 
-想生成新页面，把技能交给你的编码助手，附上一句话描述即可。
+**生成原型**：让编码助手按 [`mono-ui-prototype`](skills/mono-ui-prototype/SKILL.md) 技能制作页面，附上需求或参考图。例如：
 
-## 开源协议
+> 做一个机械键盘定制页，支持选择轴体、切换键帽和实时预览。
 
-[MIT](LICENSE)
+技能规定了设计流程和交付检查。配色、字体、布局按需求确定，生成后可以继续提出修改意见。
+
+## 工具
+
+- [`resource-getter`](tools/resource-getter/README.md)：获取插画、透明 PNG 和照片，源站较慢时下载到本地。
+- [`image-forge`](tools/image-forge/README.md)：按需生成透明 PNG，自动补充减少噪点和杂乱纹理的提示词。
+
+## 协议
+
+代码采用 [MIT](LICENSE) 协议。第三方图片、字体等素材遵循各自的许可。
