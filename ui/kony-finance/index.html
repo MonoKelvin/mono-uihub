@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a4a4a4">
+  <meta name="description" content="Kony — your income, assets, and trading activity in one place.">
+  <title>Kony — Finance workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" id="canvas">
+      <svg class="symbol-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <symbol id="nav-overview" viewBox="0 0 24 24"><path fill="currentColor" d="M10.7 3.4a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 11v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-9a2 2 0 0 1 .7-1.6z"/></symbol>
+          <symbol id="nav-portfolio" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3c-5 0-9 1.8-9 4s4 4 9 4 9-1.8 9-4-4-4-9-4ZM3 10v3c0 2.2 4 4 9 4s9-1.8 9-4v-3c-1.7 1.8-5.2 3-9 3s-7.3-1.2-9-3Zm0 6v2c0 2.2 4 4 9 4s9-1.8 9-4v-2c-1.7 1.8-5.2 3-9 3s-7.3-1.2-9-3Z"/></symbol>
+          <symbol id="nav-referrals" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm-3 10h6a4 4 0 0 1 4 4v4H5v-4a4 4 0 0 1 4-4ZM3 5a3 3 0 0 1 3 3 3 3 0 0 1-3 3Zm18 0v6a3 3 0 0 1 0-6ZM1 13h3v8H1Zm19 0h3v8h-3Z"/></symbol>
+          <symbol id="nav-analytics" viewBox="0 0 24 24"><path fill="currentColor" d="M3 3h2v16h16v2H3zM7 13l4-5 4 3 5-7 2 1-6 9-5-3-3 4z"/></symbol>
+          <symbol id="nav-security" viewBox="0 0 24 24"><path fill="currentColor" d="M7 9V7a5 5 0 0 1 10 0v2h1a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-7a3 3 0 0 1 3-3h1Zm2 0h6V7a3 3 0 0 0-6 0Zm3 4a2 2 0 0 0-1 3.7V19h2v-2.3a2 2 0 0 0-1-3.7Z"/></symbol>
+          <symbol id="nav-support" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.5 2 2 5.8 2 10.5c0 2.7 1.5 5.1 4 6.7V22l5-3h1c5.5 0 10-3.8 10-8.5S17.5 2 12 2Z"/></symbol>
+          <symbol id="coin-bnb" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2 4 4-2 2-2-2-2 2-2-2zm-6 6 2 2-2 2-2-2zm12 0 2 2-2 2-2-2zm-6 0 4 4-4 4-4-4zm-6 6 2 2-2 2-2-2zm12 0 2 2-2 2-2-2zm-8 2 2 2 2-2 2 2-4 4-4-4z"/></symbol>
+          <symbol id="coin-ada" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="1.4"/><circle cx="8.5" cy="10" r="1.2"/><circle cx="15.5" cy="10" r="1.2"/><circle cx="8.5" cy="14" r="1.2"/><circle cx="15.5" cy="14" r="1.2"/><circle cx="12" cy="8" r="1.2"/><circle cx="12" cy="16" r="1.2"/><circle cx="6" cy="6" r=".8"/><circle cx="18" cy="6" r=".8"/><circle cx="6" cy="18" r=".8"/><circle cx="18" cy="18" r=".8"/><circle cx="12" cy="3" r=".7"/><circle cx="12" cy="21" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="21" cy="12" r=".7"/><circle cx="4" cy="8" r=".6"/><circle cx="20" cy="8" r=".6"/><circle cx="4" cy="16" r=".6"/><circle cx="20" cy="16" r=".6"/></g></symbol>
+          <symbol id="coin-sol" viewBox="0 0 24 24"><path fill="currentColor" d="m6 4-3 4h15l3-4ZM3 10l3 4h15l-3-4Zm3 6-3 4h15l3-4Z"/></symbol>
+          <symbol id="star-filled" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2 3.1 6.3L22 9.4l-5 4.9 1.2 6.9-6.2-3.3-6.2 3.3L7 14.3 2 9.4l6.9-1.1z"/></symbol>
+        </defs>
+      </svg>
+      <div class="shell">
+        <aside class="rail" aria-label="Main navigation">
+          <button class="brand" data-action="navigate" data-view="overview" aria-label="Kony home">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M8 10c1.5-3.2 4.1-4.4 8.2-4.4H26l-3.1 5.2h-5.4L25 16v10h-6l-3.5-7.3L12.8 26H5.5L8 10Z"/><path fill="var(--accent)" d="m15.3 11.1 3.2 2.2-4 5.1-2.4-2z"/><circle cx="20.7" cy="22" r="1.5" fill="var(--surface)"/></svg>
+          </button>
+          <nav class="rail-nav">
+            <span class="rail-indicator" id="rail-indicator" aria-hidden="true"></span>
+            <button class="rail-button is-current" data-action="navigate" data-view="overview" aria-label="Overview" aria-current="page" data-tooltip="Overview"><i class="ti ti-home" aria-hidden="true"></i><svg class="nav-solid" aria-hidden="true"><use href="#nav-overview"/></svg></button>
+            <span class="rail-divider" aria-hidden="true"></span>
+            <button class="rail-button" data-action="navigate" data-view="portfolio" aria-label="Portfolio" data-tooltip="Portfolio"><i class="ti ti-database" aria-hidden="true"></i><svg class="nav-solid" aria-hidden="true"><use href="#nav-portfolio"/></svg></button>
+            <span class="rail-divider" aria-hidden="true"></span>
+            <button class="rail-button" data-action="navigate" data-view="referrals" aria-label="Referrals" data-tooltip="Referrals"><i class="ti ti-users-group" aria-hidden="true"></i><svg class="nav-solid" aria-hidden="true"><use href="#nav-referrals"/></svg></button>
+            <span class="rail-divider" aria-hidden="true"></span>
+            <button class="rail-button" data-action="navigate" data-view="analytics" aria-label="Analytics" data-tooltip="Analytics"><i class="ti ti-chart-line" aria-hidden="true"></i><svg class="nav-solid" aria-hidden="true"><use href="#nav-analytics"/></svg></button>
+            <span class="rail-divider" aria-hidden="true"></span>
+            <button class="rail-button" data-action="navigate" data-view="security" aria-label="Security" data-tooltip="Security"><i class="ti ti-lock" aria-hidden="true"></i><svg class="nav-solid" aria-hidden="true"><use href="#nav-security"/></svg></button>
+            <span class="rail-divider" aria-hidden="true"></span>
+            <button class="rail-button" data-action="navigate" data-view="support" aria-label="Help & support" data-tooltip="Help & support"><i class="ti ti-message-circle" aria-hidden="true"></i><svg class="nav-solid" aria-hidden="true"><use href="#nav-support"/></svg></button>
+          </nav>
+          <button class="account-avatar" data-action="navigate" data-view="account" aria-label="Your account" data-tooltip="Your account"><span class="avatar-initials" aria-hidden="true">AM</span><img src="https://i.pravatar.cc/120?u=kony-account" alt="" width="120" height="120" referrerpolicy="no-referrer"></button>
+        </aside>
+        <div class="main-shell">
+          <header class="topbar">
+            <button class="back-button icon-button" id="back-button" data-action="back" aria-label="Back to previous view" hidden><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+            <h1 class="page-title" id="page-title">Overview</h1>
+            <form class="global-search" id="global-search" role="search"><i class="ti ti-search" aria-hidden="true"></i><input id="global-query" type="search" autocomplete="off" placeholder="Search..." aria-label="Search assets and transactions"><button class="search-submit" type="submit" aria-label="Search"><i class="ti ti-arrow-right" aria-hidden="true"></i></button></form>
+            <div class="topbar-actions">
+              <button class="notification-button icon-button" id="notification-button" data-action="notifications-menu" aria-label="Notifications" aria-haspopup="menu" aria-expanded="false"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot" id="notification-dot" aria-hidden="true"></span></button>
+              <button class="button button-outline invite-button" data-action="navigate" data-view="referrals"><i class="ti ti-gift" aria-hidden="true"></i><span>Invite Friend – Get $10</span></button>
+            </div>
+          </header>
+          <main class="workspace" id="workspace">
+            <section class="dashboard view" id="overview-view" aria-label="Financial overview">
+              <section class="panel income-panel" aria-labelledby="income-title">
+                <div class="income-heading"><div><h2 id="income-title">Income per week</h2><p class="subtle income-caption">Track income changes and access payment details</p></div><button class="text-button range-button" data-action="period-menu" aria-haspopup="listbox" aria-expanded="false"><span id="period-label">Week</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div>
+                <div class="stat-row">
+                  <div class="stat-tile stat-accent"><span class="stat-label">Pending withdrawals</span><button class="stat-action" data-action="cashout">Cashout</button><strong id="pending-withdrawals">$1,200</strong></div>
+                  <div class="stat-tile stat-dark"><span class="stat-label">Daily transactions</span><button class="stat-action stat-action-light" data-action="navigate" data-view="history">Activity</button><strong id="daily-transactions">43</strong></div>
+                  <div class="stat-tile"><span class="stat-label">Exchange fees paid</span><button class="stat-action" data-action="fees">Fees</button><strong id="exchange-fees">$45.70</strong></div>
+                </div>
+                <div class="income-visual">
+                  <div class="income-summary"><button class="button button-outline details-button" data-action="navigate" data-view="analytics">View Details<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button><strong class="income-delta" id="income-delta">+2.6%</strong><p class="subtle" id="income-comparison">This week’s income is<br>higher than last week’s</p></div>
+                  <div class="income-chart" id="income-chart" aria-label="Daily income in US dollars"></div>
+                </div>
+              </section>
+              <section class="panel watchlist-panel" aria-labelledby="watchlist-title">
+                <div class="panel-heading"><h2 id="watchlist-title">Crypto watchlist</h2><button class="icon-button small-icon" data-action="export-watchlist" aria-label="Export watchlist"><i class="ti ti-share" aria-hidden="true"></i></button></div>
+                <div class="watchlist" id="watchlist"></div>
+                <button class="button button-outline button-full" data-action="navigate" data-view="markets">See More<i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+              </section>
+              <section class="panel history-panel" aria-labelledby="history-title">
+                <div class="history-heading"><button class="heading-link" data-action="navigate" data-view="history"><h2 id="history-title">Trading history</h2></button><label class="table-search"><i class="ti ti-search" aria-hidden="true"></i><input type="search" id="dashboard-query" autocomplete="off" placeholder="Search..." aria-label="Search trading history"></label><div class="history-tools"><button class="icon-button small-icon" data-action="dashboard-filter" aria-label="Filter trading history" aria-haspopup="listbox" aria-expanded="false"><i class="ti ti-filter" aria-hidden="true"></i></button><span class="tool-divider" aria-hidden="true"></span><button class="text-button date-button" data-action="date-menu" data-scope="dashboard" aria-haspopup="listbox" aria-expanded="false"><i class="ti ti-calendar-event" aria-hidden="true"></i><span id="dashboard-date">Feb 14, 2025</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div></div>
+                <div class="compact-table" id="dashboard-table"></div>
+              </section>
+              <section class="panel exchange-mini" aria-label="Quick exchange">
+                <div class="exchange-mini-heading"><button class="swap-button icon-button" data-action="swap-pair" aria-label="Swap exchange currencies"><i class="ti ti-arrows-sort" aria-hidden="true"></i></button><div class="balance-summary"><span>Your balance</span><strong id="total-balance">$15,430.28</strong></div></div>
+                <div class="mini-pair"><div><span>You sell</span><button class="text-button coin-select" data-action="coin-menu" data-side="sell" aria-haspopup="listbox" aria-expanded="false"><span id="mini-sell"></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div><div><span>You get</span><button class="text-button coin-select" data-action="coin-menu" data-side="buy" aria-haspopup="listbox" aria-expanded="false"><span id="mini-buy"></span><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div></div>
+                <button class="button button-light button-full" data-action="navigate" data-view="exchange">Exchange</button>
+              </section>
+            </section>
+            <section class="view secondary-view" id="secondary-view" aria-label="Workspace" hidden></section>
+          </main>
+        </div>
+      </div>
+      <div class="popover" id="popover" aria-hidden="true"></div>
+      <div class="rail-tooltip" id="rail-tooltip" role="tooltip" aria-hidden="true"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div class="dialog-layer" id="dialog-layer" hidden><div class="scrim" data-action="close-dialog"></div><section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><div class="dialog-heading"><h2 id="dialog-title"></h2><button class="icon-button" data-action="close-dialog" aria-label="Close"><i class="ti ti-x" aria-hidden="true"></i></button></div><div class="dialog-body" id="dialog-body"></div></section></div>
+    </div>
+  </div>
+</body>
+</html>

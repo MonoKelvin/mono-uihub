@@ -1,0 +1,17 @@
+{
+  "name": "Kony Finance",
+  "slug": "kony-finance",
+  "page_type": "software",
+  "tags": ["金融", "数据可视化", "交易"],
+  "palette": ["#e0e0e0", "#faff00", "#111111"],
+  "created_at": "2026-11-09 14:45:44",
+  "updated_at": "2026-11-09 14:45:44",
+  "imageToUI": "https://dribbble.com/shots/25871400-Dashboard-for-a-Finance-Product-Kony",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的软件。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "draw-ui", "oil-ui", "oil-frontend", "dataviz", "vibehub"]
+    }
+  ]
+}
