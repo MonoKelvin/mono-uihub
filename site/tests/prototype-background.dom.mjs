@@ -204,6 +204,40 @@ test('根主题和自定义 data 属性触发合并更新，旧监听与透明�
   assert.equal(result.tone, '');
 });
 
+test('页面深色 color-scheme 不给原型画布铺不透明底色，详情底色取原型根背景', async (t) => {
+  const { page } = await fixture(t, { viewer: true, css: ':root{color-scheme:dark}.stage{background:#1a1a1a}body{--ink:#eee}' });
+  await page.waitForFunction(() => root.dataset.load === 'ready' && root.dataset.phase === 'open' && root.dataset.detailTone === 'dark');
+  const shot = (await page.screenshot()).toString('base64');
+  const result = await page.evaluate(async (base64) => {
+    const bitmap = await createImageBitmap(await (await fetch('data:image/png;base64,' + base64)).blob());
+    const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
+    context.drawImage(bitmap, 0, 0);
+    const at = (x, y) => [...context.getImageData(x, y, 1, 1).data].slice(0, 3).join(',');
+    const frame = document.querySelector('[data-detail-host] iframe');
+    const rect = frame.getBoundingClientRect();
+    const doc = frame.contentDocument;
+    const middle = Math.round(rect.top + rect.height / 2);
+    return {
+      scheme: getComputedStyle(frame).colorScheme,
+      inner: `${getComputedStyle(doc.documentElement).colorScheme},${getComputedStyle(doc.body).colorScheme}`,
+      paper: root.style.getPropertyValue('--detail-paper'),
+      surface: getComputedStyle(document.querySelector('.detail-surface')).backgroundColor,
+      canvas: getComputedStyle(doc.body).backgroundColor,
+      edge: at(Math.round(rect.left + 24), middle),
+      gutter: at(8, middle),
+    };
+  }, shot);
+  assert.equal(result.scheme, 'normal');
+  assert.equal(result.inner, 'normal,normal');
+  assert.equal(result.canvas, 'rgba(0, 0, 0, 0)');
+  assert.equal(result.paper, 'rgb(26, 26, 26)');
+  assert.equal(result.surface, 'rgb(26, 26, 26)');
+  assert.equal(result.edge, '26,26,26');
+  assert.equal(result.gutter, '26,26,26');
+  assert.match(detailCss, /\.detail-surface\{[^}]*background:var\(--detail-paper,var\(--paper\)\)/);
+  assert.match(detailCss, /\.detail-frame-host iframe\{[^}]*color-scheme:normal/);
+});
+
 const viewerReady = (page) => page.waitForFunction(() => root.dataset.load === 'ready' && root.dataset.phase === 'open' && slot.children.length === 1);
 
 test('重放样式表或背景图片失败时不隐藏前景背景', async (t) => {

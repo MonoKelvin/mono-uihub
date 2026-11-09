@@ -4,7 +4,7 @@ const OWNER = 'data-uihub-background-host';
 const DECOR = 'data-uihub-background-decor';
 const CONTENT = 'data-uihub-replay-content';
 const STYLE_ID = 'uihub-background-transparency';
-const PALETTE_KEYS = ['--ink', '--ink-2', '--ink-3', '--gold', '--card', '--line', '--line-2', '--fill', '--fill-2', '--paper-2', '--detail-panel-bg', '--detail-tool-bg'];
+const PALETTE_KEYS = ['--ink', '--ink-2', '--ink-3', '--gold', '--card', '--line', '--line-2', '--fill', '--fill-2', '--paper-2', '--detail-paper', '--detail-panel-bg', '--detail-tool-bg'];
 
 export function backgroundCover(view, area) {
   if (!view.width || !view.height) return 1;
@@ -155,7 +155,9 @@ function makeTransparent(description) {
   };
   layers.forEach((layer, index) => {
     mark(layer.element, OWNER, String(index));
-    selectors.push(`[${OWNER}="${index}"]{background-color:transparent!important;background-image:none!important}`);
+    // color-scheme 一并归零：原型自己声明深色时，浏览器会给 iframe 画一块不透明的深色画布，
+    // 背景复刻与抽离的窗口阴影就被这层不透明底色吞掉了。
+    selectors.push(`[${OWNER}="${index}"]{background-color:transparent!important;background-image:none!important;color-scheme:normal!important}`);
     if (layer.before) selectors.push(`[${OWNER}="${index}"]::before{opacity:0!important}`);
     if (layer.after) selectors.push(`[${OWNER}="${index}"]::after{opacity:0!important}`);
   });

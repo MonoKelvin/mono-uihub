@@ -14,9 +14,11 @@ html.detail-scroll-locked body{overflow:hidden;overscroll-behavior:none}
   position:fixed;inset:0;z-index:100;isolation:isolate;overflow:hidden;color:var(--ink);outline:none;
 }
 .prototype-detail[hidden]{display:none}
-.detail-surface{position:absolute;inset:0;background:var(--paper);transform-origin:0 0}
+.detail-surface{position:absolute;inset:0;background:var(--detail-paper,var(--paper));transform-origin:0 0}
 .detail-background{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.detail-background-frame{position:absolute;left:50%;top:50%;display:block;border:0;background:transparent;transform-origin:center;pointer-events:none}
+/* 复刻层与原型 iframe 都不接受详情页的深色 color-scheme：一旦声明深色，
+   浏览器会用不透明的画布底色（白 / #121212）铺满 iframe，让背景复刻与抽离出来的窗口阴影全部失效。 */
+.detail-background-frame{position:absolute;left:50%;top:50%;display:block;border:0;background:transparent;color-scheme:normal;transform-origin:center;pointer-events:none}
 .prototype-detail[data-detail-tone="dark"]{color-scheme:dark}
 .prototype-detail[data-detail-tone="light"]{color-scheme:light}
 .detail-workspace{position:absolute;top:var(--detail-top);bottom:var(--detail-bottom);left:var(--detail-gutter);right:calc(var(--detail-gutter) + var(--detail-drawer-width) + 24px);min-width:0;min-height:0}
@@ -31,7 +33,7 @@ html.detail-scroll-locked body{overflow:hidden;overscroll-behavior:none}
 .detail-frame-host{opacity:0}
 .prototype-detail[data-load="ready"] .detail-frame-host{opacity:1}
 .prototype-detail[data-phase="switching"] .detail-frame-host{opacity:1}
-.detail-frame-host iframe{position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;padding:0;border:0;background:transparent}
+.detail-frame-host iframe{position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;padding:0;border:0;background:transparent;color-scheme:normal}
 .prototype-detail[data-phase="entering"] iframe,.prototype-detail[data-phase="leaving"] iframe,.prototype-detail[data-swapping="true"] iframe,.prototype-detail[data-revealed="false"] iframe{pointer-events:none}
 .detail-snapshot{z-index:2;pointer-events:none;opacity:1;background:var(--card);transition:opacity 280ms var(--ease)}
 .detail-snapshot[hidden]{display:none}

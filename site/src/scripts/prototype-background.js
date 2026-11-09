@@ -157,7 +157,7 @@ export function resolvePrototypePalette(source = {}) {
   return {
     '--ink': rgbText(foreground), '--ink-2': rgbText(muted), '--ink-3': rgbText(muted), '--gold': rgbText(accent), '--card': rgbText(surface),
     '--line': line, '--line-2': `rgba(${foreground.join(', ')}, .3)`, '--fill': `rgba(${foreground.join(', ')}, .05)`, '--fill-2': `rgba(${foreground.join(', ')}, .1)`,
-    '--paper-2': rgbText(surface), '--detail-panel-bg': needsPanel ? rgbText(surface) : 'transparent',
+    '--paper-2': rgbText(surface), '--detail-paper': rgbText(samples[0]), '--detail-panel-bg': needsPanel ? rgbText(surface) : 'transparent',
     '--detail-tool-bg': needsPanel ? rgbText(surface) : 'transparent',
     '--detail-tone': whiteText ? 'dark' : 'light',
   };
