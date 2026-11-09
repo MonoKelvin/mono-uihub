@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3fa">
+  <meta name="description" content="Tooni — considered streetwear for your everyday. Explore hoodies, sweatshirts, joggers and tees.">
+  <title>tooni™ — Everyday, elevated.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="wordmark" href="#collections" aria-label="Tooni home">tooni<sup>TM</sup></a>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a href="#collections" data-nav="collections" aria-current="page">collections</a>
+        <a href="#new-arrivals" data-nav="new-arrivals">new arrivals</a>
+        <a href="#lookbook" data-nav="lookbook">lookbook</a>
+        <a href="#about" data-nav="about">about</a>
+        <a href="#contact" data-nav="contact">contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-button" href="#search" aria-label="Search"><i class="ti ti-search" aria-hidden="true"></i></a>
+        <a class="icon-button bag-link" href="#bag" aria-label="Shopping bag"><i class="ti ti-shopping-bag" aria-hidden="true"></i><span class="bag-count" hidden>0</span></a>
+        <a class="icon-button" href="#account" aria-label="Your account"><i class="ti ti-user" aria-hidden="true"></i></a>
+        <button class="icon-button menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+      </div>
+    </header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="#collections">collections</a><a href="#new-arrivals">new arrivals</a><a href="#lookbook">lookbook</a><a href="#about">about</a><a href="#contact">contact</a>
+    </nav>
+    <main id="main-content">
+      <section class="view home-view" data-view="collections">
+        <section class="hero" aria-label="Essential Hoodie collection">
+          <aside class="side-rail">
+            <nav class="audience-nav" aria-label="Shop by fit">
+              <a href="#shop?fit=unisex">unisex</a><span></span><a href="#shop?fit=women">women</a><span></span><a href="#shop?fit=men">men</a>
+            </nav>
+            <div class="social-rail"><span class="rail-line"></span><span class="follow-label">follow us</span><a href="#lookbook?channel=instagram" aria-label="Instagram collection"><i class="ti ti-brand-instagram" aria-hidden="true"></i></a><a href="#lookbook?channel=youtube" aria-label="Collection films"><i class="ti ti-brand-youtube" aria-hidden="true"></i></a><a href="#lookbook?channel=tiktok" aria-label="Style stories"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></a></div>
+          </aside>
+          <div class="hero-copy">
+            <p class="eyebrow">PREMIUM STREETWEAR<span class="eyebrow-line"></span></p>
+            <h1>Essential<br><span class="title-second">Hoodie<span class="edition-number" aria-label="Edition 02">02</span></span></h1>
+            <p class="hero-description">Everyday comfort with a modern edge.<br> A hoodie designed for style, warmth,<br> and all-day wear.</p>
+            <div class="hero-purchase">
+              <fieldset class="size-picker"><legend>select size</legend><div class="size-options" data-size-group="hero"><button type="button" class="size-button" data-size="S" aria-pressed="false">S</button><button type="button" class="size-button" data-size="M" aria-pressed="false">M</button><button type="button" class="size-button is-selected" data-size="L" aria-pressed="true">L</button><button type="button" class="size-button" data-size="XL" aria-pressed="false">XL</button></div></fieldset>
+              <div class="purchase-divider"></div>
+              <button class="primary-button hero-shop" data-action="hero-shop">Shop Now — $49</button>
+            </div>
+            <a class="watch-link" href="#lookbook"><span class="play-disc"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg></span>Watch Collection</a>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-arch" aria-hidden="true"></div>
+            <img class="hero-model" src="assets/hero-lavender.webp" alt="Lavender Essential Hoodie styled with cream trousers" width="760" height="1000" fetchpriority="high">
+            <div class="hero-cutout" aria-hidden="true"></div>
+          </div>
+          <nav class="category-nav" aria-label="Collections"><a class="is-current" href="#shop?category=Hoodies"><span class="category-arrow" aria-hidden="true">⟶</span>Hoodies</a><a href="#shop?category=Sweatshirts">Sweatshirts</a><a href="#shop?category=Joggers">Joggers</a><a href="#shop?category=T-Shirts">T-Shirts</a></nav>
+          <div class="hero-controls"><button class="round-button" data-action="previous-hero" aria-label="Previous colorway"><i class="ti ti-chevron-up" aria-hidden="true"></i></button><button class="round-button" data-action="next-hero" aria-label="Next colorway"><i class="ti ti-chevron-down" aria-hidden="true"></i></button></div>
+          <span class="sr-only" id="hero-status" aria-live="polite">Lavender, edition 02</span>
+        </section>
+        <section class="collection-preview content-width">
+          <div class="section-heading"><div><p class="eyebrow">THE EVERYDAY EDIT</p><h2>Your new constants.</h2></div><a class="text-link" href="#shop">Explore the collection<i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div>
+          <div class="product-grid" id="home-products"></div>
+        </section>
+        <section class="collection-note content-width"><p>Good things. On repeat.</p><span>Thoughtful fits. Soft fabrics. Made to be lived in.</span><a class="text-link" href="#about">Meet tooni<i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></section>
+      </section>
+      <section class="view catalog-view content-width" data-view="shop" hidden>
+        <div class="page-heading"><p class="eyebrow" id="catalog-eyebrow">THE TOONI COLLECTION</p><h1 id="catalog-title" tabindex="-1">All the essentials.</h1><p id="catalog-description">Everyday pieces. Anything but ordinary.</p></div>
+        <div class="catalog-toolbar"><div class="filter-tabs" aria-label="Filter collection" id="category-filters"></div><div class="sort-control"><button class="sort-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-menu">Sort: <span id="sort-label">Featured</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="sort-menu" id="sort-menu" role="listbox" aria-label="Sort products" hidden><button role="option" aria-selected="true" data-sort="featured">Featured</button><button role="option" aria-selected="false" data-sort="price-low">Price: low to high</button><button role="option" aria-selected="false" data-sort="price-high">Price: high to low</button><button role="option" aria-selected="false" data-sort="new">Newest first</button></div></div></div>
+        <p class="results-label" id="catalog-count" aria-live="polite"></p><div class="product-grid" id="catalog-products"></div>
+      </section>
+      <section class="view search-view content-width" data-view="search" hidden>
+        <div class="page-heading"><p class="eyebrow">FIND YOUR EVERYDAY</p><h1>Looking for something?</h1></div>
+        <form class="search-form" id="search-form" role="search"><label class="sr-only" for="search-input">Search products</label><i class="ti ti-search" aria-hidden="true"></i><input id="search-input" name="query" type="search" placeholder="Try “hoodie” or “lavender”" autocomplete="off"><button class="text-link" type="submit">Search<i class="ti ti-arrow-right" aria-hidden="true"></i></button></form>
+        <p class="results-label" id="search-count" role="status"></p><div class="product-grid" id="search-products"></div><div class="empty-state" id="search-empty" hidden><i class="ti ti-search" aria-hidden="true"></i><h2>No matches. Yet.</h2><p>Try another color, name or collection.</p><button class="text-link" data-action="clear-search">See all essentials<i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+      </section>
+      <section class="view product-view content-width" data-view="product" hidden><div id="product-content"></div></section>
+      <section class="view bag-view content-width" data-view="bag" hidden>
+        <div class="page-heading"><p class="eyebrow">GOOD PICKS</p><h1>Your shopping bag<span id="bag-heading-count"></span></h1></div>
+        <div id="bag-content"></div>
+      </section>
+      <section class="view checkout-view content-width" data-view="checkout" hidden>
+        <div class="page-heading"><a class="text-link back-link" href="#bag"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to bag</a><h1>The final details.</h1></div>
+        <div class="checkout-layout"><form id="checkout-form" class="checkout-form" novalidate><h2>Contact & delivery</h2><div class="form-grid"><label class="full-width">Email address<input name="email" type="email" autocomplete="email" required></label><label>First name<input name="firstName" autocomplete="given-name" required></label><label>Last name<input name="lastName" autocomplete="family-name" required></label><label class="full-width">Street address<input name="address" autocomplete="street-address" required></label><label>City<input name="city" autocomplete="address-level2" required></label><label>Postal code<input name="postal" autocomplete="postal-code" required></label></div><p class="form-status" id="checkout-status" role="status" hidden></p><button class="primary-button" type="submit">Continue to payment<i class="ti ti-arrow-right" aria-hidden="true"></i></button></form><aside class="order-summary" id="checkout-summary"></aside></div>
+      </section>
+      <section class="view lookbook-view" data-view="lookbook" hidden>
+        <div class="lookbook-heading content-width"><p class="eyebrow">THE TOONI LOOKBOOK · VOL. 02</p><h1>Nothing extra.<br>Just you.</h1><p>Soft layers. Slow mornings. Your kind of everyday.</p></div>
+        <div class="lookbook-story content-width"><div class="lookbook-image"><div class="lookbook-oval"></div><img src="assets/hero-lavender.webp" alt="The lavender Essential Hoodie from the Tooni everyday collection" width="760" height="1000"></div><div class="lookbook-copy"><p class="eyebrow">01 / THE SOFT SIDE</p><h2>A little color.<br>A lot of comfort.</h2><p>Lavender cotton fleece meets an easy, oversized silhouette. Pair it with cream joggers. Or simply wear it your way.</p><a class="primary-button" href="#product?id=hoodie-lavender">Shop this look<i class="ti ti-arrow-up-right" aria-hidden="true"></i></a><div class="lookbook-pair"><a href="#product?id=hoodie-lavender">Essential Hoodie<span>$49</span></a><a href="#product?id=jogger-oat">Everyday Joggers<span>$42</span></a></div></div></div>
+        <div class="lookbook-footer content-width"><h2>Made for your everyday.</h2><a class="text-link" href="#shop">Find your fit<i class="ti ti-arrow-right" aria-hidden="true"></i></a></div>
+      </section>
+      <section class="view about-view content-width" data-view="about" hidden>
+        <div class="about-layout"><div class="about-title"><p class="eyebrow">HI, WE’RE TOONI.</p><h1>Less noise.<br>More you.</h1><span class="about-mark" aria-hidden="true">t.</span></div><div class="about-copy"><h2>Your everyday deserves<br>something good.</h2><p>Tooni is a wardrobe of well-considered essentials. Pieces you reach for without thinking twice, in colors that feel like you.</p><p>We start with a good fit. Add soft, substantial fabrics. Keep the details that matter and leave the rest out.</p><div class="about-details"><div><span>01</span><h3>Room to be yourself.</h3><p>Relaxed silhouettes and unisex fits, made for movement.</p></div><div><span>02</span><h3>Comfort, considered.</h3><p>Cotton-rich fleece, soft jersey and the small details you feel.</p></div><div><span>03</span><h3>Wear. Repeat.</h3><p>Simple pieces that work together, season after season.</p></div></div><a class="text-link" href="#shop">Find your everyday<i class="ti ti-arrow-right" aria-hidden="true"></i></a></div></div>
+      </section>
+      <section class="view contact-view content-width" data-view="contact" hidden>
+        <div class="contact-layout"><div class="page-heading"><p class="eyebrow">LET’S TALK</p><h1>We’re all ears.</h1><p>A question about your fit, an order,<br>or something else? Drop us a note.</p><div class="contact-detail"><i class="ti ti-clock" aria-hidden="true"></i><span>Monday–Friday<br>9am–5pm, GMT</span></div><a class="text-link" href="#account?tab=orders">Looking for your orders?<i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div><form class="contact-form" id="contact-form" novalidate><label>Your name<input name="name" autocomplete="name" required placeholder="Full name"></label><label>Email address<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label><label>Your message<textarea name="message" rows="4" required placeholder="How can we help?"></textarea></label><p class="form-status" id="contact-status" role="status" hidden></p><button class="primary-button" type="submit">Send message<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></form></div>
+      </section>
+      <section class="view account-view content-width" data-view="account" hidden>
+        <div class="page-heading"><p class="eyebrow">YOUR TOONI</p><h1>A little space for you.</h1></div><div class="account-layout"><nav class="account-tabs" aria-label="Account sections"><button data-account-tab="profile" class="is-current">My account<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button><button data-account-tab="orders">My orders<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button><button data-account-tab="saved">Saved pieces<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></nav><div id="account-content"></div></div>
+      </section>
+    </main>
+    <footer class="site-footer content-width"><a class="wordmark" href="#collections">tooni<sup>TM</sup></a><span>Everyday, elevated.</span><div><a href="#contact">Get in touch</a><a href="#about">Our story</a><span>© 2026 tooni</span></div></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden><i class="ti ti-check" aria-hidden="true"></i><span></span><a href="#bag">View bag</a></div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "Tooni — 摩登街头服饰",
+  "slug": "tooni-fashion",
+  "page_type": "website",
+  "tags": ["电商", "时尚", "服饰"],
+  "palette": ["#f7f3fa", "#703d92", "#111113"],
+  "created_at": "2026-11-09 19:48:22",
+  "updated_at": "2026-11-09 20:07:16",
+  "imageToUI": "https://dribbble.com/shots/27865515-Tooni-Modern-Fashion-eCommerce-Website-UI-Design",
+  "history": [
+    {
+      "prompt": "还原这个UI原型。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "image-purify"],
+      "image_generation": [
+        {"prompt": "A young adult woman in an oversized lavender purple cotton pullover hoodie with dropped shoulders, thick hood around her neck, two pale drawstrings, ribbed cuffs and a large kangaroo pocket. Both hands tucked into the kangaroo pocket. Cream wide-leg trousers. Brown hair loosely tied in a high messy bun with curled strands around the face, silver hoop earrings, chin slightly raised, head gently tilted, direct gaze at the camera. Front three-quarter fashion studio portrait from the top of the head to the upper thighs, sleeves and body entirely visible, soft frontal studio lighting, isolated subject.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "A single pair of warm ivory cotton fleece joggers, relaxed straight legs with ribbed ankle cuffs, elastic waistband and drawstrings, side pockets. Front-facing clothing product photography, arranged flat with subtle natural fabric folds, entire garment visible, isolated on transparent background, soft even studio light.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "A single plain ivory cotton T-shirt, oversized boxy fit, dropped shoulders, short sleeves, small ribbed crew neckline, no branding. Front-facing clothing product photography, laid flat with soft natural fabric folds, entire garment visible, isolated on transparent background, soft even studio light.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "A single lavender purple cotton fleece pullover hoodie, oversized relaxed fit, dropped shoulders, thick hood standing open, matching drawstrings with silver eyelets, front kangaroo pocket, ribbed cuffs and hem, no branding. Front-facing clothing product photography, arranged flat with soft natural fabric folds, the whole garment visible, isolated on transparent background, soft even studio light.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "A single muted sage green cotton fleece crewneck sweatshirt, oversized relaxed fit, dropped shoulders, long sleeves, ribbed neckline cuffs and hem, no branding. Front-facing clothing product photography, arranged flat with soft natural fabric folds, entire garment visible, isolated on transparent background, soft even studio light.", "model": "agnes-image-2.5-flash"}
+      ]
+    }
+  ]
+}
