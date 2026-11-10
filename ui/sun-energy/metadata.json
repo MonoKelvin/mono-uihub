@@ -1,0 +1,36 @@
+{
+  "name": "SUN Solar Energy",
+  "slug": "sun-energy",
+  "page_type": "website",
+  "tags": ["新能源", "产品展示", "太阳能"],
+  "palette": ["#050505", "#c0a267", "#f5f5f1"],
+  "created_at": "2026-11-10 15:04:00",
+  "updated_at": "2026-11-10 16:23:53",
+  "imageToUI": "https://dribbble.com/shots/27801533-solar-energy-branding-sun",
+  "history": [{
+    "prompt": "还原这个UI原型做成单页面的网页。",
+    "model": "gpt-6.1-sol",
+    "skills": ["mono-ui-prototype", "hallmark", "dataviz", "image-purify"],
+    "image_generation": [
+      {"prompt": "Front view of a freestanding black solar flower sculpture with twelve broad fan-shaped photovoltaic petals arranged radially around a small chrome mechanical hub, every petal has straight parallel silver conductive lines and stepped brushed aluminum edges, circle tilted slightly away from camera, black tapered triangular industrial support on low circular black pedestal, monochrome black silicon and brushed aluminum, single silver rim light from top left, whole circular silhouette inside square frame, solid black studio background", "model": "agnes-image-2.5-flash"},
+      {"prompt": "Macro product photograph of an articulated black photovoltaic solar flower hinge, silver aluminum panel leading edge running diagonally from lower left to upper right, sculpted black machined pivot bracket with circular aperture, side view, single silver edge light, black finned silicon panel behind it, plain black studio background, object occupies right and lower half of square frame, empty black upper left", "model": "agnes-image-2.5-flash"},
+      {"prompt": "Editorial side profile portrait of an adult woman with long flowing platinum blonde hair, facing right and looking slightly down, black tailored jacket, natural skin, head and shoulders in right half of composition, single silver light from upper left, plain black background, monochrome fashion photograph", "model": "agnes-image-2.5-flash"}
+    ]
+  }, {
+    "prompt": "请继续对比检查，很多内容出现了遮挡，尺寸位置也不对。建议按照1366*768尺寸来检查；太阳能装置太简陋了，要生成相对精细复杂一点的。",
+    "model": "gpt-6.1-sol",
+    "skills": ["mono-ui-prototype", "hallmark", "image-purify"],
+    "image_generation": [{
+      "prompt": "A precision-engineered black solar tracking machine viewed almost frontally, twelve rigid fan-sector photovoltaic wings radiate from a compact mechanical hub in a complete circular array. Each wing is built from multiple straight-edged narrow trapezoidal silicon segments, with squared corners, stepped peripheral mounting tabs, thin silver aluminum perimeter rails and straight parallel silver electrical busbars crossing a fine grid of rectangular photovoltaic cells. The wings have layered articulated hinges at their roots, slight individual tilt and clear gaps between assemblies. The center is a machined mechanical rotor with concentric bearing rings, short black linkage arms, cable conduits, fasteners and silver couplings. Under the array is an angular open triangular black steel support, with a visible central linear actuator, diagonal bracing rods, articulated rotary mount, bolts and routed cables. The machine is anchored on a broad low circular black metal turntable. The upper circular photovoltaic array dominates the silhouette, the mechanical support is compact. Black silicon and anodized black aluminum with restrained silver edge highlights, single white studio rim light from upper left, near-black studio background, entire machine visible with narrow margin, monochrome industrial product photograph. The form is angular mechanical hardware with flat segmented wings, rather than curved botanical petals or a decorative fan on a cone.",
+      "model": "agnes-image-2.5-flash"
+    }]
+  }, {
+    "prompt": "每块太阳能面板不是矩形，应该是扇形的，最外边最好是有一点点交叉重叠，类似风扇那种有一点倾斜；右下角人物不是黑白的应该是浅金色头发的。",
+    "model": "gpt-6.1-sol",
+    "skills": ["mono-ui-prototype", "hallmark", "image-purify"],
+    "image_generation": [
+      {"prompt": "A black precision-engineered solar tracking machine, almost frontal view of a large circular rotor composed of TWELVE FAN-SHAPED SECTOR PHOTOVOLTAIC BLADES. Each individual blade is an annular fan sector: narrow at the central hub, spreading outward between two radial side edges to a broad curved arc at the outer rim. The blades are wide geometric fan sectors, not rectangles, not long oval flower petals. Each blade has a shallow clockwise pitch of approximately fifteen degrees like an axial cooling fan, its trailing outer corner slightly overlaps the leading corner of the next blade. This small overlap forms a continuous layered circular silhouette with crisp stepped silhouettes and silver edge highlights, the blade surfaces remain clearly distinguishable. The fan-sector silicon surfaces carry straight fine silver conductive ribs and thin transverse busbars, the curved outer arc is supported by thin anodized aluminum rails with small stepped tabs. The central hub is an exposed compact machined rotor with concentric bearing rings, articulated hinges, short linkage arms, couplings, bolts and neatly routed black cables. Beneath the large rotor is a compact open triangular black steel mechanical mount, an exposed linear actuator and diagonal bracing rods, mounted on a broad low round black turntable. Black silicon, black anodized aluminum and restrained silver metal edges, one white studio rim light from upper left, empty near-black studio background, entire industrial machine inside the frame, square composition, the circular fan-sector array dominates and the support stays compact. Emphasize the radial sector geometry, same-direction blade inclination and slight overlap at the outermost edges.", "model": "agnes-image-2.5-flash"},
+      {"prompt": "Color editorial side-profile portrait of an adult woman with long flowing PALE GOLDEN BLONDE hair, soft champagne blonde highlights and ash blonde roots, natural warm ivory skin, muted rose lips, realistic natural color photography rather than monochrome. She faces right with her head tilted slightly down, loose strands of long blonde hair fall partly over her nearer eye and flow across her black tailored jacket. Head and shoulders occupy the right two-thirds of the composition, leaving plain empty black space on the left. The hair is very light blonde with a subtle warm golden hue, skin retains warm natural color. One large soft key light from upper left, dark black studio background with no visible lighting equipment, square composition, restrained fashion portrait with fine natural hair strands.", "model": "agnes-image-2.5-flash"}
+    ]
+  }]
+}
