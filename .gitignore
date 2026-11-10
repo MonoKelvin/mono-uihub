@@ -12,6 +12,9 @@ Desktop.ini
 .claude/plans/
 .claude/temp/
 
+# 本机生成的技能链接（Windows 目录联接可能包含绝对路径）
+.claude/skills
+
 # Editor
 .vscode/
 .idea/

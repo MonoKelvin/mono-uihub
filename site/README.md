@@ -14,6 +14,8 @@ npm test           # 元数据、详情导航、背景配色与发布规则测�
 npm run test:background # 无截图的背景 DOM / 生命周期测试（需要本机浏览器）
 ```
 
+安装（`npm install` / `npm ci`）、`dev` 和 `build` 会先执行 `skills/setup-skills.mjs`，在仓库根目录生成被 Git 忽略的 `.claude/skills`。优先使用相对符号链接，Windows 无权限时改用本机目录联接；移动仓库后重跑即可。只需加载技能时，可在根目录执行 `node skills/setup-skills.mjs`。
+
 `scripts/sync-prototypes.mjs` 会把 `ui/<slug>/` 中的 html / css / js / 图片 / 字体 / 截图复制到 `public/prototypes/`（已 gitignore），**不发布 metadata.json** 和任何隐藏文件。
 
 ## 数据规则

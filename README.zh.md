@@ -47,6 +47,14 @@ npm install
 npm run dev
 ```
 
+**加载项目技能**：`site/` 的安装、开发和构建命令会自动生成 `.claude/skills`。如果只制作原型，在仓库根目录执行一次：
+
+```bash
+node skills/setup-skills.mjs
+```
+
+脚本根据自身位置定位仓库，优先创建指向 `../skills` 的相对符号链接；Windows 无符号链接权限时改用本机目录联接。链接不提交到 Git，换电脑或移动仓库后重新执行即可。
+
 **生成原型**：让编码助手按 [`mono-ui-prototype`](skills/mono-ui-prototype/SKILL.md) 技能制作页面，附上需求或参考图。例如：
 
 > 做一个机械键盘定制页，支持选择轴体、切换键帽和实时预览。
