@@ -46,7 +46,10 @@ test('背景 cover 只计算一个统一比例，不更改前景视口尺寸', (
 function checkPalette(source) {
   const palette = resolvePrototypePalette(source);
   const surface = colorToRgba(palette['--card']);
-  const backgrounds = palette['--detail-panel-bg'] === 'transparent' ? [...(source.samples || [[234, 232, 225]]), surface] : [surface];
+  const glass = colorToRgba(palette['--detail-panel-bg']);
+  assert.equal(glass[3], .6);
+  assert.equal(palette['--detail-tool-bg'], palette['--detail-panel-bg']);
+  const backgrounds = [surface, ...(source.samples || [[234, 232, 225]]).map((bg) => compositeColor(glass, bg))];
   for (const key of ['--ink', '--ink-2', '--ink-3', '--gold']) {
     const color = colorToRgba(palette[key]);
     for (const bg of backgrounds) assert.ok(contrast(color, bg) >= 4.5, `${key}: ${contrast(color, bg)}`);
@@ -64,19 +67,17 @@ test('浅色和深色原型保留可读的原文字、强调色及局部色系',
   assert.equal(dark['--detail-tone'], 'dark');
 });
 
-test('低对比文字、透明文字和无法采样的图片背景使用可读的安全表面', () => {
+test('低对比文字和复杂背景使用半透明毛玻璃，并按合成后的背景验证对比度', () => {
   for (const source of [
     ...[115, 116, 117, 118, 119].map((gray) => ({ foreground: [gray, gray, gray, 1], samples: [[255, 255, 255]] })),
     { foreground: [255, 255, 255, 1], muted: [240, 240, 240, 1], samples: [[255, 255, 255]] },
     { foreground: [0, 0, 0, .05], samples: [[0, 0, 0]] },
     { complex: true, samples: [[230, 220, 210]], surface: [255, 255, 255, .05] },
     { samples: [[255, 255, 255], [0, 0, 0]], accent: [120, 120, 120, 1] },
+    { foreground: [244, 243, 238, 1], surface: [80, 80, 80, 1], samples: [[20, 20, 20], [190, 190, 190]] },
+    { foreground: [118, 118, 118, 1], samples: [[0, 0, 0], [255, 255, 255]] },
   ]) {
-    const palette = checkPalette(source);
-    if (source.complex || source.samples.length > 1) {
-      assert.notEqual(palette['--detail-panel-bg'], 'transparent');
-      assert.equal(palette['--detail-tool-bg'], palette['--detail-panel-bg']);
-    }
+    checkPalette(source);
   }
 });
 

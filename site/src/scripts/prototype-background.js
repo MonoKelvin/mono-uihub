@@ -136,16 +136,24 @@ export function extractPrototypePalette(description) {
 
 export function resolvePrototypePalette(source = {}) {
   const samples = source.samples?.length ? source.samples : [[234, 232, 225]];
-  const score = (rgb) => Math.min(...samples.map((bg) => contrast(rgb, bg)));
+  const score = (rgb, backgrounds = samples) => Math.min(...backgrounds.map((bg) => contrast(rgb, bg)));
+  const glassBackgrounds = (surface) => [surface, ...samples.map((bg) => compositeColor([...surface, .6], bg))];
   const dark = [244, 243, 238], light = [23, 22, 20];
   const original = source.foreground && compositeColor(source.foreground, samples[0]);
-  const foreground = original && score(original) >= 4.5 ? original : score(dark) > score(light) ? dark : light;
-  const needsPanel = Boolean(source.complex) || score(foreground) < 4.5;
+  let foreground = original && score(original) >= 4.5 ? original : score(dark) > score(light) ? dark : light;
   const whiteText = contrast(foreground, [0, 0, 0]) > contrast(foreground, [255, 255, 255]);
   let surface = source.surface && compositeColor(source.surface, samples[0]);
   if (!surface || contrast(foreground, surface) < 4.5) surface = whiteText ? [35, 37, 40] : [244, 243, 238];
-  if (contrast(foreground, surface) < 4.5) surface = contrast(foreground, [0, 0, 0]) > contrast(foreground, [255, 255, 255]) ? [0, 0, 0] : [255, 255, 255];
-  const backgrounds = [surface, ...(needsPanel ? [] : samples)];
+  if (contrast(foreground, surface) < 4.5) surface = whiteText ? [0, 0, 0] : [255, 255, 255];
+  let backgrounds = glassBackgrounds(surface);
+  if (score(foreground, backgrounds) < 4.5) {
+    [foreground, surface] = [
+      [foreground, whiteText ? [0, 0, 0] : [255, 255, 255]],
+      [foreground, whiteText ? [255, 255, 255] : [0, 0, 0]],
+      [whiteText ? dark : light, whiteText ? [0, 0, 0] : [255, 255, 255]],
+    ].find(([text, face]) => score(text, glassBackgrounds(face)) >= 4.5);
+    backgrounds = glassBackgrounds(surface);
+  }
   const safeMuted = (color) => {
     let rgb = color ? compositeColor(color, backgrounds[0]) : foreground.map((n, i) => Math.round(n * .7 + backgrounds[0][i] * .3));
     for (let step = 0; step < 10 && Math.min(...backgrounds.map((bg) => contrast(rgb, bg))) < 4.5; step++) rgb = rgb.map((n, i) => Math.round(n * .75 + foreground[i] * .25));
@@ -157,8 +165,8 @@ export function resolvePrototypePalette(source = {}) {
   return {
     '--ink': rgbText(foreground), '--ink-2': rgbText(muted), '--ink-3': rgbText(muted), '--gold': rgbText(accent), '--card': rgbText(surface),
     '--line': line, '--line-2': `rgba(${foreground.join(', ')}, .3)`, '--fill': `rgba(${foreground.join(', ')}, .05)`, '--fill-2': `rgba(${foreground.join(', ')}, .1)`,
-    '--paper-2': rgbText(surface), '--detail-paper': rgbText(samples[0]), '--detail-panel-bg': needsPanel ? rgbText(surface) : 'transparent',
-    '--detail-tool-bg': needsPanel ? rgbText(surface) : 'transparent',
-    '--detail-tone': whiteText ? 'dark' : 'light',
+    '--paper-2': rgbText(surface), '--detail-paper': rgbText(samples[0]), '--detail-panel-bg': `rgba(${surface.join(', ')}, .6)`,
+    '--detail-tool-bg': `rgba(${surface.join(', ')}, .6)`,
+    '--detail-tone': contrast(surface, [255, 255, 255]) > contrast(surface, [0, 0, 0]) ? 'dark' : 'light',
   };
 }

@@ -97,6 +97,7 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
   const ease = styles.getPropertyValue('--ease').trim();
   const sharedEase = styles.getPropertyValue('--ease-shared').trim();
   const animations = new Set();
+  let restoreHint = null;
   let active = null, desired = '', routing = false;
   let savedScroll = null, savedFocus = null, savedPageWidth = '';
   let snapshotImage = null, imageSize = null;
@@ -413,6 +414,8 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
     clearTimeout(loadTimer);
     ++layoutVersion;
     restore.hidden = true;
+    restoreHint?.cancel();
+    restoreHint = null;
     clearCopyTimers();
     setChrome(false);
     // 真实页面保持显示，组件退出后直接缩回；不再为退场恢复截图。
@@ -604,12 +607,19 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
       updateLabels();
     });
   }
-  function setClean(clean) {
+  function setClean(clean, hint = false) {
     changeLayout(() => {
+      restoreHint?.cancel();
+      restoreHint = null;
       root.dataset.clean = String(clean);
       setChrome(!clean);
       restore.hidden = !clean;
       (clean ? restore : $('[data-detail-fullscreen]')).focus({ preventScroll: true });
+      if (clean && hint && !reduce.matches) {
+        const opacity = getComputedStyle(restore).getPropertyValue('--detail-restore-opacity').trim();
+        restoreHint = restore.animate([{ opacity }, { opacity: 1 }, { opacity }], { duration: 300, iterations: 3, easing: sharedEase, fill: 'none' });
+        restoreHint.finished.catch(() => {});
+      }
     });
   }
 
@@ -651,8 +661,10 @@ export function initPrototypeDetail({ page, cards, getLanguage, onBusyChange, ge
   previous.addEventListener('click', () => navigateNeighbor(-1));
   next.addEventListener('click', () => navigateNeighbor(1));
   $('[data-detail-scrim]').addEventListener('click', toggleDrawer);
-  $('[data-detail-fullscreen]').addEventListener('click', () => setClean(true));
+  $('[data-detail-fullscreen]').addEventListener('click', (event) => setClean(true, event.detail > 0));
   restore.addEventListener('click', () => setClean(false));
+  restore.addEventListener('pointerenter', () => restoreHint?.cancel());
+  restore.addEventListener('focus', () => restoreHint?.cancel());
   retry.addEventListener('click', () => {
     if (!retryItem) { loadPrototype(); return; }
     const url = new URL(location.href);

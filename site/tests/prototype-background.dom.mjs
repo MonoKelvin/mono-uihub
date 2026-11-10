@@ -16,7 +16,7 @@ before(async () => {
 after(async () => { await browser?.close(); });
 
 const baseStyle = `html,body{margin:0;width:100%;height:100%}body{--ink:#202020;--accent:#17552b;color:var(--ink)}.stage{width:100%;height:100%;display:grid;place-items:center;background:#e8e3d8}.canvas{width:600px;height:400px;background:white;border-radius:24px;color:#202020}`;
-async function fixture(t, { css = '', html = '<main class="stage"><div class="canvas"><button>交互窗口</button></div></main>', viewer = false, viewport = { width: 1600, height: 1000 }, reducedMotion = 'reduce', details = {}, hasTouch = false } = {}) {
+async function fixture(t, { head = '', css = '', html = '<main class="stage"><div class="canvas"><button>交互窗口</button></div></main>', viewer = false, viewport = { width: 1600, height: 1000 }, reducedMotion = 'reduce', details = {}, hasTouch = false } = {}) {
   const page = await browser.newPage({ viewport, reducedMotion, hasTouch });
   t.after(() => page.close());
   const requests = [];
@@ -24,13 +24,13 @@ async function fixture(t, { css = '', html = '<main class="stage"><div class="ca
     const path = new URL(route.request().url()).pathname;
     requests.push(path);
     if (scripts.has(path)) return route.fulfill({ contentType: 'text/javascript', body: scripts.get(path) });
-    if (path === '/prototype/index.html' || path === '/prototype-next/index.html') return route.fulfill({ contentType: 'text/html', body: `<!doctype html><html><head><link rel="stylesheet" href="styles.css"><style>${baseStyle}${css}${path.includes('-next') ? '.stage{background:#111}body{--ink:#eee}' : ''}</style></head><body>${html}</body></html>` });
+    if (path === '/prototype/index.html' || path === '/prototype-next/index.html') return route.fulfill({ contentType: 'text/html', body: `<!doctype html><html><head>${head}<link rel="stylesheet" href="styles.css"><style>${baseStyle}${css}${path.includes('-next') ? '.stage{background:#111}body{--ink:#eee}' : ''}</style></head><body>${html}</body></html>` });
     if (path.endsWith('/styles.css')) return route.fulfill({ contentType: 'text/css', headers: { 'Cache-Control': 'no-store' }, body: '.canvas button{font-size:16px}' });
     if (path.endsWith('.svg')) return route.fulfill({ contentType: 'image/svg+xml', headers: { 'Cache-Control': 'no-store' }, body: '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="#ddd"/></svg>' });
     if (viewer) {
       const items = ['demo', 'next'].map((slug) => ({ slug, name: slug, href: slug === 'demo' ? '/prototype/index.html' : '/prototype-next/index.html', details: { prompt: slug, type: 'software', ...details } }));
       const markup = detailMarkup.replace('data-detail-items={JSON.stringify(items)}', `data-detail-items='${JSON.stringify(items)}'`);
-      return route.fulfill({ contentType: 'text/html', body: `<!doctype html><style>*{box-sizing:border-box}:root{--paper:#eee;--card:white;--ink:#202020;--ink-2:#333;--ink-3:#444;--ease:ease;--ease-shared:ease;--ease-drawer:ease;--r-pill:999px}${detailCss}</style><div id="page"><a class="card" data-slug="demo"><div class="frame">原型</div></a><a class="card" data-slug="next"><div class="frame">下一个</div></a></div>${markup}` });
+      return route.fulfill({ contentType: 'text/html', body: `<!doctype html><style>*{box-sizing:border-box}:root{--paper:#eee;--card:white;--ink:#202020;--ink-2:#333;--ink-3:#444;--ease:ease;--ease-shared:ease;--ease-drawer:ease;--r-pill:999px;--shadow-sm:0 1px 2px rgb(0 0 0 / .05)}${detailCss}</style><div id="page"><a class="card" data-slug="demo"><div class="frame">原型</div></a><a class="card" data-slug="next"><div class="frame">下一个</div></a></div>${markup}` });
     }
     return route.fulfill({ contentType: 'text/html', body: '<!doctype html><style>#root{position:fixed;inset:0}#slot{position:absolute;inset:0}#source{position:absolute;left:40px;top:76px;width:1000px;height:700px;border:0}</style><div id="root"><div id="slot"></div><iframe id="source" src="/prototype/index.html"></iframe></div>' });
   });
@@ -204,41 +204,87 @@ test('根主题和自定义 data 属性触发合并更新，旧监听与透明�
   assert.equal(result.tone, '');
 });
 
-test('页面深色 color-scheme 不给原型画布铺不透明底色，详情底色取原型根背景', async (t) => {
-  const { page } = await fixture(t, { viewer: true, css: ':root{color-scheme:dark}.stage{background:#1a1a1a}body{--ink:#eee}' });
-  await page.waitForFunction(() => root.dataset.load === 'ready' && root.dataset.phase === 'open' && root.dataset.detailTone === 'dark');
-  const shot = (await page.screenshot()).toString('base64');
-  const result = await page.evaluate(async (base64) => {
-    const bitmap = await createImageBitmap(await (await fetch('data:image/png;base64,' + base64)).blob());
-    const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
-    context.drawImage(bitmap, 0, 0);
-    const at = (x, y) => [...context.getImageData(x, y, 1, 1).data].slice(0, 3).join(',');
-    const frame = document.querySelector('[data-detail-host] iframe');
-    const rect = frame.getBoundingClientRect();
-    const doc = frame.contentDocument;
-    const middle = Math.round(rect.top + rect.height / 2);
-    return {
-      scheme: getComputedStyle(frame).colorScheme,
-      inner: `${getComputedStyle(doc.documentElement).colorScheme},${getComputedStyle(doc.body).colorScheme}`,
-      paper: root.style.getPropertyValue('--detail-paper'),
-      surface: getComputedStyle(document.querySelector('.detail-surface')).backgroundColor,
-      canvas: getComputedStyle(doc.body).backgroundColor,
-      edge: at(Math.round(rect.left + 24), middle),
-      gutter: at(8, middle),
-    };
-  }, shot);
-  assert.equal(result.scheme, 'normal');
-  assert.equal(result.inner, 'normal,normal');
-  assert.equal(result.canvas, 'rgba(0, 0, 0, 0)');
-  assert.equal(result.paper, 'rgb(26, 26, 26)');
-  assert.equal(result.surface, 'rgb(26, 26, 26)');
-  assert.equal(result.edge, '26,26,26');
-  assert.equal(result.gutter, '26,26,26');
-  assert.match(detailCss, /\.detail-surface\{[^}]*background:var\(--detail-paper,var\(--paper\)\)/);
-  assert.match(detailCss, /\.detail-frame-host iframe\{[^}]*color-scheme:normal/);
-});
+for (const [name, head, css] of [
+  ['CSS', '', ':root{color-scheme:dark}'],
+  ['meta', '<meta name="color-scheme" content="dark">', ''],
+]) {
+  test(`${name} 深色 color-scheme 不给原型画布铺不透明底色，清理恢复原声明`, async (t) => {
+    const { page } = await fixture(t, { viewer: true, head, css: css + '.stage{background:#1a1a1a}body{--ink:#eee}' });
+    await page.waitForFunction(() => root.dataset.load === 'ready' && root.dataset.phase === 'open' && root.dataset.detailTone === 'dark');
+    const shot = (await page.screenshot()).toString('base64');
+    const result = await page.evaluate(async (base64) => {
+      const bitmap = await createImageBitmap(await (await fetch('data:image/png;base64,' + base64)).blob());
+      const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
+      context.drawImage(bitmap, 0, 0);
+      const at = (x, y) => [...context.getImageData(x, y, 1, 1).data].slice(0, 3).join(',');
+      const frame = document.querySelector('[data-detail-host] iframe');
+      const rect = frame.getBoundingClientRect();
+      const doc = window.originalSchemeDoc = frame.contentDocument;
+      const middle = Math.round(rect.top + rect.height / 2);
+      return {
+        scheme: getComputedStyle(frame).colorScheme,
+        inner: `${getComputedStyle(doc.documentElement).colorScheme},${getComputedStyle(doc.body).colorScheme}`,
+        paper: root.style.getPropertyValue('--detail-paper'),
+        surface: getComputedStyle(document.querySelector('.detail-surface')).backgroundColor,
+        canvas: getComputedStyle(doc.body).backgroundColor,
+        edge: at(Math.round(rect.left + 24), middle),
+        gutter: at(8, middle),
+      };
+    }, shot);
+    assert.equal(result.scheme, 'normal');
+    assert.equal(result.edge, '26,26,26');
+    assert.equal(result.gutter, '26,26,26');
+    assert.equal(result.inner, 'light,normal');
+    assert.equal(result.canvas, 'rgba(0, 0, 0, 0)');
+    assert.equal(result.paper, 'rgb(26, 26, 26)');
+    assert.equal(result.surface, 'rgb(26, 26, 26)');
+    assert.match(detailCss, /\.detail-surface\{[^}]*background:var\(--detail-paper,var\(--paper\)\)/);
+    assert.match(detailCss, /\.detail-frame-host iframe\{[^}]*color-scheme:normal/);
+    await page.locator('[data-detail-back]').click();
+    await page.waitForFunction(() => root.hidden);
+    const restored = await page.evaluate(() => ({
+      sheet: originalSchemeDoc.getElementById('uihub-background-transparency') !== null,
+      marker: originalSchemeDoc.documentElement.hasAttribute('data-uihub-background-host'),
+      meta: originalSchemeDoc.querySelector('meta[name="color-scheme"]')?.content ?? null,
+    }));
+    assert.deepEqual(restored, { sheet: false, marker: false, meta: head ? 'dark' : null });
+  });
+}
 
 const viewerReady = (page) => page.waitForFunction(() => root.dataset.load === 'ready' && root.dataset.phase === 'open' && slot.children.length === 1);
+
+for (const viewport of [{ width: 1600, height: 1000 }, { width: 390, height: 844 }]) {
+  test(`${viewport.width}px 壁纸背景下工具条、两侧按钮和参数面板使用半透明毛玻璃`, async (t) => {
+    const { page } = await fixture(t, { viewer: true, viewport, css: '.stage{background:#e8e3d8 url(assets/grain.svg) center / cover}' });
+    await viewerReady(page);
+    await page.waitForFunction(() => getComputedStyle(root.querySelector('[data-detail-drawer]')).opacity === '1');
+    const materials = await page.evaluate(() => ['[data-detail-toolbar]', '[data-detail-back]', '[data-detail-toggle-drawer]', '[data-detail-drawer]'].map((selector) => {
+      const css = getComputedStyle(root.querySelector(selector));
+      return { selector, background: css.backgroundColor, blur: css.backdropFilter, shadow: css.boxShadow, radius: css.borderTopLeftRadius, border: css.borderLeftWidth };
+    }));
+    for (const material of materials) {
+      assert.match(material.background, /^rgba\(.+, 0\.6\)$/);
+      assert.match(material.blur, /blur\((20|24)px\)/);
+      if (material.selector === '[data-detail-drawer]') {
+        assert.equal(material.shadow, 'none');
+        assert.equal(material.radius, '8px');
+        assert.equal(material.border, '1px');
+      } else assert.match(material.shadow, /inset/);
+    }
+    assert.equal(await page.locator('[data-detail-loading]').evaluate((element) => getComputedStyle(element).backgroundColor), 'rgba(0, 0, 0, 0)');
+    await page.locator('[data-detail-toggle-drawer]').click();
+    assert.equal(await page.evaluate(() => root.dataset.drawer), 'closed');
+    await page.locator('[data-detail-toggle-drawer]').click();
+    assert.equal(await page.evaluate(() => root.dataset.drawer), 'open');
+    await page.emulateMedia({ contrast: 'more' });
+    const accessible = await page.evaluate(() => {
+      const css = getComputedStyle(root.querySelector('[data-detail-drawer]'));
+      return { background: css.backgroundColor, blur: css.backdropFilter };
+    });
+    assert.match(accessible.background, /^rgb\(/);
+    assert.equal(accessible.blur, 'none');
+  });
+}
 
 test('重放样式表或背景图片失败时不隐藏前景背景', async (t) => {
   const { page } = await fixture(t, { css: '.stage{background-image:url(assets/grain.svg)}' });
@@ -274,6 +320,95 @@ test('主题 link 的 href、media 和加载完成都会更新重放样式', asy
   await page.waitForFunction(() => slot.firstChild && getComputedStyle(slot.firstChild.contentDocument.querySelector('.stage')).backgroundColor === 'rgb(0, 0, 255)');
   await page.evaluate(() => { source.contentDocument.querySelector('link').media = 'not all'; });
   await page.waitForFunction(() => slot.firstChild && getComputedStyle(slot.firstChild.contentDocument.querySelector('.stage')).backgroundColor === 'rgb(232, 227, 216)');
+});
+
+test('全屏恢复按钮位于左上角，闪烁三次后回到半透明，重复进入不残留动画或重载原型', async (t) => {
+  const { page } = await fixture(t, { viewer: true, viewport: { width: 1366, height: 768 }, reducedMotion: 'no-preference' });
+  await viewerReady(page);
+  await page.evaluate(() => {
+    window.originalFrame = root.querySelector('[data-detail-host] iframe');
+    window.restoreHints = [];
+    const restore = root.querySelector('[data-detail-restore]');
+    const animate = restore.animate.bind(restore);
+    restore.animate = (frames, options) => {
+      restoreHints.push({ frames, options });
+      window.restoreHintAnimation = animate(frames, options);
+      return restoreHintAnimation;
+    };
+  });
+  const restore = page.locator('[data-detail-restore]');
+  await page.locator('[data-detail-fullscreen]').click();
+  const hints = await page.evaluate(() => restoreHints);
+  assert.equal(hints.length, 1);
+  assert.deepEqual(hints[0].frames, [{ opacity: '.24' }, { opacity: 1 }, { opacity: '.24' }]);
+  assert.equal(hints[0].options.duration, 300);
+  assert.equal(hints[0].options.iterations, 3);
+  assert.equal(hints[0].options.fill, 'none');
+  assert.equal(Math.round(await page.evaluate(() => restoreHintAnimation.effect.getComputedTiming().activeDuration)), 900);
+  await page.waitForFunction(() => restoreHintAnimation.playState === 'running' && restoreHintAnimation.currentTime > 350);
+  await page.waitForFunction(() => {
+    const restore = root.querySelector('[data-detail-restore]');
+    return restore.getAnimations().length === 0 && getComputedStyle(restore).opacity === '0.24';
+  });
+  const position = await restore.boundingBox();
+  assert.equal(position.x, 20);
+  assert.equal(position.y, 20);
+  assert.equal(position.width, 40);
+  assert.equal(position.height, 40);
+  await restore.hover();
+  await page.waitForFunction(() => getComputedStyle(root.querySelector('[data-detail-restore]')).opacity === '1');
+  await restore.click();
+  assert.equal(await restore.isVisible(), false);
+  await page.locator('[data-detail-fullscreen]').click();
+  assert.equal(await page.evaluate(() => restoreHints.length), 2);
+  await restore.hover();
+  await page.waitForFunction(() => restoreHintAnimation.playState === 'idle' && getComputedStyle(root.querySelector('[data-detail-restore]')).opacity === '1');
+  await page.keyboard.press('Escape');
+  assert.deepEqual(await page.evaluate(() => ({
+    clean: root.dataset.clean,
+    hidden: root.querySelector('[data-detail-restore]').hidden,
+    animations: root.querySelector('[data-detail-restore]').getAnimations().length,
+    sameFrame: root.querySelector('[data-detail-host] iframe') === originalFrame,
+    focused: document.activeElement === root.querySelector('[data-detail-fullscreen]'),
+  })), { clean: 'false', hidden: true, animations: 0, sameFrame: true, focused: true });
+});
+
+for (const hasTouch of [false, true]) {
+  test(`减少动效时恢复按钮不闪烁，${hasTouch ? '触摸' : '鼠标'}环境保持可见且可退出`, async (t) => {
+    const { page } = await fixture(t, { viewer: true, hasTouch, viewport: hasTouch ? { width: 390, height: 844 } : { width: 1366, height: 768 } });
+    await viewerReady(page);
+    await page.evaluate(() => {
+      window.restoreHints = 0;
+      const restore = root.querySelector('[data-detail-restore]');
+      const animate = restore.animate.bind(restore);
+      restore.animate = (...args) => { restoreHints++; return animate(...args); };
+    });
+    const fullscreen = page.locator('[data-detail-fullscreen]');
+    if (hasTouch) await fullscreen.tap(); else await fullscreen.click();
+    const restore = page.locator('[data-detail-restore]');
+    assert.equal(await page.evaluate(() => restoreHints), 0);
+    await page.waitForFunction((opacity) => getComputedStyle(root.querySelector('[data-detail-restore]')).opacity === opacity, hasTouch ? '0.5' : '0.24');
+    const position = await restore.boundingBox();
+    assert.equal(position.x, 20);
+    assert.equal(position.y, 20);
+    if (hasTouch) await restore.tap(); else await restore.click();
+    assert.equal(await restore.isVisible(), false);
+    assert.equal(await page.evaluate(() => root.dataset.clean), 'false');
+  });
+}
+
+test('键盘进入全屏不闪烁，恢复按钮保持清晰焦点并支持 Escape 退出', async (t) => {
+  const { page } = await fixture(t, { viewer: true, reducedMotion: 'no-preference' });
+  await viewerReady(page);
+  await page.locator('[data-detail-fullscreen]').focus();
+  await page.keyboard.press('Enter');
+  const restore = page.locator('[data-detail-restore]');
+  assert.equal(await restore.evaluate((element) => element === document.activeElement && element.matches(':focus-visible')), true);
+  assert.equal(await restore.evaluate((element) => element.getAnimations().filter((animation) => animation.effect.getTiming().fill === 'none').length), 0);
+  await page.waitForFunction(() => getComputedStyle(root.querySelector('[data-detail-restore]')).opacity === '1');
+  await page.keyboard.press('Escape');
+  assert.equal(await restore.isVisible(), false);
+  assert.equal(await page.evaluate(() => document.activeElement === root.querySelector('[data-detail-fullscreen]')), true);
 });
 
 test('详情切换同步提交背景和参数，抽屉及全屏保留，背景 cover 不拉大前景 iframe', async (t) => {
@@ -392,6 +527,10 @@ test('触摸环境不触发参考来源的鼠标 hover 高亮', async (t) => {
   await viewerReady(page);
   assert.equal(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches), false);
   const link = page.locator('[data-field="source"] a');
+  await page.waitForFunction(() => {
+    const element = document.querySelector('[data-field="source"] a');
+    return getComputedStyle(element).color === getComputedStyle(element.parentElement).color;
+  });
   await link.hover();
   const result = await link.evaluate((element) => ({ hover: element.matches(':hover'), color: getComputedStyle(element).color, parent: getComputedStyle(element.parentElement).color, accent: getComputedStyle(root).getPropertyValue('--gold').trim() }));
   assert.equal(result.hover, true);
