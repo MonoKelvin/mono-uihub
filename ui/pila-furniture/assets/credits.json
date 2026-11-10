@@ -1,0 +1,36 @@
+{
+  "pila.webp": {
+    "type": "AI-generated product cutout",
+    "model": "agnes-image-2.5-flash",
+    "description": "Straight-on front elevation of a white Carrara marble T-shaped washbasin with a tall centered slab pedestal, a narrow visible hollow basin opening and a recessed wooden insert fully inside the far-right cavity. Generated for this interface; not the original product photograph.",
+    "modifications": "Trimmed empty alpha margins, added a faint local contact shadow beneath the pedestal foot and converted to WebP."
+  },
+  "marble-detail.webp": {
+    "source": "https://pixabay.com/photos/marble-stone-stone-grain-4700915/",
+    "license": "Pixabay Content License"
+  },
+  "interior-bedroom.webp": {
+    "source": "https://pixabay.com/photos/interior-design-modern-style-home-4467768/",
+    "license": "Pixabay Content License"
+  },
+  "linen-chair.webp": {
+    "source": "https://pngimg.com/uploads/armchair/armchair_PNG7017.png",
+    "attribution": "pngimg.com",
+    "license": "CC BY-NC 4.0",
+    "commercial_use": false,
+    "modifications": "Cropped the first armchair from the product image sheet."
+  },
+  "everyday-table.webp": {
+    "source": "https://pngimg.com/uploads/table/table_PNG6997.png",
+    "attribution": "pngimg.com",
+    "license": "CC BY-NC 4.0",
+    "commercial_use": false,
+    "modifications": "Cropped the first wooden table from the product image sheet."
+  },
+  "studio-lamp.webp": {
+    "source": "https://pngimg.com/uploads/lamp/lamp_PNG108698.png",
+    "attribution": "pngimg.com",
+    "license": "CC BY-NC 4.0",
+    "commercial_use": false
+  }
+}

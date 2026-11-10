@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9f9f9">
+  <meta name="description" content="Furniture, thoughtfully made. Discover the Classic Pila and a considered collection of objects for everyday living.">
+  <title>FURNiTURE — The Classic Pila</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body data-view="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <button class="header-link menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu-view">
+      <span class="menu-mark" aria-hidden="true"><span></span><span></span></span>
+      <span id="menu-label">MENU</span>
+    </button>
+    <a class="wordmark" href="#home" aria-label="Furniture home">FURN<span>i</span>TURE</a>
+    <a class="header-link cart-link" href="#cart" aria-label="Shopping bag, 0 items">
+      <span>CART</span><span class="bag-mark"><i class="ti ti-shopping-bag" aria-hidden="true"></i><span id="cart-count" class="cart-count" aria-hidden="true"></span></span>
+    </a>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="view" id="home-view">
+      <section class="hero" aria-label="Featured furniture">
+        <div class="hero-copy">
+          <span class="maker" id="hero-maker">BLOOEY</span>
+          <h1 id="hero-title">The Classic Pila</h1>
+          <p class="hero-description" id="hero-description">Made by local craftsmen mostly working from their backyards, the classic Pila is an iconic symbol of local design culture and can be found in colonial residences or at the central square</p>
+          <button class="add-to-cart text-action" id="hero-add" data-add="pila"><span>ADD TO CART</span><i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button>
+        </div>
+        <a class="product-stage" id="hero-product-link" href="#product/pila" aria-label="View The Classic Pila">
+          <img id="hero-product" src="assets/pila.webp" alt="White marble Pila washbasin with a wide rectangular basin and a sculptural pedestal" fetchpriority="high">
+          <span class="image-error" hidden>Image unavailable <span class="text-link">View product details</span></span>
+        </a>
+        <div class="slide-index" aria-label="Product 1 of 4">
+          <span id="current-slide">01</span><span class="slide-track"><span id="slide-progress"></span></span><span>04</span>
+        </div>
+        <button class="play-button" id="film-open" aria-label="Play the Pila material story"><span>PLAY</span><span class="play-circle"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></button>
+        <a class="interior-preview" href="#story" aria-label="Explore the Pila in everyday spaces"><img src="assets/interior-bedroom.webp" alt="A calm bedroom with warm wooden walls and natural linen"></a>
+        <div class="slide-controls" aria-label="Featured product navigation">
+          <button id="next-slide" aria-label="Next product"><i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button>
+          <button id="previous-slide" aria-label="Previous product"><i class="ti ti-arrow-narrow-left" aria-hidden="true"></i></button>
+        </div>
+        <button class="share-button header-link" id="share-toggle" aria-expanded="false" aria-controls="share-panel"><span>SHARE</span><i class="ti ti-share" aria-hidden="true"></i></button>
+        <div class="share-panel" id="share-panel" hidden><span class="label">THE CLASSIC PILA</span><button id="copy-link"><i class="ti ti-link" aria-hidden="true"></i><span>Copy product link</span></button><input id="share-url" aria-label="Product link" readonly hidden><p id="share-status" role="status"></p></div>
+      </section>
+      <section class="story-section" id="story-section">
+        <div class="story-image"><img src="assets/marble-detail.webp" alt="The subtle grey veins and natural surface of white marble" loading="lazy"></div>
+        <div class="story-copy"><span class="label">OBJECTS WITH A STORY</span><h2>A place for<br>everyday rituals.</h2><p>Honest materials. Familiar forms. The Pila brings a simple daily ritual into focus, with stone that feels as good as it looks.</p><a class="text-action" href="#story"><span>DISCOVER THE STORY</span><i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></a></div>
+      </section>
+      <section class="collection-invitation"><span class="label">A CONSIDERED COLLECTION</span><h2>Made to live with.</h2><a class="text-action" href="#collection"><span>EXPLORE ALL OBJECTS</span><i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></a></section>
+    </div>
+    <section class="view menu-view" id="menu-view" hidden aria-label="Main menu">
+      <div class="menu-content"><span class="label">FURNITURE, THOUGHTFULLY MADE</span><nav><a href="#home">Discover<span>01</span></a><a href="#collection">Collection<span>02</span></a><a href="#story">Our story<span>03</span></a><a href="#cart">Shopping bag<span>04</span></a></nav><a class="studio-email" href="mailto:hello@furniture.studio">hello@furniture.studio<i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div>
+      <div class="menu-photo"><img src="assets/interior-bedroom.webp" alt="Furniture in a quiet, thoughtfully designed home"><span>Good objects. Ordinary moments.</span></div>
+    </section>
+    <section class="view inner-view" id="collection-view" hidden>
+      <div class="page-heading"><div><span class="label">OBJECTS FOR EVERYDAY LIVING</span><h1>The collection</h1></div><span class="collection-total">04 OBJECTS</span></div>
+      <div class="collection-tools"><div class="category-filters" aria-label="Filter collection"><button data-filter="all" aria-pressed="true">All objects</button><button data-filter="bath" aria-pressed="false">Bath</button><button data-filter="living" aria-pressed="false">Living</button></div><label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="collection-search" type="search" placeholder="Find an object" aria-label="Search the collection"></label></div>
+      <div class="product-grid" id="product-grid"></div>
+      <div class="empty-state" id="search-empty" hidden><h2>No objects found.</h2><p>Try another name or explore the full collection.</p><button class="text-action" id="clear-search">VIEW ALL OBJECTS<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button></div>
+      <p class="results-status sr-only" id="results-status" role="status"></p>
+    </section>
+    <section class="view inner-view" id="product-view" hidden>
+      <a href="#collection" class="back-link"><i class="ti ti-arrow-narrow-left" aria-hidden="true"></i>Back to collection</a>
+      <div class="product-detail"><div class="detail-image" id="detail-image"></div><div class="detail-copy"><span class="label" id="detail-maker"></span><h1 id="detail-title"></h1><p class="detail-price" id="detail-price"></p><p class="detail-description" id="detail-description"></p><div class="material-group"><span class="label">MATERIAL</span><span id="detail-material"></span></div><div class="detail-purchase"><div class="quantity-control"><button id="detail-minus" aria-label="Decrease quantity"><i class="ti ti-minus" aria-hidden="true"></i></button><output id="detail-quantity" aria-label="Quantity">1</output><button id="detail-plus" aria-label="Increase quantity"><i class="ti ti-plus" aria-hidden="true"></i></button></div><button class="solid-button" id="detail-add">ADD TO CART<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button></div><p class="purchase-note" id="detail-availability"></p><dl class="specifications" id="detail-specifications"></dl><details class="care-details"><summary>Materials & care<i class="ti ti-plus" aria-hidden="true"></i></summary><p id="detail-care"></p></details></div></div>
+    </section>
+    <section class="view inner-view" id="cart-view" hidden>
+      <div class="page-heading"><div><span class="label">YOUR SELECTION</span><h1>Shopping bag</h1></div><a class="back-link" href="#collection">Continue exploring<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></a></div>
+      <div class="empty-state" id="cart-empty"><i class="ti ti-shopping-bag" aria-hidden="true"></i><h2>A little room for something good.</h2><p>Your shopping bag is empty. Find an object to make your own.</p><a class="text-action" href="#collection">EXPLORE THE COLLECTION<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></a></div>
+      <div class="cart-layout" id="cart-filled" hidden><div id="cart-items"></div><aside class="order-summary"><h2>Your order</h2><dl><div><dt>Subtotal</dt><dd id="cart-subtotal"></dd></div><div><dt>Delivery</dt><dd>Arranged by the studio</dd></div></dl><div class="summary-total"><span>Total</span><strong id="cart-total"></strong></div><p>Delivery costs will be confirmed with your address before you place an order.</p><a href="#checkout" class="solid-button">CONTINUE TO CHECKOUT<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></a></aside></div>
+    </section>
+    <section class="view inner-view" id="checkout-view" hidden>
+      <a href="#cart" class="back-link"><i class="ti ti-arrow-narrow-left" aria-hidden="true"></i>Back to shopping bag</a>
+      <div class="page-heading"><div><span class="label">THE NEXT STEP</span><h1>Make it yours.</h1></div></div>
+      <div class="checkout-layout"><form id="checkout-form" novalidate><h2>Contact & delivery</h2><div class="form-grid"><label class="form-field">Full name<input name="name" autocomplete="name" required maxlength="100"><span class="field-error" id="name-error"></span></label><label class="form-field">Email address<input name="email" type="email" autocomplete="email" required maxlength="254"><span class="field-error" id="email-error"></span></label><label class="form-field full-width">Street address<input name="address" autocomplete="street-address" required maxlength="200"><span class="field-error" id="address-error"></span></label><label class="form-field">City<input name="city" autocomplete="address-level2" required maxlength="100"><span class="field-error" id="city-error"></span></label><label class="form-field">Postal code<input name="postal" autocomplete="postal-code" required maxlength="20"><span class="field-error" id="postal-error"></span></label></div><p class="service-note">Online payment is currently unavailable. Download your order details to share with the studio; no order is placed or payment taken.</p><button class="solid-button" type="submit">REVIEW YOUR SELECTION<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></button></form><aside class="order-summary"><h2>Your selection</h2><div id="checkout-items"></div><div class="summary-total"><span>Subtotal</span><strong id="checkout-total"></strong></div></aside></div>
+      <section class="order-review" id="order-review" hidden><span class="label">READY TO SHARE WITH THE STUDIO</span><h2>Your order details</h2><p id="review-contact"></p><p>Delivery and availability must be confirmed by the studio. This document is a selection summary, not an order confirmation.</p><button class="solid-button" type="button" id="download-order">DOWNLOAD ORDER DETAILS<i class="ti ti-download" aria-hidden="true"></i></button><p id="download-status" role="status"></p></section>
+    </section>
+    <section class="view story-view" id="story-view" hidden>
+      <div class="story-page-heading"><span class="label">BLOOEY / THE CLASSIC PILA</span><h1>Something familiar.<br>Something lasting.</h1><p>The Pila is a place to pause. An everyday object, reimagined through honest materials and a quiet architectural form.</p></div><div class="story-wide-image"><img src="assets/interior-bedroom.webp" alt="A quiet bedroom framed by wood and natural materials"></div><div class="story-page-body"><span class="label">A SIMPLE DAILY RITUAL</span><h2>Stone. Water. Time.</h2><p>A broad basin and a single, sculptural pedestal. The Classic Pila keeps the silhouette simple and lets the natural character of marble do the talking. Each piece of stone has its own pattern; no two surfaces are exactly alike.</p><a class="text-action" href="#product/pila">MEET THE CLASSIC PILA<i class="ti ti-arrow-narrow-right" aria-hidden="true"></i></a></div>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="wordmark" href="#home">FURN<span>i</span>TURE</a><span>Objects for the way we live.</span><a href="#collection">Explore the collection<i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></footer>
+  <div class="film-layer" id="film-layer" hidden>
+    <div class="film-scrim" id="film-scrim"></div><section class="film-dialog" role="dialog" aria-modal="true" aria-labelledby="film-title"><button class="film-close icon-button" id="film-close" aria-label="Close material story"><i class="ti ti-x" aria-hidden="true"></i></button><div class="film-visual"><img src="assets/pila.webp" alt="The Classic Pila in white marble" id="film-image"><span class="film-chapter" id="film-chapter">01 / THE FORM</span></div><div class="film-caption"><span class="label">A CLOSER LOOK</span><h2 id="film-title">A familiar form.</h2><p id="film-description">A wide, generous basin. One sculptural pedestal.</p><div class="film-controls"><button id="film-play" class="icon-button" aria-label="Pause material story"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg></button><progress id="film-progress" max="1" value="0" aria-label="Material story progress"></progress><span id="film-time">00:00 / 00:12</span></div></div></section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

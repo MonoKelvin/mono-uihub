@@ -1,0 +1,66 @@
+{
+  "name": "FURNiTURE · Pila 家具",
+  "slug": "pila-furniture",
+  "page_type": "website",
+  "tags": ["家具", "购物", "Pila"],
+  "palette": ["#f9f9f9", "#f1f1f1", "#1c1c1c"],
+  "created_at": "2026-11-10 19:32:12",
+  "updated_at": "2026-11-10 21:24:09",
+  "imageToUI": "https://dribbble.com/shots/4926945-Furniture-Concept-Main-Page/attachments/1104958?mode=media",
+  "history": [
+    {
+      "prompt": "还原这个UI原型网站。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-scrolltrigger"]
+    },
+    {
+      "prompt": "通过UI还原网页时，首屏尽量自适应窗口尺寸，能让内容展示完全不要出现遮挡或者超越区域的情况（除非自适应后出现拥挤或者内部遮挡问题），同时写到skill里面",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "继续。那个白色的T台尽量使用白色大理石材质，右上面的的是木板，T台上面是中空的，建议使用文生图生成抠图结果",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "One sculptural freestanding T-shaped washbasin made of bright white Carrara marble with sparse pale grey natural veins. A very wide shallow rectangular trough basin, open and hollow at the top with visible straight inner marble walls and a recessed empty basin floor. The broad front fascia is a perfectly flat rectangular white marble slab. One single broad rectangular marble slab pedestal is centered under the basin, forming a capital T silhouette, with no side legs. The trough is roughly four times wider than the centered pedestal. A narrow honey-colored natural wooden board rests across the far right side of the basin opening, spanning from the front rim to the back rim. Almost straight-on front view from just slightly above the top rim, showing only a shallow glimpse into the hollow basin. Whole washbasin visible including the pedestal foot, accurate architectural proportions, single large softbox light from the upper left.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "T台有问题，太短了尺寸对不上，木板应该放到内部而不是一半在内一半在外",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "A tall architectural T-shaped freestanding washbasin in bright white Carrara marble with a few very faint fine pale-grey veins, seen in near-orthographic frontal elevation. Match these proportions precisely: the horizontal basin is 100 cm wide, 16 cm tall and 40 cm deep; a single centered rectangular slab pedestal is 23 cm wide and 76 cm tall below the basin. The pedestal is long and slender, making up about 80 percent of the total visible height, with no other legs. Camera is almost level with the top rim, only 3 degrees above it, so the open hollow rectangular basin interior is visible as a narrow shallow strip above the broad flat front fascia. The basin is genuinely hollow, with straight interior marble walls and a recessed empty floor. Inside the far-right part of the basin cavity, one slim honey-colored oak insert board is aligned front-to-back along the basin depth, not left-to-right along its width. This wooden insert occupies only the rightmost 15 percent of the basin width and sits recessed below the upper marble rim, entirely within the inner basin walls. Both ends of the wood stop inside the marble cavity; no part rests on the outer rim or sticks outside the washbasin silhouette. White stone dominates, with softly lit planes and readable marble thickness. One complete washbasin, full tall pedestal and foot visible, soft diffuse lighting from upper left, bare basin without taps or accessories.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "图片请换成正视图的T台",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "A single white Carrara marble T-shaped freestanding washbasin shown in a STRICT STRAIGHT-ON FRONT ELEVATION. The camera is centered exactly on the vertical symmetry axis, perpendicular to the front marble face: zero left or right rotation, zero roll, parallel horizontal edges, perfectly vertical pedestal edges. Both sides are equal and symmetrical; neither the left side face nor the right side face is visible. This is a frontal architectural elevation, not an isometric or three-quarter view. The whole object has a wide shallow rectangular hollow trough at the top and one long centered rectangular slab pedestal below. Proportions: basin width 100 cm, front fascia height 16 cm, centered pedestal width 23 cm, pedestal height below the basin 76 cm. The long pedestal occupies most of the total height. Bright white marble with only a few faint pale-grey veins. The camera is only one degree above the basin rim, so the open empty basin appears as a very narrow horizontal strip at the top, not a large top-down opening. A small honey-colored wooden insert sits recessed entirely inside the far-right basin cavity, below the top rim, oriented front-to-back within the inner walls, with nothing projecting outside. The front marble face and long flat pedestal dominate the image. Full foot and full basin visible. One large diffuse light from upper left.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "还是不对，有点小了继续生成，底部有一点轻微的阴影效果",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "One large architectural T-shaped white Carrara marble freestanding washbasin in a strictly straight-on orthographic FRONT VIEW. Camera exactly centered, front face parallel to the image plane, zero sideways rotation and zero roll. All horizontal edges are level. Only front surfaces are visible, no left or right side panels, no three-quarter perspective. A broad substantial rectangular basin crown spans 110 cm in width; its flat front fascia is 16 cm tall. Beneath it is one long centered solid rectangular marble pedestal, 27 cm wide and 78 cm tall, giving the object a tall monumental T silhouette rather than a squat small sink. The whole object fills the composition with only a small even margin and includes the complete pedestal foot. Bright white stone, sparse very faint fine light-grey veins, readable soft lighting on the front planes. The camera is just above the upper lip, revealing only a narrow horizontal glimpse into the hollow empty basin. A small natural warm oak insert is recessed inside the far-right cavity, below the rim and entirely within the inner walls, with no protrusion. Diffuse light from the upper left, calm natural material shading at the pedestal foot.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    }
+  ]
+}
