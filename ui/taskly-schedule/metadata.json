@@ -1,0 +1,17 @@
+{
+  "name": "Taskly · 自由职业日程",
+  "slug": "taskly-schedule",
+  "page_type": "software",
+  "tags": ["日程管理", "任务管理", "自由职业"],
+  "palette": ["#ffffff", "#ffd871", "#242036"],
+  "created_at": "2026-11-10 11:16:59",
+  "updated_at": "2026-11-10 11:16:59",
+  "imageToUI": "https://dribbble.com/shots/10858979-FREE-Freelancer-Schedule-Web",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的软件。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "hallmark", "gsap-core", "gsap-timeline"]
+    }
+  ]
+}

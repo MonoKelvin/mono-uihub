@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Taskly brings your daily schedule, weekly pins and a little room to focus together.">
+  <meta name="theme-color" content="#e5ecee">
+  <title>Taskly — Your day, a little lighter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <main class="stage">
+    <div class="canvas" aria-label="Taskly workspace">
+      <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="icon-check-solid" viewBox="0 0 24 24"><path d="M9.1 18.1 3.7 12.7a1.5 1.5 0 0 1 2.1-2.1l3.3 3.3 9.1-9.1a1.5 1.5 0 0 1 2.1 2.1L9.1 18.1Z" fill="currentColor"/></symbol>
+        <symbol id="icon-play-solid" viewBox="0 0 24 24"><path d="M8 4.8c0-.7.8-1.1 1.4-.7l10 7.2a.9.9 0 0 1 0 1.4l-10 7.2c-.6.4-1.4 0-1.4-.7V4.8Z" fill="currentColor"/></symbol>
+        <symbol id="icon-pause-solid" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></symbol>
+        <symbol id="icon-shuffle-solid" viewBox="0 0 24 24"><path d="M18 3v3h-2.2c-2.5 0-3.9 2-5.5 4.5C8.7 13 7.4 15 5.2 15H3v2h2.2c3.3 0 5-2.7 6.7-5.4C13.3 9.3 14.5 8 15.8 8H18v3l5-4-5-4ZM3 6v2h2.2c1.2 0 2.2 1 3.1 2.4l1.2-1.9C8.3 6.9 7 6 5.2 6H3Zm10.2 7.6-1.2 2c1 1.1 2.1 1.4 3.8 1.4H18v3l5-4-5-4v3h-2.2c-1 0-1.8-.5-2.6-1.4Z" fill="currentColor"/></symbol>
+        <symbol id="icon-repeat-solid" viewBox="0 0 24 24"><path d="m17 2 5 4-5 4V7H7a3 3 0 0 0-3 3v2H2v-2a5 5 0 0 1 5-5h10V2ZM7 22l-5-4 5-4v3h10a3 3 0 0 0 3-3v-2h2v2a5 5 0 0 1-5 5H7v3Zm4-12h2v5h-2v-3h-1v-1l1-1Z" fill="currentColor"/></symbol>
+      </svg>
+      <div class="app-shell" id="app-shell">
+        <aside class="sidebar" aria-label="Weekly planning">
+          <button class="brand-button" type="button" data-action="home" aria-label="Taskly, today's schedule">
+            <span class="brand-mark" aria-hidden="true"><i class="ti ti-plus"></i></span>
+            <strong>taskly</strong>
+          </button>
+          <section class="weekly-pins" aria-labelledby="pins-heading">
+            <div class="section-heading">
+              <h2 id="pins-heading">Weekly Pinned</h2>
+              <button class="text-button" type="button" data-action="pins">View all</button>
+            </div>
+            <div class="pinned-preview" id="pinned-preview">
+              <button class="pin-card pin-card--featured" type="button" data-action="pin" data-id="doctor" data-date="2021-03-15" data-time="09:00" data-category="Personal" data-icon="stethoscope">
+                <span class="pin-icon" aria-hidden="true"><i class="ti ti-stethoscope"></i></span>
+                <span class="pin-copy"><strong class="pin-title">Call doctor for tests</strong><span class="pin-date">15 Mar 2021 - 9:00 AM</span><span class="tag">Personal</span><span class="pin-note">Ask for blood tests and GYM certificate.</span></span>
+              </button>
+              <button class="pin-card pin-card--compact" type="button" data-action="pin" data-id="birthday" data-date="2021-03-22" data-time="" data-category="Personal" data-icon="cake">
+                <span class="pin-icon" aria-hidden="true"><i class="ti ti-cake"></i></span>
+                <strong class="pin-title">Beatrice’s bday</strong><span class="pin-date">22 Mar 2021</span>
+              </button>
+            </div>
+            <button class="add-pin" type="button" data-action="new-pin"><span class="pin-icon" aria-hidden="true"><i class="ti ti-plus"></i></span><strong>Add new weekly pin</strong></button>
+          </section>
+          <section class="calendar" aria-labelledby="calendar-heading">
+            <div class="calendar-heading">
+              <h2 id="calendar-heading">March, 2021</h2>
+              <div class="calendar-arrows">
+                <button class="icon-button icon-button--tiny" type="button" data-action="calendar-prev" aria-label="Previous month"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+                <button class="icon-button icon-button--tiny" type="button" data-action="calendar-next" aria-label="Next month"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+              </div>
+              <div class="calendar-range">
+                <button class="text-button" type="button" id="calendar-range-trigger" data-action="calendar-range" role="combobox" aria-haspopup="listbox" aria-controls="calendar-range-list" aria-expanded="false">Two weeks</button>
+                <div class="select-options calendar-range-list" id="calendar-range-list" role="listbox" aria-label="Calendar range" hidden>
+                  <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-action="range-option" data-value="two">Two weeks<i class="ti ti-check" aria-hidden="true"></i></button>
+                  <button class="select-option" type="button" role="option" aria-selected="false" data-action="range-option" data-value="full">Full month</button>
+                </div>
+              </div>
+            </div>
+            <div class="calendar-body">
+              <div class="calendar-weekdays" id="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+              <div class="calendar-grid" id="calendar-grid" data-range="two" aria-label="March 2021">
+                <button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-01">1</button><button class="calendar-day has-event" type="button" data-action="date" data-date="2021-03-02">2</button><button class="calendar-day has-event" type="button" data-action="date" data-date="2021-03-03">3</button><button class="calendar-day has-event" type="button" data-action="date" data-date="2021-03-04">4</button><button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-05">5</button><button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-06">6</button><button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-07">7</button>
+                <button class="calendar-day has-event" type="button" data-action="date" data-date="2021-03-08">8</button><button class="calendar-day has-event" type="button" data-action="date" data-date="2021-03-09">9</button><button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-10">10</button><button class="calendar-day is-selected" type="button" data-action="date" data-date="2021-03-11" aria-pressed="true">11</button><button class="calendar-day has-event" type="button" data-action="date" data-date="2021-03-12">12</button><button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-13">13</button><button class="calendar-day is-quiet" type="button" data-action="date" data-date="2021-03-14">14</button>
+              </div>
+            </div>
+          </section>
+        </aside>
+        <div class="main-area" id="main-area">
+          <section class="home-view" id="schedule-view" aria-label="Today's schedule">
+            <div class="schedule-column">
+              <header class="schedule-heading">
+                <div class="schedule-heading-copy"><h1 id="schedule-title">Today’s schedule</h1><div class="schedule-date-row"><p id="schedule-date">Thursday 11</p><div class="day-arrows"><button class="icon-button icon-button--tiny" type="button" data-action="day-prev" aria-label="Previous day"><i class="ti ti-arrow-left" aria-hidden="true"></i></button><button class="icon-button icon-button--tiny" type="button" data-action="day-next" aria-label="Next day"><i class="ti ti-arrow-right" aria-hidden="true"></i></button></div></div></div>
+                <button class="new-task-button" type="button" data-action="new-task" aria-label="Add a new task"><i class="ti ti-plus" aria-hidden="true"></i></button>
+              </header>
+              <div class="schedule-content" id="schedule-content">
+                <div class="task-list" id="task-list">
+                  <article class="task-row task-row--done" data-id="wake" data-date="2021-03-11" data-start="07:00" data-end="" data-category="Personal" data-icon="alarm" data-completed="true">
+                    <button class="completion-button is-completed" type="button" data-action="complete" data-id="wake" aria-label="Reopen Wake up Buddy" aria-pressed="true"><svg aria-hidden="true"><use href="#icon-check-solid"/></svg></button>
+                    <button class="task-card" type="button" data-action="task" data-id="wake"><span class="task-icon task-icon--alarm" aria-hidden="true"><i class="ti ti-alarm"></i></span><span class="task-copy"><strong class="task-title">Wake up Buddy</strong></span><time class="task-time">7:00 AM</time></button>
+                  </article>
+                  <article class="task-row task-row--done" data-id="yoga" data-date="2021-03-11" data-start="08:00" data-end="" data-category="Health" data-icon="yoga" data-completed="true">
+                    <button class="completion-button is-completed" type="button" data-action="complete" data-id="yoga" aria-label="Reopen Morning Yoga" aria-pressed="true"><svg aria-hidden="true"><use href="#icon-check-solid"/></svg></button>
+                    <button class="task-card" type="button" data-action="task" data-id="yoga"><span class="task-icon task-icon--yoga" aria-hidden="true"><i class="ti ti-yoga"></i></span><span class="task-copy"><strong class="task-title">Morning Yoga</strong></span><time class="task-time">8:00 AM</time></button>
+                  </article>
+                  <article class="task-row task-row--checklist" data-id="workout" data-date="2021-03-11" data-start="09:00" data-end="" data-category="Health" data-icon="barbell" data-completed="false">
+                    <button class="completion-button" type="button" data-action="complete" data-id="workout" aria-label="Complete Daily workout" aria-pressed="false"><span aria-hidden="true"></span></button>
+                    <button class="task-card" type="button" data-action="task" data-id="workout"><span class="task-icon" aria-hidden="true"><i class="ti ti-barbell"></i></span><span class="task-copy"><strong class="task-title">Daily workout</strong><span class="task-checklist" role="list"><span role="listitem">Squat 10x3</span><span role="listitem">Push up 10x3</span><span role="listitem">Plank 30 seconds</span></span></span><time class="task-time">9:00 AM</time></button>
+                  </article>
+                  <article class="task-row task-row--meeting" data-id="shift" data-date="2021-03-11" data-start="10:00" data-end="11:30" data-category="Work" data-icon="device-laptop" data-completed="false" data-attendees="Elena,Jordan,Ally,Robin,Casey,Sam">
+                    <button class="completion-button" type="button" data-action="complete" data-id="shift" aria-label="Complete Shift project kick off pt.1" aria-pressed="false"><span aria-hidden="true"></span></button>
+                    <button class="task-card" type="button" data-action="task" data-id="shift"><span class="task-icon" aria-hidden="true"><i class="ti ti-device-laptop"></i></span><span class="task-copy"><strong class="task-title">Shift project kick off pt.1</strong><span class="task-description">Zoom call, kick off with Elena and Jordan from Shift.</span><span class="attendees"><span class="avatar-stack"><span class="mini-avatar avatar--rose" data-person="Elena"><img src="./assets/avatar-elena.svg" width="280" height="280" alt=""></span><span class="mini-avatar avatar--mint" data-person="Jordan"><img src="./assets/avatar-jordan.svg" width="280" height="280" alt=""></span><span class="mini-avatar avatar--sand" data-person="Ally"><img src="./assets/avatar-ally.svg" width="280" height="280" alt=""></span></span><span>+3 attendees</span></span></span><time class="task-time">10:00 AM<br>11:30 AM</time></button>
+                  </article>
+                  <article class="task-row task-row--note" data-id="sushi" data-date="2021-03-11" data-start="12:30" data-end="" data-category="Personal" data-icon="soup" data-completed="false">
+                    <button class="completion-button" type="button" data-action="complete" data-id="sushi" aria-label="Complete Skype Sushi" aria-pressed="false"><span aria-hidden="true"></span></button>
+                    <button class="task-card" type="button" data-action="task" data-id="sushi"><span class="task-icon task-icon--soup" aria-hidden="true"><i class="ti ti-soup"></i></span><span class="task-copy"><strong class="task-title">Skype Sushi</strong><span class="task-description">Lunch with Ally, fight this quarantine with humor!</span></span><time class="task-time">12:30 PM</time></button>
+                  </article>
+                  <article class="task-row task-row--short" data-id="dribbble" data-date="2021-03-11" data-start="14:00" data-end="" data-category="Work" data-icon="device-laptop" data-completed="false">
+                    <button class="completion-button" type="button" data-action="complete" data-id="dribbble" aria-label="Complete Dribbble Shot" aria-pressed="false"><span aria-hidden="true"></span></button>
+                    <button class="task-card" type="button" data-action="task" data-id="dribbble"><span class="task-icon" aria-hidden="true"><i class="ti ti-device-laptop"></i></span><span class="task-copy"><strong class="task-title">Dribbble Shot</strong><span class="task-description">Working on a new shot !!</span></span><time class="task-time">2:00 PM</time></button>
+                  </article>
+                </div>
+                <div class="pagination schedule-pagination" id="schedule-pagination" hidden></div>
+              </div>
+            </div>
+            <aside class="widgets" aria-label="Your personal space">
+              <button class="profile-button" type="button" data-action="settings"><span class="profile-copy"><strong id="profile-name">Mark Collins</strong><span>My settings</span></span><span class="profile-avatar" id="profile-avatar"><img src="./assets/avatar-mark.webp" width="240" height="240" alt=""></span></button>
+              <section class="music-widget widget" aria-label="Music player">
+                <button class="widget-menu icon-button" type="button" data-action="music" aria-label="Open music library"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+                <div class="track-identity"><span class="album-cover" id="album-cover" aria-hidden="true"><svg viewBox="0 0 64 64"><path class="album-base" d="M0 0h64v64H0z"/><path class="album-side" d="M44 0h20v64H44zM0 46h64v18H0z"/><path class="album-figure" d="M16 12c0-8 14-8 14 0v10l7 6 3 28H7l3-27 6-7Z"/><path class="album-detail" d="m15 11 15 3-2 3-15-3ZM14 27l10 8 8-11-5 30h-9ZM3 7h6v12H3z"/><path class="album-lines" d="M49 5h2v51h-2zm6 0h1v51h-1z"/></svg></span><button class="track-name-button" type="button" data-action="music"><strong id="track-name">Godzilla</strong><span id="track-artist">Eminem</span></button></div>
+                <div class="seek-control"><input id="track-seek" type="range" min="0" max="240" value="195" aria-label="Track position" disabled><div class="track-timing"><span id="track-elapsed">03:15</span><span id="track-remaining">00:45</span></div></div>
+                <div class="player-controls"><button class="icon-button" id="shuffle-button" type="button" data-action="shuffle" aria-label="Shuffle" aria-pressed="false"><i class="ti ti-arrows-shuffle" aria-hidden="true"></i></button><button class="icon-button" id="previous-track" type="button" data-action="track-prev" aria-label="Previous track" disabled><i class="ti ti-player-skip-back" aria-hidden="true"></i></button><button class="play-button" id="play-button" type="button" data-action="play" aria-label="Play Godzilla"><svg aria-hidden="true"><use href="#icon-play-solid"/></svg></button><button class="icon-button" id="next-track" type="button" data-action="track-next" aria-label="Next track" disabled><i class="ti ti-player-skip-forward" aria-hidden="true"></i></button><button class="icon-button" id="repeat-button" type="button" data-action="repeat" aria-label="Repeat track" aria-pressed="true"><i class="ti ti-repeat-once" aria-hidden="true"></i></button></div>
+                <p class="player-status" id="player-status" role="status"></p>
+              </section>
+              <section class="clock-widget widget" aria-label="Time and weather"><button class="widget-menu icon-button" type="button" data-action="clock-settings" aria-label="Clock settings"><i class="ti ti-menu-2" aria-hidden="true"></i></button><p class="clock-time" id="clock-time">8:48 AM</p><p class="weather-caption"><i class="ti ti-sun" aria-hidden="true"></i><span>Now is almost Sunny</span></p></section>
+              <section class="upgrade-widget widget" id="upgrade-widget" aria-labelledby="upgrade-heading"><button class="widget-menu icon-button" type="button" data-action="dismiss-upgrade" aria-label="Dismiss Taskly Plus card"><i class="ti ti-x" aria-hidden="true"></i></button><h2 id="upgrade-heading">Unleash<br>the freelance<br>super power</h2><p>Unlimited tasks.<br>Premium features.</p><div class="upgrade-bottom"><svg class="freelancer-art" viewBox="0 0 120 144" aria-hidden="true"><g class="art-lines"><path class="art-white" d="M47 39c-8-12-1-27 11-31 5-5 11-3 16 0 14-4 23 9 20 18l-5 9 2 15c-1 15-11 25-22 25-13-1-20-12-21-24Z"/><path d="M45 29c4 3 13 4 20 0m-16-9c5 3 17 4 24-1m-12-8c-8 10 7 18 22 14m-11 3c10 1 12 8 8 14M49 42l38 2m-5-2 14-4"/><path class="art-white" d="M68 70v15l-20 10 6 17h35l11-18-21-9-1-14"/><path class="art-black" d="M50 82C20 84 10 105 10 144h94c2-14 2-45-13-53l-12-7-13 20Z"/><path class="art-white" d="m73 106 12-22 16 7-12 31-13-6Z"/><path class="art-white" d="m50 130 17-20c6-7 14-5 18-4l-2 5 6 4-3 7-11 2-13 20H42"/><path d="m35 102 9 10m-16 15 9 4m-17-14 6 3m36-29 3 5m28 32 6 2m-56-11 7 3M58 53c0 6 3 9 7 8m12-5c-2 4-6 6-10 4"/><circle class="art-white" cx="57" cy="44" r="8"/><circle class="art-white" cx="79" cy="45" r="8"/><path d="M65 44h6"/><circle class="art-black" cx="58" cy="45" r="1.4"/><circle class="art-black" cx="78" cy="46" r="1.4"/></g></svg><button class="upgrade-button" type="button" data-action="plans" aria-label="Explore Taskly Plus"><i class="ti ti-arrow-right" aria-hidden="true"></i></button></div></section>
+            </aside>
+          </section>
+          <section class="workspace-view" id="workspace-view" aria-label="Workspace" hidden></section>
+        </div>
+      </div>
+      <div class="layer" id="confirm-layer" hidden><div class="scrim" data-action="cancel-confirm"></div><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-description"><button class="dialog-close icon-button" type="button" data-action="cancel-confirm" aria-label="Close confirmation"><i class="ti ti-x" aria-hidden="true"></i></button><h2 id="confirm-title">Delete this task?</h2><p id="confirm-description"></p><div class="dialog-actions"><button class="button button--quiet" id="confirm-cancel" type="button" data-action="cancel-confirm">Keep it</button><button class="button button--danger" id="confirm-delete" type="button" data-action="confirm-delete">Delete task</button></div></section></div>
+      <div class="notification" id="notification" role="status" hidden></div>
+      <input id="music-file" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" multiple hidden>
+      <audio id="audio-player" preload="metadata"></audio>
+    </div>
+  </main>
+</body>
+</html>
