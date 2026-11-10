@@ -1,0 +1,32 @@
+{
+  "name": "SERE — A Breath of Nature",
+  "slug": "sere-air",
+  "page_type": "website",
+  "tags": ["空气净化", "家居", "产品展示"],
+  "palette": ["#ffffff", "#dcf868", "#20251d"],
+  "created_at": "2026-11-10 22:03:23",
+  "updated_at": "2026-11-10 22:38:25",
+  "imageToUI": "https://dribbble.com/shots/27874186-Sere-Air-Purifier-Product-Website-Design",
+  "history": [
+    {
+      "prompt": "还原这个UI原型网站。参考链接：https://dribbble.com/shots/27874186-Sere-Air-Purifier-Product-Website-Design。素材选择：寻找相似素材。",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype", "frontend-design", "animate", "dataviz", "run"],
+      "image_generation": [
+        {"prompt": "A single premium cylindrical air purifier, tall ivory white matte ceramic upper body, lower third finely perforated light grey metal intake mesh, black circular radial air outlet at the top with a thin white floating circular lid lifted slightly above the grille, tiny vertical pale green indicator on the front, rounded base. Three-quarter front view from slightly above, whole object centered, height twice the diameter, soft daylight from the upper left, isolated object.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "Exploded technical product photograph of one ivory cylindrical air purifier, vertically aligned assembly, floating white circular top lid, black radial fan outlet, silver circular motor and white fan blades, central cylindrical charcoal and HEPA pleated filter, two curved ivory shell halves separated to the sides, perforated light grey bottom intake cylinder and round base. All parts form one coherent appliance, three-quarter perspective, soft studio daylight, isolated on pure white, centered full object with wide margins, no text.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "Close-up commercial photograph of two human hands adding essential oil to the circular top of a premium ivory white cylindrical air purifier. One hand holds a small white aroma pad above the open circular top lid, the other tilts a slim brushed silver essential oil bottle toward it. Black radial air outlet grille around the top, white cylinder partly visible at bottom. Soft daylight, pale grey seamless studio background, wide horizontal composition, hands entering from both sides, product centered, no text.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "A landscape made entirely of rounded lush green moss-covered miniature hills, close-to-ground viewpoint, soft rolling velvety moss mounds from the foreground receding into a pale silver-grey misty horizon, upper half empty cloudy grey sky, fresh morning daylight from upper left, forest-green and chartreuse moss, calm expansive space, wide horizontal panoramic composition, no trees, no objects, no text.", "model": "agnes-image-2.5-flash"},
+        {"prompt": "One long gently curved fallen branch of pale weathered wood richly covered with bright green cushion moss and a few tiny delicate green ferns. A miniature moss landscape resting across the wood, organic irregular silhouette, wide horizontal composition, photographed from slightly above, soft natural morning daylight from upper left, fully isolated entire branch, generous empty space around it, no text.", "model": "agnes-image-2.5-flash"}
+      ]
+    },
+    {
+      "prompt": "首屏的图片应该是一个草坪上放置的产品，要生成一个图片，放上去有阴影效果的，不能是球状物，而是草坪，越远的地方有雾气朦胧效果",
+      "model": "claude-sonnet-4-6[1M]",
+      "skills": ["mono-ui-prototype"],
+      "image_generation": [
+        {"prompt": "Wide landscape commercial photograph for a premium air purifier website. ONE tall cylindrical ivory white air purifier stands firmly on a continuous flat lawn of fine fresh green grass, placed in the RIGHT THIRD of the composition. The purifier has a matte white upper body, light grey perforated lower intake, a black radial circular outlet and a thin ivory floating circular lid. Realistic dark contact shadow directly under its base and a soft cast shadow extending to the right across the grass, grounded at grass level. The foreground is a broad natural flat grassy meadow with fine individual blades and subtle gentle terrain, NOT moss cushions, NOT spherical mounds, NOT green balls. Behind the product the meadow recedes into layers of soft silvery morning fog, increasingly blurred and pale toward a distant low horizon, overcast grey-green sky. LEFT HALF largely open sky and softly misted grass for a large white website headline. Gentle diffuse daylight from upper left, eye-level product photograph, full purifier visible, horizontal 16:9 composition, no text.", "model": "agnes-image-2.5-flash"}
+      ]
+    }
+  ]
+}
