@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#15171d">
+  <meta name="description" content="Discover your next adventure. Games, your library, and your friends, together on Steam.">
+  <title>Steam — Game store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" aria-label="Steam desktop application">
+      <div class="app">
+        <aside class="sidebar" aria-label="Main navigation">
+          <a class="brand" href="#store" aria-label="Steam home">
+            <svg class="steam-symbol" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="23" fill="currentColor"/>
+              <g class="steam-mark">
+                <circle cx="31" cy="16" r="10"/>
+                <circle class="steam-cutout" cx="31" cy="16" r="7"/>
+                <circle cx="31" cy="16" r="4.8"/>
+                <path d="m14 29 9-8 6 5-11 10z"/>
+                <circle cx="13.5" cy="33" r="7.5"/>
+                <circle class="steam-cutout" cx="13.5" cy="33" r="5.6"/>
+                <path d="M1 26 15 31c5 2 3 9-2 7L3 34z"/>
+              </g>
+            </svg>
+            <span class="brand-wordmark">STEAM<span class="registered">®</span></span>
+          </a>
+          <nav class="primary-nav">
+            <span class="nav-indicator" aria-hidden="true"></span>
+            <a class="nav-item is-active" href="#store" data-nav="store" aria-current="page" title="Game store">
+              <span class="nav-icon"><i class="ti ti-device-gamepad-2" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10c3 0 5 4 5 8s-1 6-3 6c-1 0-2-1-4-3H9c-2 2-3 3-4 3-2 0-3-2-3-6s2-8 5-8Z" fill="currentColor"/><path d="M6 10v4m-2-2h4m7-1h.01m3 2h.01" fill="none" stroke="var(--icon-cutout)" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <span class="nav-label">Game store</span>
+            </a>
+            <a class="nav-item" href="#library" data-nav="library" title="Library">
+              <span class="nav-icon"><i class="ti ti-layout-grid" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z" fill="currentColor"/></svg></span>
+              <span class="nav-label">Library</span>
+            </a>
+            <a class="nav-item" href="#community" data-nav="community" title="Community">
+              <span class="nav-icon"><i class="ti ti-messages" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-7l-5 4v-4a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" fill="currentColor"/><path d="M7 10h.01M11 10h.01M15 10h.01" stroke="var(--icon-cutout)" stroke-width="2" stroke-linecap="round"/></svg></span>
+              <span class="nav-label">Community</span>
+            </a>
+            <a class="nav-item" href="#friends" data-nav="friends" title="Friends">
+              <span class="nav-icon"><i class="ti ti-user-hexagon" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5.5v9L12 22 2 16.5v-9Z" fill="currentColor"/><circle cx="12" cy="9" r="3" fill="var(--icon-cutout)"/><path d="M7 17c0-5 10-5 10 0" fill="var(--icon-cutout)"/></svg></span>
+              <span class="nav-label">Friends</span>
+            </a>
+          </nav>
+          <div class="sidebar-footer">
+            <nav class="utility-nav" aria-label="Preferences and support">
+              <a class="nav-item" href="#settings" data-nav="settings" title="Settings"><span class="nav-icon"><i class="ti ti-settings" aria-hidden="true"></i></span><span class="nav-label">Settings</span></a>
+              <a class="nav-item" href="#help" data-nav="help" title="Help"><span class="nav-icon"><i class="ti ti-help-square-rounded" aria-hidden="true"></i></span><span class="nav-label">Help</span></a>
+            </nav>
+            <a class="chat-launcher" href="#friends" title="Friend chat and Groups"><span>Friend chat<br>and Groups</span><i class="ti ti-plus" aria-hidden="true"></i></a>
+          </div>
+        </aside>
+        <header class="topbar">
+          <form class="global-search" id="global-search" role="search">
+            <i class="ti ti-search" aria-hidden="true"></i>
+            <input id="search-input" name="search" type="search" placeholder="Search games" autocomplete="off" aria-label="Search games">
+            <button class="search-clear" type="button" data-action="clear-search" aria-label="Clear search" hidden><i class="ti ti-x" aria-hidden="true"></i></button>
+          </form>
+          <div class="topbar-actions">
+            <button class="icon-button notification-trigger" type="button" data-popover="notifications" aria-label="Notifications" aria-haspopup="menu" aria-expanded="false"><i class="ti ti-bell" aria-hidden="true"></i><span class="unread-dot" aria-hidden="true"></span></button>
+            <button class="icon-button cart-trigger" type="button" data-action="navigate" data-route="cart" aria-label="Shopping cart"><i class="ti ti-basket" aria-hidden="true"></i><span class="cart-count" hidden>0</span></button>
+            <button class="profile-trigger" type="button" data-popover="profile" aria-haspopup="menu" aria-expanded="false" aria-label="Jenny Wilson account menu"><img class="avatar profile-avatar" src="./assets/avatar-jenny.webp" alt=""><span class="profile-name">Jenny Wilson</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+          </div>
+        </header>
+        <main class="workspace" id="workspace" tabindex="-1"></main>
+      </div>
+      <div class="popover" id="popover" hidden></div>
+      <div class="layer" id="dialog-layer" hidden>
+        <div class="scrim" data-action="close-dialog"></div>
+        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1"></section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    </div>
+  </div>
+</body>
+</html>

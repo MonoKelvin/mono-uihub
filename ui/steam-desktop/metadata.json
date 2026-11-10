@@ -1,0 +1,17 @@
+{
+  "name": "Steam Desktop",
+  "slug": "steam-desktop",
+  "page_type": "software",
+  "palette": ["#15171d", "#ff7837", "#3c4050"],
+  "tags": ["游戏", "商店", "Steam"],
+  "created_at": "2026-11-09 16:32:11",
+  "updated_at": "2026-11-09 16:32:11",
+  "imageToUI": "https://dribbble.com/shots/20659983-Steam-Desktop-App-Redesign",
+  "history": [
+    {
+      "prompt": "还原这个UI原型软件。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "oil-frontend", "vibehub"]
+    }
+  ]
+}
