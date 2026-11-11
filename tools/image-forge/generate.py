@@ -323,9 +323,8 @@ if __name__ == "__main__":
         except Exception:  # noqa: BLE001
             pass
 
-    # Look for .env in repo root first, then alongside this script.
-    for _candidate in (REPO_ROOT / ".env", SCRIPT_DIR / ".env", SCRIPT_DIR / ".env.local"):
-        _load_env_file(_candidate)
+    # All tools share the single repository-root env file.
+    _load_env_file(REPO_ROOT / ".env")
 
     parser = argparse.ArgumentParser(
         prog="image-forge",

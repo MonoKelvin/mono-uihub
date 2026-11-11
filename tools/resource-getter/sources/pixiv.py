@@ -11,7 +11,7 @@ for users who prefer it.
 Setup:
 1. ``python tools/resource-getter/get.py pixiv-login`` — clones/updates
    ``vendor/pixiv-mcp-server`` and runs its interactive ``get_token.py``.
-2. The helper writes ``PIXIV_REFRESH_TOKEN`` into ``tools/resource-getter/.env``.
+2. The helper writes ``PIXIV_REFRESH_TOKEN`` into the repository-root ``.env``.
 3. If Pixiv is blocked in your region, set ``HTTPS_PROXY`` in the same file.
 
 The vendor source is gitignored; only ``vendor/manifest.json`` pins the commit.

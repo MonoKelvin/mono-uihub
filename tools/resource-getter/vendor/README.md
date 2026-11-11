@@ -22,7 +22,7 @@ is intentionally **not committed** to mono-uihub:
 python tools/resource-getter/get.py pixiv-login --fetch-only
 python tools/resource-getter/get.py pixiv-login --fetch-only --update
 
-# interactive login; writes the token into tools/resource-getter/.env
+# interactive login; writes the token into 项目根目录 `.env`
 python tools/resource-getter/get.py pixiv-login
 
 # validate the new token against the Pixiv API
@@ -51,7 +51,7 @@ git submodule add https://github.com/222wcnm/pixiv-mcp-server \
 
 ## Security
 
-- `tools/resource-getter/.env` (which receives the refresh token) is gitignored.
+- `项目根目录 `.env`` (which receives the refresh token) is gitignored.
 - Never commit the token, `vendor/pixiv-mcp-server/.env`, or the upstream
   project's `downloads/` folder.
 - The token grants access to the Pixiv account that authorised it. Treat it like

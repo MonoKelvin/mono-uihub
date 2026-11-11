@@ -1,128 +1,108 @@
 # Image Forge (`tools/image-forge/`)
 
-Two small Python tools for minting **transparent-PNG** assets:
+两个互补的 Python 工具：
 
-- **`generate.py`** — zero-dependency (stdlib only). Generates images with an
-  **alpha / transparent channel** via an OpenAI-compatible image API
-  (`gpt-image-2`, `grok-imagine-2`, or any provider exposing the same
-  `/images/generations` shape).
-- **`matte.py`** — a *fallback for when generation is unavailable* (quota
-  exhausted, provider cooldown, no `.env`): cut the subject out of an **online
-  photo** (or local file) with an **offline ONNX** saliency model — no cloud
-  calls. Needs `onnxruntime`, `Pillow`, `numpy`. See the Fallback section below.
+- **`generate.py`**：通过 OpenAI 兼容的 `/images/generations` 接口生成图片，自动叠加 `skills/image-purify/purify.json` 的干净图像提示词。
+- **`matte.py`**：对已有图片去背。**默认优先调用图生图模型编辑**，在线服务不可用、返回无透明通道或比例异常时，才回退到本地 ONNX 抠图。
 
-It exists so the UI skill can mint custom transparent assets (icons, HUD
-graphics, sci-fi line art, …) on demand — instead of hot-linking a search-result
-photo whose background can't be removed and that doesn't match the page's visual
-direction.
+所有工具的环境变量统一从**项目根目录 `.env`** 读取，模板为根目录 `.env.example`；工具目录不再维护独立 env 文件。
 
-**Every prompt is purified before it is sent.** The clean-image word packs in
-[`skills/image-purify/purify.json`](../../skills/image-purify/SKILL.md) are
-appended automatically — universal base pack + the `--style` pack you pick + a
-cutout pack when alpha is requested — which is what keeps output free of noise,
-fish-scale micro-texture, floating debris and the usual "AI look". You write the
-subject; the quality vocabulary is not yours to type.
-
-## Setup
+## 配置
 
 ```bash
-# 1. create the env file in the repo root OR in tools/image-forge/ (never committed)
-#    → IMAGE_API_BASE_URL, IMAGE_API_KEY, IMAGE_MODEL
+# 在仓库根目录执行一次
+cp .env.example .env
+```
 
-# 2. run (no pip / venv needed — stdlib only)
+| 变量 | 必需 | 说明 |
+|---|---|---|
+| `IMAGE_API_BASE_URL` | 在线时 | OpenAI 兼容 Base URL；Agnes 为 `https://apihub.agnes-ai.com/v1` |
+| `IMAGE_API_KEY` | 在线时 | Bearer token，不要提交到 Git |
+| `IMAGE_MODEL` | 在线时 | 生图模型，也作为抠图模型的默认值 |
+| `IMAGE_MATTE_MODEL` | 否 | 单独覆盖抠图模型，如 `agnes-image-2.5-flash` |
+| `IMAGE_MATTE_SIZE` | 否 | 在线输出档位，默认 `2K`；可选 `1K` / `2K` / `3K` / `4K` |
+| `IMAGE_MATTE_TIMEOUT` | 否 | 在线请求超时秒数，默认 `240` |
+| `IMAGE_MATTE_OFFLINE_MODEL` | 否 | 离线模型，默认 `auto` |
+| `IMAGE_FORGE_GH_PROXY` | 否 | ONNX 下载代理；置空则直连 GitHub |
+| `IMAGE_NEGATIVE_PARAM` | 否 | 仅网关支持顶层 `negative_prompt` 时设为 `1` |
+| `PURIFY_PACK` | 否 | 覆盖 `purify.json` 路径 |
+
+## 抠图：在线优先，离线兜底
+
+```bash
+# 默认在线图生图抠图；主体描述可选，但越明确越不容易误删
+python tools/image-forge/matte.py input.jpg output.png \
+  --subject "画面左侧的人物，包括全部细碎发丝"
+
+# 查看实际发送的标准提示词，不请求 API
+python tools/image-forge/matte.py input.jpg output.png --dry-run \
+  --subject "红色汽车"
+
+# 明确跳过在线服务
+python tools/image-forge/matte.py input.jpg output.png --offline-only
+
+# 在线失败时直接报错，不允许离线回退
+python tools/image-forge/matte.py input.jpg output.png --no-fallback
+```
+
+### 在线链路
+
+以 Agnes Image 2.5 Flash 为例，请求发送至：
+
+```text
+POST <IMAGE_API_BASE_URL>/images/generations
+```
+
+图生图参数遵循[官方文档](https://www.agnes-ai.com/en/docs/agnes-image-25-flash)：
+
+- 原图以 Data URI Base64 放在 `extra_body.image` 数组中；
+- `extra_body.response_format` 设为 `b64_json`，也兼容解析返回的 `data[0].url`；
+- `size` 使用 `1K`—`4K` 档位，`ratio` 自动选择最接近原图的支持比例；
+- 标准提示词要求只移除背景，不重绘、不改色、不改变构图，并保留发丝与半透明边缘；`--subject` 会附加明确的抠图主体。
+
+**透明校验与两种保真策略**：Agnes 文档并未承诺一定输出 alpha，因此工具会实际检查返回 PNG 的透明通道，无透明像素或主体为空都视为失败。默认采用模型返回的完整 RGBA 结果，允许主体颜色、纹理和尺寸存在轻微偏差，但提示词仍明确要求不要重绘或修改主体。需要严格保留原始像素时，传 `--preserve-source-colors`：此时仅采用在线 alpha，与原图 RGB 重新合成；若返回图宽高比偏差超过 3%，则拒绝强行对齐并回退离线。
+
+### 离线链路
+
+```bash
+# auto：subject 含人物/发丝提示时选 birefnet-portrait，否则选 birefnet-general
+python tools/image-forge/matte.py input.jpg output.png --offline-only
+
+# 轻量快速模式（旧默认，适合临时草稿，不推荐精细发丝）
+python tools/image-forge/matte.py input.jpg output.png --offline-only --model u2netp
+```
+
+| 参数 | 默认值 | 作用 |
+|---|---:|---|
+| `--model` | `auto` | `birefnet-general` / `birefnet-portrait` / `isnet-general-use` / `u2net` / `u2netp` |
+| `--feather` | `0` | 额外高斯模糊；默认关闭，避免吞掉发丝 |
+| `--guide-radius` | `0` | 边缘引导滤波半径；`0` 按图尺寸自适应 |
+| `--guide-eps` | `0.001` | 引导滤波正则项；越小越贴近原图边缘 |
+| `--decontaminate` | `0.65` | 半透明边缘的背景色去污染强度，范围 `0`—`1` |
+| `--no-guided-filter` | 关闭 | 禁用边缘引导滤波，仅用于对照排查 |
+| `--no-trim` | 关闭 | 保留完整画布，不按主体裁剪 |
+
+BiRefNet 在 1024×1024 输入上生成软 alpha，明显优于旧的 320px `u2netp`。引导滤波沿原图边缘细化蒙版，并保留弱 alpha 发丝；去污染根据 `C = αF + (1-α)B` 估算边缘前景色，减轻原背景色描边。裁剪使用低 alpha 阈值，避免细发丝被当作噪点移除。
+
+模型首次使用自动下载到 `models/cache/`。BiRefNet 文件较大且 CPU 推理较慢；这是质量优先的兜底策略，不是实时批处理方案。权重校验使用 rembg 官方发布页公布的 MD5。
+
+依赖：
+
+```bash
+pip install onnxruntime pillow numpy opencv-python
+```
+
+## 文生图
+
+```bash
 python tools/image-forge/generate.py --style lineicon \
   "a sci-fi HUD line icon, single cyan stroke" \
-  ui/bioform-lab-console/assets/icon-hud.png
+  ui/<page>/assets/icon-hud.png
+
+python tools/image-forge/generate.py --list-styles
+python tools/image-forge/generate.py --style anime --dry-run "..." out.png
 ```
 
-## Options
+`generate.py` 只需要 Python 标准库。它先请求 `transparent: true`，不支持时再降级为普通图片；这与 `matte.py` 的「必须具有真实 alpha，否则回退」策略不同。
 
-| arg / flag | description |
-|---|---|
-| prompt | **subject only** — no `ultra detailed` / `8k` / `masterpiece`; those words are what cause scaly, noisy output |
-| output path | where to write the PNG (auto-creates dirs) |
-| `--style <key>` | clean-image style pack. **Always pass one.** `photoreal` `anime` `chibi` `illustration` `skeuomorphic` `iso25d` `render3d` `cinematic` `stylized` `guofeng` `lineicon` `product` (aliases accepted, e.g. `3d`, `icon`, `2.5d`) |
-| `--list-styles` | print the packs with their Chinese labels and aliases |
-| `--dry-run` | assemble and print the final prompt without spending a request |
-| `--no-transparent` | skip the `transparent: true` param and the cutout pack (use for full-bleed imagery or models without alpha) |
-| `--no-purify` | send the raw prompt. A/B tests only — never for shipped assets |
-
-## Environment
-
-| var | required | meaning |
-|---|---|---|
-| `IMAGE_API_BASE_URL` | yes | e.g. `https://api.openai.com/v1` |
-| `IMAGE_API_KEY` | yes | bearer token |
-| `IMAGE_MODEL` | yes | e.g. `gpt-image-2` |
-| `IMAGE_NEGATIVE_PARAM` | no | set `1` when the gateway accepts a `negative_prompt` field; otherwise the avoid-list is folded into the prompt text as an `Avoid: …` sentence |
-| `PURIFY_PACK` | no | override the path to `purify.json` |
-
-## How it works
-
-1. Loads `.env` from the repo root **or** `tools/image-forge/` (either works; never committed).
-2. Loads `skills/image-purify/purify.json` and assembles the final prompt:
-   `subject → style pack → cutout pack (if alpha) → base pack → Avoid: …`.
-   Prints a `[purify]` line so you can see what was applied; a missing pack file
-   degrades to a small built-in base pack with a warning.
-3. POSTs to `<IMAGE_API_BASE_URL>/images/generations`.
-4. Prefers `b64_json` in the response; falls back to the `url` field.
-5. **Transparency strategy**: first tries `transparent: true`. If that fails
-   (model unsupported), retries once without it so generation still succeeds —
-   the asset is usable; the designer can post-process in a few clicks if needed.
-6. Writes the bytes to disk, correcting the extension if the model returned JPEG.
-
-## Fallback — offline cutout from an online photo (`matte.py`)
-
-When generation is unavailable (quota exhausted, provider cooldown, no `.env`),
-you can still get a clean transparent asset: pick an **online photo that already
-contains the subject** (any hot-linkable CDN — Unsplash / Pexels / …), then
-remove its background **offline** with an ONNX saliency model. No cloud calls.
-
-```bash
-# default model u2netp (vendored at models/u2netp.onnx, Apache-2.0, ~4.4MB)
-python tools/image-forge/matte.py "https://host/photo.jpg" ui/<page>/assets/<name>.png
-
-# high precision (recommended for busy backgrounds) — isnet-general-use,
-# auto-downloaded once (~170MB) into models/cache/
-python tools/image-forge/matte.py "https://host/photo.jpg" ui/<page>/assets/<name>.png \
-  --model isnet-general-use
-```
-
-| arg / flag | description |
-|---|---|
-| input | an `http(s)` image URL **or** a local image path |
-| output | output PNG path (auto-creates dirs) |
-| `--model <key>` | `u2netp` (default · vendored · fast) · `u2net` · `isnet-general-use` (best edges) |
-| `--no-trim` | keep the full frame instead of cropping to the subject's bounding box |
-| `--feather <px>` | edge feather radius, default `1.0` |
-
-**Models & licenses.** Only Apache-2.0 / MIT weights are used. The small
-`u2netp.onnx` is vendored under `models/` (`models/LICENSE` = Apache-2.0,
-`models/NOTICE` = provenance). The larger `u2net` / `isnet-general-use` (~170MB)
-are **not** committed — `matte.py` fetches them on first use into `models/cache/`
-(gitignored) through a GitHub proxy. Override it with env `IMAGE_FORGE_GH_PROXY`
-(set it empty to hit GitHub directly). Do **not** vendor non-redistributable
-weights (e.g. BRIA RMBG-1.4 is non-commercial).
-
-**Deps.** `matte.py` needs `onnxruntime`, `Pillow`, `numpy` (unlike `generate.py`,
-which is stdlib-only): `pip install onnxruntime pillow numpy`.
-
-**Tips.** The console prints a `foreground=NN%` sanity line; if it is degenerate
-(<2% or >97%) try `--model isnet-general-use` or a cleaner source photo.
-Translucent subjects (a clear cup) correctly keep partial alpha, so the page
-background shows through — usually what you want.
-
-## Calling from the agent
-
-The agent invokes the script directly — no MCP registration required:
-
-```bash
-! python tools/image-forge/generate.py --style <pack> "<subject>" ui/<page>/assets/<name>.png
-```
-
-See **素材：图片、图标与生成资产** in
-[`skills/mono-ui-prototype/SKILL.md`](../../skills/mono-ui-prototype/SKILL.md)
-for when generating is allowed at all (hot-linking comes first), and
-[`skills/image-purify/SKILL.md`](../../skills/image-purify/SKILL.md) for the
-prompt doctrine, the full word packs, and the img2img repair workflow for images
-that are already dirty.
+模型来源与许可见 `models/NOTICE`。不要引入禁止再分发或限制商用的权重。

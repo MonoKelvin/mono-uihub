@@ -21,13 +21,13 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from .paths import TOOL_ROOT
+from .paths import REPO_ROOT, TOOL_ROOT
 
 VENDOR_ROOT = TOOL_ROOT / "vendor"
 PIXIV_DIR = VENDOR_ROOT / "pixiv-mcp-server"
 PIXIV_REPO = "https://github.com/222wcnm/pixiv-mcp-server"
 MANIFEST = VENDOR_ROOT / "manifest.json"
-ENV_FILE = TOOL_ROOT / ".env"
+ENV_FILE = REPO_ROOT / ".env"
 
 
 class VendorError(RuntimeError):

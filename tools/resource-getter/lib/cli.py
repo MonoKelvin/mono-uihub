@@ -453,7 +453,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
         "repo_root": str(REPO_ROOT),
         "env_files": {
             str(path): path.exists()
-            for path in (REPO_ROOT / ".env", TOOL_ROOT / ".env", TOOL_ROOT / ".env.local")
+            for path in (REPO_ROOT / ".env",)
         },
         "sources": [],
     }
@@ -500,7 +500,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
                 ui.warn(f"{source.NAME}: {getattr(source, 'LICENSE', '')} — 不可直接商用")
     if not args.json:
         print("")
-        ui.info("第一次使用请复制 .env.example 为 .env，填入 PIXABAY_API_KEY 等凭据。")
+        ui.info("第一次使用请在项目根目录复制 .env.example 为 .env，填入 PIXABAY_API_KEY 等凭据。")
     else:
         ui.dump_json(info)
     return 0
@@ -688,7 +688,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--insecure", action="store_true", help="跳过 TLS 校验（仅本地调试）")
     p.add_argument("--verify", action="store_true", help="登录写入后调用 Pixiv API 验证 token")
     p.add_argument("--verify-only", action="store_true", help="不启动向导，只验证 .env 中已有 token")
-    p.add_argument("--env-file", default=str(TOOL_ROOT / ".env"), help="写入的 .env 路径")
+    p.add_argument("--env-file", default=str(REPO_ROOT / ".env"), help="写入的 .env 路径（默认项目根目录）")
     add_json(p)
     p.set_defaults(func=cmd_pixiv_login)
 

@@ -86,7 +86,7 @@ def build(
 def search(query: str, *, limit: int = 12, width: int = 1600, **_: Any) -> list[Asset]:
     key = env.require(
         "PEXELS_API_KEY",
-        hint="在 tools/resource-getter/.env 中设置；不设则只能用 build/直链。",
+        hint="在项目根目录 .env 中设置；不设则只能用 build/直链。",
     )
     resp = http.request(
         http.build_url(f"{API}/search", {"query": query, "per_page": max(1, min(80, limit))}),
