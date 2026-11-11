@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#ecefea">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Your accounts, cards and everyday transfers in one place.">
+  <title>Lime — Your everyday wallet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@800;900&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" aria-label="Lime Wallet">
+      <div class="status-bar" aria-hidden="true">
+        <span class="status-time">9:41</span>
+        <div class="status-icons"><span class="signal"><b></b><b></b><b></b><b></b></span><i class="ti ti-wifi"></i><span class="battery"><b></b></span></div>
+      </div>
+      <div id="view" class="view"></div>
+      <div id="overlay" class="overlay" hidden></div>
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+      <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <clipPath id="flag-circle"><circle cx="24" cy="24" r="24"/></clipPath>
+          <pattern id="us-stars" width="7" height="6" patternUnits="userSpaceOnUse"><path d="m3.5 1 .55 1.7h1.8L4.4 3.8l.55 1.7L3.5 4.45 2.05 5.5l.55-1.7L1.15 2.7h1.8Z" fill="#fff"/></pattern>
+          <symbol id="flag-us" viewBox="0 0 48 48"><g clip-path="url(#flag-circle)"><path fill="#fff" d="M0 0h48v48H0z"/><path stroke="#c93748" stroke-width="3.7" d="M0 2h48M0 9.4h48M0 16.8h48M0 24.2h48M0 31.6h48M0 39h48M0 46.4h48"/><path fill="#233e6b" d="M0 0h27v26H0z"/><path fill="url(#us-stars)" d="M0 0h27v26H0z"/></g></symbol>
+          <symbol id="flag-vn" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#e5002b"/><path d="m24 11 3.1 9.4H37l-8 5.8 3.1 9.4-8.1-5.8-8.1 5.8 3.1-9.4-8-5.8h9.9Z" fill="#ffed3e"/></symbol>
+        </defs>
+      </svg>
+    </main>
+  </div>
+</body>
+</html>

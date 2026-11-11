@@ -1,0 +1,17 @@
+{
+  "name": "Lime Wallet · 金融钱包",
+  "slug": "lime-wallet",
+  "page_type": "app",
+  "tags": ["金融", "钱包", "转账"],
+  "palette": ["#ffffff", "#a1e870", "#183600"],
+  "created_at": "2026-11-11 19:00:28",
+  "updated_at": "2026-11-11 19:56:34",
+  "imageToUI": "https://dribbble.com/shots/27075185-Finance-Wallet-App-Mobile-UI-Design",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的App。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "mobile-native", "run"]
+    }
+  ]
+}
