@@ -1,0 +1,34 @@
+{
+  "name": "Lumora Studio",
+  "slug": "lumora-studio",
+  "page_type": "software",
+  "tags": ["AI 视频", "创作工具", "工作流"],
+  "palette": ["#080a0b", "#ff874c", "#f5f4f2"],
+  "created_at": "2026-11-11 08:53:00",
+  "updated_at": "2026-11-11 10:19:36",
+  "imageToUI": "https://dribbble.com/shots/27874437-AI-Video-Generation-Dashboard",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的软件",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz", "image-purify"]
+    },
+    {
+      "prompt": "继续参考该文件，完善lumora-studio UI原型。资源中的jpg文件都损坏了请重新获取或生成。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz", "image-purify", "run"],
+      "duration_seconds": 3485
+    },
+    {
+      "prompt": "在1366*768尺寸情况下，整体内容稍微有点紧凑了，内容尤其是字体的尺寸稍大不正常，请检查修复",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "run"],
+      "duration_seconds": 236
+    },
+    {
+      "prompt": "继续",
+      "model": "claude-opus-5",
+      "skills": ["mono-ui-prototype", "run"]
+    }
+  ]
+}
