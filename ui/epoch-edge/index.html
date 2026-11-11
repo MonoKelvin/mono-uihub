@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e7e7e5">
+  <meta name="description" content="Meet Juli. Sculptural comfort, considered materials, and a place to slow down.">
+  <title>Epoch Edge — The Juli Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="epoch-flower" viewBox="0 0 100 100">
+        <g fill="currentColor">
+          <ellipse cx="50" cy="24" rx="12" ry="24"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(45 50 50)"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(90 50 50)"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(135 50 50)"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(180 50 50)"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(225 50 50)"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(270 50 50)"/>
+          <ellipse cx="50" cy="24" rx="12" ry="24" transform="rotate(315 50 50)"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-bar">
+      <button class="circle-button menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="site-menu"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+      <a class="wordmark" href="#home" data-home>Epoch Edge.</a>
+      <a class="circle-button" href="#contact" data-contact="phone" aria-label="Contact Epoch Edge"><i class="ti ti-phone" aria-hidden="true"></i></a>
+    </div>
+    <nav id="site-menu" class="site-menu" aria-label="Main navigation" hidden inert>
+      <a href="#features"><span>Features</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <a href="#galleries"><span>Galleries</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <a href="#product"><span>The Juli Collection</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <a href="#specifications"><span>Specifications</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+      <a href="#contact"><span>Let’s talk</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div id="landing-view">
+      <section id="home" class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">Epoch Edge.</h1>
+        <div class="hero-scene">
+          <div class="hero-background-word" aria-hidden="true">Juli.</div>
+          <div class="hero-intro">
+            <svg class="flower" aria-hidden="true"><use href="#epoch-flower"/></svg>
+            <p>Our meticulously crafted furniture pieces are designed to enhance your living spaces, whether you’re looking for timeless classics or contemporary designs.</p>
+          </div>
+          <img class="hero-chair" src="./assets/chair-russet.webp" alt="Juli armchair in rich brown leather with curved arms and dark legs" fetchpriority="high" width="1000" height="1100">
+          <a class="material-note material-note--leather" href="#specifications">
+            <span class="material-label">The best<br>leather</span>
+            <span class="material-thumbnail"><img src="./assets/chair-russet.webp" alt="Brown leather upholstery detail" width="160" height="130"></span>
+            <i class="ti ti-arrow-up-right" aria-hidden="true"></i>
+          </a>
+          <a class="material-note material-note--wood" href="#specifications">
+            <span class="material-label">High quality<br>wood</span>
+            <span class="material-thumbnail"><img src="./assets/chair-back.webp" alt="Curved wood shell detail" width="160" height="130"></span>
+            <i class="ti ti-arrow-up-right" aria-hidden="true"></i>
+          </a>
+        </div>
+        <nav class="section-nav" aria-label="Explore the collection">
+          <a href="#features">[ Features ]</a>
+          <a href="#galleries">[ Galleries ]</a>
+          <a class="scroll-down" href="#features" aria-label="Discover the Epoch Edge difference"><i class="ti ti-arrow-down" aria-hidden="true"></i></a>
+          <a href="#product">[ Product ]</a>
+          <a href="#specifications">[ Specifications ]</a>
+        </nav>
+      </section>
+
+      <section id="features" class="features section-padding" aria-labelledby="features-title">
+        <div class="features-heading">
+          <h2 id="features-title"><span>Discover</span><span>The Epoch Edge</span><span>Difference.</span></h2>
+          <img class="feature-detail-image" src="./assets/chair-ivory.webp" alt="The soft curves of the Juli Ivory chair" width="180" height="180" loading="lazy">
+        </div>
+        <div class="features-bottom">
+          <div class="comfort-column">
+            <div class="comfort-card">
+              <button class="comfort-toggle" aria-expanded="false" aria-controls="comfort-extra"><span>Advanced Comfort<br><span class="muted">Technology</span></span><svg class="flower" aria-hidden="true"><use href="#epoch-flower"/></svg></button>
+              <p>Considered proportions and a gently curved seat offer support in all the right places. Soft upholstery makes room for the everyday moments that matter.</p>
+              <span class="fine-line"></span>
+              <div id="comfort-extra" class="comfort-extra" hidden>A generous seat. A supportive back. A shape that feels as good as it looks.</div>
+            </div>
+            <p class="feature-statement">Epoch Edge, where innovation meets comfort, <span>redefining the way you sit and work.</span></p>
+          </div>
+          <a class="design-card" href="#galleries">
+            <div class="design-card-top"><svg class="flower" aria-hidden="true"><use href="#epoch-flower"/></svg><span>An extraordinary<br>expression of<br>design.</span></div>
+            <div class="design-card-middle"><p>Made for a slower pace.<br>A meeting of soft curves,<br>warm materials and<br>quiet confidence.</p><img src="./assets/chair-pair.webp" alt="Brown and ivory Juli chairs together" width="210" height="230" loading="lazy"></div>
+            <div class="design-card-bottom"><span>Jan 20</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></div>
+            <span class="card-signature">Juli</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="galleries" class="galleries dark-section section-padding" aria-labelledby="gallery-title">
+        <div class="gallery-tabs" role="tablist" aria-label="Juli gallery">
+          <button id="tab-comfort" role="tab" aria-selected="true" aria-controls="gallery-panel" data-gallery="comfort">Enhanced Productivity</button>
+          <button id="tab-quality" role="tab" aria-selected="false" aria-controls="gallery-panel" data-gallery="quality" tabindex="-1">Quality Assurance</button>
+          <button id="tab-custom" role="tab" aria-selected="false" aria-controls="gallery-panel" data-gallery="custom" tabindex="-1">Customer Satisfaction</button>
+        </div>
+        <h2 id="gallery-title">Juli<br>Galleries.</h2>
+        <div id="gallery-panel" class="gallery-content" role="tabpanel" aria-labelledby="tab-comfort" tabindex="0">
+          <p class="gallery-description">Soft upholstery.<br>A generous seat.<br>Room to slow down.</p>
+          <button class="gallery-image gallery-image--back" data-gallery-pick="ivory" aria-label="Explore Juli Ivory"><img id="gallery-main-image" src="./assets/chair-ivory.webp" alt="Juli in the Ivory finish" width="600" height="720" loading="lazy"><span>View the collection <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></button>
+          <button class="gallery-image gallery-image--close" data-gallery-pick="ivory" aria-label="Explore Juli Ivory"><img id="gallery-detail-image" src="./assets/chair-russet.webp" alt="Russet leather upholstery and curved armrest" width="420" height="510" loading="lazy"><span>Explore Ivory <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></button>
+        </div>
+        <span class="gallery-year">©2024</span>
+      </section>
+
+      <section id="product" class="product section-padding" aria-labelledby="product-title">
+        <div class="product-heading"><h2 id="product-title">Juli Brown</h2><span id="finish-name">Russet</span></div>
+        <div class="product-stage">
+          <div class="collections-word" aria-hidden="true">Collections</div>
+          <img id="product-image" src="./assets/chair-russet.webp" alt="Front view of Juli Brown in the Russet finish" width="1000" height="1000" loading="lazy">
+          <span class="price-tag"><span class="tag-hole"></span>$299</span>
+        </div>
+        <div class="product-bottom">
+          <p class="product-description">Juli is a lounge chair that combines a bold and stylish design with a supremely comfortable feel. A deep, generous form and tactile upholstery invite you to settle in and stay a little longer.</p>
+          <div class="swatches" role="group" aria-label="Choose a finish">
+            <button class="swatch is-selected" data-finish="russet" style="--swatch-color: #936c58" aria-label="Russet brown" aria-pressed="true"></button>
+            <button class="swatch" data-finish="ivory" style="--swatch-color: #faf9f2" aria-label="Ivory white" aria-pressed="false"></button>
+            <button class="swatch" data-finish="sand" style="--swatch-color: #d6c2a3" aria-label="Sand beige" aria-pressed="false"></button>
+          </div>
+          <button class="buy-button" data-buy><span class="button-dot"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span>Buy Now</span></button>
+        </div>
+      </section>
+
+      <section id="specifications" class="specifications dark-section section-padding" aria-labelledby="spec-title">
+        <p class="section-label">Technical Specifications</p>
+        <h2 id="spec-title">Precision Crafted for Your<br>Comfort</h2>
+        <div class="spec-sidebar">
+          <dl class="spec-list">
+            <div><dt>Dimensions</dt><dd>100 W × 80 D × 80 H cm</dd></div>
+            <div><dt>Weight</dt><dd>10 kg</dd></div>
+            <div><dt>Material</dt><dd><ul><li>High-strength steel frame for durability and stability.</li><li>Premium memory foam padding for optimal comfort and support, upholstered in breathable fabric or full-grain leather.</li><li>High-quality mesh material for excellent ventilation and support, promoting a cool and comfortable sitting experience.</li><li>Ergonomically designed armrests with soft padded covers for enhanced comfort during extended use.</li></ul></dd></div>
+          </dl>
+          <button class="buy-button buy-button--light" data-buy><span class="button-dot"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span>Buy Now</span></button>
+          <details class="warranty-card" open><summary><span class="warranty-dot"></span><span>Warranty<br>Information</span><span class="warranty-years">10 years</span></summary><p>Crafted for everyday life. Keep your purchase details and contact our team for care advice and warranty enquiries.</p></details>
+        </div>
+        <div class="room-image-wrap">
+          <img class="room-image" src="./assets/chair-room.webp" alt="Brown leather Juli chair in a warm, light-filled interior" width="1000" height="1333" loading="lazy">
+          <button class="room-play" aria-label="View the chair up close" aria-expanded="false" aria-controls="film-panel"><i class="ti ti-zoom-in" aria-hidden="true"></i></button>
+          <div id="film-panel" class="film-panel" hidden><span>A closer look.</span><img src="./assets/chair-russet.webp" alt="Juli chair design and upholstery" width="600" height="660"><p>Soft curves. Rich leather.<br>Made for your everyday.</p><button class="film-close circle-button" aria-label="Close the detailed view"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+        </div>
+        <div class="spec-footer"><span>Epoch Edge.</span><span>Juli 2024.</span><svg class="flower" aria-hidden="true"><use href="#epoch-flower"/></svg></div>
+      </section>
+
+      <section id="contact" class="contact section-padding" aria-labelledby="contact-title">
+        <p class="section-label">Have Questions? Contact Us!</p>
+        <div class="contact-heading"><h2 id="contact-title">Let’s Talk.</h2><svg class="contact-flower" aria-hidden="true"><use href="#epoch-flower"/></svg></div>
+        <div class="contact-images"><img src="./assets/chair-pair.webp" alt="Discover the Juli collection" width="200" height="110" loading="lazy"><img src="./assets/chair-room.webp" alt="A welcoming interior with Juli" width="200" height="110" loading="lazy"></div>
+        <div class="contact-links"><button data-contact="enquiry">[ Contact Us ]</button><button data-contact="phone">[ Phone ]</button><button data-contact="email">[ Email ]</button><button data-contact="social">[ Social Media ]</button></div>
+        <div class="contact-panel" id="contact-panel" hidden>
+          <div class="contact-panel-heading"><h3 id="contact-panel-title">A little conversation.</h3><button class="circle-button contact-close" aria-label="Close contact details"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+          <div id="contact-content"></div>
+        </div>
+      </section>
+    </div>
+
+    <section id="order-view" class="order-view section-padding" aria-labelledby="order-title" hidden>
+      <button class="text-button" id="order-back"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to the collection</button>
+      <div class="order-layout">
+        <div class="order-image"><img id="order-image" src="./assets/chair-russet.webp" alt="Your selected Juli chair" width="1000" height="1000"></div>
+        <div class="order-information"><p class="section-label">The Juli Collection</p><h1 id="order-title">Make room<br>for comfort.</h1>
+          <div class="order-product-line"><h2 id="order-product-name">Juli Brown — Russet</h2><span>$299</span></div>
+          <div class="order-finish-buttons" role="group" aria-label="Order finish"><button data-finish="russet" aria-pressed="true">Russet</button><button data-finish="ivory" aria-pressed="false">Ivory</button><button data-finish="sand" aria-pressed="false">Sand</button></div>
+          <div class="order-quantity"><span>Quantity</span><div><button id="quantity-minus" aria-label="Decrease quantity" disabled><i class="ti ti-minus" aria-hidden="true"></i></button><output id="quantity-value" aria-live="polite">1</output><button id="quantity-plus" aria-label="Increase quantity"><i class="ti ti-plus" aria-hidden="true"></i></button></div></div>
+          <div class="order-total"><span>Subtotal</span><strong id="order-total">$299</strong></div><p class="order-delivery">Delivery and availability are confirmed by our team. No payment is taken here.</p>
+          <form id="order-form" novalidate><div class="form-fields"><label>Your name<input name="name" autocomplete="name" required maxlength="100" aria-describedby="order-name-error"><span class="field-error" id="order-name-error" hidden></span></label><label>Email address<input name="email" type="email" autocomplete="email" required maxlength="254" aria-describedby="order-email-error"><span class="field-error" id="order-email-error" hidden></span></label></div><label>Your location<input name="location" autocomplete="address-level2" required maxlength="140" aria-describedby="order-location-error"><span class="field-error" id="order-location-error" hidden></span></label><p class="form-status" id="order-status" role="status"></p><button class="solid-button" type="submit"><span>Prepare purchase enquiry</span><i class="ti ti-arrow-right" aria-hidden="true"></i></button></form>
+          <div id="order-result" class="order-result" hidden><h3>Your enquiry is ready.</h3><p>Download your selected finish, quantity and contact details, then share the file with our team to arrange your purchase.</p><button id="download-enquiry" class="solid-button"><span>Download enquiry</span><i class="ti ti-download" aria-hidden="true"></i></button><button id="edit-enquiry" class="text-button">Edit details</button><p id="download-status" class="form-status" role="status"></p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer dark-section section-padding">
+    <div class="footer-top"><p>Our meticulously crafted furniture pieces are designed to enhance your living spaces, whether you’re looking for timeless classics or contemporary designs.</p><nav aria-label="Footer navigation"><a href="#home" data-home>Home</a><a href="#features">Features</a><a href="#galleries">Galleries</a><a href="#product">Product</a><a href="#specifications">Specifications</a></nav><div class="footer-contact"><span>Contact Us</span><a href="#contact" data-contact="phone">+1 646 533 7279</a><span>110 W 3rd St, New York,<br>NY 10012, USA</span></div></div>
+    <div class="footer-brand"><a href="#home" data-home>Epoch Edge.</a><svg class="flower" aria-hidden="true"><use href="#epoch-flower"/></svg></div>
+    <div class="footer-bottom"><span>Juli 2024.</span><span>Copyright © 2024 Epoch Edge. All rights reserved.</span></div>
+  </footer>
+</body>
+</html>

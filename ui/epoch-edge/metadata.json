@@ -1,0 +1,22 @@
+{
+  "name": "Epoch Edge",
+  "slug": "epoch-edge",
+  "page_type": "website",
+  "tags": ["家居", "商品", "Epoch Edge"],
+  "palette": ["#e7e7e5", "#936c58", "#191a18"],
+  "created_at": "2026-11-11 19:23:27",
+  "updated_at": "2026-11-11 22:56:14",
+  "imageToUI": "https://dribbble.com/shots/24124033-Epoch-Edge-Product-Landing-Page",
+  "history": [
+    {
+      "prompt": "还原这个UI原型网页。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-scrolltrigger"]
+    },
+    {
+      "prompt": "继续 epoch-edge 的开发。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-scrolltrigger"]
+    }
+  ]
+}

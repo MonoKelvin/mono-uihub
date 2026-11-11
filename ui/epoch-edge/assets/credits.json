@@ -1,0 +1,27 @@
+{
+  "chair-russet.webp": {
+    "source": "Existing resource-getter sourced chair photo in furniture-board/assets/chair-cognac.webp",
+    "processing": "Russet color study; independent substitute, not extracted from reference UI"
+  },
+  "chair-ivory.webp": {
+    "source": "Same independent chair photo",
+    "processing": "Ivory color study"
+  },
+  "chair-sand.webp": {
+    "source": "Same independent chair photo",
+    "processing": "Sand color study"
+  },
+  "chair-pair.webp": {
+    "source": "Composite of independent Russet and Ivory color studies"
+  },
+  "chair-back.webp": {
+    "source": "https://www.163.com/dy/article/DNQ2EDD50518R50H.html",
+    "owner": "Giorgetti / 欧居汇",
+    "license": "Original promotional photograph; owner retains rights; private visual reference only"
+  },
+  "chair-room.webp": {
+    "source": "https://unsplash.com/photos/brown-leather-armchair-with-white-throw-pillow-9KXhSAL_0ps",
+    "author": "khloe arledge",
+    "license": "Unsplash License"
+  }
+}
