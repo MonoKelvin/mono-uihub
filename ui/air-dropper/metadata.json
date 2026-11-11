@@ -1,0 +1,22 @@
+{
+  "name": "Air Dropper",
+  "slug": "air-dropper",
+  "page_type": "software",
+  "tags": ["无人机", "物流", "机队管理"],
+  "palette": ["#f3f3f5", "#5366ce", "#333536"],
+  "created_at": "2026-11-11 11:02:03",
+  "updated_at": "2026-11-11 13:37:35",
+  "imageToUI": "https://dribbble.com/shots/27655455-Drone-Website-Dashboard-Air-Dropper",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的软件。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz"]
+    },
+    {
+      "prompt": "整个内容太紧凑了（尽量适配1366*768尺寸），和原图有差距。第二个模块应该是补充图片中的UI样式。请仔细分析优化。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz"]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d3d3d5">
+  <title>Air Dropper — Drone Fleet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas" id="app">
+      <header class="app-header">
+        <button class="brand" data-view="fleet" aria-label="Air Dropper, drone fleet">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 2h10v8l-4 4H2zm18 0h10v12h-6l-4-4zM2 18h6l4 4v8H2zm22 0h6v12H20v-8zM12 12h8v8h-8z" fill="currentColor"/></svg>
+        </button>
+        <h1 id="page-title">Drone Fleet</h1>
+        <div class="global-search">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input id="search" type="search" placeholder="Search drones, missions, addresses…" aria-label="Search current workspace" autocomplete="off">
+          <span class="search-shortcut">/</span>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" data-action="connection" aria-label="Connection status" title="Connection status"><i class="ti ti-access-point" aria-hidden="true"></i></button>
+          <button class="icon-button notification-button" data-action="notifications" aria-label="Notifications" aria-expanded="false" title="Notifications"><i class="ti ti-bell" aria-hidden="true"></i><span class="notification-dot"></span></button>
+          <button class="avatar" data-action="account" aria-label="Alex Morgan, account settings"><img src="./assets/operator-avatar.jpg" alt="Fleet manager"><span class="avatar-initials">AM</span></button>
+        </div>
+      </header>
+      <nav class="rail" aria-label="Main navigation">
+        <button class="nav-button" data-view="overview" aria-label="Overview" title="Overview"><i class="ti ti-layout-grid" aria-hidden="true"></i><span class="nav-active-mark"></span></button>
+        <button class="nav-button" data-view="missions" aria-label="Missions & routes" title="Missions & routes"><i class="ti ti-route" aria-hidden="true"></i><span class="nav-active-mark"></span></button>
+        <button class="nav-button" data-view="orders" aria-label="Deliveries" title="Deliveries"><i class="ti ti-list-details" aria-hidden="true"></i><span class="nav-active-mark"></span><span class="rail-dot"></span></button>
+        <button class="nav-button active" data-view="fleet" aria-label="Drone fleet" aria-current="page" title="Drone fleet"><i class="ti ti-drone" aria-hidden="true"></i><span class="nav-active-mark"></span></button>
+        <button class="nav-button" data-view="analytics" aria-label="Analytics" title="Analytics"><i class="ti ti-chart-bar" aria-hidden="true"></i><span class="nav-active-mark"></span></button>
+        <button class="nav-button" data-view="settings" aria-label="Settings" title="Settings"><i class="ti ti-settings" aria-hidden="true"></i><span class="nav-active-mark"></span></button>
+      </nav>
+      <main class="workspace" id="workspace" aria-label="Drone fleet workspace"></main>
+      <div id="popover" class="popover" hidden></div>
+      <div id="dialog-layer" class="dialog-layer" hidden></div>
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    </div>
+  </div>
+</body>
+</html>
