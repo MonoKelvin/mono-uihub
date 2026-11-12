@@ -77,7 +77,7 @@ def build(
 def search(query: str, *, limit: int = 12, width: int = 1600, **_: Any) -> list[Asset]:
     key = env.require(
         "UNSPLASH_ACCESS_KEY",
-        hint="在 tools/resource-getter/.env 中设置；不设则只能用 build/直链。",
+        hint="在项目根目录 .env 中设置；不设则只能用 build/直链。",
     )
     data = http.get_json(
         http.build_url(

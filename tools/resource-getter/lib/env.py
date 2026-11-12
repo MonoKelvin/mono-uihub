@@ -1,13 +1,9 @@
 """Tiny .env loader (no python-dotenv dependency).
 
-Lookup order — later files win, but an already-exported environment variable
-always wins over every file:
+Configuration is read only from ``<repo>/.env``. An already-exported
+environment variable always wins over the file.
 
-1. ``<repo>/.env``
-2. ``tools/resource-getter/.env``
-3. ``tools/resource-getter/.env.local``
-
-The real files are gitignored. Never print secret values; ``mask()`` is provided
+The real file is gitignored. Never print secret values; ``mask()`` is provided
 for diagnostics.
 """
 
@@ -16,13 +12,9 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from .paths import REPO_ROOT, TOOL_ROOT
+from .paths import REPO_ROOT
 
-_FILES = (
-    REPO_ROOT / ".env",
-    TOOL_ROOT / ".env",
-    TOOL_ROOT / ".env.local",
-)
+_FILES = (REPO_ROOT / ".env",)
 _LOADED = False
 
 

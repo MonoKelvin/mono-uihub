@@ -66,7 +66,7 @@ It is **not committed** and not redistributed with mono-uihub:
   so its dependencies are never installed into the vendored tree.
 
 The only reason this checkout exists is the interactive Pixiv OAuth flow. Once
-`PIXIV_REFRESH_TOKEN` is in `.env`, `sources/pixiv.py` talks to the official App
+`PIXIV_REFRESH_TOKEN` is in the repository-root `.env`; `sources/pixiv.py` talks to the official App
 API directly and the vendor tree is unused.
 
 ## If you add a vendored library

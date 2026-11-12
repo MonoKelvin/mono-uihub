@@ -24,14 +24,10 @@ Desktop.ini
 # finesse 构建历史（本地轮换记忆，随每次构建重写）
 .finesse/
 
-# Never commit API credentials (e.g. tools/image-forge/qingjiu.env)
-*.env
-
-# Image Forge — never commit real credentials
+# Unified local credentials live only in the repository-root .env.
+# The committed .env.example template contains placeholders, never secrets.
 .env
-tools/image-forge/.env
-tools/resource-getter/.env
-tools/resource-getter/.env.local
+*.env
 tools/resource-getter/.cache/
 tools/resource-getter/test-output/
 # Vendored third-party source (cloned by pixiv-login; never committed)

@@ -14,6 +14,11 @@ Optional models (NOT vendored; fetched on demand into models/cache/ by matte.py)
   u2net.onnx             — U^2-Net full.      Apache-2.0 (same source as above).
   isnet-general-use.onnx — IS-Net / DIS.      Apache-2.0
                            (https://github.com/xuebinqin/DIS).
+  birefnet-general.onnx  — BiRefNet general.  MIT
+  birefnet-portrait.onnx — BiRefNet portrait. MIT
+                           (https://github.com/ZhengPeng7/BiRefNet).
+                           Downloaded from the official rembg release assets;
+                           filenames are normalized locally and MD5-checked.
 
 Only Apache-2.0 / MIT-licensed weights are used here. Do NOT vendor models whose
 license forbids redistribution (e.g. BRIA RMBG-1.4 is non-commercial).

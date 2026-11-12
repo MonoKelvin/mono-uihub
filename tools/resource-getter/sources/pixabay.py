@@ -90,7 +90,7 @@ def search(
 ) -> list[Asset]:
     key = env.require(
         "PIXABAY_API_KEY",
-        hint="在 tools/resource-getter/.env 中写入 PIXABAY_API_KEY=...",
+        hint="在项目根目录 .env 中写入 PIXABAY_API_KEY=...",
     )
     image_type = image_type if image_type in _VALID_TYPES else "all"
     per_page = max(3, min(200, limit * (3 if transparent else 1)))

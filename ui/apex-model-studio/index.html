@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="description" content="Apex Model Studio — model representation, brand campaigns and creative production.">
+  <title>Apex Model Studio — Talent Without Limits</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script async onload="window.dispatchEvent(new Event('apex:motion-ready'))" src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script async onload="window.dispatchEvent(new Event('apex:motion-ready'))" src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <path id="star-ray" d="M50 0 52.7 43 50 52 47.3 43Z"/>
+      <symbol id="apex-star" viewBox="0 0 100 100">
+        <use href="#star-ray"/><use href="#star-ray" transform="rotate(11.25 50 50)"/><use href="#star-ray" transform="rotate(22.5 50 50)"/><use href="#star-ray" transform="rotate(33.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(45 50 50)"/><use href="#star-ray" transform="rotate(56.25 50 50)"/><use href="#star-ray" transform="rotate(67.5 50 50)"/><use href="#star-ray" transform="rotate(78.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(90 50 50)"/><use href="#star-ray" transform="rotate(101.25 50 50)"/><use href="#star-ray" transform="rotate(112.5 50 50)"/><use href="#star-ray" transform="rotate(123.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(135 50 50)"/><use href="#star-ray" transform="rotate(146.25 50 50)"/><use href="#star-ray" transform="rotate(157.5 50 50)"/><use href="#star-ray" transform="rotate(168.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(180 50 50)"/><use href="#star-ray" transform="rotate(191.25 50 50)"/><use href="#star-ray" transform="rotate(202.5 50 50)"/><use href="#star-ray" transform="rotate(213.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(225 50 50)"/><use href="#star-ray" transform="rotate(236.25 50 50)"/><use href="#star-ray" transform="rotate(247.5 50 50)"/><use href="#star-ray" transform="rotate(258.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(270 50 50)"/><use href="#star-ray" transform="rotate(281.25 50 50)"/><use href="#star-ray" transform="rotate(292.5 50 50)"/><use href="#star-ray" transform="rotate(303.75 50 50)"/>
+        <use href="#star-ray" transform="rotate(315 50 50)"/><use href="#star-ray" transform="rotate(326.25 50 50)"/><use href="#star-ray" transform="rotate(337.5 50 50)"/><use href="#star-ray" transform="rotate(348.75 50 50)"/>
+        <circle cx="50" cy="50" r="7"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="inner-header wrap" id="inner-header" hidden>
+    <a class="small-wordmark" href="#home" aria-label="Apex Model Studio home">APEX<span>MODEL STUDIO</span></a>
+    <nav aria-label="Page navigation"><a href="#agency">Agency</a><a href="#services">Services</a><a href="#talent">Models</a><a href="#projects">Projects</a><a href="#contact">Contact <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <div id="home-view" class="page-view">
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <svg class="hero-texture" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <filter id="orange-grain"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="4" seed="17" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".85"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+          <rect width="100%" height="100%" fill="#e34a03" filter="url(#orange-grain)"/>
+        </svg>
+        <header class="hero-header wrap">
+          <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+            <div class="nav-group"><a href="#home" aria-current="page">Home</a><a href="#agency">Agency</a><a href="#services">Services</a></div>
+            <div class="nav-group"><a href="#talent">Models</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+          </nav>
+          <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="main-navigation"><span>Menu</span><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+        </header>
+        <div class="hero-copy">
+          <h1 id="hero-title">Discover exceptional talent for fashion, commercial &amp; creative campaigns.</h1>
+          <p>Apex Model Studio represents professional models, creative talent, and rising faces for fashion shows, advertising campaigns, editorials, and digital productions worldwide.</p>
+        </div>
+        <div class="hero-discover">
+          <a class="avatar-stack" href="#talent" aria-label="Meet our models">
+            <img src="assets/portrait-noah.webp" width="44" height="44" alt="">
+            <img src="assets/portrait-ellis.webp" width="44" height="44" alt="">
+            <img src="assets/portrait-luca.webp" width="44" height="44" alt="">
+            <img src="assets/portrait-roman.webp" width="44" height="44" alt="">
+          </a>
+          <p>Meet our newest faces ready for fashion campaigns, commercial productions, and creative collaborations.</p>
+          <a class="button button--light" href="#talent">Explore Models <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a>
+        </div>
+        <div class="hero-wordmark" aria-hidden="true">APEX MODEL STUDIO</div>
+        <div class="hero-person"><img src="assets/hero-cutout.webp" width="1031" height="1250" alt="Fashion portrait in dramatic red studio lighting" fetchpriority="high"></div>
+      </section>
+
+      <section class="section section--dark grid-surface" id="agency" aria-labelledby="agency-title">
+        <div class="wrap">
+          <div class="section-heading">
+            <div><p class="eyebrow">[About agency]</p><h2 id="agency-title">Building successful careers <br>through professional <br><span class="muted">representation.</span></h2></div>
+            <svg class="starburst" aria-hidden="true"><use href="#apex-star"/></svg>
+          </div>
+          <div class="agency-grid">
+            <figure class="agency-photo photo-reveal"><img src="assets/portrait-noah.webp" alt="Noah, represented by Apex Model Studio" width="760" height="800" loading="lazy"></figure>
+            <div class="agency-information">
+              <div><h3 class="note-title">Professional Talent Management</h3><p>We help aspiring and experienced models grow successful careers through expert guidance, brand partnerships, portfolio development, and industry-leading opportunities.</p><a class="button button--orange" href="#info/agency">Learn More <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div>
+              <div class="agency-social"><p>Meet our newest faces ready for fashion campaigns, commercial productions, and creative collaborations.</p><div class="social-links" aria-label="Social channels"><button type="button" data-social="TikTok" aria-label="TikTok"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></button><button type="button" data-social="LinkedIn" aria-label="LinkedIn"><i class="ti ti-brand-linkedin" aria-hidden="true"></i></button><button type="button" data-social="YouTube" aria-label="YouTube"><i class="ti ti-brand-youtube" aria-hidden="true"></i></button><button type="button" data-social="Instagram" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></button></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--soft grid-surface" id="services" aria-labelledby="services-title">
+        <div class="wrap">
+          <div class="section-heading"><div><p class="eyebrow">[Our services]</p><h2 id="services-title">Creative solutions for models and <br><span class="muted">leading brands.</span></h2></div><svg class="starburst" aria-hidden="true"><use href="#apex-star"/></svg></div>
+          <div class="service-grid">
+            <article class="service-card" data-service-card="representation"><p class="note-title">Model</p><div class="service-name"><h3>Model Representation</h3><i class="ti ti-flower" aria-hidden="true"></i></div><div class="service-bottom"><p>Professional career management, casting, and portfolio guidance.</p><button type="button" data-service="representation" aria-expanded="false" aria-controls="service-detail">[ Read More ]</button></div></article>
+            <article class="service-card service-card--offset" data-service-card="campaigns"><p class="note-title">Brand</p><div class="service-name"><h3>Brand Campaigns</h3><i class="ti ti-flower" aria-hidden="true"></i></div><div class="service-bottom"><p>Connecting businesses with experienced talent for advertising, fashion.</p><button type="button" data-service="campaigns" aria-expanded="false" aria-controls="service-detail">[ Read More ]</button></div></article>
+            <article class="service-card" data-service-card="production"><p class="note-title">Creative</p><div class="service-name"><h3>Creative Production</h3><i class="ti ti-flower" aria-hidden="true"></i></div><div class="service-bottom"><p>Photography, styling, creative direction, and campaign execution tailored.</p><button type="button" data-service="production" aria-expanded="false" aria-controls="service-detail">[ Read More ]</button></div></article>
+          </div>
+          <div class="service-detail" id="service-detail" hidden><div><p class="eyebrow" id="service-detail-label"></p><h3 id="service-detail-title"></h3><p id="service-detail-copy"></p></div><ul id="service-detail-list"></ul><a class="button button--orange" href="#contact">Start a Conversation <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a><button class="icon-button service-close" type="button" aria-label="Close service details"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+        </div>
+      </section>
+
+      <section class="section section--dark grid-surface" id="projects" aria-labelledby="projects-title">
+        <div class="wrap">
+          <div class="section-heading project-heading"><div><p class="eyebrow">[Client reviews]</p><h2 id="projects-title">Trusted by brands and creative <br><span class="muted">professionals.</span></h2></div><p>Our agency works with fashion labels, photographers, designers, and international companies to deliver exceptional talent for every project.</p></div>
+          <div class="project-layout">
+            <div class="project-tabs" role="tablist" aria-label="Selected projects" aria-orientation="vertical">
+              <button class="project-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="project-panel" id="project-tab-0" data-project="0"><img src="assets/portrait-roman.webp" width="760" height="800" alt="After Hours campaign"></button>
+              <button class="project-tab" type="button" role="tab" aria-selected="false" aria-controls="project-panel" id="project-tab-1" tabindex="-1" data-project="1"><img src="assets/portrait-noah.webp" width="760" height="800" alt="Form editorial"></button>
+              <button class="project-tab" type="button" role="tab" aria-selected="false" aria-controls="project-panel" id="project-tab-2" tabindex="-1" data-project="2"><img src="assets/portrait-ellis.webp" width="760" height="800" alt="New Perspective campaign"></button>
+            </div>
+            <div class="project-panel" id="project-panel" role="tabpanel" aria-labelledby="project-tab-0" tabindex="0">
+              <figure><img id="project-image" src="assets/portrait-roman.webp" width="760" height="800" alt="After Hours — studio portrait" loading="lazy"></figure>
+              <div class="project-copy" aria-live="polite"><blockquote id="project-quote">“Working with Apex Model Studio transformed our campaign. Their professional talent, organization, and creativity exceeded every expectation from casting to final production.”</blockquote><div class="project-credit"><div><p id="project-person">Sophia Carter</p><span id="project-role">Creative Director</span></div><div class="rating" id="project-rating" aria-label="5 out of 5 stars"><i class="ti ti-star-filled" aria-hidden="true"></i><i class="ti ti-star-filled" aria-hidden="true"></i><i class="ti ti-star-filled" aria-hidden="true"></i><i class="ti ti-star-filled" aria-hidden="true"></i><i class="ti ti-star-filled" aria-hidden="true"></i></div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--soft grid-surface" id="models" aria-labelledby="models-title">
+        <div class="wrap">
+          <div class="section-heading"><div><p class="eyebrow">[Our models]</p><h2 id="models-title">Meet the faces behind leading <br><span class="muted">fashion campaigns.</span></h2></div><svg class="starburst" aria-hidden="true"><use href="#apex-star"/></svg></div>
+          <div class="model-mosaic">
+            <a class="mosaic-photo mosaic-photo--first photo-reveal" href="#talent/noah" aria-label="View Noah's profile"><img src="assets/portrait-noah.webp" width="760" height="800" alt="Noah, fashion model" loading="lazy"><span>Noah <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></a>
+            <div class="mosaic-stat mosaic-stat--years"><p class="display-number">15+</p><p>Years of experience developing successful modeling careers worldwide.</p></div>
+            <div class="mosaic-stat mosaic-stat--work"><p class="display-number">15K</p><p>International fashion events and commercial productions completed annually.</p></div>
+            <a class="mosaic-photo mosaic-photo--second photo-reveal" href="#talent/luca" aria-label="View Luca's profile"><img src="assets/portrait-luca.webp" width="760" height="800" alt="Luca, editorial model" loading="lazy"><span>Luca <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></a>
+            <a class="mosaic-photo mosaic-photo--feature" href="#talent/roman" aria-label="View Roman's profile"><img src="assets/portrait-roman.webp" width="760" height="800" alt="Roman, creative talent" loading="lazy"><span>Roman <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span></a>
+            <p class="mosaic-note">Our diverse roster includes runway models, commercial talent, lifestyle influencers, and editorial professionals ready for global opportunities.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--dark grid-surface manifesto" aria-labelledby="manifesto-title">
+        <div class="wrap">
+          <div class="manifesto-grid"><div class="mission-quote"><p>“Our mission is to discover unique talent, build lasting careers, and connect creative professionals with world-class opportunities across fashion and advertising.”</p><i class="ti ti-quote" aria-hidden="true"></i></div><figure class="manifesto-photo photo-reveal"><img src="assets/portrait-roman.webp" width="760" height="800" alt="Roman in a red-light studio portrait" loading="lazy"></figure><div class="manifesto-note"><h3 class="note-title">Empowering Creative Talent</h3><p>Every successful campaign begins with exceptional people. We provide personalized management and long-term career development for every model we represent.</p><a class="button button--orange" href="#info/agency">Learn More <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div></div>
+          <h2 id="manifesto-title" class="manifesto-title">Talent creates <span>opportunities.</span> Professional guidance <br>transforms those <span>opportunities into</span> successful careers <br>across the global fashion and creative industries.</h2>
+        </div>
+      </section>
+    </div>
+
+    <section class="page-view subpage grid-surface" id="talent-view" hidden aria-labelledby="talent-title">
+      <div class="wrap"><a class="text-link back-link" href="#models"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to the studio</a><div class="section-heading"><div><p class="eyebrow">[Our models]</p><h1 id="talent-title">Individual faces. <br><span class="muted">Limitless possibilities.</span></h1></div><svg class="starburst" aria-hidden="true"><use href="#apex-star"/></svg></div><div class="talent-controls"><div class="filter-tabs" aria-label="Talent categories"><button type="button" class="is-active" data-filter="all" aria-pressed="true">All Talent</button><button type="button" data-filter="fashion" aria-pressed="false">Fashion</button><button type="button" data-filter="commercial" aria-pressed="false">Commercial</button><button type="button" data-filter="editorial" aria-pressed="false">Editorial</button></div><label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><span class="sr-only">Search models</span><input id="talent-search" type="search" placeholder="Search by name" autocomplete="off"></label></div><p class="result-count" id="result-count" aria-live="polite"></p><div class="talent-grid" id="talent-grid"></div><div class="empty-state" id="talent-empty" hidden><i class="ti ti-search" aria-hidden="true"></i><h2>No matching faces.</h2><p>Try another name or explore the complete roster.</p><button class="button button--orange" type="button" id="clear-filters">Clear Filters <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div></div>
+    </section>
+
+    <section class="page-view subpage grid-surface" id="profile-view" hidden aria-labelledby="profile-name"><div class="wrap"><a class="text-link back-link" href="#talent"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to all talent</a><div class="profile-layout"><figure class="profile-photo"><img id="profile-image" src="assets/portrait-roman.webp" width="760" height="800" alt=""></figure><div class="profile-information"><p class="eyebrow" id="profile-category"></p><h1 id="profile-name"></h1><p class="profile-location" id="profile-location"></p><p id="profile-bio"></p><dl class="profile-measurements" id="profile-measurements"></dl><a class="button button--orange" href="#contact" id="enquire-model">Enquire About This Model <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a><button class="text-link download-profile" type="button" id="download-profile"><i class="ti ti-download" aria-hidden="true"></i> Download Profile</button><p class="inline-status" id="profile-status" role="status"></p></div></div></div></section>
+
+    <section class="page-view subpage grid-surface" id="contact-view" hidden aria-labelledby="contact-title"><div class="wrap"><a class="text-link back-link" href="#home"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to the studio</a><div class="contact-layout"><div><p class="eyebrow">[Let's create together]</p><h1 id="contact-title">Your next campaign <br><span class="muted">starts here.</span></h1><p class="contact-intro">Tell us what you have in mind. From finding the right face to shaping the complete production, let's make something worth remembering.</p><svg class="contact-star starburst" aria-hidden="true"><use href="#apex-star"/></svg><p class="contact-service-note">Online enquiries are not connected. Download your brief to keep all project details together.</p></div><form id="contact-form" novalidate><div class="form-row"><div class="form-field"><label for="contact-name">Your name <span>*</span></label><input id="contact-name" name="name" autocomplete="name" required maxlength="100"><p class="field-error" id="name-error"></p></div><div class="form-field"><label for="contact-email">Email address <span>*</span></label><input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="field-error" id="email-error"></p></div></div><div class="form-field"><label for="contact-company">Company / Brand</label><input id="contact-company" name="company" autocomplete="organization" maxlength="150"></div><div class="form-field"><span id="interest-label">I'm interested in</span><div class="custom-select" id="interest-select"><button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="interest-options" aria-labelledby="interest-label interest-value"><span id="interest-value">Model Representation</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="select-options" id="interest-options" role="listbox" aria-labelledby="interest-label" hidden><button type="button" role="option" aria-selected="true" data-value="Model Representation">Model Representation <i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="option" aria-selected="false" data-value="Brand Campaign">Brand Campaign <i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="option" aria-selected="false" data-value="Creative Production">Creative Production <i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="option" aria-selected="false" data-value="Talent Booking">Talent Booking <i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="option" aria-selected="false" aria-disabled="true" disabled>Open Casting — coming soon</button></div></div></div><div class="form-field"><label for="contact-message">Your project <span>*</span></label><textarea id="contact-message" name="message" rows="5" required maxlength="3000" placeholder="The idea, the talent, the timeline…"></textarea><p class="field-error" id="message-error"></p></div><label class="consent-field"><input id="contact-consent" name="consent" type="checkbox"><span>Include my contact details in the downloaded brief.</span></label><p class="field-error" id="consent-error"></p><div class="form-action"><button class="button button--orange" type="submit" id="contact-submit"><span>Download Project Brief</span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></button><p id="contact-status" role="status"></p></div></form></div></div></section>
+
+    <section class="page-view subpage grid-surface" id="info-view" hidden aria-labelledby="info-title"><div class="wrap info-wrap"><a class="text-link back-link" href="#home"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to the studio</a><p class="eyebrow" id="info-label">[The studio]</p><h1 id="info-title"></h1><p class="info-lead" id="info-lead"></p><div class="info-content" id="info-content"></div><a class="button button--orange" href="#contact">Get in Touch <i class="ti ti-arrow-up-right" aria-hidden="true"></i></a></div></section>
+  </main>
+
+  <footer class="footer grid-surface">
+    <div class="wrap footer-content"><div class="footer-top"><p>Apex Model Studio represents professional models, creative talent, and fashion professionals for campaigns, editorials, and commercial projects worldwide.</p><div class="social-links"><button type="button" data-social="TikTok" aria-label="TikTok"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></button><button type="button" data-social="LinkedIn" aria-label="LinkedIn"><i class="ti ti-brand-linkedin" aria-hidden="true"></i></button><button type="button" data-social="YouTube" aria-label="YouTube"><i class="ti ti-brand-youtube" aria-hidden="true"></i></button><button type="button" data-social="Instagram" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></button></div></div><div class="footer-links"><div><h2>Quick Links</h2><a href="#home">Home</a><a href="#agency">Agency</a><a href="#services">Services</a><a href="#talent">Models</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div><div><h2>Services</h2><a href="#services/representation">Model Management</a><a href="#services/campaigns">Brand Campaigns</a><a href="#info/portfolio">Portfolio Building</a><a href="#services/production">Creative Direction</a><a href="#services/production">Photography</a><a href="#info/casting">Casting</a></div><div><h2>Company</h2><a href="#info/agency">About Us</a><a href="#info/careers">Careers</a><a href="#info/partners">Partners</a><a href="#info/journal">Blog</a><a href="#info/media">Media</a><a href="#info/events">Events</a></div><div><h2>Support</h2><a href="#info/faq">FAQs</a><a href="#info/privacy">Privacy Policy</a><a href="#info/terms">Terms of Service</a><a href="#contact">Contact</a><a href="#info/help">Help Center</a><a href="#info/newsletter">Newsletter</a></div></div><p class="copyright">© 2026 <a href="#home">Apex Model Studio.</a> All Rights Reserved.</p></div><div class="footer-wordmark" aria-hidden="true">PROFESSIONAL MODELING AGENCY</div><figure class="footer-person"><img src="assets/hero-cutout.webp" width="1031" height="1250" alt="" loading="lazy"></figure>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

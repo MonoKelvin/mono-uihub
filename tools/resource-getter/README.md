@@ -11,15 +11,16 @@ tools/resource-getter/
 ├── lib/                  # 通用能力
 ├── vendor/               # 引用式三方源码（gitignored，仅 manifest/README 入库）
 ├── test-output/          # test 子命令的样本（gitignored）
-├── .env.example          # 凭据模板（真实 .env 已 gitignore）
 └── THIRD_PARTY.md        # 许可与第三方代码说明
+
+凭据统一放在项目根目录：`.env.example` → `.env`。
 ```
 
 ## 快速开始
 
 ```bash
 # 1. 凭据（只需 Pixabay 就能覆盖大部分日常）
-cp tools/resource-getter/.env.example tools/resource-getter/.env
+cp .env.example .env
 #    填入 PIXABAY_API_KEY=...
 
 # 2. 自检

@@ -1,0 +1,17 @@
+{
+  "name": "Apex Model Studio",
+  "slug": "apex-model-studio",
+  "page_type": "website",
+  "palette": ["#0b0b0b", "#e64a06", "#f8f6ee"],
+  "tags": ["时尚", "模特经纪", "Apex"],
+  "created_at": "2026-11-11 22:27:56",
+  "updated_at": "2026-11-11 22:27:56",
+  "imageToUI": "https://dribbble.com/shots/27622273-Apex-Model-Studio",
+  "history": [
+    {
+      "prompt": "还原这个UI原型网站。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "gsap-scrolltrigger"]
+    }
+  ]
+}
