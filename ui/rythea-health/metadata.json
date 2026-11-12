@@ -1,0 +1,33 @@
+{
+  "name": "Rythea · Heart Health",
+  "slug": "rythea-health",
+  "page_type": "software",
+  "tags": ["健康管理", "数据可视化", "心电图"],
+  "palette": ["#f3f3f3", "#ef1029", "#141414"],
+  "created_at": "2026-11-12 17:32:19",
+  "updated_at": "2026-11-12 19:01:45",
+  "imageToUI": "https://dribbble.com/shots/27689695-Heart-Health-Monitoring-ECG-Dashboard",
+  "history": [
+    {
+      "prompt": "还原这个UI软件。参考：https://dribbble.com/shots/27689695-Heart-Health-Monitoring-ECG-Dashboard",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "Chest-up studio portrait of an adult man in his late thirties with warm olive skin, dense short black curly hair and a neatly trimmed stubble beard, wearing a light heather gray cotton crew-neck T-shirt. Torso facing forward, head subtly turned to his right, calm neutral expression, looking slightly to the left of the camera. Full head and both shoulders visible. Soft diffused studio daylight from the front left.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    },
+    {
+      "prompt": "继续 rythea-health 项目的还原。底部的菜单要置顶且毛玻璃效果",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "Record an ECG 按钮颜色不对",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f3f3">
+  <meta name="description" content="Your heart health, ECG recordings and connected devices, in one place.">
+  <title>Rythea — Your heart, understood.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" id="app" aria-label="Rythea heart health">
+      <header class="app-header">
+        <button class="brand" data-view="dashboard" aria-label="Rythea dashboard">
+          <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+            <defs><radialGradient id="brand-red"><stop offset="0" stop-color="#ff7c82"/><stop offset=".5" stop-color="#ff3444"/><stop offset="1" stop-color="#e8001c"/></radialGradient></defs>
+            <path fill="url(#brand-red)" d="M32 1 36 13 43 5 44 18 56 13 51 25 64 27 53 34 61 44 48 43 49 57 39 49 34 63 28 51 18 60 20 46 6 49 14 37 1 32 14 27 5 17 19 20 18 6 27 15Z"/>
+            <path fill="#ff9399" d="m32 11 4 12 11-5-5 12 12 4-13 4 5 11-11-6-5 12-3-13-12 5 6-11-11-6 13-3-4-11 11 6Z" opacity=".65"/>
+            <circle cx="32" cy="32" r="12" fill="url(#brand-red)"/><circle cx="32" cy="32" r="6.5" fill="#fefafa"/>
+          </svg>
+          <span>Rythea</span>
+        </button>
+        <div class="search-cluster">
+          <div class="search-control">
+            <i class="ti ti-search" aria-hidden="true"></i>
+            <input id="global-search" type="search" placeholder="Search" aria-label="Search records, devices and settings" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false">
+          </div>
+          <button class="icon-button filter-button" data-action="open-filters" aria-label="Filter ECG recordings"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i><span class="notification-dot"></span></button>
+          <div class="search-results popover" id="search-results" role="listbox" aria-label="Search results" hidden></div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" id="privacy-button" data-view="settings" aria-label="Privacy and display settings"><i class="ti ti-shield" aria-hidden="true"></i></button>
+          <button class="icon-button" id="app-menu-button" data-action="app-menu" aria-label="More options" aria-haspopup="menu" aria-expanded="false"><i class="ti ti-dots" aria-hidden="true"></i></button>
+        </div>
+      </header>
+
+      <div class="views">
+        <section class="view dashboard-view" id="view-dashboard" aria-label="Dashboard">
+          <h1 class="dashboard-heading">Check Your<br>Heart’s Health</h1>
+          <img class="patient-portrait" src="assets/ryan-walker.webp" alt="Ryan Walker" draggable="false">
+          <section class="patient-summary" aria-label="Patient profile">
+            <button class="patient-name" data-view="profile" id="dashboard-name">Ryan Walker</button>
+            <button class="patient-email text-button" data-action="edit-contact" id="dashboard-email">ryan.cooper@gmail.com</button>
+            <p class="patient-age" id="dashboard-age">39 years</p>
+            <div class="profile-chips">
+              <span class="profile-chip"><span>Birth:</span><strong id="dashboard-birth">20/07/1985</strong></span>
+              <span class="profile-chip"><span>Gender:</span><strong id="dashboard-gender">Male</strong></span>
+              <button class="profile-chip id-chip" data-action="copy-id" aria-label="Copy patient ID"><span>ID:</span><strong id="dashboard-patient-id">3KF2-DW90D-8A1</strong></button>
+              <button class="profile-chip phone-chip" data-action="copy-phone" aria-label="Copy phone number"><i class="ti ti-phone" aria-hidden="true"></i><strong id="dashboard-phone">(444)-678-8721</strong></button>
+            </div>
+          </section>
+
+          <div class="ecg-stack">
+            <section class="ecg-card" aria-label="Latest ECG recording">
+              <div class="card-topline">
+                <div><h2 class="eyebrow">ECG</h2><p class="last-check" id="ecg-last-check">Last Check · Feb 12, 2025</p></div>
+                <div class="card-actions">
+                  <button class="icon-button" data-action="latest-details" aria-label="View ECG details"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+                  <button class="icon-button" data-action="export-latest" aria-label="Download latest ECG"><i class="ti ti-download" aria-hidden="true"></i></button>
+                  <button class="icon-button" data-action="ecg-menu" aria-label="More ECG options" aria-haspopup="menu"><i class="ti ti-dots" aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <div class="ecg-summary" id="ecg-summary">
+                <div class="ecg-field"><span><i class="ti ti-clock-hour-4" aria-hidden="true"></i>Duration</span><strong id="ecg-duration">1 m 30 s</strong></div>
+                <div class="ecg-field"><span><svg class="solid-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21 3.1 12.5A5.5 5.5 0 0 1 12 5.8a5.5 5.5 0 0 1 8.9 6.7Z"/></svg>Status</span><strong id="ecg-status">Normal</strong></div>
+                <div class="ecg-field"><span><i class="ti ti-device-watch" aria-hidden="true"></i>Device</span><strong id="ecg-device">Apple Watch</strong></div>
+                <div class="ecg-rate"><span class="dot-number dot-number-large" id="ecg-bpm" data-value="89"></span><span class="unit">bpm</span></div>
+              </div>
+              <div class="dot-chart ecg-dot-chart" id="dashboard-ecg-chart" tabindex="0" role="img" aria-label="ECG signal from the latest recording. Use arrow keys to inspect values."></div>
+              <div class="ecg-empty empty-state" id="ecg-empty" hidden><i class="ti ti-activity-heartbeat" aria-hidden="true"></i><h3>No ECG recordings yet</h3><button class="small-button" data-view="devices">View your devices <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+            </section>
+          </div>
+
+          <section class="record-card" aria-label="Record ECG">
+            <h2 class="eyebrow">Record ECG</h2>
+            <button class="icon-button icon-button-dark record-more" data-action="record-menu" aria-label="Recording options" aria-haspopup="menu"><i class="ti ti-dots" aria-hidden="true"></i></button>
+            <p class="last-check">Last Check · Feb 5, 2025</p>
+            <canvas class="record-aura" id="record-aura" width="480" height="480" aria-hidden="true"></canvas>
+            <div class="record-reading"><span class="dot-number" data-value="85"></span><span class="unit">bpm</span></div>
+            <button class="record-start" data-action="record-start"><span>Start Now</span><span class="icon-button icon-button-dark"><svg class="solid-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg></span></button>
+          </section>
+
+          <section class="device-card" aria-label="Your device">
+            <h2 class="eyebrow" id="dashboard-device-count">Devices (1)</h2>
+            <button class="icon-button device-settings" data-view="devices" aria-label="Manage devices"><i class="ti ti-settings" aria-hidden="true"></i></button>
+            <p class="last-check" id="dashboard-device-last">Last Connected · 2 days ago</p>
+            <img class="watch-image" id="dashboard-watch-image" src="assets/apple-watch.webp" alt="Black Apple Watch" draggable="false">
+            <button class="device-name text-button" id="dashboard-device-name" data-view="devices">Apple Watch<br>Series X</button>
+            <div class="device-empty" id="dashboard-device-empty" hidden><i class="ti ti-device-watch-plus" aria-hidden="true"></i><button class="text-button" data-action="add-device">Add a device</button></div>
+          </section>
+
+          <section class="health-card" aria-label="Health overview">
+            <div class="health-tabs" role="tablist" aria-label="Health information">
+              <button role="tab" class="health-tab is-active" data-health-tab="heart" id="tab-heart" aria-selected="true" aria-controls="panel-heart"><i class="ti ti-activity-heartbeat" aria-hidden="true"></i>Heart Rate</button>
+              <button role="tab" class="health-tab" data-health-tab="allergies" id="tab-allergies" aria-selected="false" aria-controls="panel-allergies" tabindex="-1">Allergies <span class="count-badge" id="allergy-count">2</span></button>
+              <button role="tab" class="health-tab" data-health-tab="diagnoses" id="tab-diagnoses" aria-selected="false" aria-controls="panel-diagnoses" tabindex="-1">Diagnoses <span class="count-badge" id="diagnosis-count">4</span></button>
+            </div>
+            <div class="health-body">
+              <div class="health-panel heart-panel" role="tabpanel" id="panel-heart" aria-labelledby="tab-heart">
+                <p class="heart-notice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21 3.1 12.5A5.5 5.5 0 0 1 12 5.8a5.5 5.5 0 0 1 8.9 6.7Z" fill="currentColor"/></svg><span>Your heart rate stayed steady this week.</span></p>
+                <button class="icon-button heart-download" data-action="export-heart-rate" aria-label="Download heart-rate data"><i class="ti ti-download" aria-hidden="true"></i></button>
+                <div class="weekly-row">
+                  <div class="dot-chart weekly-chart" id="current-week-chart" tabindex="0" role="img" aria-label="Current week heart rate, average 72 beats per minute. Use arrow keys to inspect values."></div>
+                  <button class="weekly-stat text-button" data-view="insights"><span class="weekly-reading"><span class="dot-number" data-value="72"></span><span class="unit">bpm</span></span><span>Current week avg</span></button>
+                </div>
+                <div class="weekly-row">
+                  <div class="dot-chart weekly-chart" id="previous-week-chart" tabindex="0" role="img" aria-label="Previous week heart rate, average 78 beats per minute. Use arrow keys to inspect values."></div>
+                  <button class="weekly-stat text-button" data-action="previous-insights"><span class="weekly-reading"><span class="dot-number" data-value="78"></span><span class="unit">bpm</span></span><span>Previous week avg</span></button>
+                </div>
+                <p class="week-trend"><i class="ti ti-arrow-down" aria-hidden="true"></i>Down 6 bpm from last week.</p>
+                <div class="health-footer">
+                  <button class="workout-tile" data-action="workout-insights"><span class="workout-reading"><span class="dot-number" data-value="79-127"></span><span class="unit">bpm</span></span><span><i class="ti ti-barbell" aria-hidden="true"></i>Last workout range</span></button>
+                  <button class="efficiency-tile" data-action="workout-insights"><strong>87%</strong><span><svg class="solid-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h6l-1 8 9-13h-6Z"/></svg>Heart Efficiency</span></button>
+                </div>
+              </div>
+              <div class="health-panel compact-health-list" role="tabpanel" id="panel-allergies" aria-labelledby="tab-allergies" hidden></div>
+              <div class="health-panel compact-health-list" role="tabpanel" id="panel-diagnoses" aria-labelledby="tab-diagnoses" hidden></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view workspace-view" id="view-history" aria-label="ECG history" hidden>
+          <div class="workspace-head"><div><h1>Your ECG history</h1><p id="history-summary">Every check, kept together.</p></div><button class="primary-button" data-action="import-record"><i class="ti ti-file-import" aria-hidden="true"></i>Import ECG</button></div>
+          <div class="filter-row">
+            <button class="select-button" id="history-period" data-select="history-period" aria-haspopup="listbox">February 2025 <i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <button class="select-button" id="history-rhythm" data-select="history-rhythm" aria-haspopup="listbox">All rhythms <i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+            <button class="text-button filter-clear" data-action="clear-filters">Clear filters</button>
+            <span class="inline-status" id="import-status" role="status"></span>
+          </div>
+          <div class="surface history-surface"><div class="records-header"><span>Date & time</span><span>Duration</span><span>Rhythm</span><span>Heart rate</span><span>Device</span><span></span></div><div id="history-rows" class="history-rows"></div><div class="pagination" id="history-pagination"></div></div>
+        </section>
+
+        <section class="view workspace-view" id="view-recording" aria-label="ECG recording details" hidden>
+          <div class="workspace-head"><div><button class="back-link text-button" data-view="history"><i class="ti ti-arrow-left" aria-hidden="true"></i>ECG history</button><h1 id="recording-title">February 12, 2025</h1></div><button class="primary-button" data-action="export-selected"><i class="ti ti-download" aria-hidden="true"></i>Download ECG</button></div>
+          <div class="record-detail-grid">
+            <section class="surface recording-surface"><div class="section-topline"><h2>ECG recording</h2><div class="segmented-control" aria-label="ECG presentation"><button class="is-active" data-record-mode="chart" aria-pressed="true"><i class="ti ti-chart-line" aria-hidden="true"></i>Signal</button><button data-record-mode="table" aria-pressed="false"><i class="ti ti-table" aria-hidden="true"></i>Data</button></div></div><div class="detail-chart chart-frame" id="detail-chart" tabindex="0" role="img" aria-label="ECG voltage over time. Use arrow keys to inspect values."></div><div class="signal-table" id="signal-table" hidden></div><div class="playback-controls"><button class="play-button icon-button-dark" id="playback-button" data-action="playback" aria-label="Play ECG recording"><svg class="solid-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg></button><span id="playback-time">0:00 / 0:06</span><div class="playback-track" role="progressbar" aria-label="Recording playback" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="playback-progress"></span></div><button class="text-button" data-action="reset-playback" aria-label="Restart playback"><i class="ti ti-rewind-backward-10" aria-hidden="true"></i></button></div></section>
+            <aside class="surface recording-info" id="recording-info"></aside>
+          </div>
+        </section>
+
+        <section class="view workspace-view" id="view-devices" aria-label="Devices" hidden>
+          <div class="workspace-head"><div><h1>Your devices</h1><p id="devices-summary">One place for every heartbeat.</p></div><button class="primary-button" data-action="add-device"><i class="ti ti-plus" aria-hidden="true"></i>Add device</button></div>
+          <div class="device-workspace" id="device-workspace"></div>
+        </section>
+
+        <section class="view workspace-view" id="view-insights" aria-label="Heart-rate insights" hidden>
+          <div class="workspace-head"><div><h1>Your heart, over time.</h1><p id="insights-date">February 6–12, 2025</p></div><button class="primary-button" data-action="export-heart-rate"><i class="ti ti-download" aria-hidden="true"></i>Export data</button></div>
+          <div class="filter-row"><button class="select-button" id="insights-period" data-select="insights-period" aria-haspopup="listbox">Current week <i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="segmented-control"><button class="is-active" data-insight-tab="resting" aria-pressed="true">Heart rate</button><button data-insight-tab="workout" aria-pressed="false">Last workout</button></div><div class="segmented-control insight-display"><button class="is-active" data-insight-mode="chart" aria-pressed="true"><i class="ti ti-chart-line" aria-hidden="true"></i></button><button data-insight-mode="table" aria-pressed="false" aria-label="View heart-rate data table"><i class="ti ti-table" aria-hidden="true"></i></button></div></div>
+          <div class="insights-grid"><section class="surface insights-surface"><div class="section-topline"><h2 id="insight-chart-title">Resting heart rate</h2><span class="chart-unit">bpm</span></div><div class="chart-legend" id="insight-legend"></div><div class="insight-chart chart-frame" id="insight-chart" tabindex="0" role="img" aria-label="Daily resting heart-rate trend. Use arrow keys to inspect values."></div><div id="insight-table" class="insight-table" hidden></div></section><aside class="insight-aside" id="insight-aside"></aside></div>
+        </section>
+
+        <section class="view workspace-view" id="view-profile" aria-label="Personal profile" hidden>
+          <div class="workspace-head"><div><h1>Your health profile</h1><p>Personal details that stay personal.</p></div><span class="profile-identifier">ID · 3KF2-DW90D-8A1</span></div>
+          <div class="profile-tabs segmented-control"><button class="is-active" data-profile-tab="personal" aria-pressed="true">Personal details</button><button data-profile-tab="health" aria-pressed="false">Health records</button><button data-view="settings">Preferences <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+          <div class="profile-workspace"><section class="surface profile-form-surface" id="profile-personal"><form id="profile-form" novalidate><div class="form-grid"><label class="form-field">Full name<input name="name" id="profile-name" type="text" value="Ryan Walker" maxlength="64" autocomplete="name" required></label><label class="form-field">Email address<input name="email" id="profile-email" type="email" value="ryan.cooper@gmail.com" maxlength="100" autocomplete="email" required></label><label class="form-field">Date of birth<input name="birth" id="profile-birth" type="text" value="20/07/1985" inputmode="numeric" maxlength="10" autocomplete="bday" aria-describedby="birth-format"><span class="field-help" id="birth-format">DD / MM / YYYY</span></label><label class="form-field">Gender<button class="select-button form-select" type="button" id="profile-gender" data-select="profile-gender" aria-haspopup="listbox">Male <i class="ti ti-chevron-down" aria-hidden="true"></i></button></label><label class="form-field form-field-wide">Phone number<input name="phone" id="profile-phone" type="tel" value="(444)-678-8721" maxlength="24" autocomplete="tel"></label></div><p class="form-message" id="profile-form-message" role="status"></p><div class="form-actions"><button type="button" class="secondary-button" data-action="reset-profile" disabled>Discard changes</button><button type="submit" class="primary-button" id="save-profile" disabled>Save changes <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div></form></section><section class="surface profile-health-surface" id="profile-health" hidden></section><div class="profile-photo-panel"><img src="assets/ryan-walker.webp" alt="Ryan Walker" draggable="false"><div><strong id="profile-photo-name">Ryan Walker</strong><span id="profile-photo-age">39 years</span></div></div></div>
+        </section>
+
+        <section class="view workspace-view" id="view-settings" aria-label="Privacy and display settings" hidden>
+          <div class="workspace-head"><div><h1>A little more peace of mind.</h1><p>Privacy & display</p></div><button class="secondary-button" data-view="profile">Your profile <i class="ti ti-arrow-up-right" aria-hidden="true"></i></button></div>
+          <div class="settings-grid"><section class="surface settings-surface"><h2>Make it yours</h2><div class="setting-row"><div><strong>Hide personal details</strong><p>Keep your name and contact details out of view.</p></div><button class="switch" role="switch" data-setting="privacy" aria-checked="false" aria-label="Hide personal details"><span></span></button></div><div class="setting-row"><div><strong>Reduce motion</strong><p>Use quieter transitions and a still recording visual.</p></div><button class="switch" role="switch" data-setting="motion" aria-checked="false" aria-label="Reduce motion"><span></span></button></div><div class="setting-row"><div><strong>High-contrast charts</strong><p>Give plotted values a stronger, patterned outline.</p></div><button class="switch" role="switch" data-setting="contrast" aria-checked="false" aria-label="High contrast charts"><span></span></button></div><div class="setting-row"><div><strong>Care team sharing</strong><p>Connect a care account to enable sharing.</p></div><button class="switch" role="switch" aria-checked="false" aria-label="Care team sharing unavailable without a care account" disabled><span></span></button></div></section><aside class="surface settings-data"><i class="ti ti-shield-lock" aria-hidden="true"></i><h2>Your data. Your choice.</h2><p>Your records stay in this browser session. Download a copy whenever you need it.</p><button class="secondary-button" data-action="export-all"><i class="ti ti-download" aria-hidden="true"></i>Export ECG recordings</button><button class="text-button danger-text" data-action="clear-records">Remove ECG recordings</button><div class="asset-credit">Watch image: <a href="https://pngimg.com/images/electronics/apple_watch" target="_blank" rel="noopener noreferrer">pngimg.com</a><br>CC BY-NC 4.0</div></aside></div>
+        </section>
+      </div>
+
+      <div class="dock-backplate" aria-hidden="true"></div>
+      <nav class="dock" aria-label="Main navigation">
+        <span class="dock-handle" aria-hidden="true"></span>
+        <button class="dock-button dock-history" data-view="history" aria-label="ECG history"><i class="ti ti-history" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 1-8.9 10h2a7 7 0 1 0 2.1-6L10 10H3V3l2.7 2.7A9 9 0 0 1 12 3Z"/><path d="M11 7h2v5.4l3.2 1.9-1 1.7-4.2-2.5Z"/></svg></button>
+        <button class="dock-button dock-devices" data-view="devices" aria-label="Devices"><i class="ti ti-device-watch" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 1h8l1 5H7Zm0 22h8l1-5H7Z"/><rect x="5" y="5" width="14" height="14" rx="5"/><path d="M20 9h1v5h-1Z"/></svg></button>
+        <button class="dock-button dock-dashboard is-active" data-view="dashboard" aria-label="Dashboard" aria-current="page"><i class="ti ti-layout-grid" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></button>
+        <button class="dock-button dock-insights" data-view="insights" aria-label="Heart-rate insights"><i class="ti ti-activity-heartbeat" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h5l2-7 4 15 2-6h5v-2h-6.5L14 13l-4-15-3.5 11H3Z"/></svg></button>
+        <button class="dock-button dock-profile" data-view="profile" aria-label="Your profile"><i class="ti ti-user" aria-hidden="true"></i><svg class="nav-filled" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3Z"/></svg></button>
+        <span class="dock-label" id="dock-label">Dashboard</span>
+      </nav>
+
+      <div class="popover option-panel" id="option-panel" role="listbox" hidden></div>
+      <div class="popover quick-menu" id="quick-menu" role="menu" hidden></div>
+      <div class="dialog-layer" id="dialog-layer" hidden><div class="scrim" data-action="close-dialog"></div><section class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description" tabindex="-1"><i class="ti ti-alert-circle dialog-symbol" aria-hidden="true"></i><h2 id="dialog-title"></h2><p id="dialog-description"></p><div class="dialog-actions"><button class="secondary-button" data-action="close-dialog">Keep it</button><button class="primary-button danger-button" id="dialog-confirm" data-action="confirm-dialog">Remove</button></div></section></div>
+      <div class="toast" id="toast" role="status" hidden><i class="ti ti-check" aria-hidden="true"></i><span></span></div>
+      <input type="file" id="import-file" accept=".csv,.json" hidden aria-label="Import an ECG file">
+    </main>
+  </div>
+</body>
+</html>
