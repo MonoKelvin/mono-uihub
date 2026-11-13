@@ -1,0 +1,17 @@
+{
+  "name": "Clevatess 创意工作室",
+  "slug": "clevatess-studio",
+  "page_type": "website",
+  "tags": ["创意机构", "作品集", "品牌设计"],
+  "palette": ["#dedfe0", "#f1f1ef", "#151515"],
+  "created_at": "2026-11-13 09:28:07",
+  "updated_at": "2026-11-13 09:28:07",
+  "imageToUI": "https://dribbble.com/shots/27709485-Creative-Agency-Website-Hero-section",
+  "history": [
+    {
+      "prompt": "还原这个UI原型网站。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "design-taste-frontend", "image-purify", "gsap-core", "gsap-timeline"]
+    }
+  ]
+}
