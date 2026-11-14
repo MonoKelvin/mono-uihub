@@ -1,0 +1,32 @@
+{
+  "name": "Dilocash — Digital Banking Landing",
+  "slug": "dilocash-banking",
+  "page_type": "website",
+  "palette": ["#191915", "#e8c24a", "#f8f6ee"],
+  "tags": ["数字银行", "虚拟卡", "落地页"],
+  "created_at": "2026-11-14 10:15:36",
+  "updated_at": "2026-11-14 10:56:44",
+  "imageToUI": "https://dribbble.com/shots/20981862-Digital-Banking-Website-Landing-Page",
+  "history": [
+    {
+      "prompt": "还原这个ui原型的网站。",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "首屏的图片手拿的卡片要真实卡片，上面有内容的，仔细参考。背景的渐变不要设计容器，否则边缘地方能明显看到",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "底部中心的徽标，外圈的文字要大一点；右侧的头像应该使用真实头像；首屏左侧大字跟像是代码类型的字体；",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "手拿的卡片上面内容布置不对，都超出卡片了，请重写生成",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}
