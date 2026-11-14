@@ -1,0 +1,21 @@
+{
+  "name": "Inputs · Light",
+  "slug": "inputs-light",
+  "page_type": "component",
+  "tags": ["表单", "筛选", "输入控件"],
+  "palette": ["#edf0f5", "#0878fa", "#101114"],
+  "created_at": "2026-11-14 13:29:44",
+  "updated_at": "2026-11-14 14:01:57",
+  "imageToUI": "https://dribbble.com/shots/16094644-Inputs-Component-Light-Part",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的组件。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui"]
+    },
+    {
+      "prompt": "Event Name 和 Start Date 区域有点问题，出现和组件紧凑的情况",
+      "model": "gpt-6.1-sol"
+    }
+  ]
+}

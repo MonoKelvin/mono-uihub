@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf0f5">
+  <title>Inputs · Light</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <main class="canvas" aria-label="Inputs collection">
+      <svg class="background-lines" viewBox="0 0 2000 1500" fill="none" aria-hidden="true">
+        <path d="M438-4C573 178 559 400 371 568S114 677-28 670M997 214C1150 90 1351 69 1493 193S1768 512 1730 668C1689 840 1482 1062 1194 1019S853 816 809 594M2005 1274C1786 972 1660 990 1443 1161S1218 1351 1204 1532"/>
+      </svg>
+      <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <symbol id="flag-de" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#ffdc43"/><path d="M.9 10.7a16 16 0 0 1 30.2 0" fill="#08090b"/><path d="M.9 10.7h30.2a16 16 0 0 1 0 10.6H.9a16 16 0 0 1 0-10.6" fill="#d80032"/></symbol>
+          <symbol id="flag-br" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#73a448"/><path d="m3 16 13-10 13 10-13 10Z" fill="#ffdf36"/><circle cx="16" cy="16" r="6.6" fill="#0066b2"/><path d="M10 13.7c4 .1 7.2 1.2 12 4.4" stroke="#fff" stroke-width="1.5" fill="none"/><circle cx="15" cy="19" r=".6" fill="#fff"/><circle cx="19" cy="20" r=".5" fill="#fff"/></symbol>
+          <symbol id="flag-au" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0761ac"/><path d="M3.3 6.3 15 15M15 2 2 15" stroke="#fff" stroke-width="4"/><path d="m3.3 6.3 11.7 8.7M15 2 2 15" stroke="#e53248" stroke-width="1.5"/><path d="M8 2v14M1 9h15" stroke="#fff" stroke-width="4"/><path d="M8 2v14M1 9h15" stroke="#e53248" stroke-width="2"/><path d="m10 21 .8 2 2.2.1-1.7 1.4.5 2.1-1.8-1.2-1.8 1.2.5-2.1-1.7-1.4 2.2-.1Zm14-7 .6 1.5 1.6.1-1.3 1 .4 1.6-1.3-.9-1.4.9.4-1.6-1.3-1 1.7-.1Zm-3 9 .6 1.5 1.6.1-1.3 1 .4 1.6-1.3-.9-1.4.9.4-1.6-1.3-1 1.7-.1Z" fill="#fff"/><circle cx="20" cy="8" r="1.2" fill="#fff"/><circle cx="27" cy="21" r="1" fill="#fff"/></symbol>
+          <symbol id="flag-ca" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#fff"/><path d="M7 2.8v26.4a16 16 0 0 1 0-26.4m18 0a16 16 0 0 1 0 26.4Z" fill="#df0036"/><path d="m16 8 1.6 4 2-1-.7 4 3-1.2-.7 2 1.3 1.5-5.2 3 .7 1.7-3-.4v3h-1v-3l-3 .4.7-1.7-5.2-3 1.3-1.5-.7-2 3 1.2-.7-4 2 1Z" transform="translate(3 2) scale(.8)" fill="#df0036"/></symbol>
+          <symbol id="flag-us" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#fff"/><path d="M3.8 5.7h24.4M.6 11h30.8M0 16.3h32M1.1 21.6h29.8M4.9 26.9h22.2" stroke="#ed1641" stroke-width="2.7"/><path d="M2.2 8A16 16 0 0 1 17.5.1V17H0A16 16 0 0 1 2.2 8" fill="#087bc9"/><path d="M7 5h1M12 5h1M3 9h1M8 9h1M13 9h1M3 13h1M8 13h1M13 13h1" stroke="#fff" stroke-width="1.8"/></symbol>
+          <symbol id="heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></symbol>
+          <symbol id="user-filled" viewBox="0 0 24 24"><circle cx="12" cy="6.5" r="4.3"/><path d="M4.5 18c0-4.6 15-4.6 15 0 0 5.3-15 5.3-15 0Z"/></symbol>
+          <symbol id="play-filled" viewBox="0 0 24 24"><path d="M8 5.6c0-1 1-1.5 1.7-.8l9 6.4c.7.5.7 1.2 0 1.7l-9 6.4c-.7.6-1.7.1-1.7-.8Z"/></symbol>
+        </defs>
+      </svg>
+
+      <section class="card countries" aria-label="Country selection">
+        <label class="search-field"><span class="search-symbol"><i class="ti ti-search" aria-hidden="true"></i></span><input id="country-search" type="search" placeholder="Search countries..." aria-label="Search countries" autocomplete="off"></label>
+        <div class="country-list" role="radiogroup" aria-label="Country">
+          <button class="country-row" type="button" role="radio" aria-checked="false" data-country="de"><svg class="flag" aria-hidden="true"><use href="#flag-de"/></svg><span>Germany ( +49 )</span><span class="country-check"><i class="ti ti-check" aria-hidden="true"></i></span></button>
+          <button class="country-row is-selected" type="button" role="radio" aria-checked="true" data-country="br"><svg class="flag" aria-hidden="true"><use href="#flag-br"/></svg><span>Brazil ( +55 )</span><span class="country-check"><i class="ti ti-check" aria-hidden="true"></i></span></button>
+          <button class="country-row" type="button" role="radio" aria-checked="false" data-country="au"><svg class="flag" aria-hidden="true"><use href="#flag-au"/></svg><span>Australia ( +61 )</span><span class="country-check"><i class="ti ti-check" aria-hidden="true"></i></span></button>
+          <button class="country-row" type="button" role="radio" aria-checked="false" data-country="ca"><svg class="flag" aria-hidden="true"><use href="#flag-ca"/></svg><span>Canada ( +1 )</span><span class="country-check"><i class="ti ti-check" aria-hidden="true"></i></span></button>
+          <p class="list-empty" hidden>No countries found.</p>
+        </div>
+        <div class="country-actions"><button class="primary" id="country-login" type="button">Login</button><button class="outline close-button" id="country-clear" type="button" aria-label="Clear country selection"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+        <p class="country-status inline-status" role="status"></p>
+      </section>
+
+      <section class="card filter-card" aria-label="Product filters">
+        <span class="badge filter-count" aria-label="2 active filters">2</span>
+        <div class="filter-tabs" role="tablist" aria-label="Filter category">
+          <span class="tab-marker" aria-hidden="true"></span>
+          <button id="tab-price" type="button" role="tab" aria-selected="true" aria-controls="panel-price" data-filter="price">Price Filter</button>
+          <button id="tab-colors" type="button" role="tab" aria-selected="false" aria-controls="panel-colors" data-filter="colors" tabindex="-1">Colors Filter</button>
+          <button id="tab-brand" type="button" role="tab" aria-selected="false" aria-controls="panel-brand" data-filter="brand" tabindex="-1">Brand Filter</button>
+        </div>
+        <div class="filter-body">
+          <div id="panel-price" class="filter-panel price-panel" role="tabpanel" aria-labelledby="tab-price">
+            <div class="dual-range" id="price-range" aria-label="Price range">
+              <div class="range-track"><span class="range-selected"></span></div>
+              <button type="button" class="range-knob range-min" id="min-handle" role="slider" aria-label="Minimum price" aria-valuemin="0" aria-valuemax="50000" aria-valuenow="12340.45"><span class="range-bubble"><svg aria-hidden="true"><use href="#play-filled"/></svg></span><span class="range-dot"></span></button>
+              <button type="button" class="range-knob range-max" id="max-handle" role="slider" aria-label="Maximum price" aria-valuemin="0" aria-valuemax="50000" aria-valuenow="40350.9"><span class="range-bubble"><svg aria-hidden="true"><use href="#play-filled"/></svg></span><span class="range-dot"></span></button>
+            </div>
+            <div class="price-fields"><label class="value-field"><span>From :</span><input id="price-from" type="text" inputmode="decimal" value="$ 12,340.45" aria-label="Minimum price" autocomplete="off"></label><label class="value-field"><span>To :</span><input id="price-to" type="text" inputmode="decimal" value="$ 40,350.90" aria-label="Maximum price" autocomplete="off"></label></div>
+          </div>
+          <div id="panel-colors" class="filter-panel choice-panel" role="tabpanel" aria-labelledby="tab-colors" hidden>
+            <p class="panel-caption">Choose your colors</p>
+            <div class="color-choices">
+              <button type="button" class="color-choice" data-color="blue" aria-pressed="false"><span class="swatch swatch-blue"><i class="ti ti-check" aria-hidden="true"></i></span>Blue</button>
+              <button type="button" class="color-choice" data-color="black" aria-pressed="false"><span class="swatch swatch-black"><i class="ti ti-check" aria-hidden="true"></i></span>Black</button>
+              <button type="button" class="color-choice" data-color="pink" aria-pressed="false"><span class="swatch swatch-pink"><i class="ti ti-check" aria-hidden="true"></i></span>Pink</button>
+              <button type="button" class="color-choice" data-color="white" aria-pressed="false"><span class="swatch swatch-white"><i class="ti ti-check" aria-hidden="true"></i></span>White</button>
+            </div>
+          </div>
+          <div id="panel-brand" class="filter-panel choice-panel" role="tabpanel" aria-labelledby="tab-brand" hidden>
+            <p class="panel-caption">Choose your brands</p>
+            <div class="brand-choices"><button type="button" data-brand="ace" aria-pressed="false"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span>Ace Design</button><button type="button" data-brand="framer" aria-pressed="false"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span>Framer</button><button type="button" data-brand="figma" aria-pressed="false"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span>Figma</button><button type="button" disabled><span class="diamond-check"></span>Invision</button></div>
+          </div>
+        </div>
+        <div class="filter-actions"><button class="primary" id="apply-filter" type="button">Apply</button><button class="outline" id="cancel-filter" type="button">Cancel</button></div>
+        <p class="filter-status inline-status" role="status"></p>
+      </section>
+
+      <section class="card username-card" aria-label="Username input">
+        <label class="icon-field"><svg class="field-icon user-icon" aria-hidden="true"><use href="#user-filled"/></svg><span class="field-content"><span class="field-label">Username</span><input type="text" id="standalone-username" value="Amirbaqian" aria-label="Username" autocomplete="off"><span class="input-caret" aria-hidden="true"></span></span></label>
+      </section>
+
+      <form class="card login-card" id="login-form" aria-label="Login" novalidate>
+        <label class="icon-field emphasized"><svg class="field-icon user-icon" aria-hidden="true"><use href="#user-filled"/></svg><span class="field-content"><span class="field-label">Username</span><input type="text" id="login-username" value="Amirbaqian" aria-label="Login username" autocomplete="off" aria-describedby="login-status"></span></label>
+        <label class="icon-field password-field"><i class="ti ti-shield-lock field-icon" aria-hidden="true"></i><span class="field-content"><span class="field-label">Password</span><input type="password" id="login-password" aria-label="Password" autocomplete="off" aria-describedby="login-status"></span><button type="button" class="password-toggle" id="password-toggle" aria-label="Show password" aria-pressed="false"><i class="ti ti-eye-off" aria-hidden="true"></i></button></label>
+        <div class="remember-row"><label class="remember-control"><input id="remember-me" type="checkbox" checked><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span><span id="remember-label">Remember me</span></label></div>
+        <p id="login-status" class="login-status inline-status" role="status"></p>
+        <button type="submit" class="primary login-button" id="login-submit">Login</button>
+      </form>
+
+      <section class="card segment-card" aria-label="Filter mode">
+        <span class="badge product-count" aria-label="2 product filters">2</span>
+        <div class="segment-buttons"><span class="segment-indicator" aria-hidden="true"></span><button type="button" data-mode="product" aria-pressed="false">Product Filter</button><button type="button" data-mode="price" aria-pressed="true">Price Filter</button></div>
+      </section>
+
+      <section class="card event-card" aria-label="Event details">
+        <div class="event-field-group">
+          <i class="ti ti-users-group event-icon" aria-hidden="true"></i>
+          <label class="event-name"><span class="field-label">Event Name</span><input id="event-name" type="text" value="Meeting with Ace’s member" aria-label="Event name" autocomplete="off" maxlength="80"></label>
+        </div>
+        <span class="event-divider" aria-hidden="true"></span>
+        <div class="event-field-group">
+          <i class="ti ti-calendar-event event-icon" aria-hidden="true"></i>
+          <label class="event-date"><span class="field-label">Start Date</span><input id="event-date" type="text" value="November 14, 2021" aria-label="Start date" autocomplete="off" aria-describedby="event-status"></label>
+        </div>
+        <span class="event-divider" aria-hidden="true"></span>
+        <button type="button" class="event-switch" id="event-switch" role="switch" aria-checked="true" aria-label="Event reminders"><span>On</span><span class="switch-diamond"></span></button>
+        <p id="event-status" class="event-status inline-status" role="status"></p>
+      </section>
+
+      <button class="card like-button" id="like-button" type="button" aria-pressed="true" aria-label="Like"><svg class="heart-icon" aria-hidden="true"><use href="#heart"/></svg><span class="badge like-count" aria-label="10 likes">10</span></button>
+
+      <section class="card editor-card" aria-label="Message editor">
+        <div class="editor-surface"><div id="message-editor" class="message-editor" contenteditable="true" role="textbox" aria-label="Message" aria-multiline="true" data-placeholder="Enter your message here..."></div>
+          <div class="editor-toolbar" role="toolbar" aria-label="Text formatting">
+            <div class="tool-group"><button type="button" data-command="justifyLeft" aria-label="Align left" aria-pressed="false"><i class="ti ti-align-left" aria-hidden="true"></i></button><button type="button" data-command="justifyCenter" aria-label="Align center" aria-pressed="false"><i class="ti ti-align-center" aria-hidden="true"></i></button><button type="button" data-command="justifyRight" aria-label="Align right" aria-pressed="false"><i class="ti ti-align-right" aria-hidden="true"></i></button></div>
+            <div class="tool-group"><button type="button" id="text-style" aria-label="Text style" aria-expanded="false" aria-controls="text-menu"><i class="ti ti-text-size" aria-hidden="true"></i></button><button type="button" data-command="italic" aria-label="Italic" aria-pressed="false"><i class="ti ti-italic" aria-hidden="true"></i></button><button type="button" data-command="bold" aria-label="Bold" aria-pressed="false"><i class="ti ti-bold" aria-hidden="true"></i></button><button type="button" data-command="underline" aria-label="Underline" aria-pressed="false"><i class="ti ti-underline" aria-hidden="true"></i></button><button type="button" data-command="strikeThrough" aria-label="Strikethrough" aria-pressed="false"><i class="ti ti-strikethrough" aria-hidden="true"></i></button></div>
+            <div class="tool-group"><button type="button" id="line-height" aria-label="Increase line spacing" aria-pressed="false"><i class="ti ti-line-height" aria-hidden="true"></i></button></div>
+          </div>
+          <div id="text-menu" class="dropdown text-menu" role="menu" aria-label="Text style" hidden><button type="button" role="menuitemradio" aria-checked="true" data-text-style="body">Body text</button><button type="button" role="menuitemradio" aria-checked="false" data-text-style="heading">Heading</button><button type="button" role="menuitemradio" aria-checked="false" disabled>Caption</button></div>
+        </div>
+      </section>
+
+      <section class="card apps-card" aria-label="Application selection">
+        <label class="search-field"><span class="search-symbol"><i class="ti ti-search" aria-hidden="true"></i></span><input id="app-search" type="search" placeholder="Search application..." aria-label="Search applications" autocomplete="off"></label>
+        <div class="app-list" role="radiogroup" aria-label="Application">
+          <button type="button" class="app-row" data-app="Framer" role="radio" aria-checked="false"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span><span>Framer</span></button>
+          <button type="button" class="app-row is-selected" data-app="Invision Studio" role="radio" aria-checked="true"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span><span>Invision Studio</span></button>
+          <button type="button" class="app-row" data-app="Adobe XD" role="radio" aria-checked="false"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span><span>Adobe XD</span></button>
+          <button type="button" class="app-row" data-app="Figma" role="radio" aria-checked="false"><span class="diamond-check"><i class="ti ti-check" aria-hidden="true"></i></span><span>Figma</span></button>
+          <p class="list-empty" hidden>No applications found.</p>
+        </div>
+        <button type="button" class="primary round-button app-continue" id="app-continue" aria-label="Use Invision Studio"><svg aria-hidden="true"><use href="#play-filled"/></svg></button>
+        <p class="app-status inline-status" role="status"></p>
+      </section>
+
+      <section class="card upload-card" aria-label="Picture upload">
+        <div class="upload-surface" id="drop-zone">
+          <div class="upload-idle" id="upload-idle"><i class="ti ti-upload upload-icon" aria-hidden="true"></i><h2>Upload pictures</h2><p>Videos must be less than <strong>30 MB</strong><br>and photos must be less than <strong>2 MB</strong><br>in size.</p></div>
+          <div class="upload-result" id="upload-result" hidden><div class="upload-preview" id="upload-preview"></div><p class="file-name" id="file-name"></p><p class="file-detail" id="file-detail"></p><button type="button" class="remove-file" id="remove-file" aria-label="Remove file"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+          <p class="upload-status inline-status" id="upload-status" role="status"></p>
+        </div>
+        <input class="visually-hidden" id="file-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm" tabindex="-1" aria-label="Choose a picture or video">
+        <button type="button" class="primary upload-button" id="upload-button">Upload</button>
+      </section>
+
+      <section class="card phone-card" aria-label="Phone number">
+        <button type="button" class="phone-prefix" id="phone-prefix" aria-label="Country code: United States +1" aria-expanded="false" aria-controls="phone-menu"><svg class="flag" aria-hidden="true"><use href="#flag-us"/></svg><span>+1</span></button>
+        <label class="phone-number"><span class="field-label">Number</span><input id="phone-number" type="tel" value="207 9042 301" aria-label="Phone number" autocomplete="off"></label>
+        <button type="button" class="primary round-button phone-submit" id="phone-submit" aria-label="Confirm phone number"><svg aria-hidden="true"><use href="#play-filled"/></svg></button>
+        <div class="dropdown phone-menu" id="phone-menu" role="menu" aria-label="Calling code" hidden><button type="button" role="menuitemradio" aria-checked="true" data-prefix="us"><svg class="flag" aria-hidden="true"><use href="#flag-us"/></svg>United States <span>+1</span></button><button type="button" role="menuitemradio" aria-checked="false" data-prefix="de"><svg class="flag" aria-hidden="true"><use href="#flag-de"/></svg>Germany <span>+49</span></button><button type="button" role="menuitemradio" aria-checked="false" data-prefix="br"><svg class="flag" aria-hidden="true"><use href="#flag-br"/></svg>Brazil <span>+55</span></button><button type="button" role="menuitemradio" aria-checked="false" data-prefix="au"><svg class="flag" aria-hidden="true"><use href="#flag-au"/></svg>Australia <span>+61</span></button><button type="button" role="menuitemradio" aria-checked="false" data-prefix="ca"><svg class="flag" aria-hidden="true"><use href="#flag-ca"/></svg>Canada <span>+1</span></button><button type="button" role="menuitem" disabled>More countries</button></div>
+        <p class="phone-status inline-status" role="status"></p>
+      </section>
+      <svg class="ace-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="m20 50-7 .1c-5 0-8-3-5.5-8L28 5c2-3.6 6-3.6 8 0l20.5 37c2.5 5-.5 8-5.5 8H40M13 42l19-29 19 29M20 49h3m17 0h-3" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </main>
+  </div>
+</body>
+</html>
