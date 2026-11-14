@@ -1,0 +1,31 @@
+{
+  "name": "TRAVEX 山地车",
+  "slug": "travex-bikes",
+  "page_type": "website",
+  "tags": ["电商", "山地车", "产品展示"],
+  "palette": ["#f2f1eb", "#59712c", "#142020"],
+  "created_at": "2026-11-14 21:09:02",
+  "updated_at": "2026-11-14 21:53:25",
+  "imageToUI": "https://dribbble.com/shots/27775583-TRAVEX-Premium-Mountain-Bike-Product-Showcase-UI-UX",
+  "history": [
+    {
+      "prompt": "还原这个UI网页。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "oil-ui", "animate", "image-purify"],
+      "image_generation": [
+        {
+          "prompt": "Landscape 16:9 photograph of a premium olive green full suspension trail mountain bike standing on a rocky alpine ridge, large bicycle occupies the right 62 percent of the composition, rear wheel near the horizontal center and front wheel on the right, viewed from front-right three quarter angle at wheel height, black knobby Maxxis tires, gold anodized front suspension fork, black saddle and handlebars, sculpted olive carbon frame with white TRAVEX lettering on the down tube. Entire bike and both wheels fit within the frame with generous safe margins, wheels touch the rocks in the lower quarter. Layered blue grey mountains behind, distant sunlit mountain peaks on the right, pale ivory overcast sky fills the upper half and left 40 percent with open negative space, soft warm late afternoon light from upper right, sparse moss on foreground stone. Photograph only, without headings, navigation, buttons, borders or any UI.",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "A premium olive green full suspension carbon trail mountain bike, entire bicycle seen from front-right three quarter angle at wheel height, rear wheel on the left, front wheel on the right, black knobby Maxxis tires with pale grey sidewall lettering, gold anodized front suspension fork, black flat handlebar and saddle, sculpted olive green carbon frame, white TRAVEX lettering on the diagonal down tube, black rear shock inside the frame, disc brakes and silver spoke wheels. Soft warm light from upper right, accurate bicycle geometry, isolated whole bicycle centered with generous margins, genuine transparent background.",
+          "model": "agnes-image-2.5-flash"
+        },
+        {
+          "prompt": "Extend the supplied photograph into a wide 16:9 landscape composition. Preserve the same olive green mountain bike, its three quarter perspective, gold fork, black tires, material and warm light. Place the entire large bicycle in the right 60 percent of the wide frame, rear wheel around x=45 percent and front wheel around x=85 percent, handlebar at y=18 percent, both complete wheels resting on rocks at y=88 percent. Extend the same blue grey alpine mountain landscape and rocky ground to the left. The upper left 42 percent is calm pale ivory sky with low mountains beginning below y=60 percent. Only one bicycle, full silhouette uncropped, a natural photograph without headings, navigation or other UI.",
+          "model": "agnes-image-2.5-flash"
+        }
+      ]
+    }
+  ]
+}

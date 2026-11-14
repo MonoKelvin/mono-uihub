@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f2f1eb">
+  <meta name="description" content="TRAVEX mountain bikes. Explore the Ridgex collection and find your next trail companion.">
+  <title>TRAVEX — Built for Bigger Trails</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="TRAVEX home">
+      <svg class="brand-mark" viewBox="0 0 54 30" aria-hidden="true"><path d="M0 28 18 8l7 7L13 28Zm18 0L30 13 42 28h12L29 0 4 28Zm9 0 4-6 5 6Z" fill="currentColor"/></svg>
+      <span>TRAVEX</span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#bikes" data-nav="bikes" aria-current="page">Bikes</a>
+      <a href="#accessories" data-nav="accessories">Accessories</a>
+      <a href="#gear" data-nav="gear">Gear</a>
+      <a href="#about" data-nav="about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#search" class="icon-button" aria-label="Search products"><i class="ti ti-search" aria-hidden="true"></i></a>
+      <a href="#account" class="icon-button" aria-label="Your account"><i class="ti ti-user" aria-hidden="true"></i></a>
+      <a href="#bag" class="icon-button bag-link" aria-label="Shopping bag, 0 items"><i class="ti ti-shopping-bag" aria-hidden="true"></i><span class="bag-count">0</span></a>
+      <a href="#product/ridgex-pro" class="header-cta" aria-label="Discover Ridgex Pro"><i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="home-view" class="view hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <picture><source media="(max-width: 850px)" srcset="./assets/mountain-mobile.webp"><img class="hero-landscape" src="./assets/hero-forest.webp" alt="" fetchpriority="high"></picture>
+        <img class="hero-photo" src="./assets/hero-forest.webp" alt="" fetchpriority="high">
+        <img class="hero-mobile-bike" src="./assets/bike-forest.webp" alt="">
+        <div class="hero-shade"></div>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">TRAIL <span>/</span> ALL MOUNTAIN</p>
+        <h1 id="hero-title">Built for<br><span>Bigger Trails</span></h1>
+        <a href="#bikes" class="explore-link"><span class="round-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></span><span>Explore Bikes</span></a>
+      </div>
+      <div class="hero-image-state" hidden role="status">
+        <i class="ti ti-photo" aria-hidden="true"></i><p>The view couldn't load.</p><button class="text-button" id="retry-hero" type="button">Try again <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+      </div>
+      <div class="hero-bottom">
+        <div class="gallery-controls" aria-label="Bike detail gallery">
+          <button class="gallery-arrow" type="button" data-gallery-step="-1" aria-label="Previous detail"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+          <div class="thumbnails">
+            <button type="button" class="thumbnail" data-gallery="frame" aria-label="View frame detail" aria-pressed="false"><img src="./assets/detail-frame.webp" alt="" loading="eager"></button>
+            <button type="button" class="thumbnail" data-gallery="suspension" aria-label="View suspension detail" aria-pressed="false"><img src="./assets/detail-suspension.webp" alt="" loading="eager"></button>
+            <button type="button" class="thumbnail" data-gallery="drivetrain" aria-label="View drivetrain detail" aria-pressed="false"><img src="./assets/detail-drivetrain.webp" alt="" loading="eager"></button>
+          </div>
+          <button class="gallery-arrow" type="button" data-gallery-step="1" aria-label="Next detail"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+          <button class="gallery-reset" type="button" hidden>Full bike <i class="ti ti-arrows-minimize" aria-hidden="true"></i></button>
+        </div>
+        <a class="hero-model" href="#product/ridgex-pro"><span class="model-rule"></span><span class="model-name">RIDGEX PRO</span><span class="model-category">TRAIL / ALL MOUNTAIN</span></a>
+        <div class="color-options hero-colors" aria-label="Frame color">
+          <button type="button" class="color-swatch is-selected" data-color="forest" style="--swatch: #63743a" aria-label="Forest olive" aria-pressed="true"></button>
+          <button type="button" class="color-swatch" data-color="carbon" style="--swatch: #263133" aria-label="Carbon black" aria-pressed="false"></button>
+          <button type="button" class="color-swatch" data-color="silver" style="--swatch: #d5d6d2" aria-label="Glacier silver" aria-pressed="false"></button>
+        </div>
+      </div>
+      <p class="sr-only" id="gallery-status" aria-live="polite">Ridgex Pro in Forest olive, full bike view.</p>
+    </section>
+
+    <section id="catalog-view" class="view content-view" hidden aria-labelledby="catalog-title">
+      <div class="page-heading"><div><p class="eyebrow" id="catalog-eyebrow">FIND YOUR LINE</p><h1 id="catalog-title" tabindex="-1">The bike collection.</h1></div><p class="heading-note" id="catalog-note">From the first climb<br>to the last descent.</p></div>
+      <div class="catalog-tools">
+        <form class="search-field" id="search-form" role="search"><i class="ti ti-search" aria-hidden="true"></i><label for="product-search" class="sr-only">Search products</label><input type="search" id="product-search" placeholder="Search the collection" autocomplete="off"><button type="button" id="clear-search" aria-label="Clear search" hidden><i class="ti ti-x" aria-hidden="true"></i></button></form>
+        <div class="category-filters" aria-label="Frame color"><button type="button" data-filter="all" aria-pressed="true">All colors</button><button type="button" data-filter="forest" aria-pressed="false">Forest olive</button><button type="button" data-filter="carbon" aria-pressed="false">Carbon black</button><button type="button" data-filter="silver" aria-pressed="false">Glacier silver</button></div>
+        <div class="sort-select"><button type="button" id="sort-trigger" aria-expanded="false" aria-controls="sort-panel"><span id="sort-label">Featured</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="select-panel" id="sort-panel" role="listbox" aria-label="Sort products" hidden><button type="button" role="option" aria-selected="true" data-sort="featured">Featured <i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="option" aria-selected="false" data-sort="price-asc">Price: low to high</button><button type="button" role="option" aria-selected="false" data-sort="price-desc">Price: high to low</button><button type="button" role="option" aria-selected="false" disabled>Newest arrivals · Coming soon</button></div></div>
+      </div>
+      <p class="result-count" id="result-count" aria-live="polite"></p>
+      <div class="product-grid" id="product-grid"></div>
+      <div class="empty-state" id="catalog-empty" hidden><i class="ti ti-search" aria-hidden="true"></i><h2>No trails found.</h2><p>Try another search or clear your filters.</p><button type="button" class="primary-button" id="reset-filters">View the collection <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+    </section>
+
+    <section id="detail-view" class="view content-view" hidden aria-labelledby="detail-title">
+      <a class="back-link" id="detail-back" href="#bikes"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to the collection</a>
+      <div class="product-detail">
+        <div class="detail-visual"><img id="detail-image" src="./assets/bike-forest.webp" alt="Ridgex Pro mountain bike"><span class="detail-image-label" id="detail-image-label">RIDGEX PRO</span></div>
+        <div class="detail-info"><p class="eyebrow" id="detail-category">TRAIL / ALL MOUNTAIN</p><h1 id="detail-title" tabindex="-1">Ridgex Pro</h1><p class="detail-description" id="detail-description"></p><p class="detail-price" id="detail-price"></p>
+          <div class="option-group" id="detail-colors-group"><div class="option-label"><span>Color</span><span id="selected-color">Forest olive</span></div><div class="color-options detail-colors" aria-label="Choose frame color"><button type="button" class="color-swatch is-selected" data-color="forest" style="--swatch: #63743a" aria-label="Forest olive" aria-pressed="true"></button><button type="button" class="color-swatch" data-color="carbon" style="--swatch: #263133" aria-label="Carbon black" aria-pressed="false"></button><button type="button" class="color-swatch" data-color="silver" style="--swatch: #d5d6d2" aria-label="Glacier silver" aria-pressed="false"></button></div></div>
+          <fieldset class="size-group"><legend class="option-label">Frame size</legend><div class="size-options" id="size-options"></div><p class="size-note" id="size-note">Select your frame size.</p></fieldset>
+          <button type="button" class="primary-button add-button" id="add-to-bag" disabled>Add to bag <i class="ti ti-plus" aria-hidden="true"></i></button><p class="inline-status" id="add-status" role="status"></p>
+          <details class="specs-disclosure" open><summary>Specifications <i class="ti ti-plus" aria-hidden="true"></i></summary><dl class="spec-list" id="spec-list"></dl></details>
+        </div>
+      </div>
+    </section>
+
+    <section id="bag-view" class="view content-view" hidden aria-labelledby="bag-title">
+      <div class="page-heading"><div><p class="eyebrow">READY FOR YOUR NEXT RIDE</p><h1 id="bag-title" tabindex="-1">Your bag.</h1></div><a href="#bikes" class="back-link">Keep exploring <i class="ti ti-arrow-right" aria-hidden="true"></i></a></div>
+      <div class="empty-state" id="bag-empty"><i class="ti ti-shopping-bag" aria-hidden="true"></i><h2>Your next adventure starts here.</h2><p>Find a bike. Pick your line.</p><a class="primary-button" href="#bikes">Explore bikes <i class="ti ti-arrow-right" aria-hidden="true"></i></a></div>
+      <div class="bag-layout" id="bag-content" hidden><div class="bag-items" id="bag-items"></div><aside class="bag-summary"><h2>Ride summary</h2><dl><div><dt>Subtotal</dt><dd id="bag-subtotal"></dd></div><div><dt>Delivery</dt><dd>Calculated at checkout</dd></div><div class="total-row"><dt>Estimated total</dt><dd id="bag-total"></dd></div></dl><button type="button" class="primary-button" id="save-bag">Save your selection <i class="ti ti-download" aria-hidden="true"></i></button><p class="inline-status" id="save-status" role="status"></p><p class="summary-note">Download your selected bikes and gear to take to a TRAVEX retailer.</p></aside></div>
+    </section>
+
+    <section id="account-view" class="view content-view" hidden aria-labelledby="account-title">
+      <div class="account-layout"><div class="account-story"><img src="./assets/hero-forest.webp" alt="A mountain bike ready for an alpine trail"><div><p class="eyebrow">THE TRAIL IS CALLING</p><h2>A little further.<br>A little wilder.</h2></div></div><div class="account-panel"><div id="account-form-view"><p class="eyebrow">YOUR TRAVEX</p><h1 id="account-title" tabindex="-1">Welcome back.</h1><p class="account-intro">Sign in to keep your rides together.</p><form id="account-form" novalidate><div class="field-group"><label for="account-email">Email address</label><input type="email" id="account-email" placeholder="you@example.com" autocomplete="email" required aria-describedby="email-error"><p class="field-error" id="email-error"></p></div><div class="field-group"><label for="account-password">Password</label><div class="password-field"><input type="password" id="account-password" placeholder="At least 6 characters" autocomplete="current-password" required minlength="6" aria-describedby="password-error"><button type="button" id="toggle-password" aria-label="Show password" aria-pressed="false"><i class="ti ti-eye" aria-hidden="true"></i></button></div><p class="field-error" id="password-error"></p></div><button type="submit" class="primary-button" id="sign-in">Sign in <i class="ti ti-arrow-right" aria-hidden="true"></i></button><p class="inline-status" id="account-status" role="status"></p></form></div><div id="account-signed-in" hidden><p class="eyebrow">YOUR TRAVEX</p><h1>Good to see you.</h1><p class="account-email" id="signed-in-email"></p><div class="account-links"><a href="#bag">Your shopping bag <i class="ti ti-arrow-right" aria-hidden="true"></i></a><a href="#bikes">Find your next bike <i class="ti ti-arrow-right" aria-hidden="true"></i></a></div><button type="button" class="text-button" id="sign-out">Sign out <i class="ti ti-logout" aria-hidden="true"></i></button></div></div></div>
+    </section>
+
+    <section id="about-view" class="view content-view" hidden aria-labelledby="about-title"><div class="about-layout"><div><p class="eyebrow">BEYOND THE EVERYDAY</p><h1 id="about-title" tabindex="-1">The way out<br>is the way forward.</h1><p>TRAVEX is built around a simple feeling: the one you get when the pavement ends.</p><p>We make mountain bikes for the long way home. For quiet climbs, unfamiliar corners, and the trails that keep you coming back.</p><a href="#bikes" class="explore-link"><span class="round-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></span>Find your ride</a></div><img src="./assets/hero-forest.webp" alt="A green mountain bike against a sunlit mountain landscape"></div></section>
+  </main>
+  <footer class="site-footer" hidden><a class="footer-brand" href="#home">TRAVEX</a><p>Take the long way home.</p><a class="image-credit" href="https://pngimg.com/" target="_blank" rel="noopener noreferrer">Gear imagery: pngimg.com · CC BY-NC 4.0</a><span>© 2026 TRAVEX</span></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
