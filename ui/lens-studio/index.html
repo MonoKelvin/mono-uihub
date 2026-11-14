@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8dbdbd">
+  <meta name="description" content="Studio — Konica Hexanon AR lens collection.">
+  <title>STUDIO — Konica Hexanon AR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <article class="canvas" aria-label="Konica Hexanon AR product" data-view="overview">
+      <div class="color-band" aria-hidden="true"></div>
+      <div class="wordmark" aria-hidden="true">KONICA</div>
+      <canvas class="patina" aria-hidden="true"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+
+      <header class="header">
+        <button class="studio" type="button" aria-label="Studio, return to product">STUDIO</button>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="product-menu">
+          <i class="ti ti-menu-2" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="product-copy">
+        <h1>KONICA<br>HEXANON AR</h1>
+        <p class="lens-spec">24–40mm F1.8</p>
+        <p class="lens-diameter">Φ55mm</p>
+      </div>
+      <figure class="lens-figure">
+        <img class="lens-image" src="./assets/lens.webp" width="496" height="496" alt="Front view of a black camera lens with concentric rings and warm glass reflections" fetchpriority="high" draggable="false">
+        <div class="image-error" hidden>
+          <p>Image unavailable</p>
+          <button type="button" class="text-button" id="retry-image">Reload image</button>
+        </div>
+      </figure>
+      <img class="accessory" src="./assets/speedlight.webp" width="506" height="1146" alt="Black photographic flash unit" draggable="false">
+
+      <div class="purchase-area">
+        <section class="overview-view" aria-label="Purchase lens">
+          <p class="price">$1,096.95</p>
+          <button class="buy-button" id="buy-now" type="button">BUY NOW</button>
+        </section>
+        <section class="specification-view" aria-labelledby="specifications-title" hidden>
+          <h2 id="specifications-title">THE DETAILS</h2>
+          <dl class="specifications">
+            <div><dt>Focal length</dt><dd>40mm</dd></div>
+            <div><dt>Maximum aperture</dt><dd>f/1.8</dd></div>
+            <div><dt>Lens mount</dt><dd>Konica AR</dd></div>
+            <div><dt>Filter diameter</dt><dd>55mm</dd></div>
+          </dl>
+          <button type="button" class="buy-button" data-action="buy">BUY NOW</button>
+        </section>
+        <section class="bag-view" aria-labelledby="bag-title" hidden>
+          <h2 id="bag-title" tabindex="-1">YOUR BAG</h2>
+          <div class="bag-empty">
+            <p>Your bag is empty.</p>
+            <button type="button" class="buy-button" data-action="overview">BACK TO LENS</button>
+          </div>
+          <div class="bag-content" hidden>
+            <p class="bag-product">Konica Hexanon AR</p>
+            <p class="bag-description">40mm · f/1.8</p>
+            <div class="quantity-row" aria-label="Quantity">
+              <button class="quantity-button" id="decrease" type="button" aria-label="Decrease quantity"><i class="ti ti-minus" aria-hidden="true"></i></button>
+              <output id="quantity" aria-label="Quantity">1</output>
+              <button class="quantity-button" id="increase" type="button" aria-label="Increase quantity"><i class="ti ti-plus" aria-hidden="true"></i></button>
+              <button class="text-button remove-button" id="remove" type="button">Remove</button>
+            </div>
+            <p class="bag-total" id="bag-total">$1,096.95</p>
+            <button class="buy-button" id="save-bag" type="button">SAVE BAG</button>
+            <p class="bag-status" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+      </div>
+
+      <nav class="product-menu" id="product-menu" aria-label="Product menu" hidden>
+        <button type="button" data-action="overview" aria-current="page">Overview</button>
+        <button type="button" data-action="specifications">Specifications</button>
+        <button type="button" data-action="bag">Shopping bag <span class="bag-count">0</span></button>
+        <a class="asset-credit" href="https://pngimg.com/image/79069" target="_blank" rel="noopener noreferrer">Lens photo: pngimg · CC BY-NC 4.0</a>
+      </nav>
+      <p class="announcement" aria-live="polite"></p>
+    </article>
+  </main>
+</body>
+</html>

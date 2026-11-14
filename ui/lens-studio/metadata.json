@@ -1,0 +1,17 @@
+{
+    "name": "Lens Studio 镜头展示",
+    "slug": "lens-studio",
+    "page_type": "component",
+    "tags": ["摄影", "商品展示", "Konica"],
+    "palette": ["#8dbdbd", "#08d62b", "#0d1b1b"],
+    "created_at": "2026-11-14 16:00:25",
+    "updated_at": "2026-11-14 16:20:31",
+    "imageToUI": "https://dribbble.com/shots/19667148-Lens-Studio-Website",
+    "history": [
+        {
+            "prompt": "还原这个UI组件。",
+            "model": "gpt-6.1-sol",
+            "skills": ["mono-ui-prototype", "frontend-design"]
+        }
+    ]
+}
