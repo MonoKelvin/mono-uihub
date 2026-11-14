@@ -1,0 +1,17 @@
+{
+  "name": "Authentic Apparel 电商分析",
+  "slug": "authentic-analytics",
+  "page_type": "website",
+  "palette": ["#f3f4f1", "#dec9c4", "#171916"],
+  "tags": ["电商", "数据可视化", "服装"],
+  "created_at": "2026-11-14 22:40:13",
+  "updated_at": "2026-11-14 23:15:48",
+  "imageToUI": "https://dribbble.com/shots/6180146-eCommerce-Analytics",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的单页面的网站，实现对应的流畅交互动画。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "dataviz", "animate", "gsap-timeline"]
+    }
+  ]
+}

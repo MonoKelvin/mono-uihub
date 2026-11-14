@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f4f1">
+  <title>Authentic Apparel — eCommerce Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="site-shell" id="site-shell">
+    <aside class="analytics-rail" id="analytics-rail" aria-label="Store analytics">
+      <div class="analytics-heading">
+        <button class="icon-button close-analytics" data-action="toggle-analytics" aria-label="Hide analytics"><i class="ti ti-x" aria-hidden="true"></i></button>
+        <span>Analytics</span>
+      </div>
+      <div class="analytics-content" id="analytics-content">
+        <section class="metric-block customer-block" aria-labelledby="customer-heading">
+          <h2 id="customer-heading">Customer</h2>
+          <div class="mini-chart customer-chart" tabindex="0" role="img" aria-label="Daily first-time and returning customers. Use the arrow keys to explore the chart.">
+            <svg id="customer-plot" viewBox="0 0 180 110" aria-hidden="true">
+              <defs><pattern id="return-pattern" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="2"/></pattern></defs>
+              <path class="customer-context" id="customer-context" d="M4 102 L26 87 L48 58 L70 15 L92 50 L114 68 L136 92 L176 102 Z"/>
+              <path class="customer-primary" id="customer-primary" d="M4 102 L26 98 L48 79 L70 44 L92 68 L114 61 L136 82 L158 101 L176 102 Z"/>
+              <line class="chart-baseline" x1="4" y1="103" x2="176" y2="103"/>
+              <line class="chart-crosshair" id="customer-crosshair" x1="70" y1="8" x2="70" y2="103"/>
+            </svg>
+            <div class="chart-tooltip" id="customer-tooltip" hidden></div>
+          </div>
+          <div class="chart-legend"><span><b class="legend-key legend-key--context"></b>Return</span><span><b class="legend-key"></b>1st-time</span></div>
+        </section>
+        <section class="metric-block sales-block" aria-labelledby="sales-heading">
+          <h2 id="sales-heading">Sales</h2>
+          <div class="mini-chart sales-chart" id="sales-chart">
+            <div class="bar-grid" id="sales-bars" aria-label="Sales by day"></div>
+            <div class="chart-tooltip" id="sales-tooltip" hidden></div>
+          </div>
+          <div class="sales-total"><span id="sales-total">$905.05</span><span class="metric-delta negative"><i class="ti ti-arrow-down" aria-hidden="true"></i><span id="sales-delta">5%</span></span></div>
+          <div class="range-caption" id="range-caption">Nov 8 – 14</div>
+        </section>
+        <section class="metric-block conversion-block" aria-labelledby="conversion-heading">
+          <h2 id="conversion-heading">Conversion rate</h2>
+          <dl class="conversion-list">
+            <div><dt>Cart</dt><dd class="negative"><i class="ti ti-arrow-down" aria-hidden="true"></i><span id="cart-delta">5%</span></dd></div>
+            <div><dt>Checkout</dt><dd><i class="ti ti-arrow-up" aria-hidden="true"></i><span id="checkout-delta">8%</span></dd></div>
+            <div><dt>Sessions</dt><dd><i class="ti ti-arrow-up" aria-hidden="true"></i><span id="sessions-delta">12%</span></dd></div>
+          </dl>
+        </section>
+      </div>
+      <div class="analytics-footer"><button class="manage-button" data-action="manage">Manage</button></div>
+    </aside>
+
+    <button class="analytics-handle" id="analytics-handle" data-action="toggle-analytics" aria-label="Hide analytics" aria-expanded="true" aria-controls="analytics-rail"><i class="ti ti-chart-bar" aria-hidden="true"></i></button>
+
+    <header class="shop-header">
+      <button class="wordmark moving-heading" id="wordmark" data-action="home" aria-label="Authentic Apparel home">Authentic<br>Apparel</button>
+      <div class="header-actions">
+        <button class="bag-button" id="bag-button" data-action="bag" aria-label="Shopping bag, 2 items"><span id="bag-count">2</span></button>
+        <div class="menu-anchor">
+          <button class="icon-button" id="menu-button" data-action="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation-menu"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+          <nav class="navigation-menu" id="navigation-menu" aria-label="Main navigation" inert>
+            <span class="menu-caption">Authentic Apparel</span>
+            <button data-action="home">Collection<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+            <button data-action="journal">Journal<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+            <button data-action="delivery">Delivery & returns<i class="ti ti-arrow-up-right" aria-hidden="true"></i></button>
+            <button data-action="manage">Store analytics<i class="ti ti-chart-bar" aria-hidden="true"></i></button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="product-layout" id="product-view" aria-label="Collection">
+        <div class="product-story" id="product-story">
+          <h1 id="product-title">Open<br>cable-knit<br>sweater</h1>
+          <button class="editorial-card" data-action="journal" aria-label="Read Good lighting is all you need">
+            <img src="assets/editorial-light.webp" id="editorial-image" alt="Sunlight and architectural shadows" width="94" height="116">
+            <span id="editorial-title">Good<br>lighting is<br>all you need</span>
+            <i class="ti ti-arrow-up-right" aria-hidden="true"></i>
+          </button>
+          <div class="product-navigation" aria-label="Product navigation">
+            <button class="icon-button" data-action="previous" aria-label="Previous product"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+            <div class="product-dots" id="product-dots"></div>
+            <button class="icon-button next-button" data-action="next" aria-label="Next product"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <figure class="product-visual" id="product-visual">
+          <img class="model-image is-current" id="model-a" src="assets/product-blush.webp" alt="Model wearing a blush cable-knit sweater" fetchpriority="high">
+          <img class="model-image" id="model-b" src="assets/product-olive.webp" alt="" aria-hidden="true">
+          <div class="asset-error" id="asset-error" hidden><i class="ti ti-photo-off" aria-hidden="true"></i><p>This image couldn’t load.</p><button class="text-button" data-action="retry-image">Try again</button></div>
+        </figure>
+        <div class="product-details" id="product-details">
+          <div class="color-options" id="color-options" role="group" aria-label="Colour"></div>
+          <p class="product-price" id="product-price">€239.99</p>
+          <p class="product-description" id="product-description">Women’s high-neck sweater with a soft finish. Available in different colors and prints.</p>
+          <div class="size-options" id="size-options" role="group" aria-label="Choose your size">
+            <button class="size-button is-selected" data-size="S" aria-pressed="true">S</button>
+            <button class="size-button" data-size="M" aria-pressed="false">M</button>
+            <button class="size-button" data-size="L" aria-pressed="false">L</button>
+          </div>
+          <p class="selection-caption" id="selection-caption">Blush / Size S</p>
+          <button class="add-button" id="add-button" data-action="add-to-bag"><span id="add-label">Add to cart</span><i class="ti ti-plus" id="add-icon" aria-hidden="true"></i></button>
+          <p class="product-feedback" id="product-feedback" aria-live="polite"></p>
+        </div>
+        <div class="social-links" aria-label="Share this product">
+          <button class="icon-button" data-action="share" data-platform="X" aria-label="Share on X"><i class="ti ti-brand-twitter" aria-hidden="true"></i></button>
+          <button class="icon-button" data-action="share" data-platform="Facebook" aria-label="Share on Facebook"><i class="ti ti-brand-facebook" aria-hidden="true"></i></button>
+          <button class="icon-button" data-action="share" data-platform="Pinterest" aria-label="Share on Pinterest"><i class="ti ti-brand-pinterest" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="workspace-view" id="bag-view" aria-labelledby="bag-title" hidden>
+        <div class="view-heading"><div><p class="eyebrow">Authentic Apparel</p><h1 id="bag-title">Your shopping bag.</h1></div><button class="text-button" data-action="home"><i class="ti ti-arrow-left" aria-hidden="true"></i>Continue shopping</button></div>
+        <div class="bag-layout"><div id="bag-items" class="bag-items"></div><aside class="bag-summary" id="bag-summary"><h2>Order summary</h2><dl><div><dt>Subtotal</dt><dd id="bag-subtotal"></dd></div><div><dt>Delivery</dt><dd>Complimentary</dd></div><div class="summary-total"><dt>Total</dt><dd id="bag-total"></dd></div></dl><p>Taxes included. Complimentary standard delivery. Review your sizes and quantities before checkout.</p><button class="solid-button" data-action="review-order" id="review-order">Review order<i class="ti ti-arrow-right" aria-hidden="true"></i></button><p class="inline-message" id="order-message" aria-live="polite"></p></aside></div>
+      </section>
+
+      <section class="workspace-view" id="analytics-view" aria-labelledby="analytics-title" hidden>
+        <div class="view-heading"><div><p class="eyebrow">Authentic Apparel / Store</p><h1 id="analytics-title">A closer look.</h1></div><button class="text-button" data-action="home"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to collection</button></div>
+        <div class="report-toolbar">
+          <div class="report-tabs" role="tablist" aria-label="Analytics views"><button role="tab" aria-selected="true" class="is-active" data-report="overview">Overview</button><button role="tab" aria-selected="false" data-report="orders">Orders</button><button role="tab" aria-selected="false" data-report="settings">Store settings</button></div>
+          <div class="report-actions"><div class="dropdown-anchor"><button class="select-button" id="range-button" data-action="range-menu" aria-expanded="false" aria-controls="range-menu"><i class="ti ti-calendar" aria-hidden="true"></i><span id="range-label">Last 7 days</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="dropdown-panel" id="range-menu" role="group" aria-label="Date range" inert><button data-range="7" class="is-selected" aria-pressed="true">Last 7 days<i class="ti ti-check" aria-hidden="true"></i></button><button data-range="14" aria-pressed="false">Last 14 days<i class="ti ti-check" aria-hidden="true"></i></button><button data-range="30" aria-pressed="false">Last 30 days<i class="ti ti-check" aria-hidden="true"></i></button><button disabled>Custom range<span>Unavailable</span></button></div></div><button class="icon-button" data-action="refresh" id="refresh-button" aria-label="Refresh store data"><i class="ti ti-refresh" aria-hidden="true"></i></button><button class="text-button" data-action="export"><i class="ti ti-download" aria-hidden="true"></i>Export CSV</button></div>
+        </div>
+        <div class="sync-message" id="sync-message" role="status" hidden></div>
+        <div class="report-panel" id="report-overview" role="tabpanel">
+          <div class="report-figures"><div><span>Total sales</span><strong id="report-revenue">$905.05</strong><small>Gross revenue · USD</small></div><div><span>Sessions</span><strong id="report-sessions">1,248</strong><small>Unique store visits</small></div><div><span>Conversion</span><strong id="report-conversion">4.0%</strong><small>Sessions reaching checkout</small></div></div>
+          <div class="report-section-heading"><h2>Daily performance</h2><span>All values in USD</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Date</th><th>First-time</th><th>Returning</th><th>Sessions</th><th>Cart</th><th>Checkout</th><th class="numeric">Sales</th></tr></thead><tbody id="performance-table"></tbody><tfoot id="performance-footer"></tfoot></table></div>
+        </div>
+        <div class="report-panel" id="report-orders" role="tabpanel" hidden><div class="orders-toolbar"><label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><input id="order-search" type="search" placeholder="Search orders or customers" aria-label="Search orders or customers"></label><span id="order-count">6 orders</span></div><div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Product</th><th>Status</th><th class="numeric">Total</th><th></th></tr></thead><tbody id="orders-table"></tbody></table></div><div class="empty-state" id="orders-empty" hidden><i class="ti ti-search" aria-hidden="true"></i><h2>No matching orders.</h2><p>Try a different name or order number.</p><button class="text-button" data-action="clear-search">Clear search</button></div><section class="order-detail" id="order-detail" hidden></section></div>
+        <div class="report-panel" id="report-settings" role="tabpanel" hidden><form id="settings-form" class="settings-form" novalidate><div><h2>Store details</h2><p>Contact details for your storefront.</p></div><div class="settings-fields"><label>Store name<input name="storeName" value="Authentic Apparel" maxlength="80" required></label><label>Contact email<input type="email" name="email" value="hello@authentic-apparel.com" required></label><p class="form-error" id="settings-error" aria-live="polite"></p><button type="submit" class="solid-button">Save changes<i class="ti ti-check" aria-hidden="true"></i></button><p class="inline-message" id="settings-message" aria-live="polite"></p></div></form></div>
+      </section>
+
+      <section class="workspace-view journal-view" id="journal-view" aria-labelledby="journal-title" hidden><div class="view-heading"><div><p class="eyebrow">Journal / Field notes</p><h1 id="journal-title">Good lighting is<br>all you need.</h1></div><button class="text-button" data-action="home"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to collection</button></div><div class="journal-layout"><img src="assets/editorial-light.webp" alt="Architectural forms in warm afternoon sunlight"><article><p class="eyebrow">Light, texture, everyday life</p><h2>The beauty of<br>doing less.</h2><p>A quiet palette. A fabric that feels familiar. Light falling across the room. The pieces we return to don’t ask for attention — they simply belong.</p><p>Our collection explores those small, lasting details: relaxed silhouettes, soft textures and clothes that move through the day with you.</p><button class="text-button" data-action="home">Explore the collection<i class="ti ti-arrow-right" aria-hidden="true"></i></button></article></div></section>
+
+      <section class="workspace-view" id="delivery-view" aria-labelledby="delivery-title" hidden><div class="view-heading"><div><p class="eyebrow">Customer care</p><h1 id="delivery-title">Made to arrive.<br>Made to last.</h1></div><button class="text-button" data-action="home"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to collection</button></div><div class="care-grid"><article><span class="eyebrow">Delivery</span><h2>A little closer.</h2><p>Complimentary standard delivery on all orders. Allow 3–5 working days for your parcel to arrive.</p><p>You’ll receive tracking details when your order leaves our studio.</p></article><article><span class="eyebrow">Returns</span><h2>Find your fit.</h2><p>Return unworn items within 30 days of delivery. Keep the original tags and packaging with your pieces.</p><p>Contact hello@authentic-apparel.com with your order number to arrange a return.</p></article><article><span class="eyebrow">Care</span><h2>Wear it longer.</h2><p>Wash knitwear gently at 30°C. Dry flat and keep away from direct heat. Refer to each garment’s care label.</p><p>Fold your knits rather than hanging them to preserve their shape.</p></article></div></section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
