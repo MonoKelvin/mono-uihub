@@ -1,0 +1,32 @@
+{
+  "name": "Oppopay — Payment Landing",
+  "slug": "opp-pay-landing",
+  "page_type": "website",
+  "palette": ["#ffffff", "#101010", "#9aa8da"],
+  "tags": ["支付", "落地页", "信用卡"],
+  "created_at": "2026-11-14 08:58:23",
+  "updated_at": "2026-11-14 09:44:32",
+  "imageToUI": "https://dribbble.com/shots/24815863-Credit-Card-Landing-Page",
+  "history": [
+    {
+      "prompt": "还原这张UI原型的网站。",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "首屏不要圆角矩形的背景，撑开宽高",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "skill里面也添加描述：如果是网页还原，UI图片中即使有一个外框或者内部页面容器等，还原的时候也是按照全屏的，不要添加容器，除非用户明确说了",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    },
+    {
+      "prompt": "Registered name、Website 输入框样式不对；英文特色字体不对，细线部分太细了，请仔细检查对比；右侧VISA可能需要图标或者真实的品牌图标；下面一栏的品牌也需要真实的图标",
+      "model": "hy4",
+      "skills": ["mono-ui-prototype"]
+    }
+  ]
+}

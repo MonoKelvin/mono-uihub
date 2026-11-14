@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oppopay — International payouts, made quiet</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M4 8c5.2 8.2 12.3 11 26 10.2-1.3 8.4-8 13-14.3 12.3C8.4 29.8 4 22.4 4 15.1Z'/%3E%3C/svg%3E">
+<meta name="description" content="Oppopay helps studios and independent teams collect international payouts, issue virtual cards and settle in the currencies they work in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-star-o" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.2-4.1 5.8-.8z"/></symbol>
+  <symbol id="i-star-f" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.2-4.1 5.8-.8z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m5 9 7 7 7-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5L19.5 7"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.4h.01"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.7"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16M9.6 6.9A9.7 9.7 0 0 1 12 6.5c6 0 9.5 5.5 9.5 5.5a17 17 0 0 1-3 3.5M6.4 8.2A17.6 17.6 0 0 0 2.5 12S6 17.5 12 17.5c1 0 1.9-.15 2.7-.4"/><path d="M10.2 10.3a2.7 2.7 0 0 0 3.6 3.7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4 4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6.5 15h4"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6M12 3c2.6 2.5 4 5.6 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.6-4-9s1.4-6.5 4-9Z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 6v6c0 4.6 3.1 7.8 7.5 9.2 4.4-1.4 7.5-4.6 7.5-9.2V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-1.4 5.6M20 5v6h-6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v11m-4-4 4 4 4-4M4.5 17.5v2a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1v-2"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9.5h18M3 14.5h18"/></symbol>
+  <symbol id="i-avatar" viewBox="0 0 32 32"><circle cx="16" cy="12" r="5.2"/><path d="M5.5 29c.7-6.2 4.9-9.5 10.5-9.5S25.8 22.8 26.5 29"/></symbol>
+  <symbol id="i-lattice" viewBox="0 0 32 24"><path d="M2 5.5 6.5 18 11 5.5 15.5 18 20 5.5 24.5 18 29 5.5"/></symbol>
+  <symbol id="i-monday" viewBox="0 0 40 24"><path d="M4 18 12 6M15 18 23 6M26 18 34 6"/></symbol>
+  <symbol id="i-dropbox" viewBox="0 0 28 24"><path d="m7 2 7 4.4L7 10.8 0 6.4 7 2Zm14 0 7 4.4-7 4.4-7-4.4L21 2ZM0 15.2l7-4.4 7 4.4-7 4.4-7-4.4Zm21-4.4 7 4.4-7 4.4-7-4.4 7-4.4ZM14 16.4l7 4.4-7 4.4-7-4.4 7-4.4Z"/></symbol>
+  <symbol id="i-ncr" viewBox="0 0 34 24"><circle cx="12" cy="12" r="9.2"/><path d="M6.5 16.5 17.5 6.8M11 6.8h6.5v6.5"/></symbol>
+  <symbol id="i-disney" viewBox="0 0 90 24"><path d="M2 17c8-1 18-6 24-12 4 4 8 10 12 10 4 0 6-4 6-8M50 6c10-4 24-4 36 0"/></symbol>
+</svg>
+
+<div class="page-stage">
+  <main class="site" id="site">
+
+    <header class="topbar">
+      <a class="brand" href="#home" data-nav="home" aria-label="Oppopay — home">
+        <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true"><path d="M4 8c5.2 8.2 12.3 11 26 10.2-1.3 8.4-8 13-14.3 12.3C8.4 29.8 4 22.4 4 15.1Z" fill="currentColor"/></svg>
+        <span class="brand-slash">/</span>
+        <span class="brand-mail">sales@oppopy.io</span>
+      </a>
+
+      <nav class="mainnav" aria-label="Primary">
+        <div class="dropdown" data-dropdown="product">
+          <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="dd-product">Product <svg class="ico ico-xs"><use href="#i-chevron-down"/></svg></button>
+          <div class="dropdown-panel" id="dd-product" role="menu" hidden>
+            <div class="dd-label">Platform</div>
+            <button type="button" class="dd-option" role="menuitem" data-scroll="capabilities"><svg class="ico"><use href="#i-globe"/></svg><span><strong>Global payouts</strong><small>Pay contractors in their own currency</small></span></button>
+            <button type="button" class="dd-option" role="menuitem" data-scroll="capabilities"><svg class="ico"><use href="#i-card"/></svg><span><strong>Virtual cards</strong><small>Issue cards for every project</small></span></button>
+            <button type="button" class="dd-option is-selected" role="menuitem" data-scroll="flow"><svg class="ico"><use href="#i-refresh"/></svg><span><strong>Settlement</strong><small>Balance and transfer windows</small></span><svg class="ico ico-xs dd-tick"><use href="#i-check"/></svg></button>
+            <button type="button" class="dd-option" role="menuitem" disabled><svg class="ico"><use href="#i-shield"/></svg><span><strong>Treasury</strong><small>Available on the Scale plan</small></span></button>
+          </div>
+        </div>
+        <div class="dropdown" data-dropdown="solutions">
+          <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="dd-solutions">Solutions <svg class="ico ico-xs"><use href="#i-chevron-down"/></svg></button>
+          <div class="dropdown-panel" id="dd-solutions" role="menu" hidden>
+            <div class="dd-label">By team</div>
+            <button type="button" class="dd-option" role="menuitem" data-nav="story"><svg class="ico"><use href="#i-lattice"/></svg><span><strong>Design studios</strong><small>How Lattice pays its freelancers</small></span></button>
+            <button type="button" class="dd-option" role="menuitem" data-nav="pricing"><svg class="ico"><use href="#i-arrow-up-right"/></svg><span><strong>Growing teams</strong><small>Plans and transaction rates</small></span></button>
+            <button type="button" class="dd-option" role="menuitem" data-nav="developers"><svg class="ico"><use href="#i-lock"/></svg><span><strong>Platforms</strong><small>Embed payouts with the API</small></span></button>
+            <button type="button" class="dd-option" role="menuitem" disabled><svg class="ico"><use href="#i-info"/></svg><span><strong>Marketplaces</strong><small>Waitlist opens next quarter</small></span></button>
+          </div>
+        </div>
+        <button type="button" class="nav-link" data-nav="pricing">Pricing</button>
+        <button type="button" class="nav-link" data-nav="developers">Developers</button>
+      </nav>
+
+      <div class="topbar-right">
+        <button type="button" class="nav-link" data-nav="login" id="loginNav">Log in</button>
+        <span class="v-divider" aria-hidden="true"></span>
+        <button type="button" class="btn btn-dark btn-pill" data-nav="apply">Apply Now — It's Free</button>
+      </div>
+
+      <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open navigation"><svg class="ico"><use href="#i-menu"/></svg></button>
+      <div class="mobile-panel" id="mobilePanel" hidden>
+        <button type="button" class="mobile-link" data-scroll="capabilities">Product</button>
+        <button type="button" class="mobile-link" data-nav="story">Solutions</button>
+        <button type="button" class="mobile-link" data-nav="pricing">Pricing</button>
+        <button type="button" class="mobile-link" data-nav="developers">Developers</button>
+        <button type="button" class="mobile-link" data-nav="login">Log in</button>
+        <button type="button" class="mobile-link mobile-cta" data-nav="apply">Apply Now — It's Free</button>
+      </div>
+    </header>
+
+    <!-- ============ HOME ============ -->
+    <section class="view is-active" id="view-home" aria-label="Home">
+      <div class="hero">
+        <div class="hero-left">
+          <div class="rating">
+            <button type="button" class="rating-badge" id="ratingToggle" aria-expanded="false" aria-controls="ratingDetail" aria-label="Show rating breakdown"><svg class="ico"><use href="#i-star-f"/></svg></button>
+            <div class="rating-copy"><strong>5.0 Rated</strong><span>Over 12.5K — Ratings on Hunt</span></div>
+            <div class="expand-panel rating-detail" id="ratingDetail" hidden>
+              <div class="expand-inner">
+                <div class="rating-row"><span>5 stars</span><span class="bar"><i style="width:92%"></i></span><b>92%</b></div>
+                <div class="rating-row"><span>4 stars</span><span class="bar"><i style="width:7%"></i></span><b>7%</b></div>
+                <div class="rating-row"><span>3 stars</span><span class="bar"><i style="width:1%"></i></span><b>1%</b></div>
+                <p>12,540 reviews from teams paying and getting paid through Oppopay.</p>
+              </div>
+            </div>
+          </div>
+
+          <h1 class="hero-title reveal" tabindex="-1">Payment</h1>
+
+          <div class="testimonial reveal">
+            <div class="tt-head">
+              <span class="wordmark wordmark-lattice"><svg class="ico"><use href="#i-lattice"/></svg>Lattice</span>
+              <button type="button" class="link-arrow" data-nav="story">Read Story <svg class="ico ico-xs"><use href="#i-arrow-up-right"/></svg></button>
+            </div>
+            <blockquote>“ The Best Platform To Use For International Payout and Bank Transfers, Highly Recommend”</blockquote>
+            <div class="tt-person">
+              <span class="avatar avatar-robert"><svg class="ico"><use href="#i-avatar"/></svg></span>
+              <span><strong>Robert J.</strong><small>UX / Motion Designer</small></span>
+            </div>
+          </div>
+
+          <div class="cta-row reveal">
+            <button type="button" class="btn btn-dark btn-pill" data-nav="apply">Apply Now — It's Free</button>
+            <button type="button" class="btn btn-outline btn-pill" id="processToggle" aria-expanded="false" aria-controls="processPanel">Our Process</button>
+          </div>
+
+          <div class="expand-panel process-panel" id="processPanel" hidden>
+            <div class="expand-inner process-steps">
+              <div><b>01</b><strong>Tell us about the business</strong><span>Registration, directors and the countries you pay into.</span></div>
+              <div><b>02</b><strong>Choose your payout rails</strong><span>Local transfers, SWIFT or virtual cards for each team.</span></div>
+              <div><b>03</b><strong>Start collecting</strong><span>Share payment details and reconcile every invoice in one place.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" id="heroVisual">
+          <div class="visual-glow" id="visualGlow" aria-hidden="true"></div>
+          <div class="visual-grain" aria-hidden="true"></div>
+
+          <div class="visual-stack">
+            <button type="button" class="notice notice-paid reveal" id="noticePaid" aria-expanded="false" aria-controls="paidDetail">
+              <span class="visa"><img src="assets/logos/visa.svg" alt="Visa"></span>
+              <span class="notice-text">Jenifer Paid <b>$14,800 USD</b> for Design</span>
+              <span class="state state-ok" aria-hidden="true"><svg class="ico ico-xs"><use href="#i-check"/></svg></span>
+              <svg class="ico ico-xs notice-chevron" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            </button>
+            <div class="expand-panel notice-detail" id="paidDetail" hidden>
+              <div class="expand-inner">
+                <div class="detail-line"><span>Reference</span><b>OP-24815-USD</b></div>
+                <div class="detail-line"><span>Arrived</span><b>14 Nov, 09:42 UTC</b></div>
+                <div class="detail-line"><span>Rail</span><b>Visa · Local settlement</b></div>
+                <button type="button" class="text-btn" data-nav="account">View in transactions <svg class="ico ico-xs"><use href="#i-arrow-right"/></svg></button>
+              </div>
+            </div>
+
+            <div class="paycard reveal" id="paycard" tabindex="0" role="button" aria-label="Flip the card to see the back">
+              <div class="card-inner" id="cardInner">
+                <div class="card-face card-front">
+                  <div class="card-top">
+                    <span class="card-chip"><svg class="ico"><use href="#i-chip"/></svg></span>
+                    <span class="mastercard" aria-label="Mastercard"><i></i><i></i></span>
+                  </div>
+                  <div class="card-number-block">
+                    <span class="field-label">Card Number</span>
+                    <span class="card-number" id="cardNumber">8923 2461 5320 7642</span>
+                  </div>
+                  <div class="card-meta">
+                    <div><span class="field-label">Name</span><b>Dean Ambrose</b></div>
+                    <div><span class="field-label">Exp. Date</span><b>07/28</b></div>
+                    <div><span class="field-label">CVV</span><b>923</b></div>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <div class="magstripe"></div>
+                  <div class="signature"><span>Authorised signature</span><b>923</b></div>
+                  <p>Oppopay · Issued under licence · support@oppopy.io</p>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="notice notice-declined reveal" id="noticeDeclined" aria-expanded="false" aria-controls="declinedDetail">
+              <span class="avatar avatar-jenifer"><svg class="ico"><use href="#i-avatar"/></svg></span>
+              <span class="notice-text">Your Payment <b>$1450</b> is Declined</span>
+              <span class="state state-alert" aria-hidden="true"><svg class="ico ico-xs"><use href="#i-alert"/></svg></span>
+              <svg class="ico ico-xs notice-chevron" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            </button>
+            <div class="expand-panel notice-detail" id="declinedDetail" hidden>
+              <div class="expand-inner">
+                <div class="detail-line"><span>Reason</span><b>Card issuer declined the charge</b></div>
+                <div class="detail-line"><span>Attempt</span><b>14 Nov, 08:16 UTC</b></div>
+                <button type="button" class="text-btn" data-nav="account">Change payment method <svg class="ico ico-xs"><use href="#i-arrow-right"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brand wordmarks are local SVG assets from Wikimedia Commons; trademarked marks used for identification only. -->
+      <div class="logo-wall" aria-label="Teams using Oppopay">
+        <button type="button" class="wordmark" data-nav="story"><img src="assets/logos/rakuten.svg" alt="Rakuten"></button>
+        <button type="button" class="wordmark" data-nav="story"><img src="assets/logos/ncr.svg" alt="NCR"></button>
+        <button type="button" class="wordmark" data-nav="story"><img src="assets/logos/monday.svg" alt="monday.com"></button>
+        <button type="button" class="wordmark wordmark-disney" data-nav="story"><img src="assets/logos/disney.svg" alt="Disney"></button>
+        <button type="button" class="wordmark" data-nav="story"><img src="assets/logos/dropbox.svg" alt="Dropbox"></button>
+      </div>
+
+      <section class="section capabilities" id="capabilities">
+        <div class="section-head"><span class="eyebrow">The platform</span><h2>One account for money that crosses borders.</h2></div>
+        <div class="cap-row">
+          <div class="cap-icon"><svg class="ico"><use href="#i-globe"/></svg></div>
+          <h3>Global payouts</h3>
+          <p>Send to contractors in USD, EUR, GBP, SGD and AUD. Recipients see a local transfer, not a wire from abroad.</p>
+          <button type="button" class="link-arrow" data-scroll="flow">See settlement windows <svg class="ico ico-xs"><use href="#i-arrow-up-right"/></svg></button>
+        </div>
+        <div class="cap-row">
+          <div class="cap-icon"><svg class="ico"><use href="#i-card"/></svg></div>
+          <h3>Virtual cards</h3>
+          <p>Issue a card per client, project or subscription. Set a limit, freeze it, and close it when the work ends.</p>
+          <button type="button" class="link-arrow" data-nav="account">Manage cards <svg class="ico ico-xs"><use href="#i-arrow-up-right"/></svg></button>
+        </div>
+        <div class="cap-row">
+          <div class="cap-icon"><svg class="ico"><use href="#i-shield"/></svg></div>
+          <h3>Clean reconciliation</h3>
+          <p>Every invoice, fee and refund lands on one statement. Export it in the format your accountant already uses.</p>
+          <button type="button" class="link-arrow" data-nav="developers">Explore the API <svg class="ico ico-xs"><use href="#i-arrow-up-right"/></svg></button>
+        </div>
+      </section>
+
+      <section class="section flow" id="flow">
+        <div class="section-head"><span class="eyebrow">How it moves</span><h2>From invoice to settled, without the chase.</h2></div>
+        <div class="flow-grid">
+          <div class="flow-step"><span class="flow-mark">01</span><h3>Share details</h3><p>Give a client account details in their own currency. No new bank relationship.</p></div>
+          <div class="flow-step"><span class="flow-mark">02</span><h3>Get paid</h3><p>Funds arrive with the invoice reference attached, so the match happens on its own.</p></div>
+          <div class="flow-step"><span class="flow-mark">03</span><h3>Settle</h3><p>Choose same-day or T+1 transfer. Fees are shown before you confirm.</p></div>
+        </div>
+        <div class="rails">
+          <span class="eyebrow">Supported on</span>
+          <div class="rail-list"><span>Visa</span><span>Mastercard</span><span>Local bank rails</span><span>SWIFT</span><span>SEPA</span><span>Faster Payments</span></div>
+        </div>
+      </section>
+
+      <section class="section stories" id="stories">
+        <div class="section-head"><span class="eyebrow">From our customers</span><h2>Studios that stopped chasing invoices.</h2></div>
+        <div class="story-list" id="storyList"></div>
+      </section>
+
+      <section class="section closing">
+        <h2>Get paid, everywhere.</h2>
+        <p>Open an account, issue your first card and send the next invoice in the currency your client uses.</p>
+        <button type="button" class="btn btn-dark btn-pill btn-lg" data-nav="apply">Apply Now — It's Free</button>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-brand"><svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true"><path d="M4 8c5.2 8.2 12.3 11 26 10.2-1.3 8.4-8 13-14.3 12.3C8.4 29.8 4 22.4 4 15.1Z" fill="currentColor"/></svg><span>Oppopay</span></div>
+        <nav class="footer-links" aria-label="Footer">
+          <button type="button" data-nav="pricing">Pricing</button>
+          <button type="button" data-nav="developers">Developers</button>
+          <button type="button" data-nav="story">Customer stories</button>
+          <button type="button" data-nav="login">Log in</button>
+          <a href="mailto:sales@oppopy.io">sales@oppopy.io</a>
+        </nav>
+        <span class="footer-note">© 2026 Oppopay</span>
+      </footer>
+    </section>
+
+    <!-- ============ PRICING ============ -->
+    <section class="view" id="view-pricing" hidden aria-label="Pricing">
+      <div class="view-head">
+        <button type="button" class="back-link" data-nav="home"><svg class="ico ico-xs"><use href="#i-arrow-left"/></svg> Back to home</button>
+        <h1 tabindex="-1">Pricing</h1>
+        <p>Pay for the rails you use. No setup fee, no minimum balance, no charge for receiving.</p>
+      </div>
+
+      <div class="billing-toggle" role="group" aria-label="Billing period">
+        <button type="button" class="segment is-active" data-cycle="monthly" aria-pressed="true">Monthly</button>
+        <button type="button" class="segment" data-cycle="yearly" aria-pressed="false">Yearly <span>save 20%</span></button>
+      </div>
+
+      <div class="plan-grid" id="planGrid"></div>
+
+      <div class="compare">
+        <div class="section-head compact"><span class="eyebrow">Rate card</span><h2>What each transaction costs.</h2></div>
+        <table class="rate-table">
+          <thead><tr><th scope="col">Transaction</th><th scope="col">Starter</th><th scope="col">Growth</th><th scope="col">Scale</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Receive from a client</th><td>Free</td><td>Free</td><td>Free</td></tr>
+            <tr><th scope="row">Card payment (domestic)</th><td>1.9% + $0.25</td><td>1.6% + $0.25</td><td>Custom</td></tr>
+            <tr><th scope="row">Card payment (international)</th><td>2.9% + $0.25</td><td>2.4% + $0.25</td><td>Custom</td></tr>
+            <tr><th scope="row">Local payout</th><td>$1.20</td><td>$0.80</td><td>Custom</td></tr>
+            <tr><th scope="row">SWIFT payout</th><td>$18.00</td><td>$12.00</td><td>Custom</td></tr>
+            <tr><th scope="row">Virtual card, per month</th><td>3 included</td><td>25 included</td><td>Unlimited</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="faq">
+        <div class="section-head compact"><span class="eyebrow">Questions</span><h2>Before you apply.</h2></div>
+        <div class="faq-list" id="faqList"></div>
+      </div>
+    </section>
+
+    <!-- ============ DEVELOPERS ============ -->
+    <section class="view" id="view-developers" hidden aria-label="Developers">
+      <div class="view-head">
+        <button type="button" class="back-link" data-nav="home"><svg class="ico ico-xs"><use href="#i-arrow-left"/></svg> Back to home</button>
+        <h1 tabindex="-1">Developers</h1>
+        <p>One REST API for payouts, cards and reconciliation. Keys are scoped per environment.</p>
+      </div>
+
+      <div class="dev-grid">
+        <div class="dev-code">
+          <div class="panel-head">
+            <div class="tabs" role="tablist" aria-label="Code language">
+              <button type="button" class="tab is-active" role="tab" aria-selected="true" data-lang="curl">cURL</button>
+              <button type="button" class="tab" role="tab" aria-selected="false" data-lang="node">Node.js</button>
+              <button type="button" class="tab" role="tab" aria-selected="false" data-lang="python">Python</button>
+            </div>
+            <button type="button" class="icon-btn" id="copyCode" aria-label="Copy code"><svg class="ico ico-sm"><use href="#i-copy"/></svg><span id="copyCodeLabel">Copy</span></button>
+          </div>
+          <pre class="code"><code id="codeSample"></code></pre>
+        </div>
+
+        <div class="dev-key">
+          <h2>API credentials</h2>
+          <p>Use the test key while you build. Rotate it whenever a key leaves your team.</p>
+          <div class="key-field">
+            <code id="apiKey">••••••••••••••••••••••••sk_test_4f82</code>
+            <button type="button" class="icon-btn" id="toggleKey" aria-label="Show API key"><svg class="ico ico-sm"><use href="#i-eye"/></svg></button>
+            <button type="button" class="icon-btn" id="copyKey" aria-label="Copy API key"><svg class="ico ico-sm"><use href="#i-copy"/></svg></button>
+          </div>
+          <div class="key-actions">
+            <button type="button" class="btn btn-outline btn-pill btn-sm" id="rotateKey"><svg class="ico ico-sm"><use href="#i-refresh"/></svg> Rotate key</button>
+            <button type="button" class="text-btn" data-nav="apply">Request production access <svg class="ico ico-xs"><use href="#i-arrow-right"/></svg></button>
+          </div>
+          <p class="key-status" id="keyStatus" role="status">Test key · last rotated 02 Nov 2026</p>
+        </div>
+      </div>
+
+      <div class="endpoints">
+        <div class="panel-head endpoints-head">
+          <div><h2>Endpoints</h2><span class="endpoint-count" id="endpointCount"></span></div>
+          <button type="button" class="btn btn-outline btn-pill btn-sm" id="refreshEndpoints"><svg class="ico ico-sm"><use href="#i-refresh"/></svg> Refresh</button>
+        </div>
+        <div class="filter-row">
+          <label class="search-field"><svg class="ico ico-sm"><use href="#i-search"/></svg><input type="search" id="endpointSearch" placeholder="Search endpoints" aria-label="Search endpoints"></label>
+          <div class="chips" role="group" aria-label="Filter by method">
+            <button type="button" class="chip is-active" data-method="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-method="GET" aria-pressed="false">GET</button>
+            <button type="button" class="chip" data-method="POST" aria-pressed="false">POST</button>
+            <button type="button" class="chip" data-method="DELETE" aria-pressed="false">DELETE</button>
+          </div>
+        </div>
+        <div class="endpoint-list" id="endpointList"></div>
+        <div class="empty-state" id="endpointEmpty" hidden><svg class="ico"><use href="#i-search"/></svg><strong>No endpoints match that search.</strong><span>Try a different method or clear the query.</span><button type="button" class="text-btn" id="clearEndpoints">Clear filters</button></div>
+        <div class="loading-state" id="endpointLoading" hidden><span class="spinner"></span> Loading endpoints…</div>
+      </div>
+    </section>
+
+    <!-- ============ LOG IN ============ -->
+    <section class="view" id="view-login" hidden aria-label="Log in">
+      <div class="auth-layout">
+        <div class="auth-intro">
+          <button type="button" class="back-link" data-nav="home"><svg class="ico ico-xs"><use href="#i-arrow-left"/></svg> Back to home</button>
+          <h1 tabindex="-1">Welcome<br>back.</h1>
+          <p>Your balances, cards and payout activity are in one workspace.</p>
+          <div class="auth-note"><svg class="ico"><use href="#i-shield"/></svg><span>Two-factor verification is required on every new device.</span></div>
+        </div>
+        <form class="auth-form" id="loginForm" novalidate>
+          <h2>Log in to Oppopay</h2>
+          <div class="field">
+            <label for="loginEmail">Work email</label>
+            <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="you@studio.com" data-required data-type="email">
+            <span class="field-error" data-error-for="loginEmail" hidden></span>
+          </div>
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <div class="input-wrap">
+              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" data-required data-min="8">
+              <button type="button" class="input-action" id="togglePassword" aria-label="Show password"><svg class="ico ico-sm"><use href="#i-eye"/></svg></button>
+            </div>
+            <span class="field-error" data-error-for="loginPassword" hidden></span>
+          </div>
+          <div class="form-between">
+            <label class="check"><input type="checkbox" id="rememberMe" checked><span>Keep me signed in</span></label>
+            <button type="button" class="text-btn" id="forgotToggle" aria-expanded="false" aria-controls="resetPanel">Forgot password?</button>
+          </div>
+          <div class="expand-panel reset-panel" id="resetPanel" hidden>
+            <div class="expand-inner">
+              <p>We'll send a reset link to the email on your account.</p>
+              <div class="field"><label for="resetEmail">Email</label><input id="resetEmail" type="email" placeholder="you@studio.com" data-required data-type="email"><span class="field-error" data-error-for="resetEmail" hidden></span></div>
+              <button type="button" class="btn btn-dark btn-pill btn-sm" id="sendReset">Send reset link</button>
+              <p class="inline-status" id="resetStatus" role="status" hidden></p>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-dark btn-pill btn-block" id="loginSubmit">Log in <svg class="ico ico-sm"><use href="#i-arrow-right"/></svg></button>
+          <p class="form-foot">No account yet? <button type="button" class="text-btn" data-nav="apply">Apply now</button></p>
+          <p class="inline-status" id="loginStatus" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ APPLY ============ -->
+    <section class="view" id="view-apply" hidden aria-label="Open an account">
+      <div class="view-head">
+        <button type="button" class="back-link" data-nav="home"><svg class="ico ico-xs"><use href="#i-arrow-left"/></svg> Back to home</button>
+        <h1 tabindex="-1">Open an account</h1>
+        <p>Three short steps. You can save the file and finish later.</p>
+      </div>
+
+      <div class="steps" id="applySteps" aria-label="Application progress"></div>
+
+      <form class="apply-form" id="applyForm" novalidate>
+        <div class="step-pane" data-step="1">
+          <h2>Business details</h2>
+          <div class="field-grid">
+            <div class="field"><label for="companyName">Registered name</label><input id="companyName" name="company" placeholder="Lattice Studio Ltd" data-required><span class="field-error" data-error-for="companyName" hidden></span></div>
+            <div class="field"><label for="companySite">Website</label><input id="companySite" name="site" placeholder="lattice.studio" data-required><span class="field-error" data-error-for="companySite" hidden></span></div>
+            <div class="field">
+              <label id="countryLabel">Country of registration</label>
+              <div class="select" data-select="country">
+                <button type="button" class="select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="sel-country" aria-labelledby="countryLabel"><span class="select-value">United States</span><svg class="ico ico-sm"><use href="#i-chevron-down"/></svg></button>
+                <div class="select-panel" id="sel-country" role="listbox" hidden></div>
+                <input type="hidden" name="country" value="US">
+              </div>
+            </div>
+            <div class="field">
+              <label id="typeLabel">Business type</label>
+              <div class="select" data-select="businessType">
+                <button type="button" class="select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="sel-businessType" aria-labelledby="typeLabel"><span class="select-value">Design studio</span><svg class="ico ico-sm"><use href="#i-chevron-down"/></svg></button>
+                <div class="select-panel" id="sel-businessType" role="listbox" hidden></div>
+                <input type="hidden" name="businessType" value="Design studio">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-pane" data-step="2" hidden>
+          <h2>Payout setup</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label id="currencyLabel">Primary settlement currency</label>
+              <div class="select" data-select="currency">
+                <button type="button" class="select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="sel-currency" aria-labelledby="currencyLabel"><span class="select-value">USD — US Dollar</span><svg class="ico ico-sm"><use href="#i-chevron-down"/></svg></button>
+                <div class="select-panel" id="sel-currency" role="listbox" hidden></div>
+                <input type="hidden" name="currency" value="USD">
+              </div>
+            </div>
+            <div class="field"><label for="monthlyVolume">Expected monthly volume (USD)</label><input id="monthlyVolume" name="volume" type="number" min="0" step="100" placeholder="25000" data-required data-type="number"><span class="field-error" data-error-for="monthlyVolume" hidden></span></div>
+            <div class="field wide"><label for="useCase">What will you use Oppopay for?</label><textarea id="useCase" name="useCase" rows="3" placeholder="Paying illustrators and motion designers across Europe and Asia." data-required></textarea><span class="field-error" data-error-for="useCase" hidden></span></div>
+            <div class="field wide"><label class="check"><input type="checkbox" id="needsCards" checked><span>Issue virtual cards for project expenses</span></label></div>
+          </div>
+        </div>
+
+        <div class="step-pane" data-step="3" hidden>
+          <h2>Review</h2>
+          <div class="review-list" id="applyReview"></div>
+          <label class="check review-check"><input type="checkbox" id="confirmTerms"><span>The information above is accurate and I am authorised to open an account for this business.</span></label>
+          <span class="field-error" data-error-for="confirmTerms" hidden></span>
+        </div>
+
+        <div class="form-actions" id="applyActions">
+          <button type="button" class="btn btn-outline btn-pill" id="applyBack" disabled>Back</button>
+          <button type="button" class="btn btn-dark btn-pill" id="applyNext">Continue <svg class="ico ico-sm"><use href="#i-arrow-right"/></svg></button>
+          <button type="submit" class="btn btn-dark btn-pill" id="applySubmit" hidden>Generate application file <svg class="ico ico-sm"><use href="#i-download"/></svg></button>
+        </div>
+      </form>
+
+      <div class="receipt" id="applyReceipt" hidden>
+        <span class="receipt-icon"><svg class="ico"><use href="#i-check"/></svg></span>
+        <h2>Application file ready</h2>
+        <p id="receiptNumber"></p>
+        <p class="receipt-note">Your details are saved in this browser session. Connect an onboarding service to submit the file for review.</p>
+        <div class="receipt-actions">
+          <button type="button" class="btn btn-dark btn-pill" id="downloadApplication"><svg class="ico ico-sm"><use href="#i-download"/></svg> Download application</button>
+          <button type="button" class="btn btn-outline btn-pill" id="applyRestart">Start a new application</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ACCOUNT ============ -->
+    <section class="view" id="view-account" hidden aria-label="Account overview">
+      <div class="account-top">
+        <div><button type="button" class="back-link" data-nav="home"><svg class="ico ico-xs"><use href="#i-arrow-left"/></svg> Back to home</button><h1 tabindex="-1">Good morning, Dean.</h1></div>
+        <button type="button" class="btn btn-outline btn-pill btn-sm" id="logoutBtn">Log out</button>
+      </div>
+
+      <div class="account-grid">
+        <div class="balance-block">
+          <span class="eyebrow">Available balance</span>
+          <strong class="balance">$48,260.40</strong>
+          <span class="balance-meta">USD · Lattice Studio Ltd</span>
+          <div class="balance-actions">
+            <button type="button" class="btn btn-dark btn-pill btn-sm" id="draftToggle"><svg class="ico ico-sm"><use href="#i-plus"/></svg> New payout draft</button>
+            <button type="button" class="text-btn" data-nav="pricing">See rates <svg class="ico ico-xs"><use href="#i-arrow-right"/></svg></button>
+          </div>
+          <form class="draft-form" id="draftForm" hidden novalidate>
+            <div class="field-grid">
+              <div class="field"><label for="draftName">Recipient</label><input id="draftName" placeholder="Studio name" data-required><span class="field-error" data-error-for="draftName" hidden></span></div>
+              <div class="field"><label for="draftAmount">Amount (USD)</label><input id="draftAmount" type="number" min="1" step="1" placeholder="1200" data-required data-type="number"><span class="field-error" data-error-for="draftAmount" hidden></span></div>
+            </div>
+            <button type="submit" class="btn btn-dark btn-pill btn-sm">Save draft</button>
+            <p class="inline-status" id="draftStatus" role="status" hidden></p>
+          </form>
+        </div>
+
+        <div class="card-manage">
+          <div class="card-manage-head"><span class="eyebrow">Primary card</span><span class="badge" id="cardStateBadge">Active</span></div>
+          <div class="mini-card" id="miniCard"><span class="mini-chip"><svg class="ico"><use href="#i-chip"/></svg></span><b id="miniCardNumber">8923 2461 5320 7642</b><span class="mini-meta">Dean Ambrose · 07/28</span><span class="mastercard"><i></i><i></i></span></div>
+          <div class="card-manage-actions">
+            <button type="button" class="text-btn" id="maskCard"><svg class="ico ico-xs"><use href="#i-eye-off"/></svg> <span id="maskCardLabel">Hide card number</span></button>
+            <button type="button" class="text-btn" id="freezeCard"><svg class="ico ico-xs"><use href="#i-lock"/></svg> <span id="freezeCardLabel">Freeze card</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="transactions">
+        <div class="panel-head">
+          <div><h2>Transactions</h2><span class="tx-count" id="txCount"></span></div>
+          <button type="button" class="btn btn-outline btn-pill btn-sm" id="refreshTx"><svg class="ico ico-sm"><use href="#i-refresh"/></svg> Refresh</button>
+        </div>
+        <div class="filter-row">
+          <label class="search-field"><svg class="ico ico-sm"><use href="#i-search"/></svg><input type="search" id="txSearch" placeholder="Search transactions" aria-label="Search transactions"></label>
+          <div class="chips" role="group" aria-label="Filter transactions">
+            <button type="button" class="chip is-active" data-tx="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-tx="in" aria-pressed="false">Incoming</button>
+            <button type="button" class="chip" data-tx="out" aria-pressed="false">Outgoing</button>
+            <button type="button" class="chip" data-tx="draft" aria-pressed="false">Drafts</button>
+          </div>
+        </div>
+        <div class="tx-list" id="txList"></div>
+        <div class="empty-state" id="txEmpty" hidden><svg class="ico"><use href="#i-search"/></svg><strong>Nothing here yet.</strong><span>Change the filter or search for another reference.</span><button type="button" class="text-btn" id="clearTx">Clear filters</button></div>
+        <div class="loading-state" id="txLoading" hidden><span class="spinner"></span> Loading transactions…</div>
+      </div>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section class="view" id="view-story" hidden aria-label="Customer story">
+      <div class="view-head">
+        <button type="button" class="back-link" data-nav="home"><svg class="ico ico-xs"><use href="#i-arrow-left"/></svg> Back to home</button>
+        <h1 tabindex="-1">Lattice</h1>
+        <p>How a distributed design studio pays its collaborators without a finance team.</p>
+      </div>
+      <article class="story-body">
+        <div class="story-quote"><span class="wordmark wordmark-lattice"><svg class="ico"><use href="#i-lattice"/></svg>Lattice</span><blockquote>“ The Best Platform To Use For International Payout and Bank Transfers, Highly Recommend”</blockquote><div class="tt-person"><span class="avatar avatar-robert"><svg class="ico"><use href="#i-avatar"/></svg></span><span><strong>Robert J.</strong><small>UX / Motion Designer</small></span></div></div>
+        <p>Lattice works with illustrators and motion designers in eleven countries. Before Oppopay, every invoice meant a wire form, a currency conversion and a week of follow-up to confirm the money had arrived.</p>
+        <p>Now each collaborator is paid through a local rail in their own currency. The invoice reference travels with the payment, so reconciliation happens when the money lands rather than at the end of the month.</p>
+        <h2>What changed</h2>
+        <div class="story-rows">
+          <div><span>Payout rails</span><b>Local transfers · SWIFT · SEPA</b></div>
+          <div><span>Currencies</span><b>USD · EUR · GBP · SGD · AUD</b></div>
+          <div><span>Cards in use</span><b>One per active project</b></div>
+          <div><span>Statement export</span><b>Monthly, accountant-ready</b></div>
+        </div>
+        <button type="button" class="btn btn-dark btn-pill" data-nav="apply" data-plan="Growth">Apply Now — It's Free</button>
+      </article>
+    </section>
+
+    <div class="toast-host" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+  </main>
+</div>
+
+</body>
+</html>
