@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Discover your next drive. Luxury sports cars, effortless booking, and personal service from Dream Drive.">
+  <title>Dream Drive — Drive Your Dream Car</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="#home" data-route="home">Dream Drive</a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#home" data-route="home" class="nav-link active" aria-current="page">Home</a>
+      <a href="#about" data-section="about" class="nav-link">About Us</a>
+      <a href="#fleet" data-route="fleet" class="nav-link">Our Fleet</a>
+      <div class="brand-nav dropdown">
+        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="nav-brands">Car Brands <i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+        <div class="dropdown-panel" id="nav-brands" hidden role="menu" aria-label="Car brands">
+          <button class="dropdown-option" role="menuitem" data-brand="All" aria-current="true">All brands <i class="ti ti-check" aria-hidden="true"></i></button>
+          <button class="dropdown-option" role="menuitem" data-brand="Porsche">Porsche</button>
+          <button class="dropdown-option" role="menuitem" data-brand="Audi">Audi</button>
+          <button class="dropdown-option" role="menuitem" data-brand="Ferrari">Ferrari</button>
+          <button class="dropdown-option" role="menuitem" data-brand="BMW">BMW</button>
+          <button class="dropdown-option" role="menuitem" data-brand="Mercedes-Benz">Mercedes-Benz</button>
+          <button class="dropdown-option" role="menuitem" disabled>Bentley <span>Coming soon</span></button>
+        </div>
+      </div>
+      <a href="#services" data-section="services" class="nav-link">Our Services</a>
+      <button data-info="Lease To Own" class="nav-link">Lease To Own</button>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button search-button" data-action="search" aria-label="Search cars"><i class="ti ti-search" aria-hidden="true"></i></button>
+      <a class="button button-dark button-small" href="#contact" data-route="contact">Contact Us</a>
+      <button class="icon-button menu-button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="#home" data-route="home">Home</a><a href="#about" data-section="about">About Us</a><a href="#fleet" data-route="fleet">Our Fleet</a><a href="#services" data-section="services">Our Services</a><button data-info="Lease To Own">Lease To Own</button><a href="#contact" data-route="contact">Contact Us</a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div id="home-view" class="view">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Drive Your Dream Car,<br>Anytime, Anywhere</h1>
+          <p>Dream Drive offers curated luxury cars, quick booking, and<br class="desktop-break"> seamless delivery for an unforgettable ride.</p>
+          <div class="hero-actions"><a class="button button-dark" href="#booking" data-route="booking">Book Your Ride</a><a class="button button-light" href="#fleet" data-route="fleet">Browse Our Fleet</a></div>
+        </div>
+        <div class="hero-vehicle"><img id="hero-car" src="./assets/porsche-hero.png" alt="White Porsche 911 sports car" fetchpriority="high"><div class="ground-shadow" aria-hidden="true"></div></div>
+      </section>
+      <div class="brand-strip wrap" aria-label="Explore car brands">
+        <button data-brand="Mercedes-Benz" class="brand-amg">AMG</button><button data-brand="BMW" class="brand-bmw">BMW</button><button data-action="brand-other" class="brand-cadillac">Cadillac</button><button data-action="brand-other" class="brand-gmc">GMC</button><button data-brand="Mercedes-Benz" class="brand-mercedes">Mercedes-Benz</button><button data-action="brand-other" class="brand-nissan">NISSAN</button><button data-action="brand-other" class="brand-hummer">HUMMER</button>
+      </div>
+      <section class="about-section section wrap" id="about" aria-labelledby="about-title">
+        <h2 id="about-title">Drive Luxury Live<br>Freedom</h2>
+        <div class="about-content"><p class="about-statement">Experience premium car rentals crafted for comfort, performance, and style. Whether it’s a quick business trip or a long weekend getaway, <span>our fleet is designed to elevate your journey.</span></p>
+          <dl class="stats"><div><dt>500+</dt><dd>Luxury Cars</dd></div><div><dt>24/7</dt><dd>Road Assistance</dd></div><div><dt>100%</dt><dd>Service Guarantee</dd></div><div><dt>60+</dt><dd>Pickup Locations</dd></div><div><dt>800+</dt><dd>Satisfied Clients</dd></div></dl>
+        </div>
+      </section>
+      <section class="fleet-preview section wrap" aria-labelledby="fleet-title">
+        <div class="section-heading"><div><h2 id="fleet-title">Find Your Perfect Ride</h2><p>Explore a handpicked collection of luxury and performance cars built<br class="desktop-break"> for every journey. From sleek sedans to bold SUVs and iconic<br class="desktop-break"> sports cars.</p></div><a class="button button-dark" href="#fleet" data-route="fleet">View Full Fleet</a></div>
+        <div class="car-grid" id="featured-cars"></div>
+      </section>
+      <section class="services-section" id="services" aria-labelledby="services-title">
+        <div class="wrap service-header"><div><h2 id="services-title">Luxury Meets Reliability</h2><p>We combine the elegance of luxury vehicles with a seamless<br class="desktop-break"> rental experience.</p></div><div class="service-tabs" role="tablist" aria-label="Our services">
+          <button role="tab" aria-selected="true" aria-controls="service-card" id="service-tab-0" data-service="0" class="active">Expert</button><button role="tab" aria-selected="false" aria-controls="service-card" id="service-tab-1" data-service="1" tabindex="-1">Flexible</button><button role="tab" aria-selected="false" aria-controls="service-card" id="service-tab-2" data-service="2" tabindex="-1">Sanitized</button><button role="tab" aria-selected="false" aria-controls="service-card" id="service-tab-3" data-service="3" tabindex="-1">Booking</button><button role="tab" aria-selected="false" aria-controls="service-card" id="service-tab-4" data-service="4" tabindex="-1">Membership</button>
+        </div></div>
+        <div class="wheel-stage"><svg class="alloy-wheel" viewBox="0 0 1100 1100" aria-hidden="true"><defs><radialGradient id="wheel-glow"><stop offset="0" stop-color="#dedede"/><stop offset=".15" stop-color="#ffffff"/><stop offset=".3" stop-color="#e8e8e8"/><stop offset=".47" stop-color="#ffffff"/><stop offset="1" stop-color="#f7f7f7"/></radialGradient></defs><g id="wheel-rings" fill="none" stroke="#c8c8c8" stroke-width="2"></g><g id="wheel-spokes" fill="none" stroke="#c8c8c8" stroke-width="2"></g><circle cx="550" cy="550" r="175" fill="url(#wheel-glow)"/><circle cx="550" cy="550" r="92" fill="none" stroke="#d8d8d8" stroke-width="4"/><circle cx="550" cy="550" r="70" fill="none" stroke="#dedede" stroke-width="10"/></svg>
+          <div class="wheel-marker"><span id="service-number">01</span><span class="marker-dot"></span><span class="marker-line"></span></div>
+          <div id="service-card" class="service-card" role="tabpanel" aria-labelledby="service-tab-0"><h3 id="service-name">Expert Service</h3><img src="./assets/porsche-side.png" id="service-image" alt="Porsche sports car" loading="lazy"><p id="service-description">Professional guidance for your perfect ride</p><a class="button button-dark button-small" href="#contact" data-route="contact">Learn More</a></div>
+        </div>
+      </section>
+      <section class="picks-section section" aria-labelledby="picks-title">
+        <div class="section-heading wrap"><div><h2 id="picks-title">Top Picks This Week</h2><p>Explore our most rented and loved cars handpicked for<br class="desktop-break"> performance and elegance.</p></div><a class="button button-dark" href="#fleet" data-route="fleet">View All Cars</a></div>
+        <div class="picks-viewport"><div class="picks-track" id="picks-track"></div></div>
+        <div class="carousel-controls"><button class="icon-button" data-carousel="picks-prev" aria-label="Previous cars" disabled><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="icon-button icon-dark" data-carousel="picks-next" aria-label="Next cars"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div>
+      </section>
+      <section class="process-section section wrap" id="how-it-works" aria-labelledby="process-title">
+        <div class="section-heading"><div><h2 id="process-title">Simple. Fast. Hassle-Free</h2><p>Experience a smooth rental process designed to get you on the road<br class="desktop-break"> in minutes. From selecting your dream car to confirming your booking.</p></div><a class="button button-dark" href="#booking" data-route="booking">Start Booking</a></div>
+        <div class="process-layout"><div class="process-grid"><a href="#fleet" data-route="fleet"><h3>Browse Cars</h3><p>Select from our premium collection</p></a><a href="#fleet" data-route="fleet"><h3>Choose Ride</h3><p>Pick the perfect car</p></a><a href="#booking" data-route="booking"><h3>Set Your Date</h3><p>Pick duration and location</p></a><a href="#booking" data-route="booking"><h3>Add Preferences</h3><p>Include extras like a driver</p></a><a href="#booking" data-route="booking"><h3>Confirm Booking</h3><p>Review your ride</p></a><a href="#contact" data-route="contact"><h3>Pick Up &amp; Drive</h3><p>Collect your car and enjoy the road ahead.</p></a></div><img src="./assets/lifestyle-car.jpg" alt="Luxury car in a contemporary architectural setting" loading="lazy"></div>
+      </section>
+      <section class="testimonials-section section" aria-labelledby="reviews-title">
+        <div class="section-heading wrap"><div><h2 id="reviews-title">Trusted by Thousands</h2><p>Real experiences from real drivers. See why thousands of customers<br class="desktop-break"> trust us for comfort, quality, and reliability every time they hit the road.</p></div><div class="carousel-controls"><button class="icon-button" data-carousel="reviews-prev" aria-label="Previous reviews" disabled><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="icon-button icon-dark" data-carousel="reviews-next" aria-label="Next reviews"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div></div>
+        <div class="reviews-viewport"><div class="reviews-track" id="reviews-track"></div></div>
+      </section>
+      <section class="faq-section section wrap" id="faq" aria-labelledby="faq-title"><div><h2 id="faq-title">Got questions? We’ve got<br>answers!</h2><p>Here are some of the most common questions about our<br class="desktop-break"> luxury car rental service.</p></div><div class="faq-list">
+        <details name="rental-faq" open><summary>How do I book a car?<i class="ti ti-chevron-down" aria-hidden="true"></i></summary><p>Booking is simple and fast. Browse our fleet online, choose your preferred car, and complete your reservation with your personal details. You can also contact our team directly via phone or email for assistance.</p></details>
+        <details name="rental-faq"><summary>Can the car be delivered to my location?<i class="ti ti-chevron-down" aria-hidden="true"></i></summary><p>Yes. Choose hotel or airport delivery when planning your ride. Delivery is available across Dubai and Abu Dhabi, with the final fee confirmed by our team.</p></details>
+        <details name="rental-faq"><summary>What is the minimum rental period?<i class="ti ti-chevron-down" aria-hidden="true"></i></summary><p>Our minimum rental period is 24 hours. Weekly and monthly packages are available for longer stays.</p></details>
+        <details name="rental-faq"><summary>Is insurance included in the rental price?<i class="ti ti-chevron-down" aria-hidden="true"></i></summary><p>Standard insurance is included. An optional protection package can reduce your excess. Our team will explain the cover before your rental begins.</p></details>
+        <details name="rental-faq"><summary>What documents do I need to rent a car?<i class="ti ti-chevron-down" aria-hidden="true"></i></summary><p>Bring a valid driving licence, passport or Emirates ID, and a credit card. International visitors may also need an international driving permit.</p></details>
+        <details name="rental-faq"><summary>Is there a security deposit required?<i class="ti ti-chevron-down" aria-hidden="true"></i></summary><p>A refundable security deposit is required. The amount depends on your chosen vehicle and is shown in its details before you book.</p></details>
+      </div></section>
+    </div>
+
+    <section class="view inner-view wrap" id="fleet-view" hidden aria-labelledby="collection-title">
+      <div class="page-intro"><a class="back-link" href="#home" data-route="home"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to Dream Drive</a><h1 id="collection-title">Find your next great drive.</h1><p>Extraordinary cars. A ride for every occasion.</p></div>
+      <div class="fleet-filters"><label class="search-field"><i class="ti ti-search" aria-hidden="true"></i><span class="sr-only">Search our fleet</span><input type="search" id="fleet-search" placeholder="Search a car or brand" autocomplete="off"></label><div class="dropdown filter-dropdown"><button class="control dropdown-trigger" aria-expanded="false" aria-controls="fleet-brands"><span id="brand-filter-label">All brands</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div id="fleet-brands" class="dropdown-panel" hidden role="menu" aria-label="Filter by brand"></div></div><div class="category-filters" role="group" aria-label="Car type"><button class="active" data-category="All" aria-pressed="true">All cars</button><button data-category="Sports" aria-pressed="false">Sports</button><button data-category="Convertible" aria-pressed="false">Convertible</button><button data-category="Coupe" aria-pressed="false">Coupe</button><button data-category="Sedan" aria-pressed="false">Sedan</button></div></div>
+      <div class="results-heading"><p id="result-count" aria-live="polite">6 cars to discover</p><button class="text-button" data-action="reset-filters">Clear filters</button></div><div class="car-grid" id="fleet-cars"></div><div class="empty-state" id="empty-fleet" hidden><i class="ti ti-search" aria-hidden="true"></i><h2>No cars found</h2><p>Try a different name or explore all of our cars.</p><button class="button button-dark" data-action="reset-filters">View all cars</button></div>
+    </section>
+    <section class="view inner-view wrap" id="detail-view" hidden aria-labelledby="detail-title"></section>
+    <section class="view inner-view wrap" id="booking-view" hidden aria-labelledby="booking-title">
+      <div class="page-intro"><a class="back-link" href="#fleet" data-route="fleet"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to our fleet</a><h1 id="booking-title">Your next chapter starts here.</h1><p>Choose your dates. Make the journey your own.</p></div>
+      <div class="booking-layout"><form id="booking-form" novalidate>
+        <h2>Plan your ride</h2><div class="field"><label id="booking-car-label">Your car</label><div class="dropdown"><button type="button" class="control dropdown-trigger" aria-expanded="false" aria-controls="booking-cars" aria-labelledby="booking-car-label booking-car-value"><span id="booking-car-value">Porsche 911 GT3</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="dropdown-panel" id="booking-cars" hidden role="menu" aria-label="Choose your car"></div></div></div>
+        <div class="form-row"><div class="field"><label for="pickup-date">Pickup date</label><input id="pickup-date" name="pickup" type="text" inputmode="numeric" placeholder="DD/MM/YYYY" maxlength="10" required aria-describedby="pickup-error"><small class="field-error" id="pickup-error"></small></div><div class="field"><label for="return-date">Return date</label><input id="return-date" name="return" type="text" inputmode="numeric" placeholder="DD/MM/YYYY" maxlength="10" required aria-describedby="return-error"><small class="field-error" id="return-error"></small></div></div>
+        <div class="field"><label id="location-label">Pickup location</label><div class="dropdown"><button type="button" class="control dropdown-trigger" aria-expanded="false" aria-controls="location-options" aria-labelledby="location-label location-value"><span id="location-value">Dubai showroom</span><i class="ti ti-chevron-down" aria-hidden="true"></i></button><div class="dropdown-panel" id="location-options" role="menu" hidden aria-label="Pickup location"><button type="button" role="menuitem" class="dropdown-option" data-location="Dubai showroom" aria-current="true">Dubai showroom<i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="menuitem" class="dropdown-option" data-location="Dubai International Airport">Dubai International Airport</button><button type="button" role="menuitem" class="dropdown-option" data-location="Hotel delivery">Hotel delivery</button><button type="button" role="menuitem" class="dropdown-option" disabled>Abu Dhabi showroom <span>Fully booked</span></button></div></div></div>
+        <fieldset class="preferences"><legend>A little extra comfort</legend><label><input type="checkbox" name="driver" value="250">Personal driver <span>AED 250 / day</span></label><label><input type="checkbox" name="protection" value="120">Extended protection <span>AED 120 / day</span></label></fieldset>
+        <h2 class="form-group-title">Your details</h2><div class="form-row"><div class="field"><label for="full-name">Full name</label><input type="text" id="full-name" name="name" autocomplete="name" required aria-describedby="name-error"><small class="field-error" id="name-error"></small></div><div class="field"><label for="booking-email">Email address</label><input type="email" id="booking-email" name="email" autocomplete="email" required aria-describedby="email-error"><small class="field-error" id="email-error"></small></div></div>
+        <button type="submit" class="button button-dark">Review your ride <i class="ti ti-arrow-right" aria-hidden="true"></i></button><p class="fine-print">No payment is taken. Availability and final pricing are confirmed by our team.</p>
+      </form><aside class="booking-summary"><img id="booking-image" src="./assets/porsche-side.png" alt="Selected Porsche" loading="lazy"><h2 id="summary-name">Porsche 911 GT3</h2><p id="summary-specs">Sports · 2 seats · Automatic</p><dl class="costs"><div><dt>Daily rate</dt><dd id="daily-rate">AED 1,200</dd></div><div><dt>Rental duration</dt><dd id="rental-duration">Choose your dates</dd></div><div><dt>Extras</dt><dd id="extras-cost">AED 0</dd></div><div class="cost-total"><dt>Estimated total</dt><dd id="total-cost">—</dd></div></dl><p class="fine-print">Includes standard insurance and 250 km per day.<br>Refundable deposit: <span id="deposit-cost">AED 3,000</span>.</p><div id="booking-review" hidden aria-live="polite"><h3>Your ride, ready to review.</h3><p id="review-details"></p><button type="button" class="button button-dark" data-action="download-itinerary">Download itinerary<i class="ti ti-download" aria-hidden="true"></i></button><a class="button button-light" href="#contact" data-route="contact">Speak to our team</a></div></aside></div>
+    </section>
+    <section class="view inner-view wrap" id="contact-view" hidden aria-labelledby="contact-title"><div class="page-intro"><a class="back-link" href="#home" data-route="home"><i class="ti ti-arrow-left" aria-hidden="true"></i>Back to Dream Drive</a><h1 id="contact-title">Let’s find your perfect ride.</h1><p>Personal advice. Exceptional journeys.</p></div><div class="contact-layout"><div><h2>We’re here for you.</h2><p>Visit our Dubai showroom or talk to a member of our team about your next drive.</p><div class="contact-detail"><i class="ti ti-map-pin" aria-hidden="true"></i><div><h3>Our showroom</h3><p>123 Rental Street, Dubai<br>Al Quoz, United Arab Emirates</p></div></div><div class="contact-detail"><i class="ti ti-phone" aria-hidden="true"></i><div><h3>Call our team</h3><a href="tel:+97145789025">+971 4 578 9025</a><p>Every day, 9:00 AM – 9:00 PM</p></div></div><div class="contact-detail"><i class="ti ti-mail" aria-hidden="true"></i><div><h3>Email us</h3><a href="mailto:info@dream-drive.com">info@dream-drive.com</a></div></div></div><form id="contact-form" novalidate><h2>What do you have in mind?</h2><div class="field"><label for="contact-name">Full name</label><input id="contact-name" name="name" autocomplete="name" required></div><div class="field"><label for="contact-email">Email address</label><input id="contact-email" type="email" name="email" autocomplete="email" required></div><div class="field"><label for="contact-message">Your message</label><textarea id="contact-message" name="message" rows="5" required></textarea></div><p class="field-error" id="contact-error" role="alert"></p><button type="submit" class="button button-dark">Prepare email<i class="ti ti-mail" aria-hidden="true"></i></button><p class="fine-print">We’ll prepare your message in your email app.</p><div class="form-result" id="contact-result" hidden><h3>Your message is ready.</h3><p>Open your email app to send it, or download a copy.</p><a class="button button-dark" id="contact-mail-link">Open email app</a><button class="button button-light" type="button" data-action="download-message">Download message</button></div></form></div></section>
+    <section class="view inner-view wrap" id="info-view" hidden aria-labelledby="info-title"></section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-main wrap"><div class="footer-brand"><a class="wordmark" href="#home" data-route="home">Dream Drive</a><p>Your trusted partner for premium car rentals<br>since 2020. Making your journey<br>comfortable and memorable.</p><div class="social-links"><button data-info="Follow Dream Drive" aria-label="Dream Drive on Facebook"><i class="ti ti-brand-facebook" aria-hidden="true"></i></button><button data-info="Follow Dream Drive" aria-label="Dream Drive on X"><i class="ti ti-brand-x" aria-hidden="true"></i></button><button data-info="Follow Dream Drive" aria-label="Dream Drive on Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></button></div></div><div class="footer-links"><h3>Quick Links</h3><a href="#home" data-route="home">Home</a><a href="#about" data-section="about">About Us</a><a href="#fleet" data-route="fleet">Our Fleet</a><a href="#fleet" data-route="fleet">Car Brands</a><a href="#services" data-section="services">Our Service</a><button data-info="Journal">Blogs</button><a href="#contact" data-route="contact">Contact</a></div><div class="footer-contact"><h3>Contact</h3><p>123 Rental Street, Dubai<br>Abu Dhabi<br>+971 45789025</p><a href="mailto:info@dream-drive.com">info@Dream-Drive.com</a></div><form class="newsletter" id="newsletter-form" novalidate><label class="sr-only" for="newsletter-email">Your email address</label><input type="email" id="newsletter-email" placeholder="Enter Your Email Address" required autocomplete="email" aria-describedby="newsletter-status"><button type="submit" class="button button-dark">Subscribe</button><a class="button button-light" id="newsletter-mail-link" hidden>Open email app</a><p id="newsletter-status" aria-live="polite"></p></form></div><div class="footer-bottom wrap"><p>© 2025 Dream Drive. All rights reserved.</p><div><button data-info="Image credits">Image credits</button><button data-info="Privacy Policy">Privacy Policy</button><button data-info="Terms & Conditions">Terms &amp; Conditions</button><button data-info="Cookie Policy">Cookie Policy</button></div></div></footer>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Dream Drive 豪华租车",
+  "slug": "dream-drive",
+  "page_type": "website",
+  "palette": ["#ffffff", "#252525", "#f7f7f7"],
+  "tags": ["汽车", "租赁", "超跑"],
+  "created_at": "2026-11-14 18:29:44",
+  "updated_at": "2026-11-14 19:21:10",
+  "imageToUI": "https://dribbble.com/shots/26749575-Dream-Drive-Luxury-Car-Rental-Website",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的网站。",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "frontend-design", "dataviz", "run"]
+    }
+  ]
+}
