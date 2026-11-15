@@ -1,0 +1,17 @@
+{
+    "name": "Stylist A.I. 时尚购物",
+    "slug": "stylist-ai",
+    "page_type": "software",
+    "tags": ["电商", "服饰", "穿搭"],
+    "palette": ["#f5f2ef", "#65a6df", "#191919"],
+    "created_at": "2026-11-15 13:09:05",
+    "updated_at": "2026-11-15 13:35:01",
+    "imageToUI": "https://dribbble.com/shots/18118723-Admin-dashboard-analytics-UX",
+    "history": [
+        {
+            "prompt": "还原这个UI软件。",
+            "model": "gpt-6.1-sol",
+            "skills": ["mono-ui-prototype", "frontend-design"]
+        }
+    ]
+}
