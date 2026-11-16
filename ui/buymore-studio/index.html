@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d4e9d3">
+  <title>BuyMore — Find your next favourite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons-300.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="stage">
+    <div class="canvas">
+      <aside class="sidebar" aria-label="Main navigation">
+        <button class="logo" data-view="explore" aria-label="BuyMore home">Buy<span>More</span></button>
+        <nav class="navigation">
+          <button data-view="popular"><i class="ti ti-bolt" aria-hidden="true"></i><span>Popular Products</span></button>
+          <button data-view="explore" class="active" aria-current="page"><i class="ti ti-compass" aria-hidden="true"></i><span>Explore New</span></button>
+          <button data-view="clothing"><i class="ti ti-shopping-cart" aria-hidden="true"></i><span>Clothing and Shoes</span></button>
+          <button data-view="gifts"><i class="ti ti-gift" aria-hidden="true"></i><span>Gifts and Living</span></button>
+          <button data-view="inspiration"><i class="ti ti-bulb" aria-hidden="true"></i><span>Inspiration</span></button>
+        </nav>
+        <section class="quick-actions">
+          <h2>Quick actions</h2>
+          <button data-view="request"><i class="ti ti-plus" aria-hidden="true"></i><span>Request for product</span></button>
+          <button data-view="members"><i class="ti ti-plus" aria-hidden="true"></i><span>Add member</span></button>
+        </section>
+        <section class="last-orders">
+          <h2>Last orders <span>37</span></h2>
+          <button data-order="BM-1037"><img src="assets/sneakers.webp" alt=""><span>Lime runners<span class="muted">...view order</span></span></button>
+          <button data-order="BM-1036"><img src="assets/winter-model.webp" alt=""><span>Outerwear<span class="muted">...view order</span></span></button>
+          <button class="text-button" data-view="orders">See all</button>
+        </section>
+        <button class="logout" data-action="logout"><i class="ti ti-logout" aria-hidden="true"></i><span>Log out</span></button>
+      </aside>
+      <main class="workspace">
+        <header class="topbar">
+          <button class="order-summary" data-view="orders"><strong>37</strong><span>Orders<small>Last 7 days</small></span></button>
+          <div class="mode-switch" aria-label="Shopping view">
+            <button class="selected" data-view="explore">Dashboard</button>
+            <button data-view="clothing">Website</button>
+          </div>
+          <div class="account-actions">
+            <button class="cart-trigger" data-view="cart"><i class="ti ti-shopping-bag" aria-hidden="true"></i><span>Cart</span><span id="cart-count" hidden>0</span></button>
+            <button class="cart-preview" data-view="cart" aria-label="View items in your cart"><img src="assets/sneakers.webp" alt=""><span>+8</span><img src="assets/orange-model.webp" alt=""><img src="assets/sandals.webp" alt=""></button>
+            <button class="profile-trigger" data-view="account" aria-label="Your account"><img src="assets/white-shirt.webp" alt=""><span id="profile-name">Ryana</span></button>
+          </div>
+        </header>
+        <div class="toolbar">
+          <h1 id="view-title">Explore</h1>
+          <div class="audience-tabs" aria-label="Shop by audience">
+            <button class="selected" data-audience="All" aria-pressed="true"><i class="ti ti-squares" aria-hidden="true"></i>All</button>
+            <button data-audience="Men" aria-pressed="false"><i class="ti ti-man" aria-hidden="true"></i>Men</button>
+            <button data-audience="Women" aria-pressed="false"><i class="ti ti-woman" aria-hidden="true"></i>Women</button>
+          </div>
+          <div class="toolbar-actions">
+            <button class="filter-trigger" id="filter-trigger" data-action="filters" aria-expanded="false" aria-controls="filter-panel">Filters<span class="filter-dot"></span></button>
+            <button class="search-trigger icon-button" data-action="search" aria-label="Search products"><i class="ti ti-search" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <section class="view-content" id="view-content" aria-label="Shopping content"></section>
+      </main>
+      <section class="filter-panel" id="filter-panel" aria-label="Product filters" hidden>
+        <div class="panel-heading"><h2>Find your fit</h2><button class="icon-button" data-action="filters" aria-label="Close filters"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+        <form id="filter-form">
+          <label class="field">Maximum price <span id="price-label">$200</span><input type="range" name="price" min="20" max="200" step="5" value="200"></label>
+          <label class="check-field"><input type="checkbox" name="stock"><span>In stock only</span></label>
+          <label class="check-field"><input type="checkbox" name="saved"><span>My favourites</span></label>
+          <div class="field"><span>Sort by</span><div class="custom-select"><button type="button" id="sort-trigger" data-action="sort-menu" aria-haspopup="listbox" aria-expanded="false">Recommended<i class="ti ti-chevron-down" aria-hidden="true"></i></button><div id="sort-menu" class="select-menu" role="listbox" aria-label="Sort products" hidden><button type="button" role="option" data-sort="recommended" aria-selected="true">Recommended<i class="ti ti-check" aria-hidden="true"></i></button><button type="button" role="option" data-sort="low" aria-selected="false">Price: low to high</button><button type="button" role="option" data-sort="high" aria-selected="false">Price: high to low</button><button type="button" role="option" aria-disabled="true" disabled>Customer rating · Coming soon</button></div></div></div>
+          <div class="form-actions"><button type="button" class="soft-button" data-action="reset-filters">Reset</button><button class="primary-button" type="submit">Show results</button></div>
+        </form>
+      </section>
+      <div class="search-panel" id="search-panel" hidden><form id="search-form"><i class="ti ti-search" aria-hidden="true"></i><input name="query" type="search" maxlength="100" autocomplete="off" aria-label="Search products" placeholder="Search clothing, shoes, and more"><button class="soft-button" type="submit">Search</button><button type="button" class="icon-button" data-action="search" aria-label="Close search"><i class="ti ti-x" aria-hidden="true"></i></button></form></div>
+      <div class="toast" id="toast" role="status" hidden></div>
+      <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><symbol id="heart" viewBox="0 0 24 24"><path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 0 1 12 6a5 5 0 0 1 7.5 6.6Z"/></symbol></svg>
+    </div>
+  </div>
+</body>
+</html>
