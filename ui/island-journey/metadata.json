@@ -1,0 +1,17 @@
+{
+  "name": "Island Journey · 海岛旅行",
+  "slug": "island-journey",
+  "page_type": "app",
+  "tags": ["旅行", "海岛", "旅伴"],
+  "palette": ["#f7f8fb", "#123cff", "#39cbb2"],
+  "created_at": "2026-11-16 20:27:02",
+  "updated_at": "2026-11-16 21:03:48",
+  "imageToUI": "https://huaban.com/pins/5629236452",
+  "history": [
+    {
+      "prompt": "还原这个UI原型的App",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "mobile-native", "dataviz", "run"]
+    }
+  ]
+}
