@@ -1,0 +1,18 @@
+{
+  "name": "Home 智能家居",
+  "slug": "home-thermostat",
+  "page_type": "app",
+  "tags": ["智能家居", "设备控制", "能源"],
+  "palette": ["#f5f6f8", "#ffffff", "#080909"],
+  "created_at": "2026-11-16 18:33:55",
+  "updated_at": "2026-11-16 18:53:12",
+  "imageToUI": "https://huaban.com/pins/3115623952?modalImg=https%3A%2F%2Fgd-hbimg-edge.huaban.com%2F2633c71fa63cb781b8cf5299fa7f2e798a02b94e92bb-wCFiYD%3Fauth_key%3D1774065600-0bb0f677872d4825bd97b24790663973-0-9883e8b880b68b3f61267ca1ac6a3cf7",
+  "history": [
+    {
+      "prompt": "还原参考图中的智能家居App",
+      "model": "gpt-6.1-sol",
+      "skills": ["mono-ui-prototype", "mobile-native", "dataviz"],
+      "duration_seconds": 1158
+    }
+  ]
+}
